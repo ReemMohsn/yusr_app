@@ -1,10 +1,11 @@
 class ApiLink {
   // فقط أمثله لروابط الثلاثة الأساسية نقدر نعدلهاً بعد ذلك بما يتوافق مع مشاريعنا
   // Base
-  static const String server = 'https://smart-neighborhood-test.runasp.net/api';
+  static const String server = 'https://localhost:7122/api';
 
   // Auth
-  static const String login = '$server/auth/login';
+  static const String login = '$server/Auth/LoginMobile';
+  static const String forgotPassword = '$server/Auth/ForgotPassword';
 
   static String changeResidentialNeighborhoodManager({
     required int neighborhoodId,

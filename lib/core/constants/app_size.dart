@@ -1,7 +1,7 @@
 class AppSize {
   // لتعريف الأحجام المكررة للمشروع لتوحيد حجم جميع الصفحات
   // static const double defaultPadding = 0;
-  // static const double paddingOfPage = 16;
+  static const double paddingOfPage = 16;
   // static const double textSizeOfLable = 15;
   // static const double fontSizeOfBigButton = 20;
   // static const double siize = 10;
