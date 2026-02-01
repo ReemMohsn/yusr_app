@@ -1,24 +1,33 @@
 class ProfileModel {
-  late String id;
-  late String identifier;
+  late int userId;
+  late String fullName;
   late String token;
-  late String role;
+  late String userRole;
+  late String identifier;
 
   ProfileModel({
-    required this.id,
-    required this.identifier,
+    required this.userId,
+    required this.fullName,
     required this.token,
-    required this.role,
+    required this.userRole,
+    required this.identifier,
   });
 
   ProfileModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    identifier = json['identifier'];
-    role = json['role'];
+    userId = json['userId'];
+    fullName = json['fullName'];
+    userRole = json['role'];
     token = json['token'];
+    identifier = json['identifier'];
   }
 
   Map<String, dynamic> toJson() {
-    return {'id': id, 'identifier': identifier, 'role': role, 'token': token};
+    return {
+      'userId': userId,
+      'fullName': fullName,
+      'role': userRole,
+      'token': token,
+      'identifier': identifier,
+    };
   }
 }

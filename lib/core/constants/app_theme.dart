@@ -1,75 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:yusr/core/constants/app_color.dart';
 
 class AppTheme {
-  static const Color primaryColor = Color(0xFF6C63FF);
-  static const Color backgroundLight = Color(0xFFF7F7F7);
-  static const Color white = Color(0xFFFFFFFF);
-  static const Color backgroundDark = Color(0xFF121212);
-  static const Color surfaceDark = Color(0xFF1E1E1E);
-
-  static ThemeData lightTheme = ThemeData(
+  static ThemeData get lightTheme => ThemeData(
     useMaterial3: true,
-    fontFamily: 'Tajawal-Regular',
+    fontFamily: 'Cairo',
     brightness: Brightness.light,
-    primaryColor: primaryColor,
-    scaffoldBackgroundColor: Colors.white,
+    scaffoldBackgroundColor: AppColor.backgroundColor,
 
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: primaryColor,
-      primary: primaryColor,
-      secondary: primaryColor,
+    // colorScheme: ColorScheme.fromSeed(
+    //   seedColor: primaryColor,
+    //   primary: primaryColor,
+    //   secondary: primaryColor,
+    // ),
+
+    // text
+    textTheme: TextTheme(
+      headlineLarge: TextStyle(
+        fontSize: 16.sp,
+        fontWeight: FontWeight.bold,
+        color: AppColor.darkBlack,
+      ),
+      headlineMedium: TextStyle(fontSize: 10.sp, color: AppColor.midlineColor),
+      bodyLarge: TextStyle(
+        fontSize: 8.sp,
+        fontWeight: FontWeight.bold,
+        color: AppColor.baseFontColor,
+      ),
+      // bodyMedium: TextStyle(fontSize: 7.sp, color: Colors.black87),
+      // bodySmall: TextStyle(fontSize: 6.sp, color: Colors.black54),
     ),
 
-    // textTheme: TextTheme(
-    //   headlineLarge: TextStyle(
-    //     fontSize: 16.sp,
-    //     fontWeight: FontWeight.bold,
-    //     color: Colors.black,
-    //   ),
-    //   headlineMedium: TextStyle(
-    //     fontSize: 10.sp,
-    //     fontWeight: FontWeight.bold,
-    //     color: Colors.black,
-    //   ),
-    //   bodyLarge: TextStyle(fontSize: 8.sp, color: Colors.black87),
-    //   bodyMedium: TextStyle(fontSize: 7.sp, color: Colors.black87),
-    //   bodySmall: TextStyle(fontSize: 6.sp, color: Colors.black54),
-    // ),
+    // AppBar
+    appBarTheme: AppBarTheme(
+      backgroundColor: AppColor.darkBlack,
+      elevation: 0,
+      centerTitle: false,
+      // titleTextStyle: TextStyle(
+      //   color: Colors.black,
+      //   fontSize: 20.sp,
+      //   fontWeight: FontWeight.bold,
+      // ),
+      iconTheme: IconThemeData(color: Colors.black),
+    ),
 
-    // // AppBar
-    // appBarTheme: AppBarTheme(
-    //   backgroundColor: Colors.white,
-    //   elevation: 0,
-    //   centerTitle: true,
-    //   titleTextStyle: TextStyle(
-    //     color: Colors.black,
-    //     fontSize: 20.sp,
-    //     fontWeight: FontWeight.bold,
-    //   ),
-    //   iconTheme: IconThemeData(color: Colors.black),
-    // ),
-
-    // // Input fields
-    // inputDecorationTheme: InputDecorationTheme(
-    //   filled: true,
-    //   fillColor: backgroundLight,
-    //   contentPadding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 18.w),
-    //   hintStyle: TextStyle(color: Colors.grey, fontSize: 6.sp),
-    //   border: OutlineInputBorder(
-    //     borderRadius: BorderRadius.circular(16.r),
-    //     borderSide: BorderSide(color: Color(0xFFE4E4E4), width: 1.5.w),
-    //   ),
-    //   focusedBorder: OutlineInputBorder(
-    //     borderRadius: BorderRadius.circular(16.r),
-    //     borderSide: BorderSide(color: primaryColor, width: 1.5.w),
-    //   ),
-    //   errorBorder: OutlineInputBorder(
-    //     borderRadius: BorderRadius.circular(16.r),
-    //     borderSide: BorderSide(color: Colors.red, width: 1.5.w),
-    //   ),
-    // ),
-
-    // // Buttons
+    // Buttons
     // elevatedButtonTheme: ElevatedButtonThemeData(
     //   style: ElevatedButton.styleFrom(
     //     backgroundColor: primaryColor,
@@ -81,82 +57,110 @@ class AppTheme {
     //     textStyle: TextStyle(fontSize: 8.sp, fontWeight: FontWeight.bold),
     //   ),
     // ),
-  );
-
-  static ThemeData darkTheme = ThemeData(
-    useMaterial3: true,
-    fontFamily: 'Tajawal-Regular',
-    brightness: Brightness.dark,
-    primaryColor: primaryColor,
-    scaffoldBackgroundColor: backgroundDark,
-
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: primaryColor,
-      brightness: Brightness.dark,
-      primary: primaryColor,
-      secondary: primaryColor,
-      surface: surfaceDark,
+    
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        padding: EdgeInsets.all(7.w),
+        foregroundColor: AppColor.golden,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        side: BorderSide(color: AppColor.golden, width: 0.7),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25.0),
+        ),
+        textStyle: TextStyle(
+          fontFamily: 'Cairo',
+          fontSize: 10.sp,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
     ),
 
-    // textTheme: TextTheme(
-    //   headlineLarge: TextStyle(
-    //     fontSize: 16.sp,
-    //     fontWeight: FontWeight.bold,
-    //     color: Colors.white,
-    //   ),
-    //   headlineMedium: TextStyle(
-    //     fontSize: 10.sp,
-    //     fontWeight: FontWeight.bold,
-    //     color: Colors.white,
-    //   ),
-    //   bodyLarge: TextStyle(fontSize: 8.sp, color: Colors.white70),
-    //   bodyMedium: TextStyle(fontSize: 7.sp, color: Colors.white70),
-    //   bodySmall: TextStyle(fontSize: 6.sp, color: Colors.white60),
-    // ),
+    // input
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: AppColor.inputFieldColor,
+      // المسافات الداخلية للحقل
+      contentPadding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 20.w),
+      // تنسيق النص التلميحي (Hint)
+      hintStyle: TextStyle(
+        color: AppColor.lightFontColor,
+        fontSize: 8.sp,
+        fontWeight: FontWeight.w400,
+        fontFamily: 'Cairo',
+      ),
 
-    // // AppBar
-    // appBarTheme: AppBarTheme(
-    //   backgroundColor: backgroundDark,
-    //   elevation: 0,
-    //   centerTitle: true,
-    //   titleTextStyle: TextStyle(
-    //     color: Colors.white,
-    //     fontSize: 20.sp,
-    //     fontWeight: FontWeight.bold,
-    //   ),
-    //   iconTheme: const IconThemeData(color: Colors.white),
-    // ),
+      // لون الأيقونات الافتراضي داخل الحقل
+      prefixIconColor: AppColor.golden,
+      suffixIconColor: AppColor.golden,
 
-    // // Input fields
-    // inputDecorationTheme: InputDecorationTheme(
-    //   filled: true,
-    //   fillColor: surfaceDark,
-    //   contentPadding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 18.w),
-    //   hintStyle: TextStyle(color: Colors.grey, fontSize: 6.sp),
-    //   border: OutlineInputBorder(
-    //     borderRadius: BorderRadius.circular(16.r),
-    //     borderSide: BorderSide(color: Color(0xFFE4E4E4), width: 1.5.w),
-    //   ),
-    //   focusedBorder: OutlineInputBorder(
-    //     borderRadius: BorderRadius.circular(16.r),
-    //     borderSide: BorderSide(color: primaryColor, width: 1.5.w),
-    //   ),
-    //   errorBorder: OutlineInputBorder(
-    //     borderRadius: BorderRadius.circular(16.r),
-    //     borderSide: BorderSide(color: Colors.red, width: 1.5.w),
-    //   ),
-    // ),
-    // // Buttons
-    // elevatedButtonTheme: ElevatedButtonThemeData(
-    //   style: ElevatedButton.styleFrom(
-    //     backgroundColor: primaryColor,
-    //     foregroundColor: Colors.white,
-    //     padding: EdgeInsets.symmetric(vertical: 14.h),
-    //     shape: RoundedRectangleBorder(
-    //       borderRadius: BorderRadius.circular(26.r),
-    //     ),
-    //     textStyle: TextStyle(fontSize: 8.sp, fontWeight: FontWeight.bold),
-    //   ),
-    // ),
+      // الحدود الافتراضية
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16.r),
+        borderSide: const BorderSide(
+          width: 1,
+          color: AppColor.inputFieldBoundaries,
+        ),
+      ),
+
+      // الحدود في الوضع العادي (غير مفعل)
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16.r),
+        borderSide: const BorderSide(color: AppColor.inputFieldBoundaries),
+      ),
+
+      // الحدود عند الكتابة (Focus)
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16.r),
+        borderSide: const BorderSide(color: AppColor.golden),
+      ),
+
+      // الحدود عند وجود خطأ
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16.r),
+        borderSide: const BorderSide(color: AppColor.danger),
+      ),
+
+      // الحدود عند الكتابة وفي نفس الوقت يوجد خطأ
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16.r),
+        borderSide: const BorderSide(color: AppColor.danger, width: 1.5),
+      ),
+    ),
+
+    // Navigation
+    navigationBarTheme: NavigationBarThemeData(
+      indicatorColor: Colors.transparent,
+      labelTextStyle: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          return const TextStyle(
+            fontSize: 10,
+            fontWeight: FontWeight.bold,
+            color: AppColor.golden,
+          );
+        }
+        return const TextStyle(
+          fontSize: 10,
+          fontWeight: FontWeight.bold,
+          color: AppColor.lightFontColor,
+        );
+      }),
+
+      // إعدادات ألوان الأيقونات
+      iconTheme: WidgetStateProperty.resolveWith((states) {
+        // حالة العنصر المختار (Active)
+        if (states.contains(WidgetState.selected)) {
+          return const IconThemeData(
+            color: AppColor.golden, // اللون الذهبي
+            size: 24, // حجم الأيقونة المختارة (اختياري)
+          );
+        }
+        // حالة العنصر غير المختار (Inactive)
+        return const IconThemeData(
+          color: Colors.grey, // اللون الرمادي
+          size: 22, // حجم الأيقونة غير المختارة (اختياري)
+        );
+      }),
+    ),
   );
 }

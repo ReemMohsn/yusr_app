@@ -49,6 +49,16 @@ class AppLocalizations {
   static AppLocalizations? maybeOf(BuildContext context) {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
+
+  /// `الإحصائيات العائلية`
+  String get SocialAndFamily {
+    return Intl.message(
+      'الإحصائيات العائلية',
+      name: 'SocialAndFamily',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {

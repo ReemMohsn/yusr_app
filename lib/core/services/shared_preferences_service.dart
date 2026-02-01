@@ -8,37 +8,37 @@ import 'package:yusr/features/auth/data/models/login_model.dart';
 class SharedPreferencesService {
   /// نستخدم النسخة الحديثة Async المتوافقة مع الويب والموبايل
   /// لا حاجة لدالة init() في بداية التطبيق
-  static final SharedPreferencesAsync _prefs = SharedPreferencesAsync();
+   final SharedPreferencesAsync _prefs = SharedPreferencesAsync();
 
   // ===========================================================================
   // 1. Authentication & Profile Logic (منطق التطبيق)
   // ===========================================================================
 
   /// التحقق مما إذا كان المستخدم مسجلاً للدخول
-  static Future<bool> get isLoggedIn async {
+   Future<bool> get isLoggedIn async {
     final value = await _prefs.getBool(SharedPreferencesKeys.isLoggedIn);
     return value ?? false;
   }
 
   /// حفظ حالة تسجيل الدخول
-  static Future<void> setLoggedIn(bool value) async {
+   Future<void> setLoggedIn(bool value) async {
     await _prefs.setBool(SharedPreferencesKeys.isLoggedIn, value);
   }
 
   /// التحقق من إكمال شاشة البداية (Onboarding)
-  static Future<bool> get isOnboardingCompleted async {
+   Future<bool> get isOnboardingCompleted async {
     final value = await _prefs.getBool(
       SharedPreferencesKeys.onboardingCompleted,
     );
     return value ?? false;
   }
 
-  static Future<void> setOnboardingCompleted() async {
+   Future<void> setOnboardingCompleted() async {
     await _prefs.setBool(SharedPreferencesKeys.onboardingCompleted, true);
   }
 
   /// استرجاع بيانات الملف الشخصي
-  static Future<ProfileModel?> getProfile() async {
+   Future<ProfileModel?> getProfile() async {
     final profileString = await _prefs.getString(SharedPreferencesKeys.profile);
 
     if (profileString != null) {
@@ -56,7 +56,7 @@ class SharedPreferencesService {
   }
 
   /// حفظ بيانات الملف الشخصي
-  static Future<void> setProfile(ProfileModel profile) async {
+   Future<void> setProfile(ProfileModel profile) async {
     try {
       final profileJson = jsonEncode(profile.toJson());
       await _prefs.setString(SharedPreferencesKeys.profile, profileJson);
@@ -68,13 +68,13 @@ class SharedPreferencesService {
   }
 
   /// حذف بيانات الملف الشخصي (تسجيل الخروج)
-  static Future<void> removeProfile() async {
+   Future<void> removeProfile() async {
     await _prefs.remove(SharedPreferencesKeys.profile);
     await setLoggedIn(false); // تعديل الحالة إلى غير مسجل
   }
 
   /// مسح جميع البيانات (عند حذف الحساب مثلاً)
-  static Future<void> clear() async {
+   Future<void> clear() async {
     await _prefs.clear();
   }
 
@@ -82,30 +82,30 @@ class SharedPreferencesService {
   // 2. Generic Helpers (دوال عامة لاستخدامات أخرى)
   // ===========================================================================
 
-  static Future<void> setString(String key, String value) async =>
+   Future<void> setString(String key, String value) async =>
       await _prefs.setString(key, value);
 
-  static Future<String?> getString(String key) async =>
+   Future<String?> getString(String key) async =>
       await _prefs.getString(key);
 
-  static Future<void> setBool(String key, bool value) async =>
+   Future<void> setBool(String key, bool value) async =>
       await _prefs.setBool(key, value);
 
-  static Future<bool?> getBool(String key) async => await _prefs.getBool(key);
+   Future<bool?> getBool(String key) async => await _prefs.getBool(key);
 
-  static Future<void> setInt(String key, int value) async =>
+   Future<void> setInt(String key, int value) async =>
       await _prefs.setInt(key, value);
 
-  static Future<int?> getInt(String key) async => await _prefs.getInt(key);
+   Future<int?> getInt(String key) async => await _prefs.getInt(key);
 
-  static Future<void> setDouble(String key, double value) async =>
+   Future<void> setDouble(String key, double value) async =>
       await _prefs.setDouble(key, value);
 
-  static Future<double?> getDouble(String key) async =>
+   Future<double?> getDouble(String key) async =>
       await _prefs.getDouble(key);
 
   /// دالة عامة لحفظ أي نوع (كما في الكود القديم لديك)
-  static Future<void> setValue(String key, dynamic value) async {
+   Future<void> setValue(String key, dynamic value) async {
     if (value is String) {
       await _prefs.setString(key, value);
     } else if (value is bool) {

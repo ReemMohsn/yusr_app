@@ -2,9 +2,9 @@ import 'package:dio/dio.dart';
 
 import 'errormodel.dart';
 
-class Serverexception implements Exception {
+class ServerException implements Exception {
   final ErrorModel errModel;
-  Serverexception({required this.errModel});
+  ServerException({required this.errModel});
 }
 
 void handleDioExceptions(DioException error) {
@@ -14,7 +14,7 @@ void handleDioExceptions(DioException error) {
     case DioExceptionType.receiveTimeout:
     case DioExceptionType.connectionError:
     case DioExceptionType.cancel:
-      throw Serverexception(
+      throw ServerException(
         errModel: ErrorModel(
           errorMessage: 'فشل الاتصال، يرجى التحقق من اتصالك بالإنترنت',
           statusCode: 500,
@@ -24,7 +24,7 @@ void handleDioExceptions(DioException error) {
 
     case DioExceptionType.badCertificate:
     case DioExceptionType.unknown:
-      throw Serverexception(
+      throw ServerException(
         errModel: ErrorModel(
           errorMessage: 'حدث خطأ غير متوقع، يرجى المحاولة مرة أخرى',
           statusCode: 500,
@@ -41,11 +41,11 @@ void handleDioExceptions(DioException error) {
         case 409:
         case 422:
         case 504:
-          throw Serverexception(
+          throw ServerException(
             errModel: ErrorModel.fromJson(error.response!.data),
           );
         default:
-          throw Serverexception(
+          throw ServerException(
             errModel: ErrorModel(
               errorMessage: 'حدث خطأ من الخادم، يرجى المحاولة لاحقاً',
               statusCode: 500,

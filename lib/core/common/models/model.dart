@@ -1,1 +1,3 @@
-class model {}
+class model {
+  
+}
