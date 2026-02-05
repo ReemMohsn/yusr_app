@@ -12,7 +12,9 @@ import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/core/utils/app_validator.dart';
 import 'package:yusr/features/auth/presentation/widgets/custom_back_button.dart';
 import 'package:yusr/features/auth/presentation/widgets/hgh.dart';
-import 'package:yusr/features/auth/providers/auth_controller.dart';
+import 'package:yusr/core/common/providers/shared_preferences_service_provider%20.dart';
+import 'package:yusr/core/constants/shared_preferences_keys.dart';
+import 'package:yusr/features/auth/providers/forgot_password_controller_provider.dart';
 
 class ForgotPassword extends ConsumerStatefulWidget {
   const ForgotPassword({super.key});
@@ -35,7 +37,7 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     final local = context.locale;
-    ref.listen<AsyncValue<void>>(authControllerProvider, (_, state) {
+    ref.listen<AsyncValue<void>>(forgotPasswordControllerProvider, (_, state) {
       if (state.isLoading) {
         context.showLoadingDialog();
       } else {
@@ -198,11 +200,16 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
                             FocusScope.of(context).unfocus();
+                            final email = identifirController.text.trim();
                             await ref
-                                .read(authControllerProvider.notifier)
-                                .forgotPassword(
-                                  identifirController.text.trim(),
+                                .read(sharedPreferencesServiceProvider)
+                                .setString(
+                                  SharedPreferencesKeys.resetEmail,
+                                  email,
                                 );
+                            await ref
+                                .read(forgotPasswordControllerProvider.notifier)
+                                .sendCode(email);
                           }
                         },
                         backgroundColor: AppColor.golden,

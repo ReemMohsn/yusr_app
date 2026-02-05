@@ -19,7 +19,6 @@ class OtpDigitField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // استخدمنا SizedBox لضبط الحجم بدقة ومنع التمدد الزائد
     return SizedBox(
       width: 30.w, // عرض ثابت ومناسب
       height: 60.h, // ارتفاع ثابت
@@ -31,12 +30,11 @@ class OtpDigitField extends StatelessWidget {
             // إذا كان الحقل فارغاً وضغط المستخدم حذف، عد للخلف
             if (controller.text.isEmpty && prevFocusNode != null) {
               prevFocusNode!.requestFocus();
-              // (اختياري) إذا كنت تريد حذف الرقم السابق بمجرد الرجوع إليه، يمكنك تفعيله هنا
-              // لكن السلوك القياسي هو فقط الرجوع للتركيز عليه
             }
           }
         },
         child: TextFormField(
+          // validator: AppValidator.validateEmptyField,
           controller: controller,
           focusNode: focusNode,
           textAlign: TextAlign.center,

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'auth_controller.dart';
+part of 'reset_password_controller_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,33 +9,34 @@ part of 'auth_controller.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(AuthController)
-const authControllerProvider = AuthControllerProvider._();
+@ProviderFor(ResetPasswordController)
+const resetPasswordControllerProvider = ResetPasswordControllerProvider._();
 
-final class AuthControllerProvider
-    extends $AsyncNotifierProvider<AuthController, void> {
-  const AuthControllerProvider._()
+final class ResetPasswordControllerProvider
+    extends $AsyncNotifierProvider<ResetPasswordController, void> {
+  const ResetPasswordControllerProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'authControllerProvider',
+        name: r'resetPasswordControllerProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$authControllerHash();
+  String debugGetCreateSourceHash() => _$resetPasswordControllerHash();
 
   @$internal
   @override
-  AuthController create() => AuthController();
+  ResetPasswordController create() => ResetPasswordController();
 }
 
-String _$authControllerHash() => r'aa035a235ceaf2d3b92ad6f3541acdaed480a8f7';
+String _$resetPasswordControllerHash() =>
+    r'e2c3c620c604111e4449a0cba65c6ed71fc5ad99';
 
-abstract class _$AuthController extends $AsyncNotifier<void> {
+abstract class _$ResetPasswordController extends $AsyncNotifier<void> {
   FutureOr<void> build();
   @$mustCallSuper
   @override

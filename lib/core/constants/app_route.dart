@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:yusr/features/auth/presentation/views/account_verification.dart';
 import 'package:yusr/features/auth/presentation/views/forgot_password.dart';
 import 'package:yusr/features/auth/presentation/views/login_view.dart';
+import 'package:yusr/features/auth/presentation/views/reset_password_view.dart';
 import 'package:yusr/features/home/presentation/views/main_home_view.dart';
 
 class AppRouter {
@@ -16,6 +17,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const ForgotPassword());
       case AppRoute.otpVerificationView:
         return MaterialPageRoute(builder: (_) => const OtpVerificationView());
+      case AppRoute.resetPasswordView:
+        return MaterialPageRoute(builder: (_) => const ResetPasswordView());
       default:
         return null;
     }
@@ -27,4 +30,5 @@ class AppRoute {
   static const String loginView = '/loginView';
   static const String forgotPassword = '/ForgotPassword';
   static const String otpVerificationView = '/OtpVerificationView';
+  static const String resetPasswordView = '/ResetPasswordView';
 }

@@ -6,6 +6,9 @@ class ApiLink {
   // Auth
   static const String login = '$server/Auth/LoginMobile';
   static const String forgotPassword = '$server/Auth/ForgotPassword';
+  static const String sendCode = '$server/Auth/SendCode';
+  static const String resetPassword = '$server/Auth/ResetPassword';
+  static const String logout = '$server/Auth/Logout';
 
   static String changeResidentialNeighborhoodManager({
     required int neighborhoodId,
