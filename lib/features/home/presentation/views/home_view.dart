@@ -17,7 +17,7 @@ class HomeView extends ConsumerWidget {
           const HajjStatusCard(),
           SizedBox(height: 30.h),
           Text(
-            "مواقيت الصلاة",
+            "مواقيت الاذان",
             textAlign: TextAlign.start,
             style: TextStyle(
               fontSize: 12.sp,
