@@ -12,17 +12,18 @@ import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/core/utils/app_validator.dart';
 import 'package:yusr/features/auth/presentation/widgets/custom_back_button.dart';
 import 'package:yusr/features/auth/presentation/widgets/hgh.dart';
-import 'package:yusr/features/auth/providers/auth_controller.dart';
 import 'package:yusr/features/auth/providers/password_visibility_provider.dart';
+import 'package:yusr/core/common/providers/shared_preferences_service_provider%20.dart';
+import 'package:yusr/features/auth/providers/reset_password_controller_provider.dart';
 
-class ResetPassword extends ConsumerStatefulWidget {
-  const ResetPassword({super.key});
+class ResetPasswordView extends ConsumerStatefulWidget {
+  const ResetPasswordView({super.key});
 
   @override
-  ConsumerState<ResetPassword> createState() => _ResetPasswordState();
+  ConsumerState<ResetPasswordView> createState() => _ResetPasswordViewState();
 }
 
-class _ResetPasswordState extends ConsumerState<ResetPassword> {
+class _ResetPasswordViewState extends ConsumerState<ResetPasswordView> {
   final formKey = GlobalKey<FormState>();
   final passwordController = TextEditingController();
   final towpassWordController = TextEditingController();
@@ -38,8 +39,12 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
   @override
   Widget build(BuildContext context) {
     final isPasswordVisible = ref.watch(passwordVisibilityProvider);
+    final isPasswordTwoVisible = ref.watch(passwordTwoVisibilityProvider);
     final local = context.locale;
-    ref.listen<AsyncValue<void>>(authControllerProvider, (_, state) {
+    ref.listen<AsyncValue<void>>(resetPasswordControllerProvider, (
+      _,
+      state,
+    ) async {
       if (state.isLoading) {
         context.showLoadingDialog();
       } else {
@@ -47,10 +52,12 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
         if (state.hasError) {
           context.showErrorSnackBar(state.errorMessage);
         } else {
-          context.showSuccessSnackBar(
-            "تم إرسال رمز التحقق إلى بريدك الإلكتروني بنجاح",
-          );
-          Navigator.of(context).pushNamed(AppRoute.otpVerificationView);
+          context.showSuccessSnackBar("تم إعاده تعيين كلمة المرور بنجاح");
+          // Clear any saved reset email after successful password reset
+
+          await ref.read(sharedPreferencesServiceProvider).removeResetEmail();
+          await ref.read(sharedPreferencesServiceProvider).removeOtpCode();
+          Navigator.of(context).pushNamed(AppRoute.loginView);
         }
       }
     });
@@ -147,17 +154,21 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                       SizedBox(height: 20.h),
                       TextFormField(
                         controller: passwordController,
+                        autofocus: true,
                         keyboardType: TextInputType.visiblePassword,
                         validator: AppValidator.validateEmptyField,
                         obscureText: !isPasswordVisible,
-                        focusNode: passWordFocusNode,
                         textInputAction: TextInputAction.done,
+                        onFieldSubmitted: (_) => FocusScope.of(
+                          context,
+                        ).requestFocus(passWordFocusNode),
                         decoration: InputDecoration(
                           hintText: "**********",
                           prefixIcon: Icon(
                             Icons.lock_outline_rounded,
                             size: 12.sp,
                           ),
+
                           suffixIcon: IconButton(
                             onPressed: () {
                               ref
@@ -180,10 +191,12 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                       TextFormField(
                         controller: towpassWordController,
                         keyboardType: TextInputType.visiblePassword,
-                        validator: AppValidator.validateEmptyField,
-                        obscureText: !isPasswordVisible,
-                        focusNode: passWordFocusNode,
+                        validator: (value) {
+                          return null;
+                        },
+                        obscureText: !isPasswordTwoVisible,
                         textInputAction: TextInputAction.done,
+                        focusNode: passWordFocusNode,
                         decoration: InputDecoration(
                           hintText: "**********",
                           prefixIcon: Icon(
@@ -193,12 +206,14 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                           suffixIcon: IconButton(
                             onPressed: () {
                               ref
-                                      .read(passwordVisibilityProvider.notifier)
+                                      .read(
+                                        passwordTwoVisibilityProvider.notifier,
+                                      )
                                       .state =
-                                  !isPasswordVisible;
+                                  !isPasswordTwoVisible;
                             },
                             icon: Icon(
-                              isPasswordVisible
+                              isPasswordTwoVisible
                                   ? Icons.visibility_outlined
                                   : Icons.visibility_off_outlined,
                               size: 12.sp,
@@ -207,17 +222,25 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                         ),
                       ),
                       SizedBox(height: 30.h),
-
                       CustomBigButton(
                         text: 'إعادة التعيين',
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
-                            // FocusScope.of(context).unfocus();
-                            // await ref
-                            //     .read(authControllerProvider.notifier)
-                            //     .forgotPassword(
-                            //       identifirController.text.trim(),
-                            //     );
+                            if (passwordController.text.trim() !=
+                                towpassWordController.text.trim()) {
+                              context.showErrorSnackBar(
+                                "كلمتا المرور غير متطابقتين",
+                              );
+                            } else {
+                              FocusScope.of(context).unfocus();
+                              await ref
+                                  .read(
+                                    resetPasswordControllerProvider.notifier,
+                                  )
+                                  .resetPassword(
+                                    passwordController.text.trim(),
+                                  );
+                            }
                           }
                         },
                         backgroundColor: AppColor.golden,

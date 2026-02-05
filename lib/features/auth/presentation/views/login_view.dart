@@ -11,8 +11,9 @@ import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/core/utils/app_validator.dart';
 import 'package:yusr/features/auth/presentation/widgets/custom_back_button.dart';
 import 'package:yusr/features/auth/presentation/widgets/hgh.dart';
-import 'package:yusr/features/auth/providers/auth_controller.dart';
+import 'package:yusr/features/auth/providers/login_controller_provider.dart';
 import 'package:yusr/features/auth/providers/password_visibility_provider.dart';
+import 'package:yusr/features/home/providers/user_provider.dart';
 
 class LoginView extends ConsumerStatefulWidget {
   const LoginView({super.key});
@@ -38,7 +39,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
   Widget build(BuildContext context) {
     final local = context.locale;
     final isPasswordVisible = ref.watch(passwordVisibilityProvider);
-    ref.listen<AsyncValue<void>>(authControllerProvider, (_, state) {
+    ref.listen<AsyncValue<void>>(loginControllerProvider, (_, state) {
       if (state.isLoading) {
         context.showLoadingDialog();
       } else {
@@ -48,7 +49,10 @@ class _LoginViewState extends ConsumerState<LoginView> {
           print(state.errorMessage);
         } else {
           context.showSuccessSnackBar("تم تسجيل الدخول بنجاح");
-          Navigator.of(context).pushNamed(AppRoute.mainHomeView);
+          ref.invalidate(userProfileProvider);
+          Navigator.of(
+            context,
+          ).pushNamedAndRemoveUntil(AppRoute.mainHomeView, (route) => false);
         }
       }
     });
@@ -187,7 +191,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                       GestureDetector(
                         onTap: () => Navigator.of(
                           context,
-                        ).pushNamed(AppRoute.otpVerificationView),
+                        ).pushNamed(AppRoute.forgotPassword),
                         child: Text(
                           "نسيت كلمة المرور؟",
                           style: TextStyle(
@@ -207,7 +211,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                             FocusScope.of(context).unfocus();
 
                             await ref
-                                .read(authControllerProvider.notifier)
+                                .read(loginControllerProvider.notifier)
                                 .login(
                                   identifirController.text.trim(),
                                   passwordController.text.trim(),

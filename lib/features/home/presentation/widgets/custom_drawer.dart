@@ -1,66 +1,136 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:yusr/core/constants/app_color.dart';
+import 'package:yusr/core/constants/app_route.dart';
+import 'package:yusr/core/extensions/async_value_ui.dart';
+import 'package:yusr/core/extensions/context_extension.dart';
+import 'package:yusr/features/auth/data/models/login_model.dart';
+import 'package:yusr/features/auth/providers/logout_controller_provider.dart';
+import 'package:yusr/features/home/presentation/widgets/build_drawer_header.dart';
+import 'package:yusr/features/home/presentation/widgets/build_logout_button.dart';
+import 'package:yusr/features/home/presentation/widgets/build_menu_item.dart';
+import 'package:yusr/features/home/providers/user_provider.dart';
 
-// class CustomDrawer extends ConsumerWidget {
-//   const CustomDrawer({super.key});
+class CustomDrawer extends ConsumerWidget {
+  const CustomDrawer({super.key});
 
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     // final role = ref.watch(userRoleProvider); // نستمع للدور
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen<AsyncValue<void>>(logoutControllerProvider, (_, state) {
+      if (state.isLoading) {
+        context.showLoadingDialog();
+      } else {
+        context.closeLoadingDialog();
+        if (state.hasError) {
+          context.showErrorSnackBar(state.errorMessage);
+          print(state.errorMessage);
+        } else {
+          context.showSuccessSnackBar("تم تسجيل الخروج وإبطال التوكن بنجاح");
+          ref.invalidate(userProfileProvider);
+          Navigator.of(context).pushNamed(AppRoute.loginView);
+        }
+      }
+    });
 
-//     return Drawer(
-//       child: Column(
-//         children: [
-//           _buildHeader(ref), // الهيدر (صورة واسم)
-//           Expanded(
-//             child: ListView(
-//               children: _getMenuItemsForRole(role), // دالة تجلب العناصر حسب الدور
-//             ),
-//           ),
-//           _buildLogoutButton(ref),
-//         ],
-//       ),
-//     );
-//   }
+    final userState = ref.watch(userProfileProvider);
+    return Drawer(
+      backgroundColor: AppColor.baseFontColor,
+      child: userState.when(
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (err, stack) => Center(child: Text('Error: $err')),
+        data: (profile) {
+          return Column(
+            children: [
+              // 1. رأس القائمة (Header)
+              BuildDrawerHeader(profile: profile!),
 
-//   // هذه الدالة هي "المخ" الذي يقرر ماذا يظهر
-//   List<Widget> _getMenuItemsForRole(UserRole role) {
-//     switch (role) {
-//       case UserRole.pilgrim:
-//         return [
-//           _buildTile(Icons.info, "معلومات القروب"),
-//           _buildTile(Icons.book, "مناسك الحج"),
-//         ];
-//       case UserRole.supervisor:
-//         return [
-//           _buildTile(Icons.star, "كن قائد"),
-//           _buildTile(Icons.campaign, "الإعلانات"),
-//           _buildTile(Icons.group, "معلومات القروب"),
-//           _buildTile(Icons.book, "مناسك الحج"),
-//         ];
-//       case UserRole.manager:
-//         return [
-//            _buildTile(Icons.campaign, "الإعلانات"),
-//            _buildTile(Icons.location_on, "موقع استقرار الحملة"),
-//            _buildTile(Icons.book, "مناسك الحج"),
-//         ];
-//       case UserRole.guest:
-//       default:
-//         return [
-//            _buildTile(Icons.login, "تسجيل الدخول"),
-//         ];
-//     }
-//   }
+              // 2. خيارات القائمة بناءً على الدور
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: Column(
+                    children: _buildMenuItems(context, profile!.userRole),
+                  ),
+                ),
+              ),
 
-//   Widget _buildTile(IconData icon, String title) {
-//     return ListTile(
-//       leading: Icon(icon, color: Colors.amber), // لون الثيم الخاص بك
-//       title: Text(title, style: TextStyle(color: Colors.white)),
-//       onTap: () {},
-//     );
-//   }
-  
-//   // ... بقية الودجت للهيدر وزر الخروج
-//    Widget _buildHeader(WidgetRef ref) { /* ... */ return Container(); }
-//    Widget _buildLogoutButton(WidgetRef ref) { /* ... */ return Container(); }
-// }
+              // 3. زر تسجيل الخروج
+              BuildLogoutButton(context: context, ref: ref),
+              const SizedBox(height: 20),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  List<Widget> _buildMenuItems(BuildContext context, String role) {
+    switch (role.toLowerCase()) {
+      case 'مشرف':
+        return [
+          BuildMenuItem(
+            context: context,
+            title: 'كن قائد',
+            icon: Icons.workspace_premium_outlined,
+            onTap: () {},
+          ),
+          BuildMenuItem(
+            context: context,
+            title: 'الإعلانات',
+            icon: Icons.campaign_outlined,
+            onTap: () {},
+          ),
+          BuildMenuItem(
+            context: context,
+            title: 'معلومات الجروب',
+            icon: Icons.info_outline,
+            onTap: () {},
+          ),
+          BuildMenuItem(
+            context: context,
+            title: 'مناسك الحج',
+            icon: Icons.menu_book_outlined,
+            onTap: () {},
+          ),
+        ];
+      case 'مدير الحملة':
+        return [
+          BuildMenuItem(
+            context: context,
+            title: 'الإعلانات',
+            icon: Icons.campaign_outlined,
+            onTap: () {},
+          ),
+          BuildMenuItem(
+            context: context,
+            title: 'موقع استقرار الحملة',
+            icon: Icons.location_on_outlined,
+            onTap: () {},
+          ),
+          BuildMenuItem(
+            context: context,
+            title: 'مناسك الحج',
+            icon: Icons.menu_book_outlined,
+            onTap: () {},
+          ),
+        ];
+      case 'الحاج':
+      default:
+        return [
+          BuildMenuItem(
+            context: context,
+            title: 'معلومات الجروب',
+            icon: Icons.info_outline,
+            onTap: () {},
+          ),
+          BuildMenuItem(
+            context: context,
+            title: 'مناسك الحج',
+            icon: Icons.menu_book_outlined,
+            onTap: () {},
+          ),
+        ];
+    }
+  }
+}

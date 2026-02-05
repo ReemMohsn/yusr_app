@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:yusr/core/common/providers/shared_preferences_service_provider%20.dart';
 import 'package:yusr/core/common/widgets/widget.dart'; // CustomBigButton
 import 'package:yusr/core/constants/app_color.dart';
+import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/core/constants/app_size.dart';
+import 'package:yusr/core/constants/shared_preferences_keys.dart';
 import 'package:yusr/core/extensions/async_value_ui.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/features/auth/presentation/widgets/custom_back_button.dart';
 import 'package:yusr/features/auth/presentation/widgets/hgh.dart';
 import 'package:yusr/features/auth/presentation/widgets/otp_digit_field.dart';
-import 'package:yusr/features/auth/providers/auth_controller.dart';
+import 'package:yusr/features/auth/presentation/widgets/resend_timer_widget.dart';
+import 'package:yusr/features/auth/providers/forgot_password_controller_provider.dart';
+import 'package:yusr/features/auth/providers/otp_verification_controller_provider.dart';
+import 'package:yusr/features/auth/providers/resend_timer_controller_provider.dart';
 
 class OtpVerificationView extends ConsumerStatefulWidget {
   const OtpVerificationView({super.key});
@@ -34,11 +39,21 @@ class _OtpVerificationViewState extends ConsumerState<OtpVerificationView> {
     super.dispose();
   }
 
+  @override
+  void initState() {
+    super.initState();
+    // بدء المؤقت بمجرد فتح الصفحة
+    // نستخدم addPostFrameCallback لضمان أن الواجهة جاهزة
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(resendTimerControllerProvider.notifier).startTimer();
+    });
+  }
+
   String get _otpCode => _controllers.map((e) => e.text).join();
 
   @override
   Widget build(BuildContext context) {
-    ref.listen<AsyncValue<void>>(authControllerProvider, (_, state) {
+    ref.listen<AsyncValue<void>>(otpVerificationControllerProvider, (_, state) {
       if (state.isLoading) {
         context.showLoadingDialog();
       } else {
@@ -46,8 +61,10 @@ class _OtpVerificationViewState extends ConsumerState<OtpVerificationView> {
         if (state.hasError) {
           context.showErrorSnackBar(state.errorMessage);
         } else if (state.hasValue) {
-          context.showSuccessSnackBar("تم التحقق بنجاح");
-          // Navigator.pushNamed(context, AppRoute.resetPassword); // الانتقال للصفحة التالية
+          context.showSuccessSnackBar(
+            "تم التحقق من الرمز بنجاح، يمكنك الآن تعيين كلمة مرور جديدة",
+          );
+          Navigator.pushNamed(context, AppRoute.resetPasswordView);
         }
       }
     });
@@ -102,22 +119,20 @@ class _OtpVerificationViewState extends ConsumerState<OtpVerificationView> {
                 style: context.theme.textTheme.headlineMedium,
                 textAlign: TextAlign.center,
               ),
-
               SizedBox(height: 40.r),
-
               Container(
                 width: double.infinity,
                 padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 40.h),
                 decoration: BoxDecoration(
                   color: AppColor.withe,
                   border: Border.all(
-                    color: AppColor.inputFieldBoundaries, // لون الحدود
-                    width: 0.7, // حجم صغير جداً (يمكنك جعله 0.5 إذا أردته أنحف)
+                    color: AppColor.inputFieldBoundaries,
+                    width: 0.7,
                   ),
                   borderRadius: BorderRadius.circular(30.r),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.10), // 10% Opacity
+                      color: Colors.black.withOpacity(0.10),
                       offset: const Offset(0, 20), // Y = 20
                       blurRadius: 25, // Blur = 25
                       spreadRadius: -5, // Spread = -5
@@ -157,17 +172,43 @@ class _OtpVerificationViewState extends ConsumerState<OtpVerificationView> {
                         }),
                       ),
                     ),
-
                     SizedBox(height: 30.h),
+                    Center(
+                      child: ResendTimerWidget(
+                        onResend: () async {
+                          await ref
+                              .read(forgotPasswordControllerProvider.notifier)
+                              .sendCode(
+                                await ref
+                                        .read(sharedPreferencesServiceProvider)
+                                        .getString(
+                                          SharedPreferencesKeys.resetEmail,
+                                        ) ??
+                                    '',
+                              );
+                        },
+                      ),
+                    ),
+                    SizedBox(height: 12.h),
 
                     CustomBigButton(
                       text: 'التحقق من الرمز',
                       onPressed: () async {
-                        // if (_otpCode.length == 5) {
-                        //   await ref.read(authControllerProvider.notifier).verifyOtp(_otpCode);
-                        // } else {
-                        //   context.showErrorSnackBar("الرجاء إدخال الرمز كاملاً");
-                        // }
+                        if (_otpCode.length == 5) {
+                          await ref
+                              .read(sharedPreferencesServiceProvider)
+                              .setString(
+                                SharedPreferencesKeys.otpCode,
+                                _otpCode,
+                              );
+                          await ref
+                              .read(otpVerificationControllerProvider.notifier)
+                              .verifyOtp(_otpCode);
+                        } else {
+                          context.showErrorSnackBar(
+                            "الرجاء إدخال الرمز كاملاً",
+                          );
+                        }
                       },
                       backgroundColor: AppColor.golden,
                       textColor: AppColor.withe,
