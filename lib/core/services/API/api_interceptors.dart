@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
 
 import '../shared_preferences_service.dart';
+
 class AuthInterceptor extends Interceptor {
-  final SharedPreferencesService _prefsService; // متغير لاستقبال الخدمة
+  final SharedPreferencesService _prefsService;
 
   AuthInterceptor(this._prefsService);
 
@@ -23,8 +24,3 @@ class AuthInterceptor extends Interceptor {
     super.onRequest(options, handler);
   }
 }
-// مثال على بيانات تسجيل الدخول لسرعة وصول جميع المطورين إليها
-// {
-//   "email": "sys.smartneighborhood@gmail.com",
-//   "password": "Mub_12345"
-// }

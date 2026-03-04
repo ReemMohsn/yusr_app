@@ -9,6 +9,7 @@ import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/core/constants/app_size.dart';
 import 'package:yusr/core/extensions/async_value_ui.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
+import 'package:yusr/core/services/API/ApiResponse.dart';
 import 'package:yusr/core/utils/app_validator.dart';
 import 'package:yusr/features/auth/presentation/widgets/custom_back_button.dart';
 import 'package:yusr/features/auth/presentation/widgets/hgh.dart';
@@ -37,21 +38,24 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     final local = context.locale;
-    ref.listen<AsyncValue<void>>(forgotPasswordControllerProvider, (_, state) {
-      if (state.isLoading) {
-        context.showLoadingDialog();
-      } else {
-        context.closeLoadingDialog();
-        if (state.hasError) {
+    ref.listen<AsyncValue<ApiResponse<dynamic>?>>(
+      forgotPasswordControllerProvider,
+      (_, state) {
+        if (state.isLoading) {
+          context.showLoadingDialog();
+        } else if (state.hasError) {
+          context.closeLoadingDialog();
           context.showErrorSnackBar(state.errorMessage);
-        } else {
-          context.showSuccessSnackBar(
-            "تم إرسال رمز التحقق إلى بريدك الإلكتروني بنجاح",
-          );
+        } else if (state.hasValue && state.value != null) {
+          context.closeLoadingDialog();
+          // 🎉 هنا السحر! نجحت العملية والبيانات موجودة
+          // يمكنك عرض رسالة النجاح القادمة من الباك إند مباشرة!
+          context.showSuccessSnackBar(state.value!.message);
+          // الانتقال لشاشة إدخال الكود (OTP)
           Navigator.of(context).pushNamed(AppRoute.otpVerificationView);
         }
-      }
-    });
+      },
+    );
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -59,7 +63,7 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
         scrolledUnderElevation: 0,
         leadingWidth: 60.w,
         leading: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15.w),
+          padding: EdgeInsets.symmetric(horizontal: 10.w),
           child: const UnconstrainedBox(child: CustomBackButton()),
         ),
       ),
@@ -72,9 +76,9 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
             children: [
               SizedBox(height: 20.h),
               Container(
-                width: 80.w,
-                height: 80.w,
-                padding: EdgeInsets.all(22.w),
+                width: 96.w,
+                height: 96.w,
+                padding: EdgeInsets.all(25.w),
                 decoration: BoxDecoration(
                   color: AppColor.golden,
                   shape: BoxShape.circle,
@@ -97,41 +101,14 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
                   ),
                 ),
               ),
-
-              // Container(
-              //   width: 80.w,
-              //   height: 80.w,
-              //   padding: EdgeInsets.all(22.w),
-              //   decoration: BoxDecoration(
-              //     color: AppColor.golden,
-              //     shape: BoxShape.circle,
-              //     boxShadow: [
-              //       BoxShadow(
-              //         color: AppColor.darkBlack.withValues(alpha: 0.2),
-              //         offset: const Offset(0, 4),
-              //         blurRadius: 3,
-              //         spreadRadius: 1,
-              //       ),
-              //     ],
-              //   ),
-              //   child: SvgPicture.asset(
-              //     AppImage.lockIcon,
-              //     // width: 20.w,
-              //     // height: 20.h,
-              //     colorFilter: ColorFilter.mode(
-              //       AppColor.darkBlack,
-              //       BlendMode.srcIn,
-              //     ),
-              //   ),
-              // ),
               SizedBox(height: 30.h),
               Text(
-                "نسيت كلمة المرور؟",
+                local.forgotPassword,
                 style: context.theme.textTheme.headlineLarge,
               ),
               SizedBox(height: 20.h),
               Text(
-                "لا تقلق، يمكنك استعادة حسابك بسهولة. أدخل بريدك الإلكتروني وسنرسل لك رمز التحقق",
+                local.forgotPasswordDescription,
                 style: context.theme.textTheme.headlineMedium,
                 textAlign: TextAlign.center,
               ),
@@ -140,14 +117,14 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
 
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 40.h),
+                padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 40.h),
                 decoration: BoxDecoration(
                   color: AppColor.withe,
                   border: Border.all(
                     color: AppColor.inputFieldBoundaries, // لون الحدود
                     width: 0.7, // حجم صغير جداً (يمكنك جعله 0.5 إذا أردته أنحف)
                   ),
-                  borderRadius: BorderRadius.circular(30.r),
+                  borderRadius: BorderRadius.circular(24.r),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.10), // 10% Opacity
@@ -168,8 +145,8 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      CustomLable(context: context, text: "البريد الإلكتروني"),
-                      SizedBox(height: 20.h),
+                      CustomLable(context: context, text: local.emailLabel),
+                      SizedBox(height: 15.h),
                       TextFormField(
                         validator: AppValidator.validateEmptyField,
                         controller: identifirController,
@@ -182,21 +159,21 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
                           hintText: "example@email.com",
                           prefixIcon: Icon(
                             Icons.mail_outline_rounded,
-                            size: 12.sp,
+                            size: 20.sp,
                           ),
                         ),
                       ),
-                      SizedBox(height: 10.h),
+                      SizedBox(height: 14.h),
                       Text(
-                        "سيتم إرسال رابط الاستعادة إلى بريدك الإلكتروني",
+                        local.recoveryLinkNote,
                         style: TextStyle(
                           color: AppColor.lightFontColor,
-                          fontSize: 7.sp,
+                          fontSize: 12.sp,
                         ),
                       ),
                       SizedBox(height: 30.h),
                       CustomBigButton(
-                        text: 'إرسال رمز التحقق',
+                        text: local.sendVerificationCodeButton,
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
                             FocusScope.of(context).unfocus();

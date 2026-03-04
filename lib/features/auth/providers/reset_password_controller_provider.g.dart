@@ -13,7 +13,8 @@ part of 'reset_password_controller_provider.dart';
 const resetPasswordControllerProvider = ResetPasswordControllerProvider._();
 
 final class ResetPasswordControllerProvider
-    extends $AsyncNotifierProvider<ResetPasswordController, void> {
+    extends
+        $AsyncNotifierProvider<ResetPasswordController, ApiResponse<dynamic>?> {
   const ResetPasswordControllerProvider._()
     : super(
         from: null,
@@ -34,23 +35,29 @@ final class ResetPasswordControllerProvider
 }
 
 String _$resetPasswordControllerHash() =>
-    r'e2c3c620c604111e4449a0cba65c6ed71fc5ad99';
+    r'7e092d6fd816ae1f85c73cc84f8ae634db5cf408';
 
-abstract class _$ResetPasswordController extends $AsyncNotifier<void> {
-  FutureOr<void> build();
+abstract class _$ResetPasswordController
+    extends $AsyncNotifier<ApiResponse<dynamic>?> {
+  FutureOr<ApiResponse<dynamic>?> build();
   @$mustCallSuper
   @override
   void runBuild() {
-    build();
-    final ref = this.ref as $Ref<AsyncValue<void>, void>;
+    final created = build();
+    final ref =
+        this.ref
+            as $Ref<AsyncValue<ApiResponse<dynamic>?>, ApiResponse<dynamic>?>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<AsyncValue<void>, void>,
-              AsyncValue<void>,
+              AnyNotifier<
+                AsyncValue<ApiResponse<dynamic>?>,
+                ApiResponse<dynamic>?
+              >,
+              AsyncValue<ApiResponse<dynamic>?>,
               Object?,
               Object?
             >;
-    element.handleValue(ref, null);
+    element.handleValue(ref, created);
   }
 }

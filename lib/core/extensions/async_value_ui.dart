@@ -11,7 +11,6 @@ extension AsyncValueUI on AsyncValue {
     if (error is ServerException) {
       return (error as ServerException).errModel.errorMessage;
     }
-
     // 3. يرجع النص الافتراضي
     return error.toString();
   }

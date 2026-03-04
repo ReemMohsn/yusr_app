@@ -22,7 +22,7 @@ class CustomLable extends StatelessWidget {
           ),
         ),
         SizedBox(width: 4.w),
-        Text(text, style: context.theme.textTheme.bodyLarge),
+        Text(text, style: context.theme.textTheme.bodyMedium),
       ],
     );
   }

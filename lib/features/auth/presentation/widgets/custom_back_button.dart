@@ -15,8 +15,8 @@ class CustomBackButton extends StatelessWidget {
       onTap: () => Navigator.maybePop(context),
       customBorder: const CircleBorder(),
       child: Ink(
-        width: 30.w,
-        height: 30.w,
+        width: 39.w,
+        height: 39.w,
         decoration: BoxDecoration(
           color: AppColor.withe,
           shape: BoxShape.circle,
@@ -36,7 +36,7 @@ class CustomBackButton extends StatelessWidget {
           ],
         ),
         child: Center(
-          child: Icon(Icons.chevron_left, color: AppColor.golden, size: 20.sp),
+          child: Icon(Icons.chevron_left, color: AppColor.golden, size: 25.sp),
         ),
       ),
     );

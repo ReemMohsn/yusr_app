@@ -22,14 +22,14 @@ class InfoBox extends StatelessWidget {
         children: [
           Text(
             title,
-            style: TextStyle(color: AppColor.lightFontColor, fontSize: 8.sp),
+            style: TextStyle(color: AppColor.lightFontColor, fontSize: 12.sp),
           ),
           SizedBox(height: 4.h),
           Text(
             value,
             style: TextStyle(
               color: AppColor.golden,
-              fontSize: 12.sp,
+              fontSize: 18.sp,
               fontWeight: FontWeight.bold,
             ),
           ),

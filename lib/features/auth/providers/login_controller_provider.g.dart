@@ -13,7 +13,8 @@ part of 'login_controller_provider.dart';
 const loginControllerProvider = LoginControllerProvider._();
 
 final class LoginControllerProvider
-    extends $AsyncNotifierProvider<LoginController, void> {
+    extends
+        $AsyncNotifierProvider<LoginController, ApiResponse<ProfileModel>?> {
   const LoginControllerProvider._()
     : super(
         from: null,
@@ -33,23 +34,32 @@ final class LoginControllerProvider
   LoginController create() => LoginController();
 }
 
-String _$loginControllerHash() => r'7d6787a9e98ad0aa4bac95ac44b8516d1211366a';
+String _$loginControllerHash() => r'af48077aa349604979bfe85aff06ac5852aa6a20';
 
-abstract class _$LoginController extends $AsyncNotifier<void> {
-  FutureOr<void> build();
+abstract class _$LoginController
+    extends $AsyncNotifier<ApiResponse<ProfileModel>?> {
+  FutureOr<ApiResponse<ProfileModel>?> build();
   @$mustCallSuper
   @override
   void runBuild() {
-    build();
-    final ref = this.ref as $Ref<AsyncValue<void>, void>;
+    final created = build();
+    final ref =
+        this.ref
+            as $Ref<
+              AsyncValue<ApiResponse<ProfileModel>?>,
+              ApiResponse<ProfileModel>?
+            >;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<AsyncValue<void>, void>,
-              AsyncValue<void>,
+              AnyNotifier<
+                AsyncValue<ApiResponse<ProfileModel>?>,
+                ApiResponse<ProfileModel>?
+              >,
+              AsyncValue<ApiResponse<ProfileModel>?>,
               Object?,
               Object?
             >;
-    element.handleValue(ref, null);
+    element.handleValue(ref, created);
   }
 }

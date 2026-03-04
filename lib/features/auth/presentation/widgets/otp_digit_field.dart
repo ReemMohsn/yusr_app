@@ -11,6 +11,7 @@ class OtpDigitField extends StatelessWidget {
   final FocusNode? prevFocusNode;
 
   const OtpDigitField({
+    super.key,
     required this.controller,
     required this.focusNode,
     this.nextFocusNode,
@@ -20,8 +21,8 @@ class OtpDigitField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 30.w, // عرض ثابت ومناسب
-      height: 60.h, // ارتفاع ثابت
+      width: 56.w, // عرض ثابت ومناسب
+      height: 66.h, // ارتفاع ثابت
       child: KeyboardListener(
         focusNode: FocusNode(),
         onKeyEvent: (event) {
@@ -44,7 +45,7 @@ class OtpDigitField extends StatelessWidget {
             FilteringTextInputFormatter.digitsOnly,
           ],
           style: TextStyle(
-            fontSize: 12.sp,
+            fontSize: 14.sp,
             fontWeight: FontWeight.bold,
             color: AppColor.lightBlack,
           ),

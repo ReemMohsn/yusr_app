@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/constants/app_image.dart';
 import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/core/constants/app_size.dart';
+import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/features/auth/data/models/login_model.dart';
 import 'package:yusr/features/home/data/models/navigation_item_model.dart';
 import 'package:yusr/features/home/presentation/views/home_view.dart';
@@ -20,25 +22,26 @@ class MainHomeView extends ConsumerWidget {
     final userProfileState = ref.watch(userProfileProvider);
     final profile = userProfileState.asData?.value;
     final bool isLoggedIn = profile != null;
+    final locale = context.locale;
 
-    final List<NavigationItemModel> _itemsData = [
+    final List<NavigationItemModel> itemsData = [
       NavigationItemModel(
-        label: 'الرئيسية',
+        label: locale.home,
         page: const HomeView(),
         activeIconPath: AppImage.homeIcon,
       ),
       NavigationItemModel(
-        label: 'عداد المناسك',
+        label: locale.manasekCounter,
         page: const Placeholder(),
         activeIconPath: AppImage.timerIcon,
       ),
       NavigationItemModel(
-        label: 'المفتي الذكي',
+        label: locale.smartMufti,
         page: const Placeholder(),
         activeIconPath: AppImage.smartMoftiIcon,
       ),
       NavigationItemModel(
-        label: 'ارجعني',
+        label: locale.returnMe,
         page: const Placeholder(),
         activeIconPath: AppImage.arjeneeIcon,
       ),
@@ -51,19 +54,23 @@ class MainHomeView extends ConsumerWidget {
     return Scaffold(
       endDrawer: isLoggedIn ? const CustomDrawer() : null,
       appBar: AppBar(
-        leadingWidth: isLoggedIn ? 100 : 120,
+        leadingWidth: isLoggedIn ? 100 : 140,
         leading: isLoggedIn
-            ? _buildLoggedInLeading(profile!) // عرض البروفايل + الجرس
-            : TextButton(
-                // عرض زر تسجيل الدخول للزائر
-                onPressed: () {
-                  Navigator.pushNamed(context, AppRoute.loginView);
-                },
-                child: const Text(
-                  "تسجيل الدخول",
-                  style: TextStyle(
-                    color: AppColor.golden,
-                    fontWeight: FontWeight.bold,
+            ? _buildLoggedInLeading(profile) // عرض البروفايل + الجرس
+            : Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextButton(
+                  // عرض زر تسجيل الدخول للزائر
+                  onPressed: () {
+                    Navigator.pushNamed(context, AppRoute.loginView);
+                  },
+                  child: Text(
+                    locale.login,
+                    // style: TextStyle(
+                    //   color: AppColor.golden,
+                    //   fontWeight: FontWeight.bold,
+                    //   fontSize: 14,
+                    // ),
                   ),
                 ),
               ),
@@ -126,7 +133,7 @@ class MainHomeView extends ConsumerWidget {
         padding: EdgeInsets.all(AppSize.paddingOfPage),
         child: IndexedStack(
           index: currentIndex,
-          children: _itemsData.map((e) => e.page).toList(),
+          children: itemsData.map((e) => e.page).toList(),
         ),
       ),
       bottomNavigationBar: NavigationBar(
@@ -135,7 +142,7 @@ class MainHomeView extends ConsumerWidget {
         onDestinationSelected: (int newIndex) {
           currentIndexNotifier.setIndex(newIndex);
         },
-        destinations: _itemsData.map((item) {
+        destinations: itemsData.map((item) {
           return NavigationDestination(
             label: item.label,
             icon: Builder(

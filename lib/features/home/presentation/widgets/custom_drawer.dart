@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/core/extensions/async_value_ui.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
-import 'package:yusr/features/auth/data/models/login_model.dart';
 import 'package:yusr/features/auth/providers/logout_controller_provider.dart';
 import 'package:yusr/features/home/presentation/widgets/build_drawer_header.dart';
 import 'package:yusr/features/home/presentation/widgets/build_logout_button.dart';
@@ -17,6 +15,8 @@ class CustomDrawer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = context.locale;
+
     ref.listen<AsyncValue<void>>(logoutControllerProvider, (_, state) {
       if (state.isLoading) {
         context.showLoadingDialog();
@@ -26,7 +26,7 @@ class CustomDrawer extends ConsumerWidget {
           context.showErrorSnackBar(state.errorMessage);
           print(state.errorMessage);
         } else {
-          context.showSuccessSnackBar("تم تسجيل الخروج وإبطال التوكن بنجاح");
+          context.showSuccessSnackBar(locale.logoutSuccessMessage);
           ref.invalidate(userProfileProvider);
           Navigator.of(context).pushNamed(AppRoute.loginView);
         }
@@ -50,7 +50,7 @@ class CustomDrawer extends ConsumerWidget {
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: Column(
-                    children: _buildMenuItems(context, profile!.userRole),
+                    children: _buildMenuItems(context, profile.userRole),
                   ),
                 ),
               ),
@@ -66,30 +66,31 @@ class CustomDrawer extends ConsumerWidget {
   }
 
   List<Widget> _buildMenuItems(BuildContext context, String role) {
+    final locale = context.locale;
     switch (role.toLowerCase()) {
       case 'مشرف':
         return [
           BuildMenuItem(
             context: context,
-            title: 'كن قائد',
+            title: locale.becomeALeader,
             icon: Icons.workspace_premium_outlined,
             onTap: () {},
           ),
           BuildMenuItem(
             context: context,
-            title: 'الإعلانات',
+            title: locale.announcements,
             icon: Icons.campaign_outlined,
             onTap: () {},
           ),
           BuildMenuItem(
             context: context,
-            title: 'معلومات الجروب',
+            title: locale.groupInfo,
             icon: Icons.info_outline,
             onTap: () {},
           ),
           BuildMenuItem(
             context: context,
-            title: 'مناسك الحج',
+            title: locale.hajjRituals,
             icon: Icons.menu_book_outlined,
             onTap: () {},
           ),
@@ -98,39 +99,40 @@ class CustomDrawer extends ConsumerWidget {
         return [
           BuildMenuItem(
             context: context,
-            title: 'الإعلانات',
+            title: locale.announcements,
             icon: Icons.campaign_outlined,
             onTap: () {},
           ),
           BuildMenuItem(
             context: context,
-            title: 'موقع استقرار الحملة',
+            title: locale.campaignLocation,
             icon: Icons.location_on_outlined,
             onTap: () {},
           ),
           BuildMenuItem(
             context: context,
-            title: 'مناسك الحج',
+            title: locale.hajjRituals,
             icon: Icons.menu_book_outlined,
             onTap: () {},
           ),
         ];
       case 'الحاج':
-      default:
         return [
           BuildMenuItem(
             context: context,
-            title: 'معلومات الجروب',
+            title: locale.groupInfo,
             icon: Icons.info_outline,
             onTap: () {},
           ),
           BuildMenuItem(
             context: context,
-            title: 'مناسك الحج',
+            title: locale.hajjRituals,
             icon: Icons.menu_book_outlined,
             onTap: () {},
           ),
         ];
+      default:
+        return [];
     }
   }
 }
