@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/features/home/presentation/widgets/PreparationCard.dart';
 import 'package:yusr/features/home/presentation/widgets/campaign_location_card.dart';
 import 'package:yusr/features/home/presentation/widgets/hajj_status_card_widget.dart';
@@ -11,16 +12,18 @@ class HomeView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = context.locale;
     return SingleChildScrollView(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const HajjStatusCard(),
           SizedBox(height: 30.h),
           Text(
-            "مواقيت الاذان",
+            locale.prayerTimes,
             textAlign: TextAlign.start,
             style: TextStyle(
-              fontSize: 12.sp,
+              fontSize: 16.sp,
               fontWeight: FontWeight.bold,
               color: Colors.black87,
             ),
@@ -28,14 +31,13 @@ class HomeView extends ConsumerWidget {
           SizedBox(height: 20.h),
           const PrayerTimesWidget(),
           SizedBox(height: 60.h),
-
-          const PreparationCard(), // 👈 الكرت الجديد
+          const PreparationCard(),
           SizedBox(height: 30.h),
           Text(
-            "موقع استقرار الحملة",
+            locale.campaignLocation,
             textAlign: TextAlign.start,
             style: TextStyle(
-              fontSize: 12.sp,
+              fontSize: 16.sp,
               fontWeight: FontWeight.bold,
               color: Colors.black87,
             ),
@@ -47,8 +49,3 @@ class HomeView extends ConsumerWidget {
     );
   }
 }
-
-          // if (role == UserRole.guest)
-          // const RitualsPreparationCard(),
-          // else
-          // const CampaignLocationCard(), تظهر "لا يوجد" أو الموقع الفعلي حسب البيانات

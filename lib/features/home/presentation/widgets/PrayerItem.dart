@@ -19,19 +19,19 @@ class PrayerItem extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: 25.w,
-          height: 25.w,
+          width: 48.w,
+          height: 48.w,
           decoration: BoxDecoration(
             color: AppColor.backgroundColor,
             shape: BoxShape.circle,
           ),
-          child: Icon(icon, color: AppColor.golden, size: 14.sp),
+          child: Icon(icon, color: AppColor.golden, size: 18.sp),
         ),
         SizedBox(height: 12.h),
         Text(
           name,
           style: TextStyle(
-            fontSize: 8.sp,
+            fontSize: 12.sp,
             color: AppColor.lightFontColor,
             fontWeight: FontWeight.w500,
           ),
@@ -40,7 +40,7 @@ class PrayerItem extends StatelessWidget {
         Text(
           time,
           style: TextStyle(
-            fontSize: 8.sp,
+            fontSize: 14.sp,
             fontWeight: FontWeight.bold,
             color: AppColor.darkBlack,
           ),

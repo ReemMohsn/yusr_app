@@ -1,7 +1,7 @@
 class ApiLink {
   // فقط أمثله لروابط الثلاثة الأساسية نقدر نعدلهاً بعد ذلك بما يتوافق مع مشاريعنا
   // Base
-  static const String server = 'https://localhost:7122/api';
+  static const String server = 'http://yusrapp.runasp.net/api';
 
   // Auth
   static const String login = '$server/Auth/LoginMobile';

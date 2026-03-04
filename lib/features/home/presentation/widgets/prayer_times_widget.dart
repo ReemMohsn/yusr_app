@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:yusr/core/constants/app_color.dart';
+import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/features/home/presentation/widgets/PrayerItem.dart';
 
 class PrayerTimesWidget extends StatefulWidget {
@@ -35,12 +36,14 @@ class _PrayerTimesWidgetState extends State<PrayerTimesWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final locale = context.locale;
+
     return Container(
       padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 12.w),
       decoration: BoxDecoration(
         color: AppColor.withe,
         border: Border.all(color: AppColor.goldenWithOpacity),
-        borderRadius: BorderRadius.circular(40.r),
+        borderRadius: BorderRadius.circular(18.r),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.10),
@@ -60,27 +63,27 @@ class _PrayerTimesWidgetState extends State<PrayerTimesWidget> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           PrayerItem(
-            name: "الفجر",
+            name: locale.fajr,
             time: formatTime(prayerTimes.fajr),
             icon: Icons.nightlight_round,
           ),
           PrayerItem(
-            name: "الظهر",
+            name: locale.dhuhr,
             time: formatTime(prayerTimes.dhuhr),
             icon: Icons.wb_sunny_outlined,
           ), // يمكنك استبدالها بأيقونة SVG
           PrayerItem(
-            name: "العصر",
+            name: locale.asr,
             time: formatTime(prayerTimes.asr),
             icon: Icons.wb_sunny,
           ),
           PrayerItem(
-            name: "المغرب",
+            name: locale.maghrib,
             time: formatTime(prayerTimes.maghrib),
             icon: Icons.wb_twilight,
           ),
           PrayerItem(
-            name: "العشاء",
+            name: locale.isha,
             time: formatTime(prayerTimes.isha),
             icon: Icons.nights_stay,
           ),

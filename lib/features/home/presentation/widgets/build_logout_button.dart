@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/features/auth/providers/logout_controller_provider.dart';
 
 class BuildLogoutButton extends StatelessWidget {
@@ -14,6 +15,8 @@ class BuildLogoutButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locale = context.locale;
+
     return InkWell(
       onTap: () async {
         ref.read(logoutControllerProvider.notifier).logout();
@@ -26,11 +29,11 @@ class BuildLogoutButton extends StatelessWidget {
         color: const Color(0xFF2C2C2C),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
+          children: [
             Icon(Icons.logout, color: Colors.redAccent, size: 20),
             SizedBox(width: 10),
             Text(
-              "تسجيل الخروج",
+              locale.logout, // "تسجيل الخروج",
               style: TextStyle(
                 color: Colors.redAccent,
                 fontWeight: FontWeight.bold,

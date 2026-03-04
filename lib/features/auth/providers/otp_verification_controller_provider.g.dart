@@ -13,7 +13,11 @@ part of 'otp_verification_controller_provider.dart';
 const otpVerificationControllerProvider = OtpVerificationControllerProvider._();
 
 final class OtpVerificationControllerProvider
-    extends $AsyncNotifierProvider<OtpVerificationController, void> {
+    extends
+        $AsyncNotifierProvider<
+          OtpVerificationController,
+          ApiResponse<dynamic>?
+        > {
   const OtpVerificationControllerProvider._()
     : super(
         from: null,
@@ -34,23 +38,29 @@ final class OtpVerificationControllerProvider
 }
 
 String _$otpVerificationControllerHash() =>
-    r'053f65d33efdf39766ad67093635c8980e8e3f15';
+    r'184d2b2e167cea900138b61e25bdb80080733dd3';
 
-abstract class _$OtpVerificationController extends $AsyncNotifier<void> {
-  FutureOr<void> build();
+abstract class _$OtpVerificationController
+    extends $AsyncNotifier<ApiResponse<dynamic>?> {
+  FutureOr<ApiResponse<dynamic>?> build();
   @$mustCallSuper
   @override
   void runBuild() {
-    build();
-    final ref = this.ref as $Ref<AsyncValue<void>, void>;
+    final created = build();
+    final ref =
+        this.ref
+            as $Ref<AsyncValue<ApiResponse<dynamic>?>, ApiResponse<dynamic>?>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<AsyncValue<void>, void>,
-              AsyncValue<void>,
+              AnyNotifier<
+                AsyncValue<ApiResponse<dynamic>?>,
+                ApiResponse<dynamic>?
+              >,
+              AsyncValue<ApiResponse<dynamic>?>,
               Object?,
               Object?
             >;
-    element.handleValue(ref, null);
+    element.handleValue(ref, created);
   }
 }

@@ -9,6 +9,7 @@ import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/core/constants/app_size.dart';
 import 'package:yusr/core/extensions/async_value_ui.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
+import 'package:yusr/core/services/API/ApiResponse.dart';
 import 'package:yusr/core/utils/app_validator.dart';
 import 'package:yusr/features/auth/presentation/widgets/custom_back_button.dart';
 import 'package:yusr/features/auth/presentation/widgets/hgh.dart';
@@ -41,26 +42,50 @@ class _ResetPasswordViewState extends ConsumerState<ResetPasswordView> {
     final isPasswordVisible = ref.watch(passwordVisibilityProvider);
     final isPasswordTwoVisible = ref.watch(passwordTwoVisibilityProvider);
     final local = context.locale;
-    ref.listen<AsyncValue<void>>(resetPasswordControllerProvider, (
-      _,
-      state,
-    ) async {
-      if (state.isLoading) {
-        context.showLoadingDialog();
-      } else {
-        context.closeLoadingDialog();
-        if (state.hasError) {
+    ref.listen<AsyncValue<ApiResponse<dynamic>?>>(
+      resetPasswordControllerProvider,
+      (_, state) async {
+        if (state.isLoading) {
+          context.showLoadingDialog();
+        } else if (state.hasError) {
+          context.closeLoadingDialog();
           context.showErrorSnackBar(state.errorMessage);
-        } else {
-          context.showSuccessSnackBar("تم إعاده تعيين كلمة المرور بنجاح");
-          // Clear any saved reset email after successful password reset
-
+        } else if (state.hasValue && state.value != null) {
+          context.closeLoadingDialog();
+          // 🎉 هنا السحر! نجحت العملية والبيانات موجودة
+          context.showSuccessSnackBar(state.value!.message);
           await ref.read(sharedPreferencesServiceProvider).removeResetEmail();
           await ref.read(sharedPreferencesServiceProvider).removeOtpCode();
+
+          //  ref.invalidate(userProfileProvider);
+          // Navigator.of(
+          //   context,
+          // ).pushNamedAndRemoveUntil(AppRoute.loginView, (route) => false);
+
           Navigator.of(context).pushNamed(AppRoute.loginView);
         }
-      }
-    });
+      },
+    );
+    // ref.listen<AsyncValue<void>>(resetPasswordControllerProvider, (
+    //   _,
+    //   state,
+    // ) async {
+    //   if (state.isLoading) {
+    //     context.showLoadingDialog();
+    //   } else {
+    //     context.closeLoadingDialog();
+    //     if (state.hasError) {
+    //       context.showErrorSnackBar(state.errorMessage);
+    //     } else {
+    //       context.showSuccessSnackBar("تم إعاده تعيين كلمة المرور بنجاح");
+    //       // Clear any saved reset email after successful password reset
+
+    //       await ref.read(sharedPreferencesServiceProvider).removeResetEmail();
+    //       await ref.read(sharedPreferencesServiceProvider).removeOtpCode();
+    //       Navigator.of(context).pushNamed(AppRoute.loginView);
+    //     }
+    //   }
+    // });
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -68,7 +93,7 @@ class _ResetPasswordViewState extends ConsumerState<ResetPasswordView> {
         scrolledUnderElevation: 0,
         leadingWidth: 60.w,
         leading: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15.w),
+          padding: EdgeInsets.symmetric(horizontal: 10.w),
           child: const UnconstrainedBox(child: CustomBackButton()),
         ),
       ),
@@ -81,9 +106,9 @@ class _ResetPasswordViewState extends ConsumerState<ResetPasswordView> {
             children: [
               SizedBox(height: 20.h),
               Container(
-                width: 80.w,
-                height: 80.w,
-                padding: EdgeInsets.all(22.w),
+                width: 96.w,
+                height: 96.w,
+                padding: EdgeInsets.all(25.w),
                 decoration: BoxDecoration(
                   color: AppColor.golden,
                   shape: BoxShape.circle,
@@ -107,26 +132,26 @@ class _ResetPasswordViewState extends ConsumerState<ResetPasswordView> {
 
               SizedBox(height: 30.h),
               Text(
-                "تعيين كلمة مرور جديدة",
+                local.setNewPassword,
                 style: context.theme.textTheme.headlineLarge,
               ),
               SizedBox(height: 20.h),
               Text(
-                "يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمات المرور السابقة",
+                local.newPasswordDescription,
                 style: context.theme.textTheme.headlineMedium,
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 40.h),
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 40.h),
+                padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 40.h),
                 decoration: BoxDecoration(
                   color: AppColor.withe,
                   border: Border.all(
                     color: AppColor.inputFieldBoundaries,
                     width: 0.7,
                   ),
-                  borderRadius: BorderRadius.circular(30.r),
+                  borderRadius: BorderRadius.circular(24.r),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.10), // 10% Opacity
@@ -149,14 +174,14 @@ class _ResetPasswordViewState extends ConsumerState<ResetPasswordView> {
                     children: [
                       CustomLable(
                         context: context,
-                        text: "كلمة المرور الجديدة",
+                        text: local.newPasswordLabel,
                       ),
-                      SizedBox(height: 20.h),
+                      SizedBox(height: 15.h),
                       TextFormField(
                         controller: passwordController,
                         autofocus: true,
                         keyboardType: TextInputType.visiblePassword,
-                        validator: AppValidator.validateEmptyField,
+                        validator: AppValidator.validatePassword,
                         obscureText: !isPasswordVisible,
                         textInputAction: TextInputAction.done,
                         onFieldSubmitted: (_) => FocusScope.of(
@@ -166,7 +191,7 @@ class _ResetPasswordViewState extends ConsumerState<ResetPasswordView> {
                           hintText: "**********",
                           prefixIcon: Icon(
                             Icons.lock_outline_rounded,
-                            size: 12.sp,
+                            size: 20.sp,
                           ),
 
                           suffixIcon: IconButton(
@@ -180,20 +205,21 @@ class _ResetPasswordViewState extends ConsumerState<ResetPasswordView> {
                               isPasswordVisible
                                   ? Icons.visibility_outlined
                                   : Icons.visibility_off_outlined,
-                              size: 12.sp,
+                              size: 15.sp,
                             ),
                           ),
                         ),
                       ),
                       SizedBox(height: 25.h),
-                      CustomLable(context: context, text: "تأكييد كلمة المرور"),
-                      SizedBox(height: 20.h),
+                      CustomLable(
+                        context: context,
+                        text: local.confirmPasswordLabel,
+                      ),
+                      SizedBox(height: 15.h),
                       TextFormField(
                         controller: towpassWordController,
                         keyboardType: TextInputType.visiblePassword,
-                        validator: (value) {
-                          return null;
-                        },
+                        validator: AppValidator.validatePassword,
                         obscureText: !isPasswordTwoVisible,
                         textInputAction: TextInputAction.done,
                         focusNode: passWordFocusNode,
@@ -201,7 +227,7 @@ class _ResetPasswordViewState extends ConsumerState<ResetPasswordView> {
                           hintText: "**********",
                           prefixIcon: Icon(
                             Icons.lock_outline_rounded,
-                            size: 12.sp,
+                            size: 20.sp,
                           ),
                           suffixIcon: IconButton(
                             onPressed: () {
@@ -216,20 +242,20 @@ class _ResetPasswordViewState extends ConsumerState<ResetPasswordView> {
                               isPasswordTwoVisible
                                   ? Icons.visibility_outlined
                                   : Icons.visibility_off_outlined,
-                              size: 12.sp,
+                              size: 15.sp,
                             ),
                           ),
                         ),
                       ),
                       SizedBox(height: 30.h),
                       CustomBigButton(
-                        text: 'إعادة التعيين',
+                        text: local.resetButton,
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
                             if (passwordController.text.trim() !=
                                 towpassWordController.text.trim()) {
                               context.showErrorSnackBar(
-                                "كلمتا المرور غير متطابقتين",
+                                local.passwordsDoNotMatchError,
                               );
                             } else {
                               FocusScope.of(context).unfocus();

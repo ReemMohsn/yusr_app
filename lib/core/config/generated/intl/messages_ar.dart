@@ -22,7 +22,73 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "SocialAndFamily":
-            MessageLookupByLibrary.simpleMessage("الإحصائيات العائلية")
+        "accountVerification":
+            MessageLookupByLibrary.simpleMessage("التحقق من الحساب"),
+        "announcements": MessageLookupByLibrary.simpleMessage("الإعلانات"),
+        "appName": MessageLookupByLibrary.simpleMessage("يُسر"),
+        "appSlogan": MessageLookupByLibrary.simpleMessage("رفيق الحاج الذكي"),
+        "asr": MessageLookupByLibrary.simpleMessage("العصر"),
+        "becomeALeader": MessageLookupByLibrary.simpleMessage("كن قائد"),
+        "campaignLocation":
+            MessageLookupByLibrary.simpleMessage("موقع استقرار الحملة"),
+        "confirmPasswordLabel":
+            MessageLookupByLibrary.simpleMessage("تأكيد كلمة المرور"),
+        "dhuhr": MessageLookupByLibrary.simpleMessage("الظهر"),
+        "emailLabel": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
+        "emailOrPassport": MessageLookupByLibrary.simpleMessage(
+            "البريد الإلكتروني أو رقم الجواز"),
+        "enterRequiredData":
+            MessageLookupByLibrary.simpleMessage("أدخل البيانات المطلوبة"),
+        "enterVerificationCodeDescription":
+            MessageLookupByLibrary.simpleMessage(
+                "أدخل رمز التحقق المكون من 5 أرقام الذي تم إرساله إليك"),
+        "fajr": MessageLookupByLibrary.simpleMessage("الفجر"),
+        "forgotPassword":
+            MessageLookupByLibrary.simpleMessage("نسيت كلمة المرور؟"),
+        "forgotPasswordDescription": MessageLookupByLibrary.simpleMessage(
+            "لا تقلق، يمكنك استعادة حسابك بسهولة. أدخل بريدك الإلكتروني وسنرسل لك رمز التحقق"),
+        "groupInfo": MessageLookupByLibrary.simpleMessage("معلومات الجروب"),
+        "hajjRituals": MessageLookupByLibrary.simpleMessage("مناسك الحج"),
+        "hijriDate": MessageLookupByLibrary.simpleMessage("التاريخ الهجري"),
+        "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
+        "isha": MessageLookupByLibrary.simpleMessage("العشاء"),
+        "journeyOfFaith":
+            MessageLookupByLibrary.simpleMessage("رِحْلَةُ الإِيمَانِ"),
+        "labbayk": MessageLookupByLibrary.simpleMessage("لبيك اللهم لبيك"),
+        "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
+        "loginButton": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
+        "loginToViewCampaignLocation": MessageLookupByLibrary.simpleMessage(
+            "يرجى تسجيل الدخول لعرض موقع استقرار الحملة"),
+        "logout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
+        "logoutSuccessMessage": MessageLookupByLibrary.simpleMessage(
+            "تم تسجيل الخروج وإبطال التوكن بنجاح"),
+        "maghrib": MessageLookupByLibrary.simpleMessage("المغرب"),
+        "manasekCounter": MessageLookupByLibrary.simpleMessage("عداد المناسك"),
+        "newPasswordDescription": MessageLookupByLibrary.simpleMessage(
+            "يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمات المرور السابقة"),
+        "newPasswordLabel":
+            MessageLookupByLibrary.simpleMessage("كلمة المرور الجديدة"),
+        "notFound": MessageLookupByLibrary.simpleMessage("لا يوجد"),
+        "password": MessageLookupByLibrary.simpleMessage("كلمة المرور"),
+        "passwordsDoNotMatchError":
+            MessageLookupByLibrary.simpleMessage("كلمتا المرور غير متطابقتين"),
+        "prayerTimes": MessageLookupByLibrary.simpleMessage("مواقيت الصلاة"),
+        "recoveryLinkNote": MessageLookupByLibrary.simpleMessage(
+            "سيتم إرسال رابط الاستعادة إلى بريدك الإلكتروني"),
+        "resetButton": MessageLookupByLibrary.simpleMessage("إعادة التعيين"),
+        "returnMe": MessageLookupByLibrary.simpleMessage("ارجعني"),
+        "ritualsPreparation":
+            MessageLookupByLibrary.simpleMessage("تهيئة المناسك خطوة بخطوة"),
+        "ritualsPreparationDesc": MessageLookupByLibrary.simpleMessage(
+            "ابدأ رحلتك إلى الوجهات، وتعلم خطوات الحج والعمرة الصحيحة بتفاصيل مذهبة."),
+        "sendVerificationCodeButton":
+            MessageLookupByLibrary.simpleMessage("إرسال رمز التحقق"),
+        "setNewPassword":
+            MessageLookupByLibrary.simpleMessage("تعيين كلمة مرور جديدة"),
+        "smartMufti": MessageLookupByLibrary.simpleMessage("المفتي الذكي"),
+        "verificationCodeLabel":
+            MessageLookupByLibrary.simpleMessage("رمز التحقق"),
+        "verifyCodeButton":
+            MessageLookupByLibrary.simpleMessage("التحقق من الرمز")
       };
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:yusr/core/constants/app_route.dart';
+import 'package:yusr/core/services/shared_preferences_service.dart';
 import 'package:yusr/yusr_app.dart';
 
 void main() {
@@ -28,7 +29,7 @@ void main() {
   runApp(
     ProviderScope(
       child: DevicePreview(
-        enabled: true,
+        enabled: false,
         builder: (BuildContext context) {
           return YusrApp(appRouter: AppRouter(), initialRoute: initialRoute);
         },

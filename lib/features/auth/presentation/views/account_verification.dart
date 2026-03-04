@@ -9,6 +9,7 @@ import 'package:yusr/core/constants/app_size.dart';
 import 'package:yusr/core/constants/shared_preferences_keys.dart';
 import 'package:yusr/core/extensions/async_value_ui.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
+import 'package:yusr/core/services/API/ApiResponse.dart';
 import 'package:yusr/features/auth/presentation/widgets/custom_back_button.dart';
 import 'package:yusr/features/auth/presentation/widgets/hgh.dart';
 import 'package:yusr/features/auth/presentation/widgets/otp_digit_field.dart';
@@ -34,8 +35,12 @@ class _OtpVerificationViewState extends ConsumerState<OtpVerificationView> {
 
   @override
   void dispose() {
-    for (var c in _controllers) c.dispose();
-    for (var f in _focusNodes) f.dispose();
+    for (var c in _controllers) {
+      c.dispose();
+    }
+    for (var f in _focusNodes) {
+      f.dispose();
+    }
     super.dispose();
   }
 
@@ -53,21 +58,39 @@ class _OtpVerificationViewState extends ConsumerState<OtpVerificationView> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen<AsyncValue<void>>(otpVerificationControllerProvider, (_, state) {
-      if (state.isLoading) {
-        context.showLoadingDialog();
-      } else {
-        context.closeLoadingDialog();
-        if (state.hasError) {
+    final locale = context.locale;
+    ref.listen<AsyncValue<ApiResponse<dynamic>?>>(
+      otpVerificationControllerProvider,
+      (_, state) {
+        if (state.isLoading) {
+          context.showLoadingDialog();
+        } else if (state.hasError) {
+          context.closeLoadingDialog();
           context.showErrorSnackBar(state.errorMessage);
-        } else if (state.hasValue) {
-          context.showSuccessSnackBar(
-            "تم التحقق من الرمز بنجاح، يمكنك الآن تعيين كلمة مرور جديدة",
-          );
+        } else if (state.hasValue && state.value != null) {
+          context.closeLoadingDialog();
+          // 🎉 هنا السحر! نجحت العملية والبيانات موجودة
+          // يمكنك عرض رسالة النجاح القادمة من الباك إند مباشرة!
+          context.showSuccessSnackBar(state.value!.message);
           Navigator.pushNamed(context, AppRoute.resetPasswordView);
         }
-      }
-    });
+      },
+    );
+    // ref.listen<AsyncValue<void>>(otpVerificationControllerProvider, (_, state) {
+    //   if (state.isLoading) {
+    //     context.showLoadingDialog();
+    //   } else {
+    //     context.closeLoadingDialog();
+    //     if (state.hasError) {
+    //       context.showErrorSnackBar(state.errorMessage);
+    //     } else if (state.hasValue) {
+    //       context.showSuccessSnackBar(
+    //         "تم التحقق من الرمز بنجاح، يمكنك الآن تعيين كلمة مرور جديدة",
+    //       );
+    //       Navigator.pushNamed(context, AppRoute.resetPasswordView);
+    //     }
+    //   }
+    // });
 
     return Scaffold(
       appBar: AppBar(
@@ -75,7 +98,7 @@ class _OtpVerificationViewState extends ConsumerState<OtpVerificationView> {
         elevation: 0,
         leadingWidth: 60.w,
         leading: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15.w),
+          padding: EdgeInsets.symmetric(horizontal: 10.w),
           child: const UnconstrainedBox(child: CustomBackButton()),
         ),
       ),
@@ -87,9 +110,9 @@ class _OtpVerificationViewState extends ConsumerState<OtpVerificationView> {
               SizedBox(height: 20.h),
               // --- Header Icon ---
               Container(
-                width: 80.w,
-                height: 80.w,
-                padding: EdgeInsets.all(20.w),
+                width: 96.w,
+                height: 96.w,
+                padding: EdgeInsets.all(25.w),
                 decoration: BoxDecoration(
                   color: AppColor.golden,
                   shape: BoxShape.circle,
@@ -103,33 +126,33 @@ class _OtpVerificationViewState extends ConsumerState<OtpVerificationView> {
                 ),
                 child: Icon(
                   Icons.mail_outline_rounded,
-                  size: 35.sp,
+                  size: 45.sp,
                   color: AppColor.withe,
                 ),
               ),
 
               SizedBox(height: 30.h),
               Text(
-                "التحقق من الحساب",
+                locale.accountVerification,
                 style: context.theme.textTheme.headlineLarge,
               ),
               SizedBox(height: 20.h),
               Text(
-                "أدخل رمز التحقق المكون من 5 أرقام الذي تم إرساله إليك",
+                locale.enterVerificationCodeDescription,
                 style: context.theme.textTheme.headlineMedium,
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 40.r),
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 40.h),
+                padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 40.h),
                 decoration: BoxDecoration(
                   color: AppColor.withe,
                   border: Border.all(
                     color: AppColor.inputFieldBoundaries,
                     width: 0.7,
                   ),
-                  borderRadius: BorderRadius.circular(30.r),
+                  borderRadius: BorderRadius.circular(24.r),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.10),
@@ -148,9 +171,12 @@ class _OtpVerificationViewState extends ConsumerState<OtpVerificationView> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    CustomLable(context: context, text: "رمز التحقق"),
+                    CustomLable(
+                      context: context,
+                      text: locale.verificationCodeLabel,
+                    ),
 
-                    SizedBox(height: 20.h),
+                    SizedBox(height: 15.h),
 
                     // --- Custom OTP Fields Row ---
                     Directionality(
@@ -172,7 +198,7 @@ class _OtpVerificationViewState extends ConsumerState<OtpVerificationView> {
                         }),
                       ),
                     ),
-                    SizedBox(height: 30.h),
+                    SizedBox(height: 20.h),
                     Center(
                       child: ResendTimerWidget(
                         onResend: () async {
@@ -192,7 +218,7 @@ class _OtpVerificationViewState extends ConsumerState<OtpVerificationView> {
                     SizedBox(height: 12.h),
 
                     CustomBigButton(
-                      text: 'التحقق من الرمز',
+                      text: locale.verifyCodeButton,
                       onPressed: () async {
                         if (_otpCode.length == 5) {
                           await ref

@@ -18,17 +18,21 @@ class AppTheme {
     // text
     textTheme: TextTheme(
       headlineLarge: TextStyle(
-        fontSize: 16.sp,
+        fontSize: 32.sp,
         fontWeight: FontWeight.bold,
         color: AppColor.darkBlack,
       ),
-      headlineMedium: TextStyle(fontSize: 10.sp, color: AppColor.midlineColor),
+      headlineMedium: TextStyle(fontSize: 18.sp, color: AppColor.midlineColor),
       bodyLarge: TextStyle(
-        fontSize: 8.sp,
+        fontSize: 16.sp,
         fontWeight: FontWeight.bold,
         color: AppColor.baseFontColor,
       ),
-      // bodyMedium: TextStyle(fontSize: 7.sp, color: Colors.black87),
+      bodyMedium: TextStyle(
+        fontSize: 14.sp,
+        fontWeight: FontWeight.bold,
+        color: AppColor.baseFontColor,
+      ),
       // bodySmall: TextStyle(fontSize: 6.sp, color: Colors.black54),
     ),
 
@@ -57,10 +61,9 @@ class AppTheme {
     //     textStyle: TextStyle(fontSize: 8.sp, fontWeight: FontWeight.bold),
     //   ),
     // ),
-    
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        padding: EdgeInsets.all(7.w),
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 2.h),
         foregroundColor: AppColor.golden,
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -70,7 +73,8 @@ class AppTheme {
         ),
         textStyle: TextStyle(
           fontFamily: 'Cairo',
-          fontSize: 10.sp,
+          //  color: AppColor.golden,
+          fontSize: 14.sp,
           fontWeight: FontWeight.bold,
         ),
       ),
@@ -81,11 +85,11 @@ class AppTheme {
       filled: true,
       fillColor: AppColor.inputFieldColor,
       // المسافات الداخلية للحقل
-      contentPadding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 20.w),
+      contentPadding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 20.w),
       // تنسيق النص التلميحي (Hint)
       hintStyle: TextStyle(
         color: AppColor.lightFontColor,
-        fontSize: 8.sp,
+        fontSize: 12.sp,
         fontWeight: FontWeight.w400,
         fontFamily: 'Cairo',
       ),

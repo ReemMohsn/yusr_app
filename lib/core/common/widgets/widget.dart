@@ -26,13 +26,13 @@ class CustomBigButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(16.r),
         ),
         elevation: 0,
-        padding: const EdgeInsets.all(25),
+        padding: const EdgeInsets.all(22),
       ),
       child: Text(
         text,
         style: TextStyle(
           color: textColor, // استخدام اللون الممرر للنص
-          fontSize: 10.sp, // حجم الخط (يمكنك تعديله حسب الحاجة)
+          fontSize: 14.sp, // حجم الخط (يمكنك تعديله حسب الحاجة)
           fontWeight: FontWeight.bold,
         ),
       ),
