@@ -80,7 +80,8 @@ class CustomDrawer extends ConsumerWidget {
             context: context,
             title: locale.announcements,
             icon: Icons.campaign_outlined,
-            onTap: () {},
+            onTap: () =>
+                Navigator.of(context).pushNamed(AppRoute.announcementsView),
           ),
           BuildMenuItem(
             context: context,
@@ -101,7 +102,8 @@ class CustomDrawer extends ConsumerWidget {
             context: context,
             title: locale.announcements,
             icon: Icons.campaign_outlined,
-            onTap: () {},
+            onTap: () =>
+                Navigator.of(context).pushNamed(AppRoute.announcementsView),
           ),
           BuildMenuItem(
             context: context,

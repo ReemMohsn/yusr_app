@@ -23,29 +23,40 @@ class AppTheme {
         color: AppColor.darkBlack,
       ),
       headlineMedium: TextStyle(fontSize: 18.sp, color: AppColor.midlineColor),
-      bodyLarge: TextStyle(
+      headlineSmall: TextStyle(
         fontSize: 16.sp,
         fontWeight: FontWeight.bold,
         color: AppColor.baseFontColor,
+      ),
+      bodyLarge: TextStyle(
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w600,
+        color: AppColor.midlineColor,
       ),
       bodyMedium: TextStyle(
         fontSize: 14.sp,
         fontWeight: FontWeight.bold,
         color: AppColor.baseFontColor,
       ),
-      // bodySmall: TextStyle(fontSize: 6.sp, color: Colors.black54),
+      bodySmall: TextStyle(
+        fontSize: 14.sp,
+        fontWeight: FontWeight.w600,
+        color: AppColor.midlineColor,
+      ),
     ),
 
     // AppBar
     appBarTheme: AppBarTheme(
       backgroundColor: AppColor.darkBlack,
       elevation: 0,
-      centerTitle: false,
-      // titleTextStyle: TextStyle(
-      //   color: Colors.black,
-      //   fontSize: 20.sp,
-      //   fontWeight: FontWeight.bold,
-      // ),
+      centerTitle: true,
+      titleTextStyle: TextStyle(
+        color: AppColor.golden,
+        fontFamily: 'Cairo',
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w600,
+      ),
+      leadingWidth: 60.w,
       iconTheme: IconThemeData(color: Colors.black),
     ),
 
@@ -89,7 +100,7 @@ class AppTheme {
       // تنسيق النص التلميحي (Hint)
       hintStyle: TextStyle(
         color: AppColor.lightFontColor,
-        fontSize: 12.sp,
+        fontSize: 14.sp,
         fontWeight: FontWeight.w400,
         fontFamily: 'Cairo',
       ),
