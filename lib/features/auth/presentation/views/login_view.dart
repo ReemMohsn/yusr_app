@@ -199,6 +199,21 @@ class _LoginViewState extends ConsumerState<LoginView> {
                           obscureText: !isPasswordVisible,
                           focusNode: passWordFocusNode,
                           textInputAction: TextInputAction.done,
+                          onTapOutside: (event) =>
+                              FocusManager.instance.primaryFocus?.unfocus(),
+                          onFieldSubmitted: (_) async {
+                            if (formKey.currentState!.validate()) {
+                              FocusScope.of(
+                                context,
+                              ).unfocus(); // إخفاء الكيبورد
+                              await ref
+                                  .read(loginControllerProvider.notifier)
+                                  .login(
+                                    identifirController.text.trim(),
+                                    passwordController.text.trim(),
+                                  );
+                            }
+                          },
                           decoration: InputDecoration(
                             hintText: "**********",
                             prefixIcon: Icon(
@@ -218,7 +233,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                                 isPasswordVisible
                                     ? Icons.visibility_outlined
                                     : Icons.visibility_off_outlined,
-                                size: 12.sp,
+                                size: 20.sp,
                               ),
                             ),
                           ),
