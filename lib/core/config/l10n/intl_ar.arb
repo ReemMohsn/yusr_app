@@ -44,5 +44,15 @@
   "newPasswordLabel": "كلمة المرور الجديدة",
   "confirmPasswordLabel": "تأكيد كلمة المرور",
   "resetButton": "إعادة التعيين",
-  "passwordsDoNotMatchError": "كلمتا المرور غير متطابقتين"
+  "passwordsDoNotMatchError": "كلمتا المرور غير متطابقتين",
+  "announcementSearch": "'ابحث عن إعلان...",
+  "errorFetchingAnnouncements": "حدث خطأ أثناء جلب الإعلانات:",
+  "noAnnouncementsCurrently": "لا توجد إعلانات حالياً",
+  "addAnnouncement": "إضافة إعلان",
+  "announcementTitle": "عنوان الإعلان",
+  "enterAnnouncementTitle": "أدخل عنوان الإعلان...",
+  "announcementContent": "محتوى الإعلان",
+  "writeAnnouncementContentHere": "اكتب محتوى الإعلان هنا...",
+  "targetAudience": "الفئة المستهدفة",
+  "publishAnnouncement": "نشر الإعلان"
 }

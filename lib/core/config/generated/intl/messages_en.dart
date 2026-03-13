@@ -24,6 +24,14 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "accountVerification":
             MessageLookupByLibrary.simpleMessage("Account Verification"),
+        "addAnnouncement":
+            MessageLookupByLibrary.simpleMessage("Add Announcement"),
+        "announcementContent":
+            MessageLookupByLibrary.simpleMessage("Announcement Content"),
+        "announcementSearch":
+            MessageLookupByLibrary.simpleMessage("Search for announcement..."),
+        "announcementTitle":
+            MessageLookupByLibrary.simpleMessage("Announcement Title"),
         "announcements": MessageLookupByLibrary.simpleMessage("Announcements"),
         "appName": MessageLookupByLibrary.simpleMessage("Yusr"),
         "appSlogan":
@@ -39,11 +47,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "emailLabel": MessageLookupByLibrary.simpleMessage("Email"),
         "emailOrPassport":
             MessageLookupByLibrary.simpleMessage("Email or Passport Number"),
+        "enterAnnouncementTitle":
+            MessageLookupByLibrary.simpleMessage("Enter announcement title..."),
         "enterRequiredData":
             MessageLookupByLibrary.simpleMessage("Enter the required data"),
         "enterVerificationCodeDescription":
             MessageLookupByLibrary.simpleMessage(
                 "Enter the 5-digit verification code sent to you"),
+        "errorFetchingAnnouncements": MessageLookupByLibrary.simpleMessage(
+            "An error occurred while fetching announcements:"),
         "fajr": MessageLookupByLibrary.simpleMessage("Fajr"),
         "forgotPassword":
             MessageLookupByLibrary.simpleMessage("Forgot Password?"),
@@ -74,11 +86,15 @@ class MessageLookup extends MessageLookupByLibrary {
             "The new password must be different from previous passwords"),
         "newPasswordLabel":
             MessageLookupByLibrary.simpleMessage("New Password"),
+        "noAnnouncementsCurrently": MessageLookupByLibrary.simpleMessage(
+            "There are currently no announcements"),
         "notFound": MessageLookupByLibrary.simpleMessage("Not found"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "passwordsDoNotMatchError":
             MessageLookupByLibrary.simpleMessage("Passwords do not match"),
         "prayerTimes": MessageLookupByLibrary.simpleMessage("Prayer Times"),
+        "publishAnnouncement":
+            MessageLookupByLibrary.simpleMessage("Publish Announcement"),
         "recoveryLinkNote": MessageLookupByLibrary.simpleMessage(
             "A recovery link will be sent to your email."),
         "resetButton": MessageLookupByLibrary.simpleMessage("Reset"),
@@ -92,8 +108,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "setNewPassword":
             MessageLookupByLibrary.simpleMessage("Set a new password"),
         "smartMufti": MessageLookupByLibrary.simpleMessage("Smart Mufti"),
+        "targetAudience":
+            MessageLookupByLibrary.simpleMessage("Target Audience"),
         "verificationCodeLabel":
             MessageLookupByLibrary.simpleMessage("Verification Code"),
-        "verifyCodeButton": MessageLookupByLibrary.simpleMessage("Verify Code")
+        "verifyCodeButton": MessageLookupByLibrary.simpleMessage("Verify Code"),
+        "writeAnnouncementContentHere": MessageLookupByLibrary.simpleMessage(
+            "Write announcement content here...")
       };
 }

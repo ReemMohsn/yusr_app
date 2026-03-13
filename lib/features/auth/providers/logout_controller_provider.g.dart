@@ -33,7 +33,7 @@ final class LogoutControllerProvider
   LogoutController create() => LogoutController();
 }
 
-String _$logoutControllerHash() => r'3bd1f58a350928dca85f7bbcf9d04ac82e9cd98f';
+String _$logoutControllerHash() => r'65438d3c0487d4116ffe015b0d4f049b1137ada7';
 
 abstract class _$LogoutController extends $AsyncNotifier<void> {
   FutureOr<void> build();
