@@ -24,6 +24,13 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "accountVerification":
             MessageLookupByLibrary.simpleMessage("التحقق من الحساب"),
+        "addAnnouncement": MessageLookupByLibrary.simpleMessage("إضافة إعلان"),
+        "announcementContent":
+            MessageLookupByLibrary.simpleMessage("محتوى الإعلان"),
+        "announcementSearch":
+            MessageLookupByLibrary.simpleMessage("\'ابحث عن إعلان..."),
+        "announcementTitle":
+            MessageLookupByLibrary.simpleMessage("عنوان الإعلان"),
         "announcements": MessageLookupByLibrary.simpleMessage("الإعلانات"),
         "appName": MessageLookupByLibrary.simpleMessage("يُسر"),
         "appSlogan": MessageLookupByLibrary.simpleMessage("رفيق الحاج الذكي"),
@@ -37,11 +44,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "emailLabel": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
         "emailOrPassport": MessageLookupByLibrary.simpleMessage(
             "البريد الإلكتروني أو رقم الجواز"),
+        "enterAnnouncementTitle":
+            MessageLookupByLibrary.simpleMessage("أدخل عنوان الإعلان..."),
         "enterRequiredData":
             MessageLookupByLibrary.simpleMessage("أدخل البيانات المطلوبة"),
         "enterVerificationCodeDescription":
             MessageLookupByLibrary.simpleMessage(
                 "أدخل رمز التحقق المكون من 5 أرقام الذي تم إرساله إليك"),
+        "errorFetchingAnnouncements": MessageLookupByLibrary.simpleMessage(
+            "حدث خطأ أثناء جلب الإعلانات:"),
         "fajr": MessageLookupByLibrary.simpleMessage("الفجر"),
         "forgotPassword":
             MessageLookupByLibrary.simpleMessage("نسيت كلمة المرور؟"),
@@ -68,11 +79,15 @@ class MessageLookup extends MessageLookupByLibrary {
             "يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمات المرور السابقة"),
         "newPasswordLabel":
             MessageLookupByLibrary.simpleMessage("كلمة المرور الجديدة"),
+        "noAnnouncementsCurrently":
+            MessageLookupByLibrary.simpleMessage("لا توجد إعلانات حالياً"),
         "notFound": MessageLookupByLibrary.simpleMessage("لا يوجد"),
         "password": MessageLookupByLibrary.simpleMessage("كلمة المرور"),
         "passwordsDoNotMatchError":
             MessageLookupByLibrary.simpleMessage("كلمتا المرور غير متطابقتين"),
         "prayerTimes": MessageLookupByLibrary.simpleMessage("مواقيت الصلاة"),
+        "publishAnnouncement":
+            MessageLookupByLibrary.simpleMessage("نشر الإعلان"),
         "recoveryLinkNote": MessageLookupByLibrary.simpleMessage(
             "سيتم إرسال رابط الاستعادة إلى بريدك الإلكتروني"),
         "resetButton": MessageLookupByLibrary.simpleMessage("إعادة التعيين"),
@@ -86,9 +101,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "setNewPassword":
             MessageLookupByLibrary.simpleMessage("تعيين كلمة مرور جديدة"),
         "smartMufti": MessageLookupByLibrary.simpleMessage("المفتي الذكي"),
+        "targetAudience":
+            MessageLookupByLibrary.simpleMessage("الفئة المستهدفة"),
         "verificationCodeLabel":
             MessageLookupByLibrary.simpleMessage("رمز التحقق"),
         "verifyCodeButton":
-            MessageLookupByLibrary.simpleMessage("التحقق من الرمز")
+            MessageLookupByLibrary.simpleMessage("التحقق من الرمز"),
+        "writeAnnouncementContentHere":
+            MessageLookupByLibrary.simpleMessage("اكتب محتوى الإعلان هنا...")
       };
 }

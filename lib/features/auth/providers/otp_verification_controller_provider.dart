@@ -14,7 +14,7 @@ class OtpVerificationController extends _$OtpVerificationController {
   Future<void> verifyOtp(String code) async {
     state = const AsyncValue<ApiResponse<dynamic>?>.loading();
     state = await AsyncValue.guard<ApiResponse<dynamic>?>(() async {
-      return await ref.read(authRepositoryProvider).verifyOtp(code);
+      return await ref.watch(authRepositoryProvider).verifyOtp(code);
     });
   }
 }

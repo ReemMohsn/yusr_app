@@ -9,6 +9,11 @@ class ApiLink {
   static const String sendCode = '$server/Auth/SendCode';
   static const String resetPassword = '$server/Auth/ResetPassword';
   static const String logout = '$server/Auth/Logout';
+  static const String syncData = '$server/Announcements/SyncData';
+  static const String getAnnouncements =
+      '$server/Announcements/GetAnnouncements';
+  static const String createAnnouncement =
+      '$server/Announcements/CreateAndPublishAnnouncement';
 
   static String changeResidentialNeighborhoodManager({
     required int neighborhoodId,

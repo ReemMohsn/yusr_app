@@ -15,7 +15,7 @@ class ForgotPasswordController extends _$ForgotPasswordController {
   Future<void> sendCode(String email) async {
     state = const AsyncValue<ApiResponse<dynamic>?>.loading();
     state = await AsyncValue.guard<ApiResponse<dynamic>?>(() async {
-      return await ref.read(authRepositoryProvider).forgotPassword(email);
+      return await ref.watch(authRepositoryProvider).forgotPassword(email);
     });
   }
 }

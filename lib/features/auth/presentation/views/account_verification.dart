@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:yusr/core/common/providers/shared_preferences_service_provider%20.dart';
+import 'package:yusr/core/common/providers/shared_preferences_service_provider.dart';
 import 'package:yusr/core/common/widgets/widget.dart'; // CustomBigButton
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/constants/app_route.dart';

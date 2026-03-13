@@ -1,12 +1,15 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/core/services/shared_preferences_service.dart';
 import 'package:yusr/yusr_app.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
   // 1. تفعيل اللغة العربية لكل التطبيق
   HijriCalendar.setLocal('ar');
 
@@ -16,15 +19,13 @@ void main() {
   // HijriCalendar.hAdjustment = 0;
   WidgetsFlutterBinding.ensureInitialized();
 
-  String initialRoute;
-  // if (!SharedPreferencesService.isOnboardingCompleted) {
-  //   initialRoute = AppRoute.onBoarding;
-  // } else if (!SharedPreferencesService.isLoggedIn) {
-  //   initialRoute = AppRoute.login;
-  // } else {
-  //   initialRoute = AppRoute.mainHome;
-  // }
-  initialRoute = AppRoute.mainHomeView;
+  String initialRoute = AppRoute.mainHomeView;
+  // 3. تهيئة فايربيس باستخدام الملف المولد
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // await Firebase.initializeApp();
+
+  // طلب صلاحية الإشعارات
+  // await FirebaseMessaging.instance.requestPermission();
 
   runApp(
     ProviderScope(

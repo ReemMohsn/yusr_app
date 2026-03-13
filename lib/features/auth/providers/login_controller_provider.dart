@@ -16,7 +16,7 @@ class LoginController extends _$LoginController {
     state = const AsyncValue.loading();
 
     state = await AsyncValue.guard<ApiResponse<ProfileModel>?>(() async {
-      return await ref.read(authRepositoryProvider).login(email, password);
+      return await ref.watch(authRepositoryProvider).login(email, password);
     });
   }
 }

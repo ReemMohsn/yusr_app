@@ -43,7 +43,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
     final isPasswordVisible = ref.watch(passwordVisibilityProvider);
     ref.listen<AsyncValue<ApiResponse<ProfileModel>?>>(
       loginControllerProvider,
-      (previous, next) {
+      (previous, next) async {
         // 1. حالة التحميل
         if (next.isLoading) {
           context.showLoadingDialog();

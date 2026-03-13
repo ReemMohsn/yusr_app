@@ -37,6 +37,7 @@ class YusrApp extends ConsumerWidget {
         locale: const Locale('ar'),
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
+        navigatorKey: navigatorKey,
         onGenerateRoute: appRouter.generateRoute,
         initialRoute: initialRoute,
       ),

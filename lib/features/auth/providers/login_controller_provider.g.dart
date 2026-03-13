@@ -34,7 +34,7 @@ final class LoginControllerProvider
   LoginController create() => LoginController();
 }
 
-String _$loginControllerHash() => r'af48077aa349604979bfe85aff06ac5852aa6a20';
+String _$loginControllerHash() => r'3ea68db7edc4fbab1bedf578fbb272100d3da8d4';
 
 abstract class _$LoginController
     extends $AsyncNotifier<ApiResponse<ProfileModel>?> {

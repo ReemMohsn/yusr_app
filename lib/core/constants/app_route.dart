@@ -1,11 +1,14 @@
 // مثال فقط لروابط  التنقل لإتباع نفس الإسلوب
 import 'package:flutter/material.dart';
+import 'package:yusr/features/announcements_notifications/presentation/views/add_announcement_view.dart';
 import 'package:yusr/features/announcements_notifications/presentation/views/announcements_view.dart';
 import 'package:yusr/features/auth/presentation/views/account_verification.dart';
 import 'package:yusr/features/auth/presentation/views/forgot_password.dart';
 import 'package:yusr/features/auth/presentation/views/login_view.dart';
 import 'package:yusr/features/auth/presentation/views/reset_password_view.dart';
 import 'package:yusr/features/home/presentation/views/main_home_view.dart';
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class AppRouter {
   Route? generateRoute(RouteSettings settings) {
@@ -22,6 +25,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const ResetPasswordView());
       case AppRoute.announcementsView:
         return MaterialPageRoute(builder: (_) => const AnnouncementsView());
+      case AppRoute.addAnnouncementView:
+        return MaterialPageRoute(builder: (_) => const AddAnnouncementView());
       default:
         return null;
     }
@@ -35,4 +40,5 @@ class AppRoute {
   static const String otpVerificationView = '/OtpVerificationView';
   static const String resetPasswordView = '/ResetPasswordView';
   static const String announcementsView = '/AnnouncementsView';
+  static const String addAnnouncementView = '/AddAnnouncementView';
 }

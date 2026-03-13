@@ -519,6 +519,106 @@ class AppLocalizations {
       args: [],
     );
   }
+
+  /// `Search for announcement...`
+  String get announcementSearch {
+    return Intl.message(
+      'Search for announcement...',
+      name: 'announcementSearch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An error occurred while fetching announcements:`
+  String get errorFetchingAnnouncements {
+    return Intl.message(
+      'An error occurred while fetching announcements:',
+      name: 'errorFetchingAnnouncements',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There are currently no announcements`
+  String get noAnnouncementsCurrently {
+    return Intl.message(
+      'There are currently no announcements',
+      name: 'noAnnouncementsCurrently',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Announcement`
+  String get addAnnouncement {
+    return Intl.message(
+      'Add Announcement',
+      name: 'addAnnouncement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Announcement Title`
+  String get announcementTitle {
+    return Intl.message(
+      'Announcement Title',
+      name: 'announcementTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter announcement title...`
+  String get enterAnnouncementTitle {
+    return Intl.message(
+      'Enter announcement title...',
+      name: 'enterAnnouncementTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Announcement Content`
+  String get announcementContent {
+    return Intl.message(
+      'Announcement Content',
+      name: 'announcementContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Write announcement content here...`
+  String get writeAnnouncementContentHere {
+    return Intl.message(
+      'Write announcement content here...',
+      name: 'writeAnnouncementContentHere',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Target Audience`
+  String get targetAudience {
+    return Intl.message(
+      'Target Audience',
+      name: 'targetAudience',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Publish Announcement`
+  String get publishAnnouncement {
+    return Intl.message(
+      'Publish Announcement',
+      name: 'publishAnnouncement',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {
