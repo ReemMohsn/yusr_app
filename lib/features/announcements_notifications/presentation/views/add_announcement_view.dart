@@ -93,7 +93,6 @@ class _AddAnnouncementViewState extends ConsumerState<AddAnnouncementView> {
     });
 
     return Scaffold(
-      backgroundColor: AppColor.backgroundColor,
       appBar: AppBar(
         elevation: 0,
         title: Text(locale.addAnnouncement),
@@ -134,7 +133,6 @@ class _AddAnnouncementViewState extends ConsumerState<AddAnnouncementView> {
 
               SizedBox(height: 16.h),
 
-              // كرت الفئة المستهدفة مع تعديل الـ Dropdown ليعمل بالـ Enum
               InputCardWidget(
                 title: locale.targetAudience,
                 icon: Icons.people_outline,
@@ -172,7 +170,6 @@ class _AddAnnouncementViewState extends ConsumerState<AddAnnouncementView> {
               CustomBigButton(
                 text: locale.publishAnnouncement,
                 onPressed: () async {
-                  // 1. التأكد من صحة الحقول أولاً
                   if (_formKey.currentState!.validate()) {
                     // 2. إظهار نافذة التأكيد وانتظار النتيجة
                     final bool? shouldSubmit = await showDialog<bool>(
@@ -198,77 +195,6 @@ class _AddAnnouncementViewState extends ConsumerState<AddAnnouncementView> {
                   }
                 },
               ),
-              // SizedBox(
-              //   width: double.infinity,
-              //   height: 50.h,
-              //   child:
-
-              // ElevatedButton(
-              //   style: ElevatedButton.styleFrom(
-              //     backgroundColor: Colors.black,
-              //     shape: RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.circular(12.r),
-              //     ),
-              //   ),
-              //   onPressed: () async {
-              //     // 1. التأكد من صحة الحقول أولاً
-              //     if (_formKey.currentState!.validate()) {
-              //       // 2. إظهار نافذة التأكيد وانتظار النتيجة
-              //       final bool? shouldSubmit = await showDialog<bool>(
-              //         context: context,
-              //         builder: (context) => ConfirmAnnouncementDialog(
-              //           title: _titleController.text,
-              //           body: _bodyController.text,
-              //           targetAudience: _selectedAudience
-              //               .name, // سيتم تمرير اسم الفئة هنا
-              //         ),
-              //       );
-
-              //       // 3. إذا ضغط المستخدم على "تأكيد الإرسال" (shouldSubmit == true) نقوم بتنفيذ الـ Provider
-              //       if (shouldSubmit == true) {
-              //         ref
-              //             .read(addAnnouncementProvider.notifier)
-              //             .createAnnouncement(
-              //               title: _titleController.text,
-              //               body: _bodyController.text,
-              //               targetAudienceId: _selectedAudience.id,
-              //             );
-              //       }
-              //     }
-              //   },
-
-              //   // onPressed: () {
-              //   //   if (_formKey.currentState!.validate()) {
-              //   //     ref
-              //   //         .read(addAnnouncementProvider.notifier)
-              //   //         .createAnnouncement(
-              //   //           title: _titleController.text,
-              //   //           body: _bodyController.text,
-              //   //           targetAudienceId: _selectedAudience.id,
-              //   //         );
-              //   //   }
-              //   // },
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     children: [
-              //       Text(
-              //         'نشر الإعلان',
-              //         style: TextStyle(
-              //           color: AppColor.golden,
-              //           fontSize: 16.sp,
-              //           fontWeight: FontWeight.bold,
-              //         ),
-              //       ),
-              //       SizedBox(width: 8.w),
-              //       Icon(
-              //         Icons.send_outlined,
-              //         color: AppColor.golden,
-              //         size: 20.sp,
-              //       ),
-              //     ],
-              //   ),
-              // ),
-              // ),
             ],
           ),
         ),

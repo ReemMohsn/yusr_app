@@ -619,6 +619,156 @@ class AppLocalizations {
       args: [],
     );
   }
+
+  /// `No matching search results found`
+  String get noMatchingSearchResults {
+    return Intl.message(
+      'No matching search results found',
+      name: 'noMatchingSearchResults',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm Sending`
+  String get confirmSend {
+    return Intl.message(
+      'Confirm Sending',
+      name: 'confirmSend',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to send this announcement?`
+  String get confirmSendAnnouncementQuestion {
+    return Intl.message(
+      'Are you sure you want to send this announcement?',
+      name: 'confirmSendAnnouncementQuestion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Title`
+  String get titleLabel {
+    return Intl.message(
+      'Title',
+      name: 'titleLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Content`
+  String get contentLabel {
+    return Intl.message(
+      'Content',
+      name: 'contentLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Once sent, the announcement will reach all users in the selected category and this action cannot be undone.`
+  String get sendAnnouncementWarning {
+    return Intl.message(
+      'Once sent, the announcement will reach all users in the selected category and this action cannot be undone.',
+      name: 'sendAnnouncementWarning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm Deletion`
+  String get confirmDelete {
+    return Intl.message(
+      'Confirm Deletion',
+      name: 'confirmDelete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete this announcement? This action cannot be undone.`
+  String get confirmDeleteAnnouncementMessage {
+    return Intl.message(
+      'Are you sure you want to delete this announcement? This action cannot be undone.',
+      name: 'confirmDeleteAnnouncementMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete`
+  String get delete {
+    return Intl.message(
+      'Delete',
+      name: 'delete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Session expired or your data was modified. You are now browsing as a guest.`
+  String get sessionExpiredGuest {
+    return Intl.message(
+      'Session expired or your data was modified. You are now browsing as a guest.',
+      name: 'sessionExpiredGuest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connection failed, please check your internet connection.`
+  String get connectionFailed {
+    return Intl.message(
+      'Connection failed, please check your internet connection.',
+      name: 'connectionFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An unexpected error occurred, please try again.`
+  String get unexpectedError {
+    return Intl.message(
+      'An unexpected error occurred, please try again.',
+      name: 'unexpectedError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The server is currently not responding, please try again later.`
+  String get serverNotResponding {
+    return Intl.message(
+      'The server is currently not responding, please try again later.',
+      name: 'serverNotResponding',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A server error occurred, please try again later.`
+  String get serverError {
+    return Intl.message(
+      'A server error occurred, please try again later.',
+      name: 'serverError',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {
