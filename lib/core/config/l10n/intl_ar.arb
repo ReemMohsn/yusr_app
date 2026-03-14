@@ -54,5 +54,6 @@
   "announcementContent": "محتوى الإعلان",
   "writeAnnouncementContentHere": "اكتب محتوى الإعلان هنا...",
   "targetAudience": "الفئة المستهدفة",
-  "publishAnnouncement": "نشر الإعلان"
+  "publishAnnouncement": "نشر الإعلان",
+  "returnMe": "أرجعني"
 }

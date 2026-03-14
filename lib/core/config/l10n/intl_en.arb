@@ -55,7 +55,8 @@
   "announcementContent": "Announcement Content",
   "writeAnnouncementContentHere": "Write announcement content here...",
   "targetAudience": "Target Audience",
-  "publishAnnouncement": "Publish Announcement"
+  "publishAnnouncement": "Publish Announcement",
+  "returnMe": "Return Me"
 
 
 }
