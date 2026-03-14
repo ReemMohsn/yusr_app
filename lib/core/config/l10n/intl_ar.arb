@@ -54,5 +54,20 @@
   "announcementContent": "محتوى الإعلان",
   "writeAnnouncementContentHere": "اكتب محتوى الإعلان هنا...",
   "targetAudience": "الفئة المستهدفة",
-  "publishAnnouncement": "نشر الإعلان"
+  "publishAnnouncement": "نشر الإعلان",
+"noMatchingSearchResults": "لا توجد نتائج مطابقة للبحث" ,
+"confirmSend": "تأكيد الإرسال",
+  "confirmSendAnnouncementQuestion": "هل أنت متأكد من إرسال هذا الإعلان؟",
+  "titleLabel": "العنوان",
+  "contentLabel": "المحتوى",
+  "sendAnnouncementWarning": "بعد الإرسال، سيصل الإعلان إلى جميع المستخدمين في الفئة المحددة ولن يمكن التراجع عن هذا الإجراء.",
+  "cancel": "إلغاء",
+  "confirmDelete": "تأكيد الحذف",
+  "confirmDeleteAnnouncementMessage": "هل أنت متأكد من حذف هذا الإعلان؟ لا يمكن التراجع عن هذا الإجراء.",
+  "delete": "حذف",
+  "sessionExpiredGuest": "انتهت صلاحية الجلسة أو تم تعديل بياناتك. أنت الآن تتصفح كزائر.",
+  "connectionFailed": "فشل الاتصال، يرجى التحقق من اتصالك بالإنترنت",
+  "unexpectedError": "حدث خطأ غير متوقع، يرجى المحاولة مرة أخرى",
+  "serverNotResponding": "الخادم لا يستجيب حالياً، يرجى المحاولة لاحقاً",
+  "serverError": "حدث خطأ من الخادم، يرجى المحاولة لاحقاً"
 }

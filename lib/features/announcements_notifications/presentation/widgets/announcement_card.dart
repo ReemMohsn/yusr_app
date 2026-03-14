@@ -9,9 +9,10 @@ class AnnouncementCard extends StatelessWidget {
   final String description;
   final String time;
   final String tag;
-
+  final VoidCallback onDelete;
   const AnnouncementCard({
     super.key,
+    required this.onDelete,
     required this.date,
     required this.title,
     required this.description,
@@ -131,16 +132,32 @@ class AnnouncementCard extends StatelessWidget {
                   ),
                 ),
 
-                // التوقيت
+                // التوقيت + سلة الحذف
                 Row(
                   children: [
                     Icon(Icons.access_time, color: AppColor.golden, size: 18),
                     const SizedBox(width: 6),
                     Text(
                       time,
-                      textDirection:
-                          TextDirection.ltr, // للحفاظ على شكل الوقت (14:30)
+                      textDirection: TextDirection.ltr,
                       style: context.theme.textTheme.bodySmall,
+                    ),
+                    SizedBox(width: 12.w), // مسافة بين الوقت والسلة
+                    // 🌟 زر الحذف الذهبي
+                    GestureDetector(
+                      onTap: onDelete,
+                      child: Container(
+                        padding: EdgeInsets.all(4.w),
+                        decoration: BoxDecoration(
+                          color: AppColor.golden.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(6.r),
+                        ),
+                        child: Icon(
+                          Icons.delete_outline,
+                          color: AppColor.golden,
+                          size: 20.sp,
+                        ),
+                      ),
                     ),
                   ],
                 ),

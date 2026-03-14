@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yusr/core/constants/app_color.dart';
+import 'package:yusr/core/extensions/context_extension.dart';
 
 class ConfirmAnnouncementDialog extends StatelessWidget {
   final String title;
@@ -16,16 +17,16 @@ class ConfirmAnnouncementDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locale = context.locale;
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
-      backgroundColor: AppColor.withe, // أو Colors.white حسب تعريفك
+      backgroundColor: AppColor.withe,
       insetPadding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Container(
         padding: EdgeInsets.all(20.w),
         decoration: BoxDecoration(
           color: AppColor.withe,
           borderRadius: BorderRadius.circular(16.r),
-          // لإضافة الخط الذهبي الخفيف على الحواف إذا لزم الأمر
           border: Border.all(
             color: AppColor.golden.withValues(alpha: 0.3),
             width: 1,
@@ -44,7 +45,7 @@ class ConfirmAnnouncementDialog extends StatelessWidget {
                   ),
                   const Spacer(),
                   Text(
-                    'تأكيد الإرسال',
+                    locale.confirmSend,
                     style: TextStyle(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.bold,
@@ -58,7 +59,7 @@ class ConfirmAnnouncementDialog extends StatelessWidget {
 
               SizedBox(height: 16.h),
               Text(
-                'هل أنت متأكد من إرسال هذا الإعلان؟',
+                locale.confirmSendAnnouncementQuestion,
                 style: TextStyle(fontSize: 14.sp, color: Colors.grey.shade700),
               ),
               SizedBox(height: 16.h),
@@ -75,7 +76,7 @@ class ConfirmAnnouncementDialog extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'العنوان',
+                      locale.titleLabel,
                       style: TextStyle(fontSize: 12.sp, color: Colors.grey),
                     ),
                     SizedBox(height: 4.h),
@@ -90,7 +91,7 @@ class ConfirmAnnouncementDialog extends StatelessWidget {
                     SizedBox(height: 12.h),
 
                     Text(
-                      'المحتوى',
+                      locale.contentLabel,
                       style: TextStyle(fontSize: 12.sp, color: Colors.grey),
                     ),
                     SizedBox(height: 4.h),
@@ -102,7 +103,7 @@ class ConfirmAnnouncementDialog extends StatelessWidget {
                     SizedBox(height: 12.h),
 
                     Text(
-                      'الفئة المستهدفة',
+                      locale.targetAudience,
                       style: TextStyle(fontSize: 12.sp, color: Colors.grey),
                     ),
                     SizedBox(height: 4.h),
@@ -118,7 +119,7 @@ class ConfirmAnnouncementDialog extends StatelessWidget {
                       child: Text(
                         targetAudience,
                         style: TextStyle(
-                          color: Colors.white,
+                          color: AppColor.withe,
                           fontSize: 12.sp,
                           fontWeight: FontWeight.bold,
                         ),
@@ -151,7 +152,7 @@ class ConfirmAnnouncementDialog extends StatelessWidget {
                     SizedBox(width: 8.w),
                     Expanded(
                       child: Text(
-                        'بعد الإرسال، سيصل الإعلان إلى جميع المستخدمين في الفئة المحددة ولن يمكن التراجع عن هذا الإجراء.',
+                        locale.sendAnnouncementWarning,
                         style: TextStyle(
                           fontSize: 12.sp,
                           color: Colors.grey.shade700,
@@ -184,7 +185,7 @@ class ConfirmAnnouncementDialog extends StatelessWidget {
                         false,
                       ), // إرجاع false عند الإلغاء
                       child: Text(
-                        'إلغاء',
+                        locale.cancel,
                         style: TextStyle(
                           color: Colors.grey.shade700,
                           fontSize: 16.sp,
@@ -208,7 +209,7 @@ class ConfirmAnnouncementDialog extends StatelessWidget {
                         true,
                       ), // إرجاع true عند التأكيد
                       child: Text(
-                        'تأكيد الإرسال',
+                        locale.confirmSend,
                         style: TextStyle(
                           color: AppColor.golden,
                           fontSize: 16.sp,

@@ -1,6 +1,8 @@
 // مثال فقط لروابط  التنقل لإتباع نفس الإسلوب
 import 'package:flutter/material.dart';
+import 'package:yusr/features/announcements_notifications/data/models/announcement_model.dart';
 import 'package:yusr/features/announcements_notifications/presentation/views/add_announcement_view.dart';
+import 'package:yusr/features/announcements_notifications/presentation/views/announcement_details_view.dart';
 import 'package:yusr/features/announcements_notifications/presentation/views/announcements_view.dart';
 import 'package:yusr/features/auth/presentation/views/account_verification.dart';
 import 'package:yusr/features/auth/presentation/views/forgot_password.dart';
@@ -27,6 +29,11 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const AnnouncementsView());
       case AppRoute.addAnnouncementView:
         return MaterialPageRoute(builder: (_) => const AddAnnouncementView());
+      case AppRoute.announcementDetailsView:
+        final announcement = settings.arguments as AnnouncementModel;
+        return MaterialPageRoute(
+          builder: (_) => AnnouncementDetailsView(announcement: announcement),
+        );
       default:
         return null;
     }
@@ -41,4 +48,5 @@ class AppRoute {
   static const String resetPasswordView = '/ResetPasswordView';
   static const String announcementsView = '/AnnouncementsView';
   static const String addAnnouncementView = '/AddAnnouncementView';
+  static const String announcementDetailsView = '/AnnouncementDetailsView';
 }
