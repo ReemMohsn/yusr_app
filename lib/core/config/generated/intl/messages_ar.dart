@@ -38,8 +38,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "becomeALeader": MessageLookupByLibrary.simpleMessage("كن قائد"),
         "campaignLocation":
             MessageLookupByLibrary.simpleMessage("موقع استقرار الحملة"),
+        "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
+        "confirmDelete": MessageLookupByLibrary.simpleMessage("تأكيد الحذف"),
+        "confirmDeleteAnnouncementMessage": MessageLookupByLibrary.simpleMessage(
+            "هل أنت متأكد من حذف هذا الإعلان؟ لا يمكن التراجع عن هذا الإجراء."),
         "confirmPasswordLabel":
             MessageLookupByLibrary.simpleMessage("تأكيد كلمة المرور"),
+        "confirmSend": MessageLookupByLibrary.simpleMessage("تأكيد الإرسال"),
+        "confirmSendAnnouncementQuestion": MessageLookupByLibrary.simpleMessage(
+            "هل أنت متأكد من إرسال هذا الإعلان؟"),
+        "connectionFailed": MessageLookupByLibrary.simpleMessage(
+            "فشل الاتصال، يرجى التحقق من اتصالك بالإنترنت"),
+        "contentLabel": MessageLookupByLibrary.simpleMessage("المحتوى"),
+        "delete": MessageLookupByLibrary.simpleMessage("حذف"),
         "dhuhr": MessageLookupByLibrary.simpleMessage("الظهر"),
         "emailLabel": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
         "emailOrPassport": MessageLookupByLibrary.simpleMessage(
@@ -81,6 +92,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("كلمة المرور الجديدة"),
         "noAnnouncementsCurrently":
             MessageLookupByLibrary.simpleMessage("لا توجد إعلانات حالياً"),
+        "noMatchingSearchResults":
+            MessageLookupByLibrary.simpleMessage("لا توجد نتائج مطابقة للبحث"),
         "notFound": MessageLookupByLibrary.simpleMessage("لا يوجد"),
         "password": MessageLookupByLibrary.simpleMessage("كلمة المرور"),
         "passwordsDoNotMatchError":
@@ -96,13 +109,24 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تهيئة المناسك خطوة بخطوة"),
         "ritualsPreparationDesc": MessageLookupByLibrary.simpleMessage(
             "ابدأ رحلتك إلى الوجهات، وتعلم خطوات الحج والعمرة الصحيحة بتفاصيل مذهبة."),
+        "sendAnnouncementWarning": MessageLookupByLibrary.simpleMessage(
+            "بعد الإرسال، سيصل الإعلان إلى جميع المستخدمين في الفئة المحددة ولن يمكن التراجع عن هذا الإجراء."),
         "sendVerificationCodeButton":
             MessageLookupByLibrary.simpleMessage("إرسال رمز التحقق"),
+        "serverError": MessageLookupByLibrary.simpleMessage(
+            "حدث خطأ من الخادم، يرجى المحاولة لاحقاً"),
+        "serverNotResponding": MessageLookupByLibrary.simpleMessage(
+            "الخادم لا يستجيب حالياً، يرجى المحاولة لاحقاً"),
+        "sessionExpiredGuest": MessageLookupByLibrary.simpleMessage(
+            "انتهت صلاحية الجلسة أو تم تعديل بياناتك. أنت الآن تتصفح كزائر."),
         "setNewPassword":
             MessageLookupByLibrary.simpleMessage("تعيين كلمة مرور جديدة"),
         "smartMufti": MessageLookupByLibrary.simpleMessage("المفتي الذكي"),
         "targetAudience":
             MessageLookupByLibrary.simpleMessage("الفئة المستهدفة"),
+        "titleLabel": MessageLookupByLibrary.simpleMessage("العنوان"),
+        "unexpectedError": MessageLookupByLibrary.simpleMessage(
+            "حدث خطأ غير متوقع، يرجى المحاولة مرة أخرى"),
         "verificationCodeLabel":
             MessageLookupByLibrary.simpleMessage("رمز التحقق"),
         "verifyCodeButton":

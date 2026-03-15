@@ -23,7 +23,7 @@ class AddBotton extends StatelessWidget {
             ),
           ],
         ),
-        child: const Icon(Icons.add, color: Colors.white, size: 28),
+        child: Icon(Icons.add, color: Colors.white, size: 28.sp),
       ),
     );
   }

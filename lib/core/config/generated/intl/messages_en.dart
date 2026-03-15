@@ -41,8 +41,20 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Become a Leader"),
         "campaignLocation":
             MessageLookupByLibrary.simpleMessage("Campaign Location"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+        "confirmDelete":
+            MessageLookupByLibrary.simpleMessage("Confirm Deletion"),
+        "confirmDeleteAnnouncementMessage": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to delete this announcement? This action cannot be undone."),
         "confirmPasswordLabel":
             MessageLookupByLibrary.simpleMessage("Confirm Password"),
+        "confirmSend": MessageLookupByLibrary.simpleMessage("Confirm Sending"),
+        "confirmSendAnnouncementQuestion": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to send this announcement?"),
+        "connectionFailed": MessageLookupByLibrary.simpleMessage(
+            "Connection failed, please check your internet connection."),
+        "contentLabel": MessageLookupByLibrary.simpleMessage("Content"),
+        "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "dhuhr": MessageLookupByLibrary.simpleMessage("Dhuhr"),
         "emailLabel": MessageLookupByLibrary.simpleMessage("Email"),
         "emailOrPassport":
@@ -88,6 +100,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("New Password"),
         "noAnnouncementsCurrently": MessageLookupByLibrary.simpleMessage(
             "There are currently no announcements"),
+        "noMatchingSearchResults": MessageLookupByLibrary.simpleMessage(
+            "No matching search results found"),
         "notFound": MessageLookupByLibrary.simpleMessage("Not found"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "passwordsDoNotMatchError":
@@ -103,13 +117,24 @@ class MessageLookup extends MessageLookupByLibrary {
             "Step-by-step Rituals Preparation"),
         "ritualsPreparationDesc": MessageLookupByLibrary.simpleMessage(
             "Start your journey to the destinations, and learn the correct steps of Hajj and Umrah with amazing details."),
+        "sendAnnouncementWarning": MessageLookupByLibrary.simpleMessage(
+            "Once sent, the announcement will reach all users in the selected category and this action cannot be undone."),
         "sendVerificationCodeButton":
             MessageLookupByLibrary.simpleMessage("Send Verification Code"),
+        "serverError": MessageLookupByLibrary.simpleMessage(
+            "A server error occurred, please try again later."),
+        "serverNotResponding": MessageLookupByLibrary.simpleMessage(
+            "The server is currently not responding, please try again later."),
+        "sessionExpiredGuest": MessageLookupByLibrary.simpleMessage(
+            "Session expired or your data was modified. You are now browsing as a guest."),
         "setNewPassword":
             MessageLookupByLibrary.simpleMessage("Set a new password"),
         "smartMufti": MessageLookupByLibrary.simpleMessage("Smart Mufti"),
         "targetAudience":
             MessageLookupByLibrary.simpleMessage("Target Audience"),
+        "titleLabel": MessageLookupByLibrary.simpleMessage("Title"),
+        "unexpectedError": MessageLookupByLibrary.simpleMessage(
+            "An unexpected error occurred, please try again."),
         "verificationCodeLabel":
             MessageLookupByLibrary.simpleMessage("Verification Code"),
         "verifyCodeButton": MessageLookupByLibrary.simpleMessage("Verify Code"),
