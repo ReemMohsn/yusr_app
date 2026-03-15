@@ -23,12 +23,12 @@ class AnnouncementsRepository {
     return response;
   }
 
-  Future<ApiResponse<void>> createAnnouncement({
+  Future<ApiResponse<dynamic>> createAnnouncement({
     required String title,
     required String body,
     required int targetAudienceId,
   }) async {
-    final response = await repositoryRequestHandler<void>(
+    final response = await repositoryRequestHandler<dynamic>(
       () => apiService.post(
         ApiLink.createAnnouncement,
         data: {
@@ -37,6 +37,13 @@ class AnnouncementsRepository {
           "targetAudienceId": targetAudienceId,
         },
       ),
+    );
+    return response;
+  }
+
+  Future<ApiResponse<dynamic>> deleteAnnouncement(int id) async {
+    final response = await repositoryRequestHandler<dynamic>(
+      () => apiService.delete("${ApiLink.deleteAnnouncement}/$id"),
     );
     return response;
   }
