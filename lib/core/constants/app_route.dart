@@ -6,6 +6,8 @@ import 'package:yusr/features/auth/presentation/views/forgot_password.dart';
 import 'package:yusr/features/auth/presentation/views/login_view.dart';
 import 'package:yusr/features/auth/presentation/views/reset_password_view.dart';
 import 'package:yusr/features/home/presentation/views/main_home_view.dart';
+import 'package:yusr/features/return_to_compaign_location/presentation/views/return_me_map_view.dart';
+import 'package:yusr/features/return_to_compaign_location/presentation/views/return_me_view.dart';
 
 class AppRouter {
   Route? generateRoute(RouteSettings settings) {
@@ -22,6 +24,11 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const ResetPasswordView());
       case AppRoute.announcementsView:
         return MaterialPageRoute(builder: (_) => const AnnouncementsView());
+        // أضف هذه الحالات داخل switch في ملف AppRouter
+      case AppRoute.returnMeView: // سنضيف هذا المتغير في AppRoute بالأسفل
+        return MaterialPageRoute(builder: (_) => const ReturnMeView());
+      case AppRoute.returnMeMapView:
+        return MaterialPageRoute(builder: (_) => const ReturnMeMapView()); //
       default:
         return null;
     }
@@ -35,4 +42,6 @@ class AppRoute {
   static const String otpVerificationView = '/OtpVerificationView';
   static const String resetPasswordView = '/ResetPasswordView';
   static const String announcementsView = '/AnnouncementsView';
+  static const String returnMeView = '/ReturnMeView';
+  static const String returnMeMapView = '/ReturnMeMapView';
 }
