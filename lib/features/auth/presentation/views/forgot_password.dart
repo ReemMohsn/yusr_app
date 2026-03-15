@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:yusr/core/common/providers/shared_preferences_service_provider.dart';
 import 'package:yusr/core/common/widgets/widget.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/constants/app_image.dart';
@@ -13,7 +14,6 @@ import 'package:yusr/core/services/API/ApiResponse.dart';
 import 'package:yusr/core/utils/app_validator.dart';
 import 'package:yusr/features/auth/presentation/widgets/custom_back_button.dart';
 import 'package:yusr/features/auth/presentation/widgets/hgh.dart';
-import 'package:yusr/core/common/providers/shared_preferences_service_provider%20.dart';
 import 'package:yusr/core/constants/shared_preferences_keys.dart';
 import 'package:yusr/features/auth/providers/forgot_password_controller_provider.dart';
 

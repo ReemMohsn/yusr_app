@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:yusr/core/common/providers/api_service_provider.dart';
+import 'package:yusr/core/common/providers/shared_preferences_service_provider.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/constants/app_image.dart';
 import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/core/constants/app_size.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
+import 'package:yusr/core/services/notification_service.dart';
 import 'package:yusr/features/auth/data/models/login_model.dart';
 import 'package:yusr/features/home/data/models/navigation_item_model.dart';
 import 'package:yusr/features/home/presentation/views/home_view.dart';
@@ -14,11 +17,32 @@ import 'package:yusr/features/home/providers/current_index_controller.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:yusr/features/home/providers/user_provider.dart';
 
-class MainHomeView extends ConsumerWidget {
+class MainHomeView extends ConsumerStatefulWidget {
   const MainHomeView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<MainHomeView> createState() => _MainHomeViewState();
+}
+
+class _MainHomeViewState extends ConsumerState<MainHomeView> {
+  @override
+  void initState() {
+    super.initState();
+    // استدعاء التزامن مرة واحدة عند فتح التطبيق
+    _syncNotifications();
+  }
+
+  Future<void> _syncNotifications() async {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final prefsService = ref.read(sharedPreferencesServiceProvider);
+      final apiService = ref.read(apiServiceProvider);
+      final notificationService = NotificationService(prefsService, apiService);
+      notificationService.syncUserTopics();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final userProfileState = ref.watch(userProfileProvider);
     final profile = userProfileState.asData?.value;
     final bool isLoggedIn = profile != null;
@@ -46,11 +70,13 @@ class MainHomeView extends ConsumerWidget {
         activeIconPath: AppImage.arjeneeIcon,
       ),
     ];
+
     final int currentIndex = ref.watch(currentIndexControllerProvider);
 
     final currentIndexNotifier = ref.read(
       currentIndexControllerProvider.notifier,
     );
+
     return Scaffold(
       endDrawer: isLoggedIn ? const CustomDrawer() : null,
       appBar: AppBar(

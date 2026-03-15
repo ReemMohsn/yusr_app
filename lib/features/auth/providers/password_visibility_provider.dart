@@ -1,9 +1,28 @@
 import 'package:flutter_riverpod/legacy.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final passwordVisibilityProvider = StateProvider.autoDispose<bool>(
-  (ref) => false,
-);
+part 'password_visibility_provider.g.dart';
 
-final passwordTwoVisibilityProvider = StateProvider.autoDispose<bool>(
-  (ref) => false,
-);
+@riverpod
+class PasswordVisibility extends _$PasswordVisibility {
+  @override
+  bool build() {
+    return false;
+  }
+
+  void toggle() {
+    state = !state;
+  }
+}
+
+@riverpod
+class PasswordTwoVisibility extends _$PasswordTwoVisibility {
+  @override
+  bool build() {
+    return false;
+  }
+
+  void toggle() {
+    state = !state;
+  }
+}

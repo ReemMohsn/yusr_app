@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:yusr/core/common/providers/shared_preferences_service_provider%20.dart';
+import 'package:yusr/core/common/providers/shared_preferences_service_provider.dart';
 import 'package:yusr/core/constants/api_link.dart';
 import 'package:yusr/core/constants/shared_preferences_keys.dart';
 import 'package:yusr/core/services/API/ApiResponse.dart';
@@ -8,6 +8,7 @@ import 'package:yusr/core/services/API/api_service.dart';
 import 'package:yusr/core/services/API/repository_request_handler.dart';
 import 'package:yusr/core/services/errors/errormodel.dart';
 import 'package:yusr/core/services/errors/exception.dart';
+import 'package:yusr/core/services/notification_service.dart';
 import 'package:yusr/features/auth/data/models/login_model.dart';
 
 class AuthRepository {
@@ -40,7 +41,13 @@ class AuthRepository {
         ),
       );
     }
-    await ref.read(sharedPreferencesServiceProvider).setProfile(response.data!);
+    final sharedPrefs = ref.read(sharedPreferencesServiceProvider);
+    await sharedPrefs.setProfile(response.data!);
+
+    final notificationService = NotificationService(sharedPrefs, apiService);
+
+    // نستدعيها بدون await لكي تعمل في الخلفية ولا تؤخر انتقال المستخدم للشاشة الرئيسية
+    notificationService.syncUserTopics();
     return response;
   }
 
@@ -80,7 +87,7 @@ class AuthRepository {
           "newPassword": newPassword,
         },
       ),
-      fromJson: (data) => data['message'],
+      // fromJson: (data) => data['message'],
     );
     return response;
   }
@@ -94,9 +101,16 @@ class AuthRepository {
     } catch (e) {
       debugPrint("حدث خطأ في الخادم أثناء تسجيل الخروج: $e");
     } finally {
-      // 🔥 سيتم التنفيذ دائماً سواء نجح السيرفر في حذف التوكن من عنده أم لا
-      await ref.read(sharedPreferencesServiceProvider).removeProfile();
-      await ref.read(sharedPreferencesServiceProvider).clear();
+      // التعديل الجديد: مسح اشتراكات الإشعارات قبل حذف البروفايل
+      final sharedPrefs = ref.read(sharedPreferencesServiceProvider);
+      final notificationService = NotificationService(sharedPrefs, apiService);
+
+      // هنا نستخدم await لأننا نريد التأكد من حذف التوكن قبل مسح البيانات
+      await notificationService.clearTopicsOnLogout();
+
+      // 🔥 مسح البيانات محلياً
+      await sharedPrefs.removeProfile();
+      await sharedPrefs.clear();
     }
   }
 }

@@ -11,7 +11,7 @@ class LogoutController extends _$LogoutController {
   Future<void> logout() async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
-      await ref.read(authRepositoryProvider).logout();
+      await ref.watch(authRepositoryProvider).logout();
     });
   }
 }

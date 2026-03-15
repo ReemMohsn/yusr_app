@@ -17,7 +17,7 @@ class ResetPasswordController extends _$ResetPasswordController {
 
     // 2. وحدد النوع صراحة للـ guard هنا بإضافة <...>
     state = await AsyncValue.guard<ApiResponse<dynamic>?>(() async {
-      return await ref.read(authRepositoryProvider).resetPassword(newPassword);
+      return await ref.watch(authRepositoryProvider).resetPassword(newPassword);
     });
   }
 }

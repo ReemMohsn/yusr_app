@@ -38,7 +38,7 @@ final class OtpVerificationControllerProvider
 }
 
 String _$otpVerificationControllerHash() =>
-    r'184d2b2e167cea900138b61e25bdb80080733dd3';
+    r'53999e59f3007be1747dcfbaed59dce3a3979afe';
 
 abstract class _$OtpVerificationController
     extends $AsyncNotifier<ApiResponse<dynamic>?> {
