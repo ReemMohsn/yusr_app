@@ -11,6 +11,8 @@ import 'package:yusr/features/auth/presentation/views/reset_password_view.dart';
 import 'package:yusr/features/home/presentation/views/main_home_view.dart';
 import 'package:yusr/features/return_me/presentation/views/return_me_view.dart';
 
+import 'package:yusr/features/return_to_compaign_location/presentation/views/return_me_map_view.dart';
+import 'package:yusr/features/return_to_compaign_location/presentation/views/return_me_view.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class AppRouter {
@@ -38,6 +40,11 @@ class AppRouter {
           builder: (_) => AnnouncementDetailsView(announcement: announcement),
         );
 
+        // أضف هذه الحالات داخل switch في ملف AppRouter
+      case AppRoute.returnMeView: // سنضيف هذا المتغير في AppRoute بالأسفل
+        return MaterialPageRoute(builder: (_) => const ReturnMeView());
+      case AppRoute.returnMeMapView:
+        return MaterialPageRoute(builder: (_) => const ReturnMeMapView()); //
       default:
         return null;
     }
@@ -57,4 +64,6 @@ class AppRoute {
 
   static const String announcementDetailsView = '/AnnouncementDetailsView';
 
+  static const String returnMeView = '/ReturnMeView';
+  static const String returnMeMapView = '/ReturnMeMapView';
 }
