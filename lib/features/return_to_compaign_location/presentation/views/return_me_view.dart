@@ -61,20 +61,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/core/constants/app_size.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/features/return_to_compaign_location/presentation/widgets/return_me_button.dart';
+import 'package:yusr/features/return_to_compaign_location/providers/camp_location_provider.dart';
 
-class ReturnMeView extends ConsumerStatefulWidget {
+class ReturnMeView extends ConsumerWidget {
   const ReturnMeView({super.key});
 
   @override
-  ConsumerState<ReturnMeView> createState() => _ReturnMeViewState();
-}
-
-class _ReturnMeViewState extends ConsumerState<ReturnMeView> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final locale = context.locale;
 
     return Scaffold(
@@ -84,12 +81,21 @@ class _ReturnMeViewState extends ConsumerState<ReturnMeView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
+
           children: [
             ReturnMeButton(
               title: locale.returnMe,
-              onTap: () {
-                // سيتم إضافة منطق الـ GPS هنا لاحقاً
-                debugPrint("Return Me Pressed");
+              onTap: () async {
+                final campLocation = await ref.read(
+                  fetchCampLocationProvider.future,
+                );
+
+                if (campLocation != null && context.mounted) {
+                  Navigator.of(context).pushNamed(
+                    AppRoute.returnMeMapView,
+                    arguments: campLocation,
+                  );
+                }
               },
             ),
           ],
