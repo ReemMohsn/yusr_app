@@ -71,5 +71,6 @@
   "unexpectedError": "An unexpected error occurred, please try again.",
   "serverNotResponding": "The server is currently not responding, please try again later.",
   "serverError": "A server error occurred, please try again later.",
+  "secureArrivalMessage": "To ensure a safe journey and arrive peacefully, please login first"
   "instructions": "Hajj Types"
 }

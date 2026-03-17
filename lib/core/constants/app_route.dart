@@ -11,6 +11,8 @@ import 'package:yusr/features/auth/presentation/views/reset_password_view.dart';
 import 'package:yusr/features/home/presentation/views/main_home_view.dart';
 import 'package:yusr/features/instructions/presentation/views/instructions_view.dart';
 
+import 'package:yusr/features/return_to_compaign_location/presentation/views/return_me_map_view.dart';
+import 'package:yusr/features/return_to_compaign_location/presentation/views/return_me_view.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class AppRouter {
@@ -35,6 +37,10 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => AnnouncementDetailsView(announcement: announcement),
         );
+      case AppRoute.returnMeMapView:
+        return MaterialPageRoute(builder: (_) => const ReturnMeMapView()); 
+      case AppRoute.returnMeView:
+        return MaterialPageRoute(builder: (_) => const ReturnMeView());
       case AppRoute.instructionsView:
         return MaterialPageRoute(builder: (_) => const InstructionsView());
       default:
@@ -51,6 +57,11 @@ class AppRoute {
   static const String resetPasswordView = '/ResetPasswordView';
   static const String announcementsView = '/AnnouncementsView';
   static const String addAnnouncementView = '/AddAnnouncementView';
+
+
   static const String announcementDetailsView = '/AnnouncementDetailsView';
+
+  static const String returnMeMapView = '/ReturnMeMapView';
+  static const String returnMeView = '/ReturnMeView';
   static const String instructionsView = '/InstructionsView';
 }

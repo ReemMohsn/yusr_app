@@ -16,6 +16,7 @@ import 'package:yusr/features/home/presentation/widgets/custom_drawer.dart';
 import 'package:yusr/features/home/providers/current_index_controller.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:yusr/features/home/providers/user_provider.dart';
+import 'package:yusr/features/return_to_compaign_location/presentation/views/return_me_view.dart';
 
 class MainHomeView extends ConsumerStatefulWidget {
   const MainHomeView({super.key});
@@ -66,7 +67,7 @@ class _MainHomeViewState extends ConsumerState<MainHomeView> {
       ),
       NavigationItemModel(
         label: locale.returnMe,
-        page: const Placeholder(),
+        page: const ReturnMeView(), 
         activeIconPath: AppImage.arjeneeIcon,
       ),
     ];

@@ -91,7 +91,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "hajjRituals": MessageLookupByLibrary.simpleMessage("Hajj Rituals"),
     "hijriDate": MessageLookupByLibrary.simpleMessage("Hijri Date"),
     "home": MessageLookupByLibrary.simpleMessage("Home"),
-    "instructions": MessageLookupByLibrary.simpleMessage("Hajj Types"),
     "isha": MessageLookupByLibrary.simpleMessage("Isha"),
     "journeyOfFaith": MessageLookupByLibrary.simpleMessage("Journey of Faith"),
     "labbayk": MessageLookupByLibrary.simpleMessage(

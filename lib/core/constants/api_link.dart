@@ -17,6 +17,8 @@ class ApiLink {
       '$server/Announcements/CreateAndPublishAnnouncement';
   static const String deleteAnnouncement =
       '$server/Announcements/DeleteAnnouncement';
+  // Location
+  static const String getActiveLocation = '$server/Location/GetActiveLocation';
 
   static String changeResidentialNeighborhoodManager({
     required int neighborhoodId,

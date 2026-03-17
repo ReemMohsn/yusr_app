@@ -55,6 +55,7 @@
   "writeAnnouncementContentHere": "اكتب محتوى الإعلان هنا...",
   "targetAudience": "الفئة المستهدفة",
   "publishAnnouncement": "نشر الإعلان",
+
 "noMatchingSearchResults": "لا توجد نتائج مطابقة للبحث" ,
 "confirmSend": "تأكيد الإرسال",
   "confirmSendAnnouncementQuestion": "هل أنت متأكد من إرسال هذا الإعلان؟",
@@ -70,5 +71,6 @@
   "unexpectedError": "حدث خطأ غير متوقع، يرجى المحاولة مرة أخرى",
   "serverNotResponding": "الخادم لا يستجيب حالياً، يرجى المحاولة لاحقاً",
   "serverError": "حدث خطأ من الخادم، يرجى المحاولة لاحقاً",
+  "secureArrivalMessage": "لتنعم برحلة آمنة وتصل لمخيمك بسلام، يرجى تسجيل الدخول أولاً"
   "instructions": "أنواع الحج"
 }
