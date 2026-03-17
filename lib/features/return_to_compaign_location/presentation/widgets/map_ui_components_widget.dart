@@ -30,7 +30,8 @@ class MapHeaderCapsule extends StatelessWidget {
 // الزر السفلي لعرض المسافة
 class MapBottomActionBtn extends StatelessWidget {
   final String distance;
-  const MapBottomActionBtn({super.key, required this.distance});
+  final double bearing;
+  const MapBottomActionBtn({super.key, required this.distance,required this.bearing,});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +46,13 @@ class MapBottomActionBtn extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(distance, style: TextStyle(color: Colors.white, fontSize: 18.sp, fontWeight: FontWeight.bold)),
-          const Icon(Icons.navigation_rounded, color: Colors.white),
+          Transform.rotate(
+            angle: (bearing * (3.141592653589793 / 180)), // تحويل الدرجات لراديان
+            child: Icon(
+              Icons.navigation, // أو أيقونة السهم التي تستخدمها
+              color: Colors.white,
+              size: 24.sp,
+          )),
         ],
       ),
     );
