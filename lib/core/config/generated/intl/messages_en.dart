@@ -112,6 +112,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterLocationName": MessageLookupByLibrary.simpleMessage("Enter location name"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "updateLocationTitle": MessageLookupByLibrary.simpleMessage("Update Location"),
+
             "accountVerification": MessageLookupByLibrary.simpleMessage(
       "Account Verification",
     ),
@@ -258,7 +259,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "writeAnnouncementContentHere": MessageLookupByLibrary.simpleMessage(
       "Write announcement content here...",
     ),
-      };
+
+   };
 
   }
 

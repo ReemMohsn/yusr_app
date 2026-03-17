@@ -13,12 +13,12 @@ import 'package:yusr/features/auth/presentation/views/forgot_password.dart';
 import 'package:yusr/features/auth/presentation/views/login_view.dart';
 import 'package:yusr/features/auth/presentation/views/reset_password_view.dart';
 import 'package:yusr/features/home/presentation/views/main_home_view.dart';
-import 'package:yusr/features/return_to_compaign_location/presentation/views/return_me_map_view.dart';
-import 'package:yusr/features/return_to_compaign_location/presentation/views/return_me_view.dart';
 import 'package:yusr/features/campaign_location/presentation/views/campaign_location_view.dart';
 import 'package:yusr/features/campaign_location/presentation/views/add_location_view.dart';
 import 'package:yusr/features/campaign_location/presentation/views/edit_location_view.dart';
 import 'package:yusr/features/campaign_location/presentation/views/set_location_view.dart';
+import 'package:yusr/features/return_to_compaign_location/presentation/views/return_me_map_view.dart';
+import 'package:yusr/features/return_to_compaign_location/presentation/views/return_me_view.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -62,7 +62,7 @@ class AppRouter {
           builder: (_) => AnnouncementDetailsView(announcement: announcement),
         );
       case AppRoute.returnMeMapView:
-        return MaterialPageRoute(builder: (_) => const ReturnMeMapView()); 
+        return MaterialPageRoute(builder: (_) => const ReturnMeMapView());
       case AppRoute.returnMeView:
         return MaterialPageRoute(builder: (_) => const ReturnMeView());
       case AppRoute.campaignLocationView:

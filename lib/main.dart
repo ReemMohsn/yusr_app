@@ -30,7 +30,7 @@ void main() async {
   //   initialRoute = AppRoute.mainHome;
   // }
  initialRoute = AppRoute.mainHomeView;
-  String initialRoute = AppRoute.mainHomeView;
+  // String initialRoute = AppRoute.mainHomeView;
   // 3. تهيئة فايربيس باستخدام الملف المولد
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   // 2. تفعيل خدمة التقاط الضغطات والإشعارات التي برمجناها

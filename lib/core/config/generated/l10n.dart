@@ -756,19 +756,19 @@ class AppLocalizations {
   }
 
   /// `Cancel`
-  String get cancel {
-    return Intl.message('Cancel', name: 'cancel', desc: '', args: []);
-  }
+  // String get cancel {
+  //   return Intl.message('Cancel', name: 'cancel', desc: '', args: []);
+  // }
 
   /// `Confirm Deletion`
-  String get confirmDelete {
-    return Intl.message(
-      'Confirm Deletion',
-      name: 'confirmDelete',
-      desc: '',
-      args: [],
-    );
-  }
+  // String get confirmDelete {
+  //   return Intl.message(
+  //     'Confirm Deletion',
+  //     name: 'confirmDelete',
+  //     desc: '',
+  //     args: [],
+  //   );
+  // }
 
   /// `Are you sure you want to delete this announcement? This action cannot be undone.`
   String get confirmDeleteAnnouncementMessage {
@@ -780,10 +780,7 @@ class AppLocalizations {
     );
   }
 
-  /// `Delete`
-  String get delete {
-    return Intl.message('Delete', name: 'delete', desc: '', args: []);
-  }
+
 
   /// `Session expired or your data was modified. You are now browsing as a guest.`
   String get sessionExpiredGuest {

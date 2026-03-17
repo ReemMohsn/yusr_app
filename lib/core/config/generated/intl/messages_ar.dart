@@ -159,7 +159,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "writeAnnouncementContentHere": MessageLookupByLibrary.simpleMessage(
       "اكتب محتوى الإعلان هنا...",
     ),
-            "accountVerification":
+                "accountVerification":
             MessageLookupByLibrary.simpleMessage("التحقق من الحساب"),
         "announcements": MessageLookupByLibrary.simpleMessage("الإعلانات"),
         "appName": MessageLookupByLibrary.simpleMessage("يُسر"),
@@ -241,6 +241,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "locationName": MessageLookupByLibrary.simpleMessage("اسم الموقع"),
         "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
         "updateLocationTitle": MessageLookupByLibrary.simpleMessage("تعديل موقع"),
+
   };
 
  }
