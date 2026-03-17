@@ -56,3 +56,6 @@ linux/flutter/generated_plugin_registrant.cc
 
 # Android specific
 local.properties
+
+# FVM Version Cache
+.fvm/

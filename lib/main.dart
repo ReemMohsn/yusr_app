@@ -1,3 +1,4 @@
+
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -20,6 +21,15 @@ void main() async {
   // HijriCalendar.hAdjustment = 0;
   WidgetsFlutterBinding.ensureInitialized();
 
+  String initialRoute;
+  // if (!SharedPreferencesService.isOnboardingCompleted) {
+  //   initialRoute = AppRoute.onBoarding;
+  // } else if (!SharedPreferencesService.isLoggedIn) {
+  //   initialRoute = AppRoute.login;
+  // } else {
+  //   initialRoute = AppRoute.mainHome;
+  // }
+ initialRoute = AppRoute.mainHomeView;
   String initialRoute = AppRoute.mainHomeView;
   // 3. تهيئة فايربيس باستخدام الملف المولد
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -38,6 +48,7 @@ void main() async {
           return YusrApp(appRouter: AppRouter(), initialRoute: initialRoute);
         },
       ),
+
     ),
   );
 }
