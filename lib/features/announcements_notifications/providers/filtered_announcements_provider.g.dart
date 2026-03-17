@@ -10,7 +10,7 @@ part of 'filtered_announcements_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(FilteredAnnouncements)
-const filteredAnnouncementsProvider = FilteredAnnouncementsProvider._();
+final filteredAnnouncementsProvider = FilteredAnnouncementsProvider._();
 
 final class FilteredAnnouncementsProvider
     extends
@@ -18,7 +18,7 @@ final class FilteredAnnouncementsProvider
           FilteredAnnouncements,
           AsyncValue<List<AnnouncementModel>>
         > {
-  const FilteredAnnouncementsProvider._()
+  FilteredAnnouncementsProvider._()
     : super(
         from: null,
         argument: null,
@@ -56,7 +56,6 @@ abstract class _$FilteredAnnouncements
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref =
         this.ref
             as $Ref<
@@ -74,6 +73,6 @@ abstract class _$FilteredAnnouncements
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }

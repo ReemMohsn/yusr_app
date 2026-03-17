@@ -10,11 +10,11 @@ part of 'selected_audience_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(SelectedAudience)
-const selectedAudienceProvider = SelectedAudienceProvider._();
+final selectedAudienceProvider = SelectedAudienceProvider._();
 
 final class SelectedAudienceProvider
     extends $NotifierProvider<SelectedAudience, TargetAudience> {
-  const SelectedAudienceProvider._()
+  SelectedAudienceProvider._()
     : super(
         from: null,
         argument: null,
@@ -48,7 +48,6 @@ abstract class _$SelectedAudience extends $Notifier<TargetAudience> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref = this.ref as $Ref<TargetAudience, TargetAudience>;
     final element =
         ref.element
@@ -58,6 +57,6 @@ abstract class _$SelectedAudience extends $Notifier<TargetAudience> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }

@@ -10,7 +10,7 @@ part of 'announcements_repository_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(announcementsRepository)
-const announcementsRepositoryProvider = AnnouncementsRepositoryProvider._();
+final announcementsRepositoryProvider = AnnouncementsRepositoryProvider._();
 
 final class AnnouncementsRepositoryProvider
     extends
@@ -20,7 +20,7 @@ final class AnnouncementsRepositoryProvider
           AnnouncementsRepository
         >
     with $Provider<AnnouncementsRepository> {
-  const AnnouncementsRepositoryProvider._()
+  AnnouncementsRepositoryProvider._()
     : super(
         from: null,
         argument: null,

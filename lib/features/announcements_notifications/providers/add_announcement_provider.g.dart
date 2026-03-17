@@ -10,12 +10,12 @@ part of 'add_announcement_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(AddAnnouncementNotifier)
-const addAnnouncementProvider = AddAnnouncementNotifierProvider._();
+final addAnnouncementProvider = AddAnnouncementNotifierProvider._();
 
 final class AddAnnouncementNotifierProvider
     extends
         $AsyncNotifierProvider<AddAnnouncementNotifier, ApiResponse<dynamic>?> {
-  const AddAnnouncementNotifierProvider._()
+  AddAnnouncementNotifierProvider._()
     : super(
         from: null,
         argument: null,
@@ -43,7 +43,6 @@ abstract class _$AddAnnouncementNotifier
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref =
         this.ref
             as $Ref<AsyncValue<ApiResponse<dynamic>?>, ApiResponse<dynamic>?>;
@@ -58,6 +57,6 @@ abstract class _$AddAnnouncementNotifier
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }

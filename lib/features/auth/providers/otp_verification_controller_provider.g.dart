@@ -10,7 +10,7 @@ part of 'otp_verification_controller_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(OtpVerificationController)
-const otpVerificationControllerProvider = OtpVerificationControllerProvider._();
+final otpVerificationControllerProvider = OtpVerificationControllerProvider._();
 
 final class OtpVerificationControllerProvider
     extends
@@ -18,7 +18,7 @@ final class OtpVerificationControllerProvider
           OtpVerificationController,
           ApiResponse<dynamic>?
         > {
-  const OtpVerificationControllerProvider._()
+  OtpVerificationControllerProvider._()
     : super(
         from: null,
         argument: null,
@@ -46,7 +46,6 @@ abstract class _$OtpVerificationController
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref =
         this.ref
             as $Ref<AsyncValue<ApiResponse<dynamic>?>, ApiResponse<dynamic>?>;
@@ -61,6 +60,6 @@ abstract class _$OtpVerificationController
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }

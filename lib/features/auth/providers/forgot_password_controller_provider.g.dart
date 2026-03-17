@@ -10,7 +10,7 @@ part of 'forgot_password_controller_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(ForgotPasswordController)
-const forgotPasswordControllerProvider = ForgotPasswordControllerProvider._();
+final forgotPasswordControllerProvider = ForgotPasswordControllerProvider._();
 
 final class ForgotPasswordControllerProvider
     extends
@@ -18,7 +18,7 @@ final class ForgotPasswordControllerProvider
           ForgotPasswordController,
           ApiResponse<dynamic>?
         > {
-  const ForgotPasswordControllerProvider._()
+  ForgotPasswordControllerProvider._()
     : super(
         from: null,
         argument: null,
@@ -46,7 +46,6 @@ abstract class _$ForgotPasswordController
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref =
         this.ref
             as $Ref<AsyncValue<ApiResponse<dynamic>?>, ApiResponse<dynamic>?>;
@@ -61,6 +60,6 @@ abstract class _$ForgotPasswordController
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }

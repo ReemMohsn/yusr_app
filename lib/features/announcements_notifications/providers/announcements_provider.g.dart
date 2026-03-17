@@ -10,7 +10,7 @@ part of 'announcements_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(announcements)
-const announcementsProvider = AnnouncementsProvider._();
+final announcementsProvider = AnnouncementsProvider._();
 
 final class AnnouncementsProvider
     extends
@@ -22,7 +22,7 @@ final class AnnouncementsProvider
     with
         $FutureModifier<List<AnnouncementModel>>,
         $FutureProvider<List<AnnouncementModel>> {
-  const AnnouncementsProvider._()
+  AnnouncementsProvider._()
     : super(
         from: null,
         argument: null,

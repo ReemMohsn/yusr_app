@@ -93,7 +93,8 @@ class CustomDrawer extends ConsumerWidget {
             context: context,
             title: locale.hajjRituals,
             icon: Icons.menu_book_outlined,
-            onTap: () {},
+            onTap: () =>
+                Navigator.of(context).pushNamed(AppRoute.instructionsView),
           ),
         ];
       case 'مدير الحملة':
@@ -115,7 +116,8 @@ class CustomDrawer extends ConsumerWidget {
             context: context,
             title: locale.hajjRituals,
             icon: Icons.menu_book_outlined,
-            onTap: () {},
+            onTap: () =>
+                Navigator.of(context).pushNamed(AppRoute.instructionsView),
           ),
         ];
       case 'الحاج':
@@ -130,7 +132,8 @@ class CustomDrawer extends ConsumerWidget {
             context: context,
             title: locale.hajjRituals,
             icon: Icons.menu_book_outlined,
-            onTap: () {},
+            onTap: () =>
+                Navigator.of(context).pushNamed(AppRoute.instructionsView),
           ),
         ];
       default:
@@ -138,3 +141,4 @@ class CustomDrawer extends ConsumerWidget {
     }
   }
 }
+

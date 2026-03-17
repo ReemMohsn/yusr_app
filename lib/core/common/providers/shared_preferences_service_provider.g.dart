@@ -10,7 +10,7 @@ part of 'shared_preferences_service_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(sharedPreferencesService)
-const sharedPreferencesServiceProvider = SharedPreferencesServiceProvider._();
+final sharedPreferencesServiceProvider = SharedPreferencesServiceProvider._();
 
 final class SharedPreferencesServiceProvider
     extends
@@ -20,7 +20,7 @@ final class SharedPreferencesServiceProvider
           SharedPreferencesService
         >
     with $Provider<SharedPreferencesService> {
-  const SharedPreferencesServiceProvider._()
+  SharedPreferencesServiceProvider._()
     : super(
         from: null,
         argument: null,

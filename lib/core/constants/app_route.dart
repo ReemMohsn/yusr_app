@@ -9,6 +9,7 @@ import 'package:yusr/features/auth/presentation/views/forgot_password.dart';
 import 'package:yusr/features/auth/presentation/views/login_view.dart';
 import 'package:yusr/features/auth/presentation/views/reset_password_view.dart';
 import 'package:yusr/features/home/presentation/views/main_home_view.dart';
+import 'package:yusr/features/instructions/presentation/views/instructions_view.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -34,6 +35,8 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => AnnouncementDetailsView(announcement: announcement),
         );
+      case AppRoute.instructionsView:
+        return MaterialPageRoute(builder: (_) => const InstructionsView());
       default:
         return null;
     }
@@ -49,4 +52,5 @@ class AppRoute {
   static const String announcementsView = '/AnnouncementsView';
   static const String addAnnouncementView = '/AddAnnouncementView';
   static const String announcementDetailsView = '/AnnouncementDetailsView';
+  static const String instructionsView = '/InstructionsView';
 }

@@ -10,11 +10,11 @@ part of 'resend_timer_controller_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(ResendTimerController)
-const resendTimerControllerProvider = ResendTimerControllerProvider._();
+final resendTimerControllerProvider = ResendTimerControllerProvider._();
 
 final class ResendTimerControllerProvider
     extends $NotifierProvider<ResendTimerController, int> {
-  const ResendTimerControllerProvider._()
+  ResendTimerControllerProvider._()
     : super(
         from: null,
         argument: null,
@@ -49,7 +49,6 @@ abstract class _$ResendTimerController extends $Notifier<int> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref = this.ref as $Ref<int, int>;
     final element =
         ref.element
@@ -59,6 +58,6 @@ abstract class _$ResendTimerController extends $Notifier<int> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }

@@ -10,11 +10,11 @@ part of 'password_visibility_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(PasswordVisibility)
-const passwordVisibilityProvider = PasswordVisibilityProvider._();
+final passwordVisibilityProvider = PasswordVisibilityProvider._();
 
 final class PasswordVisibilityProvider
     extends $NotifierProvider<PasswordVisibility, bool> {
-  const PasswordVisibilityProvider._()
+  PasswordVisibilityProvider._()
     : super(
         from: null,
         argument: null,
@@ -49,7 +49,6 @@ abstract class _$PasswordVisibility extends $Notifier<bool> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref = this.ref as $Ref<bool, bool>;
     final element =
         ref.element
@@ -59,16 +58,16 @@ abstract class _$PasswordVisibility extends $Notifier<bool> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }
 
 @ProviderFor(PasswordTwoVisibility)
-const passwordTwoVisibilityProvider = PasswordTwoVisibilityProvider._();
+final passwordTwoVisibilityProvider = PasswordTwoVisibilityProvider._();
 
 final class PasswordTwoVisibilityProvider
     extends $NotifierProvider<PasswordTwoVisibility, bool> {
-  const PasswordTwoVisibilityProvider._()
+  PasswordTwoVisibilityProvider._()
     : super(
         from: null,
         argument: null,
@@ -103,7 +102,6 @@ abstract class _$PasswordTwoVisibility extends $Notifier<bool> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref = this.ref as $Ref<bool, bool>;
     final element =
         ref.element
@@ -113,6 +111,6 @@ abstract class _$PasswordTwoVisibility extends $Notifier<bool> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }

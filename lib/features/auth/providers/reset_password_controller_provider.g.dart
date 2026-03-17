@@ -10,12 +10,12 @@ part of 'reset_password_controller_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(ResetPasswordController)
-const resetPasswordControllerProvider = ResetPasswordControllerProvider._();
+final resetPasswordControllerProvider = ResetPasswordControllerProvider._();
 
 final class ResetPasswordControllerProvider
     extends
         $AsyncNotifierProvider<ResetPasswordController, ApiResponse<dynamic>?> {
-  const ResetPasswordControllerProvider._()
+  ResetPasswordControllerProvider._()
     : super(
         from: null,
         argument: null,
@@ -43,7 +43,6 @@ abstract class _$ResetPasswordController
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref =
         this.ref
             as $Ref<AsyncValue<ApiResponse<dynamic>?>, ApiResponse<dynamic>?>;
@@ -58,6 +57,6 @@ abstract class _$ResetPasswordController
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }

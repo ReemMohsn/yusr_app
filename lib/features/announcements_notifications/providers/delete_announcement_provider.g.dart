@@ -10,7 +10,7 @@ part of 'delete_announcement_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(DeleteAnnouncementNotifier)
-const deleteAnnouncementProvider = DeleteAnnouncementNotifierProvider._();
+final deleteAnnouncementProvider = DeleteAnnouncementNotifierProvider._();
 
 final class DeleteAnnouncementNotifierProvider
     extends
@@ -18,7 +18,7 @@ final class DeleteAnnouncementNotifierProvider
           DeleteAnnouncementNotifier,
           ApiResponse<dynamic>?
         > {
-  const DeleteAnnouncementNotifierProvider._()
+  DeleteAnnouncementNotifierProvider._()
     : super(
         from: null,
         argument: null,
@@ -46,7 +46,6 @@ abstract class _$DeleteAnnouncementNotifier
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref =
         this.ref
             as $Ref<AsyncValue<ApiResponse<dynamic>?>, ApiResponse<dynamic>?>;
@@ -61,6 +60,6 @@ abstract class _$DeleteAnnouncementNotifier
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }

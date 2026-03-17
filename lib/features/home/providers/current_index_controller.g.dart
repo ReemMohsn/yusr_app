@@ -10,11 +10,11 @@ part of 'current_index_controller.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(CurrentIndexController)
-const currentIndexControllerProvider = CurrentIndexControllerProvider._();
+final currentIndexControllerProvider = CurrentIndexControllerProvider._();
 
 final class CurrentIndexControllerProvider
     extends $NotifierProvider<CurrentIndexController, int> {
-  const CurrentIndexControllerProvider._()
+  CurrentIndexControllerProvider._()
     : super(
         from: null,
         argument: null,
@@ -49,7 +49,6 @@ abstract class _$CurrentIndexController extends $Notifier<int> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref = this.ref as $Ref<int, int>;
     final element =
         ref.element
@@ -59,6 +58,6 @@ abstract class _$CurrentIndexController extends $Notifier<int> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }
