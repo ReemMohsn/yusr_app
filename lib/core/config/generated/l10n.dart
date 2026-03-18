@@ -543,6 +543,22 @@ class AppLocalizations {
       args: [],
     );
   }
+    String get deleteSuccess{
+    return Intl.message(
+      'Location deleted successfully',
+      name: 'deleteSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+      String get updateSuccess{
+    return Intl.message(
+      'Location updated successfully',
+      name: 'updateSuccess',
+      desc: '',
+      args: [],
+    );
+  }
 
 
   /// `Save Changes`

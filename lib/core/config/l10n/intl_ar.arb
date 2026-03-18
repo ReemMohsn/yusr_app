@@ -58,6 +58,7 @@
   "chooseCoordinates": "اختر إحداثيات الموقع",
   "saveLocation": "حفظ الموقع",
   "cancel": "إلغاء",
+  "updateSuccess": "تم تحديث بيانات الموقع بنجاح"
   "locationName": "اسم الموقع",
   "locationList": "قائمة المواقع",
   "saveChanges": "حفظ التعديل",
@@ -66,6 +67,7 @@
   "retry": "إعادة المحاولة",
   "confirmDelete": "هل أنت متأكد من حذف هذا الموقع نهائياً؟",
   "delete": "حذف",
+  "deleteSuccess": "تم حذف الموقع بنجاح",
   "enterLocationName": "أدخل اسم الموقع...",
   "updateLocationTitle": "تعديل موقع",
   "announcementSearch": "ابحث عن إعلان...",
@@ -85,4 +87,5 @@
   "contentLabel": "المحتوى",
   "sendAnnouncementWarning": "بعد الإرسال، سيصل الإعلان إلى جميع المستخدمين في الفئة المحددة ولن يمكن التراجع عن هذا الإجراء.",
   "confirmDeleteAnnouncementMessage": "هل أنت متأكد من حذف هذا الإعلان؟ لا يمكن التراجع عن هذا الإجراء."
+  
 }

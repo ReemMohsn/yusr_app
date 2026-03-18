@@ -52,7 +52,7 @@
   "serverNotResponding": "The server is currently not responding, please try again later.",
   "serverError": "A server error occurred, please try again later.",
   "secureArrivalMessage": "To ensure a safe journey and arrive peacefully, please login first",
-  
+  "updateSuccess": "Location updated successfully"
   "addLocation": "Add Location",
   "currentLocation": "Current Location",
   "otherLocations": "Other Locations",
@@ -70,7 +70,7 @@
   "delete": "Delete",
   "enterLocationName": "Enter location name...",
   "updateLocationTitle": "Update Location",
-
+  "deleteSuccess": "Location deleted successfully",
   "announcementSearch": "Search for announcement...",
   "errorFetchingAnnouncements": "An error occurred while fetching announcements:",
   "noAnnouncementsCurrently": "There are currently no announcements",

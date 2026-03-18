@@ -241,6 +241,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "locationName": MessageLookupByLibrary.simpleMessage("اسم الموقع"),
         "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
         "updateLocationTitle": MessageLookupByLibrary.simpleMessage("تعديل موقع"),
+        "deleteSuccess": MessageLookupByLibrary.simpleMessage("تم حذف الموقع بنجاح"),
+        "updateSuccess": MessageLookupByLibrary.simpleMessage("تم تحديث بيانات الموقع بنجاح"),
 
   };
 

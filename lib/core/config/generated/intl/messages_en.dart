@@ -76,6 +76,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("New Password"),
         "notFound": MessageLookupByLibrary.simpleMessage("Not found"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
+        "deleteSuccess": MessageLookupByLibrary.simpleMessage("Location deleted successfully"),
+         "updateSuccess": MessageLookupByLibrary.simpleMessage("Location updated successfully"),
         "passwordsDoNotMatchError":
             MessageLookupByLibrary.simpleMessage("Passwords do not match"),
         "prayerTimes": MessageLookupByLibrary.simpleMessage("Prayer Times"),
