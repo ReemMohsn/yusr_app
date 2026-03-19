@@ -668,6 +668,36 @@ class AppLocalizations {
       args: [],
     );
   }
+
+  /// `To ensure a safe journey and arrive peacefully, please login first`
+  String get secureArrivalMessage {
+    return Intl.message(
+      'To ensure a safe journey and arrive peacefully, please login first',
+      name: 'secureArrivalMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fetching campaign location...`
+  String get messageFetchingCampLocationmessage {
+    return Intl.message(
+      'Fetching campaign location...',
+      name: 'messageFetchingCampLocationmessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `km`
+  String get km {
+    return Intl.message('km', name: 'km', desc: '', args: []);
+  }
+
+  /// `You are here`
+  String get youAreHere {
+    return Intl.message('You are here', name: 'youAreHere', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {

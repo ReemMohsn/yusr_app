@@ -12,13 +12,22 @@ class MapOverlayUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isRtl = Directionality.of(context) == TextDirection.rtl;
+
     return Stack(
       children: [
-        Positioned(top: 50.h, left: 0, right: 0, child: const Center(child: MapHeaderCapsule())),
-        
         Positioned(
-          top: 50.h,
-          right: 20.w,
+          top: 55.h, 
+          left: 0, 
+          right: 0, 
+          child: const Center(child: MapHeaderCapsule()),
+        ),
+        
+        Positioned.directional(
+          textDirection: Directionality.of(context),
+          top: 55.h,
+          start: 20.w, 
           child: GestureDetector(
             onTap: () => Navigator.pop(context),
             child: Container(

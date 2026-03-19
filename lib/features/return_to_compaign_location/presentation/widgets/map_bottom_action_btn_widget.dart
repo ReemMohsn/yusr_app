@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yusr/core/constants/app_color.dart';
-import 'dart:math' as math; // استيراد مكتبة الرياضيات للتعامل مع الراديان
+import 'dart:math' as math;
+
+import 'package:yusr/core/extensions/context_extension.dart';
 
 class MapBottomActionBtn extends StatelessWidget {
   final String distance;
@@ -15,6 +17,8 @@ class MapBottomActionBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final locale = context.locale;
     return Container(
       height: 65.h,
       decoration: BoxDecoration(
@@ -32,10 +36,10 @@ class MapBottomActionBtn extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // عرض المسافة المحدثة بالكيلومتر
+          // عرض المسافة المترجمة الجاهزة بالثيم الموحد
           Text(
-            "$distance كم", 
-            style: TextStyle(
+            "$distance ${locale.km}",
+            style: theme.textTheme.headlineSmall?.copyWith(
               color: Colors.white, 
               fontSize: 18.sp, 
               fontWeight: FontWeight.bold,
@@ -45,7 +49,7 @@ class MapBottomActionBtn extends StatelessWidget {
           // السهم الذي يدور مع اتجاه البوصلة
 
           Transform.rotate(
-            angle: (bearing * (math.pi / 180)), // تحويل الدرجات لراديان بدقة
+            angle: (bearing * (math.pi / 180)), 
             child: Icon(
               Icons.navigation, 
               color: Colors.white,

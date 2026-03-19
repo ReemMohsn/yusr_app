@@ -3,6 +3,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:yusr/core/constants/app_color.dart';
+import 'package:yusr/core/extensions/context_extension.dart';
 
 class RouteMapWidget extends StatelessWidget {
   final LatLng campaignLocation;
@@ -20,6 +21,8 @@ class RouteMapWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locale = context.locale; 
+    final theme = Theme.of(context);
     return FlutterMap(
       mapController: mapController,
       options: MapOptions(
@@ -67,8 +70,12 @@ class RouteMapWidget extends StatelessWidget {
                       boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 4)],
                     ),
                     child: Text(
-                      "أنت هنا",
-                      style: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.bold, color: Colors.black),
+                      locale.youAreHere, 
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        fontSize: 10.sp,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   // النقطة الزرقاء (موقعك)
