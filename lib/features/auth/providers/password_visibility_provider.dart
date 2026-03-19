@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/legacy.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'password_visibility_provider.g.dart';

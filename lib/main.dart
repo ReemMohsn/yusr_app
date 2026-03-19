@@ -1,12 +1,10 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/core/services/push_notification_service.dart';
-import 'package:yusr/core/services/shared_preferences_service.dart';
 import 'package:yusr/yusr_app.dart';
 import 'firebase_options.dart';
 
