@@ -39,14 +39,7 @@ class NotificationDetailsView extends StatelessWidget {
               top: BorderSide(color: AppColor.golden, width: 4.h),
             ),
             boxShadow: [
-              BoxShadow(
-                color: AppColor.golden,
-                offset: const Offset(
-                  3,
-                  0,
-                ), // نفس تأثير الظل الذهبي الرائع الخاص بك
-                blurRadius: 0,
-              ),
+            
               BoxShadow(
                 color: Colors.black.withValues(alpha: 0.2), // ظل ناعم جداً
                 offset: const Offset(0, 4),

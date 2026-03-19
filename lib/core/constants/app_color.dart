@@ -15,4 +15,5 @@ class AppColor {
   static const Color lightBlack = Color(0xFF2B2B2B);
   static const Color danger = Color(0xFFDC3545);
   static const Color success = Color(0xFF28A745);
+  static const Color background = Color(0xFFF5F5F0);
 }

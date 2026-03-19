@@ -82,7 +82,7 @@ class _MainHomeViewState extends ConsumerState<MainHomeView> {
       appBar: AppBar(
         leadingWidth: isLoggedIn ? 100 : 140,
         leading: isLoggedIn
-            ? _buildLoggedInLeading(profile) // عرض البروفايل + الجرس
+            ? _buildLoggedInLeading(context,profile) // عرض البروفايل + الجرس
             : Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextButton(
@@ -192,7 +192,7 @@ class _MainHomeViewState extends ConsumerState<MainHomeView> {
   }
 
   /// الواجهة في حالة المستخدم المسجل (صورة + جرس)
-  Widget _buildLoggedInLeading(ProfileModel profile) {
+  Widget _buildLoggedInLeading(BuildContext context,ProfileModel profile) {
     return Row(
       children: [
         const SizedBox(width: 10),
@@ -218,8 +218,17 @@ class _MainHomeViewState extends ConsumerState<MainHomeView> {
         ),
         const SizedBox(width: 10),
         // أيقونة الجرس
-        const Icon(Icons.notifications_none_outlined, color: AppColor.golden),
+        IconButton(
+          icon: const Icon(Icons.notifications_none_outlined, color: AppColor.golden),
+          onPressed: () => _navigateToNotifications(context)
+            // معالجة النقر على أيقونة الجرس
+          ,
+        ),
       ],
     );
+  }
+  // دالة التنقل المنفصلة لزيادة وضوح الكود
+  void _navigateToNotifications(BuildContext context) {
+    Navigator.pushNamed(context, AppRoute.notificationsView);
   }
 }

@@ -11,6 +11,8 @@ class ApiLink {
   static const String resetPassword = '$server/Auth/ResetPassword';
   static const String logout = '$server/Auth/Logout';
   static const String syncData = '$server/Announcements/SyncData';
+  static const String getNotifications =
+      '$server/Announcements/GetNotifications';
   static const String getAnnouncements =
       '$server/Announcements/GetAnnouncements';
   static const String createAnnouncement =
