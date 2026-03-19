@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/features/return_to_compaign_location/presentation/widgets/map_bottom_action_btn_widget.dart';
 import 'package:yusr/features/return_to_compaign_location/presentation/widgets/map_header_capsule_widget.dart';
-import 'map_ui_components_widget.dart';
 
 class MapOverlayUI extends StatelessWidget {
   final String distance;

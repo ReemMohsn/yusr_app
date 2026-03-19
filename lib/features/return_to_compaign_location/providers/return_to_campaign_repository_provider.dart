@@ -8,5 +8,5 @@ part 'return_to_campaign_repository_provider.g.dart';
 @riverpod
 ReturnToCampaignRepository returnToCampaignRepository(Ref ref) {
   final apiService = ref.watch(apiServiceProvider);
-  return ReturnToCampaignRepository(apiService);
+  return ReturnToCampaignRepository(apiService, ref);
 }

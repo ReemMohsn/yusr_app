@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:yusr/core/constants/api_link.dart';
 import 'package:yusr/core/services/API/api_service.dart';
@@ -7,16 +8,17 @@ import 'package:yusr/core/services/API/ApiResponse.dart';
 import '../models/active_location_model.dart';
 
 class ReturnToCampaignRepository {
-  final ApiService _apiService;
+  final ApiService apiService;
+  final Ref ref;
   final Dio _dio = Dio();
   final String _orsApiKey = 'eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImExNzU1NTJjOTM5ZDQwMzliNDg4MTAyMWMwNjljYjJmIiwiaCI6Im11cm11cjY0In0=';
 
-  ReturnToCampaignRepository(this._apiService);
+  ReturnToCampaignRepository(this.apiService, this.ref);
 
   // جلب إحداثيات الحملة من السيرفر
   Future<ApiResponse<ActiveLocationModel>> getCampLocation() async {
     return await repositoryRequestHandler<ActiveLocationModel>(
-      () => _apiService.get(ApiLink.getActiveLocation),
+      () => apiService.get(ApiLink.getActiveLocation),
       fromJson: (data) => ActiveLocationModel.fromJson(data),
     );
   }
