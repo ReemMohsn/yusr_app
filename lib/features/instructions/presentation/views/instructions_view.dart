@@ -12,12 +12,12 @@ class InstructionsView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final locale = context.locale;
-    final instructionsList = ref.watch(instructionsProvider);
+    final l10n = context.locale;
+    final instructionsList = ref.watch(instructionsProvider(l10n: l10n));
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(locale.instructions),
+        title: Text(l10n.instructions),
         leading: const CustomGoldenBackButton(),
       ),
       body: SafeArea(
@@ -32,7 +32,8 @@ class InstructionsView extends ConsumerWidget {
             children: [
               for (int i = 0; i < instructionsList.length; i++) ...[
                 HajjTypeCard(instruction: instructionsList[i]),
-                if (i < instructionsList.length - 1) SizedBox(height: 26.h),
+                if (i < instructionsList.length - 1)
+                  SizedBox(height: AppSize.spaceBetweenCards.h),
               ],
             ],
           ),
