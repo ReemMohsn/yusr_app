@@ -243,6 +243,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "updateLocationTitle": MessageLookupByLibrary.simpleMessage("تعديل موقع"),
         "deleteSuccess": MessageLookupByLibrary.simpleMessage("تم حذف الموقع بنجاح"),
         "updateSuccess": MessageLookupByLibrary.simpleMessage("تم تحديث بيانات الموقع بنجاح"),
+        "changeLocation": MessageLookupByLibrary.simpleMessage("تغيير الموقع"),
+        "locationList": MessageLookupByLibrary.simpleMessage("قائمة المواقع"),
+        "enterLocationDescription": MessageLookupByLibrary.simpleMessage("أدخل وصفاً مختصراً للموقع"),
+        "locationDescription": MessageLookupByLibrary.simpleMessage("وصف الموقع"),
 
   };
 

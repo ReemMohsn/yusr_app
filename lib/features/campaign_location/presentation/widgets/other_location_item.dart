@@ -81,97 +81,100 @@ class OtherLocationItem extends ConsumerWidget {
   }
 
   // نافذة تأكيد الحذف مع توسيط الأزرار وربطها بالـ API
-void _confirmDelete(BuildContext context, WidgetRef ref) {
-    final locale = context.locale;
+// ... (بقيت أجزاء الكود كما هي حتى دالة _confirmDelete)
 
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
-        title: Row(
-          children: [
-            Icon(Icons.warning_amber_rounded, color: AppColor.golden, size: 28.sp),
-            SizedBox(width: 10.w),
-            Text(
-              locale.delete, 
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp),
-            ),
-          ],
-        ),
-        content: Column( // استخدمنا Column هنا لنتمكن من وضع الأزرار في المنتصف
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              locale.confirmDelete,
-              style: TextStyle(fontSize: 14.sp, color: Colors.grey.shade700),
-            ),
-            SizedBox(height: 24.h), // مسافة قبل الأزرار
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center, // توسيط الأزرار كما طلبتِ
-              children: [
-                // زر الحذف المربوط بالـ API
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColor.danger,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
-                    elevation: 0,
-                    padding: EdgeInsets.symmetric(horizontal: 24.w),
-                  ),
-                  onPressed: () async {
-                    // 1. إغلاق نافذة التأكيد أولاً
-                    Navigator.of(context).pop();
+    void _confirmDelete(BuildContext context, WidgetRef ref) {
+      final locale = context.locale;
 
-                    // 2. تنفيذ الحذف وانتظار النتيجة
-                    final success = await ref
-                        .read(campaignLocationControllerProvider.notifier)
-                        .removeLocation(location.locationId);
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          backgroundColor: Colors.white,
+          surfaceTintColor: Colors.white,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
+          title: Row(
+            children: [
+              Icon(Icons.warning_amber_rounded, color: AppColor.danger, size: 28.sp),
+              SizedBox(width: 10.w),
+              Text(
+                locale.delete, 
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp),
+              ),
+            ],
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                locale.confirmDelete,
+                style: TextStyle(fontSize: 14.sp, color: Colors.grey.shade700),
+              ),
+              SizedBox(height: 24.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // زر الحذف المربوط بالـ API
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColor.danger,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
+                      elevation: 0,
+                      padding: EdgeInsets.symmetric(horizontal: 24.w),
+                    ),
+                    onPressed: () async {
+                      // 1. التقاط الـ ScaffoldMessenger قبل إغلاق أي شيء
+                      // هذا هو السر لضمان ظهور الرسالة حتى بعد إغلاق الـ Dialog
+                      final messenger = ScaffoldMessenger.of(context);
+                      
+                      // 2. إغلاق الدايلوج
+                      Navigator.of(context).pop();
 
-                    // 3. إذا نجح الحذف، أظهري الرسالة الجميلة أسفل الشاشة
-                    if (success && context.mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Row(
-                            children: [
-                              const Icon(Icons.check_circle, color: Colors.white),
-                              SizedBox(width: 10.w),
-                              Text(
-                                locale.deleteSuccess,
-                                style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
-                              ),
-                            ],
+                      // 3. تنفيذ الحذف وانتظار النتيجة
+                      final success = await ref
+                          .read(campaignLocationControllerProvider.notifier)
+                          .removeLocation(location.locationId);
+
+                      // 4. إظهار الرسالة باستخدام المتغير المحفوظ
+                      if (success) {
+                        messenger.showSnackBar(
+                          SnackBar(
+                            content: Row(
+                              children: [
+                                const Icon(Icons.check_circle, color: Colors.white),
+                                SizedBox(width: 10.w),
+                                // استخدمت نص مباشر مؤقتاً للتأكد، ويمكنك إعادته لـ locale لاحقاً
+                                Text(locale.deleteSuccess), 
+                              ],
+                            ),
+                            backgroundColor: Colors.green, 
+                            behavior: SnackBarBehavior.floating,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
+                            margin: EdgeInsets.all(20.w),
                           ),
-                          backgroundColor: AppColor.success, 
-                          behavior: SnackBarBehavior.floating,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
-                          margin: EdgeInsets.all(20.w),
-                          duration: const Duration(seconds: 3),
-                        ),
-                      );
-                    }
-                  },
-                  child: Text(
-                    locale.delete,
-                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                        );
+                      }
+                    },
+                    child: Text(
+                      locale.delete,
+                      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
                   ),
-                ),
-                SizedBox(width: 12.w),
-                // زر الإلغاء
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text(
-                    locale.cancel,
-                    style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
+                  SizedBox(width: 12.w),
+                  // زر الإلغاء
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(
+                      locale.cancel,
+                      style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
+          actions: const [], 
         ),
-        // تركنا الـ actions فارغة لأننا وضعنا الأزرار داخل الـ content لتوسيطها
-        actions: const [], 
-      ),
-    );
+      );
+    }
   }
-}
+

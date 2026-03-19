@@ -4,8 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yusr/core/common/widgets/custom_golden_back_button.dart';
 import 'package:yusr/core/common/widgets/widget.dart';
-import 'package:yusr/core/constants/app_color.dart';
-import 'package:yusr/core/constants/app_size.dart';
+import 'package:yusr/core/constants/app_color.dart'; // استخدام الكلاس الخاص بكِ
 import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/core/services/API/ApiResponse.dart';
 import 'package:yusr/features/campaign_location/providers/get_locations_provider.dart';
@@ -20,6 +19,7 @@ class SetLocationView extends ConsumerStatefulWidget {
 
 class _SetLocationViewState extends ConsumerState<SetLocationView> {
   int? _selectedLocationId;
+  int? _initialActiveId; 
   bool _isInitialized = false;
 
   @override
@@ -27,7 +27,6 @@ class _SetLocationViewState extends ConsumerState<SetLocationView> {
     final locale = context.locale;
     final locationsAsync = ref.watch(getCampaignLocationsProvider);
 
-    // الاستماع لنتائج الـ API
     ref.listen<AsyncValue<ApiResponse<dynamic>?>>(
       setActiveLocationControllerProvider,
       (prev, next) {
@@ -38,209 +37,223 @@ class _SetLocationViewState extends ConsumerState<SetLocationView> {
           context.showErrorSnackBar(next.error.toString());
         } else if (next.hasValue && next.value != null) {
           context.closeLoadingDialog();
-          context.showSuccessSnackBar(next.value!.message);
+          context.showSuccessSnackBar(locale.updateSuccess); 
           Navigator.pop(context); 
         }
       },
     );
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F0),
+      backgroundColor: AppColor.backgroundColor, // تم التغيير لـ AppColor
       appBar: AppBar(
-      title: Text(
-        locale.updateLocationTitle, 
-        style: TextStyle(color: AppColor.golden, fontWeight: FontWeight.bold, fontSize: 18.sp),
-      ),
+        title: Text(
+          locale.locationList,
+          style: TextStyle(color: AppColor.golden, fontWeight: FontWeight.bold, fontSize: 18.sp),
+        ),
         centerTitle: true,
-        backgroundColor: const Color(0xFF1A1A1A),
+        backgroundColor: AppColor.baseFontColor, // استخدام اللون الأساسي للأسود
+        elevation: 0,
         leading: const UnconstrainedBox(child: CustomGoldenBackButton()),
       ),
-      body: locationsAsync.when(
-        data: (data) {
-          if (data == null) return Center(child: Text(locale.notFound));
+      body: Directionality(
+        textDirection: TextDirection.rtl,
+        child: locationsAsync.when(
+          data: (data) {
+            if (data == null) return Center(child: Text(locale.notFound));
 
-          final allLocations = [
-            if (data.currentLocation != null) data.currentLocation!,
-            ...data.previousLocations
-          ];
+            final allLocations = [
+              if (data.currentLocation != null) data.currentLocation!,
+              ...data.previousLocations
+            ];
 
-          // الحل الجذري: نستخدم تأخير بسيط جداً لتعيين القيمة الابتدائية خارج إطار الـ build
-          if (!_isInitialized && data.currentLocation != null) {
-            _isInitialized = true; // نمنع التكرار فوراً
-            Future.delayed(Duration.zero, () {
-              if (mounted) {
-                setState(() {
-                  _selectedLocationId = data.currentLocation!.locationId;
-                });
-              }
-            });
-          }
+            if (!_isInitialized && data.currentLocation != null) {
+              _isInitialized = true;
+              _initialActiveId = data.currentLocation!.locationId;
+              Future.delayed(Duration.zero, () {
+                if (mounted) {
+                  setState(() => _selectedLocationId = data.currentLocation!.locationId);
+                }
+              });
+            }
 
-          return Column(
-            children: [
-              Expanded(
-                child: ListView.separated(
-                  padding: EdgeInsets.all(20.w),
-                  itemCount: allLocations.length,
-                  separatorBuilder: (_, __) => SizedBox(height: 15.h),
-                  itemBuilder: (context, index) {
-                    final loc = allLocations[index];
-                    // هنا المقارنة تتم على الـ ID فقط، مما يمنع التحديد المتعدد
-                    final bool isSelected = _selectedLocationId == loc.locationId;
+            return Column(
+              children: [
+                Expanded(
+                  child: ListView.separated(
+                    padding: EdgeInsets.all(20.w),
+                    itemCount: allLocations.length,
+                    separatorBuilder: (_, __) => SizedBox(height: 12.h),
+                    itemBuilder: (context, index) {
+                      final loc = allLocations[index];
+                      final bool isSelected = _selectedLocationId == loc.locationId;
+                      final bool isCurrentlyActive = loc.locationId == _initialActiveId;
 
-                    return GestureDetector(
-                      onTap: () {
-                        HapticFeedback.lightImpact();
-                        setState(() {
-                          _selectedLocationId = loc.locationId;
-                        });
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(16.r),
-                          border: Border.all(
-                            color: isSelected ? AppColor.golden : Colors.transparent,
-                            width: 1.5.w,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.05),
-                              blurRadius: 10,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
-                        ),
-                        child: Row(
-                          children: [
-                            // أيقونة الموقع يسار
-                            Container(
-                              padding: EdgeInsets.all(8.w),
-                              decoration: BoxDecoration(
-                                color: AppColor.golden.withOpacity(0.1),
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(Icons.location_on_rounded, color: AppColor.golden, size: 20.sp),
-                            ),
-                            const Spacer(),
-                            // اسم الموقع منتصف
-                            Text(
-                              loc.locationName,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16.sp,
-                                color: const Color(0xFF101828),
-                              ),
-                            ),
-                            SizedBox(width: 15.w),
-                            // دائرة الاختيار يمين
-                            Container(
-                              height: 24.w,
-                              width: 24.w,
-                              padding: EdgeInsets.all(4.w),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: isSelected ? AppColor.golden : const Color(0xFF99A1AF),
-                                  width: 2.w,
-                                ),
-                              ),
-                              child: isSelected
-                                  ? Container(
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: AppColor.golden,
-                                      ),
-                                    )
-                                  : null,
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
+                      return _buildLocationItem(loc, isSelected, isCurrentlyActive, locale);
+                    },
+                  ),
                 ),
-              ),
-              
-              // أزرار الحفظ والإلغاء
-              Container(
-                padding: EdgeInsets.fromLTRB(20.w, 15.h, 20.w, 40.h),
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Container(
-                        height: 50.h,
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 6, offset: const Offset(0, 4)),
-                          ],
-                        ),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF100F0B),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
-                          ),
-                          onPressed: () {
-                            if (_selectedLocationId != null) {
-                              ref.read(setActiveLocationControllerProvider.notifier)
-                                 .changeActiveLocation(_selectedLocationId!);
-                            }
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.save_rounded, color: AppColor.golden, size: 20.sp),
-                              SizedBox(width: 8.w),
-                              Text(
-                                locale.saveChanges,
-                                style: TextStyle(color: AppColor.golden, fontWeight: FontWeight.bold, fontSize: 16.sp),
-                              ),
-                            ],
-                          ),
-                        ),
+                _buildActionButtons(locale),
+              ],
+            );
+          },
+          loading: () => const Center(child: CircularProgressIndicator(color: AppColor.golden)),
+          error: (e, _) => Center(child: Text(locale.fetchDataError)), 
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLocationItem(dynamic loc, bool isSelected, bool isCurrentlyActive, var locale) {
+    return GestureDetector(
+      onTap: () {
+        HapticFeedback.mediumImpact();
+        setState(() => _selectedLocationId = loc.locationId);
+      },
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 250),
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 15.h),
+        decoration: BoxDecoration(
+          color: AppColor.withe, // استخدام المتغير الأبيض
+          borderRadius: BorderRadius.circular(20.r),
+          border: Border.all(
+            color: isSelected ? AppColor.golden : (isCurrentlyActive ? AppColor.golden.withOpacity(0.3) : Colors.transparent),
+            width: 1.5.w,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: isSelected ? AppColor.golden.withOpacity(0.08) : AppColor.baseFontColor.withOpacity(0.03),
+              blurRadius: 10,
+              offset: const Offset(0, 4)
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  height: 22.w,
+                  width: 22.w,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: isSelected ? AppColor.golden : AppColor.lightFontColor,
+                      width: 2.w,
+                    ),
+                  ),
+                ),
+                if (isSelected)
+                  Container(
+                    height: 12.w,
+                    width: 12.w,
+                    decoration: const BoxDecoration(color: AppColor.golden, shape: BoxShape.circle),
+                  ),
+              ],
+            ),
+            SizedBox(width: 15.w),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    loc.locationName,
+                    style: TextStyle(
+                      fontWeight: isSelected ? FontWeight.w800 : FontWeight.w700,
+                      fontSize: 15.sp,
+                      color: isSelected ? AppColor.baseFontColor : AppColor.midlineColor,
+                    ),
+                  ),
+                  if (isCurrentlyActive)
+                    Padding(
+                      padding: EdgeInsets.only(top: 4.h),
+                      child: Text(
+                        locale.currentLocation,
+                        style: TextStyle(fontSize: 11.sp, color: AppColor.golden, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    SizedBox(width: 12.w),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        height: 50.h,
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 6, offset: const Offset(0, 4)),
-                          ],
-                        ),
-                        child: OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            side: const BorderSide(color: Color(0xFFE0E0E0)),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
-                          ),
-                          onPressed: () => Navigator.pop(context),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.close_rounded, color: const Color(0xFF6A7282), size: 18.sp),
-                              SizedBox(width: 4.w),
-                              Text(
-                                locale.cancel,
-                                style: TextStyle(color: const Color(0xFF6A7282), fontWeight: FontWeight.bold, fontSize: 16.sp),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                ],
               ),
-            ],
-          );
-        },
-        loading: () => const Center(child: CircularProgressIndicator(color: AppColor.golden)),
-        error: (e, _) => Center(child: Text(e.toString())),
+            ),
+            Icon(
+              Icons.location_on_rounded, 
+              color: isSelected ? AppColor.golden : AppColor.inputFieldBoundaries, 
+              size: 24.sp
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildActionButtons(var locale) {
+    final bool canSave = _selectedLocationId != _initialActiveId;
+
+    return Container(
+      padding: EdgeInsets.fromLTRB(20.w, 10.h, 20.w, 40.h),
+
+      child: Row(
+        children: [
+          Expanded(
+            flex: 2,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: canSave ? AppColor.darkBlack : AppColor.inputFieldBoundaries,
+                padding: EdgeInsets.symmetric(vertical: 15.h),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
+                elevation: canSave ? 2 : 0,
+              ),
+              onPressed: canSave ? () {
+                ref.read(setActiveLocationControllerProvider.notifier)
+                    .changeActiveLocation(_selectedLocationId!);
+              } : null,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                   Icon(Icons.save_outlined, color: canSave ? AppColor.golden : AppColor.lightFontColor, size: 22.sp),
+                   SizedBox(width: 8.w),
+                   Text(
+                    locale.saveChanges,
+                    style: TextStyle(
+                      color: canSave ? AppColor.golden : AppColor.lightFontColor, 
+                      fontWeight: FontWeight.bold, 
+                      fontSize: 16.sp
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(width: 15.w),
+          Expanded(
+            flex: 1,
+            child: OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                backgroundColor: AppColor.withe,
+                padding: EdgeInsets.symmetric(vertical: 15.h),
+                side: const BorderSide(color: AppColor.inputFieldBoundaries),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
+              ),
+              onPressed: () => Navigator.pop(context),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // إضافة أيقونة زر الإلغاء (close/cancel)
+                  Icon(Icons.close_rounded, color: AppColor.midlineColor, size: 18.sp),
+                  SizedBox(width: 4.w),
+                  Text(
+                    locale.cancel,
+                    style: TextStyle(
+                      color: AppColor.midlineColor, 
+                      fontWeight: FontWeight.bold, 
+                      fontSize: 16.sp
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

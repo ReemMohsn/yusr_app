@@ -18,45 +18,89 @@ class CampaignLocationRepository {
     );
   }
   
+// في كلاس CampaignLocationRepository
 
-  Future<ApiResponse<dynamic>> updateLocation({
-    required int id,
-    required String name,
-    required double lat,
-    required double lng,
-  }) async {
-    return await repositoryRequestHandler<dynamic>(
-      () => apiService.put(
-        ApiLink.updateLocationData, 
-        data: {
-          "locationId": id,
-          "newName": name,
-          "newLatitude": lat,
-          "newLongitude": lng,
-        },
-      ),
-      // أضيفي هذا السطر لتجنب محاولة تحويل النص إلى Map
-      fromJson: (data) => data, 
-    );
-  }
+// 1. تحديث إضافة موقع
+Future<ApiResponse<dynamic>> addLocation({
+  required String name,
+  required String description, // إضافة الوصف
+  required double lat,
+  required double lng,
+}) async {
+  return await repositoryRequestHandler<dynamic>(
+    () => apiService.post(
+      ApiLink.addCampaignLocation,
+      data: {
+        "Name": name,
+        "Description": description, // إرسال الوصف (تأكدي من حالة الأحرف حسب الـ Swagger)
+        "Latitude": lat,
+        "Longitude": lng,
+      },
+    ),
+  );
+}
 
-  // في ملف الـ Repository الخاص بك
-  Future<ApiResponse<dynamic>> addLocation({
-    required String name,
-    required double lat,
-    required double lng,
-  }) async {
-    return await repositoryRequestHandler<dynamic>(
-      () => apiService.post(
-        ApiLink.addCampaignLocation,
-        data: {
-          "Name": name,      // اجعلي الحرف الأول كبيراً N
-          "Latitude": lat,   // اجعلي الحرف الأول كبيراً L
-          "Longitude": lng,  // اجعلي الحرف الأول كبيراً L
-        },
-      ),
-    );
-  }
+// 2. تحديث تعديل موقع
+Future<ApiResponse<dynamic>> updateLocation({
+  required int id,
+  required String name,
+  required String description, // إضافة الوصف
+  required double lat,
+  required double lng,
+}) async {
+  return await repositoryRequestHandler<dynamic>(
+    () => apiService.put(
+      "${ApiLink.updateLocationData}/$id", 
+      data: {
+        "locationId": id,
+        "newName": name,
+        "newDescription": description, // إرسال الوصف الجديد
+        "newLatitude": lat,
+        "newLongitude": lng,
+      },
+    ),
+    fromJson: (data) => data, 
+  );
+}
+// Future<ApiResponse<dynamic>> updateLocation({
+//   required int id,
+//   required String name,
+//   required double lat,
+//   required double lng,
+// }) async {
+//   return await repositoryRequestHandler<dynamic>(
+//     // 1. استخدام الرابط الصحيح الذي أصلحناه
+//     () => apiService.put(
+//       "${ApiLink.updateLocationData}/$id", 
+//       data: {
+//         "locationId": id,
+//         "newName": name,
+//         "newLatitude": lat,
+//         "newLongitude": lng,
+//       },
+//     ),
+
+//     fromJson: (data) => data, 
+//   );
+// }
+
+//   // في ملف الـ Repository الخاص بك
+//   Future<ApiResponse<dynamic>> addLocation({
+//     required String name,
+//     required double lat,
+//     required double lng,
+//   }) async {
+//     return await repositoryRequestHandler<dynamic>(
+//       () => apiService.post(
+//         ApiLink.addCampaignLocation,
+//         data: {
+//           "Name": name,      // اجعلي الحرف الأول كبيراً N
+//           "Latitude": lat,   // اجعلي الحرف الأول كبيراً L
+//           "Longitude": lng,  // اجعلي الحرف الأول كبيراً L
+//         },
+//       ),
+//     );
+//   }
 
 // دالة الحذف
 Future<ApiResponse<dynamic>> deleteLocation(int id) async {
@@ -65,16 +109,16 @@ Future<ApiResponse<dynamic>> deleteLocation(int id) async {
     () => apiService.delete("${ApiLink.deleteLocation}/$id"), 
   );
 }
-  Future<ApiResponse<dynamic>> setActiveLocation(int locationId) async {
-      return await repositoryRequestHandler<dynamic>(
-        // استخدمنا post بدلاً من patch لأنها غير معرفة في الـ ApiService عندك
-        () => apiService.post(
-          ApiLink.setActiveLocation, 
-          data: {
-            "locationId": locationId,
-          },
-        ),
-      );
-    }
+Future<ApiResponse<dynamic>> setActiveLocation(int locationId) async {
+  return await repositoryRequestHandler<dynamic>(
+    // تأكدي من استخدام النوع PATCH هنا كما يظهر في Swagger
+    () => apiService.patch( 
+      ApiLink.setActiveLocation, 
+      data: {
+        "locationId": locationId,
+      },
+    ),
+  );
 }
 
+}

@@ -43,31 +43,27 @@ part 'campaign_location_controller_provider.g.dart';
         return await ref.read(campaignLocationRepositoryProvider).getLocations();
       });
     }
-// في ملف CampaignLocationController
-    Future<bool> removeLocation(int id) async {
-      // 1. نجعل الحالة "تحميل"
-      state = const AsyncValue.loading();
-      
-      // 2. ننفذ عملية الحذف ونخزن النتيجة في متغير محلي
-      final result = await AsyncValue.guard(() async {
-        return await ref.read(campaignLocationRepositoryProvider).deleteLocation(id);
-      });
 
-      // 3. التحقق من النتيجة
-      if (!result.hasError) {
-        // نجاح: نقوم بتحديث المزود المسؤول عن القائمة
-        ref.invalidate(getCampaignLocationsProvider);
-        
-        // نعيد حالة الكنترولر إلى null أو بيانات فارغة بنجاح
-        state = const AsyncValue.data(null); 
-        return true;
-      } else {
-        // فشل: هنا المشكلة، لا يمكننا قول state = result بسبب اختلاف الأنواع
-        // الحل: نقوم بإنشاء AsyncError متوافق مع النوع المطلوب
-        state = AsyncError(result.error!, result.stackTrace!);
-        return false;
-      }
+  Future<bool> removeLocation(int id) async {
+    // لا نغير حالة الكنترولر نفسه إلى loading إذا كان ذلك سيؤثر على الشاشة كاملة بشكل مزعج
+    // بل نكتفي بتنفيذ العملية
+    final result = await AsyncValue.guard(() async {
+      return await ref.read(campaignLocationRepositoryProvider).deleteLocation(id);
+    });
+
+    if (!result.hasError) {
+      // هذه الخطوة هي الأهم: تجبر المزود المسؤول عن القائمة على إعادة جلب البيانات
+      ref.invalidate(getCampaignLocationsProvider);
+      
+      // انتظر قليلاً لضمان أن الـ Provider بدأ التحميل الجديد
+      await ref.read(getCampaignLocationsProvider.future); 
+      
+      return true;
+    } else {
+      state = AsyncError(result.error!, result.stackTrace!);
+      return false;
     }
+  }
           //   // دالة تفعيل الموقع كـ "موقع حالي"
       Future<void> makeLocationActive(int id) async {
         state = const AsyncValue.loading();

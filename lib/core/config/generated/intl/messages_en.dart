@@ -78,6 +78,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "deleteSuccess": MessageLookupByLibrary.simpleMessage("Location deleted successfully"),
          "updateSuccess": MessageLookupByLibrary.simpleMessage("Location updated successfully"),
+         "changeLocation": MessageLookupByLibrary.simpleMessage("Change Location"),
         "passwordsDoNotMatchError":
             MessageLookupByLibrary.simpleMessage("Passwords do not match"),
         "prayerTimes": MessageLookupByLibrary.simpleMessage("Prayer Times"),
@@ -99,6 +100,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "verifyCodeButton": MessageLookupByLibrary.simpleMessage("Verify Code"),
         "addLocation": MessageLookupByLibrary.simpleMessage("Add Location"),
         "currentLocation": MessageLookupByLibrary.simpleMessage("Current Location"),
+        "locationList": MessageLookupByLibrary.simpleMessage("Location List"),
+        "locationDescription": MessageLookupByLibrary.simpleMessage("Location Description"),
+        "enterLocationDescription": MessageLookupByLibrary.simpleMessage("Enter a brief description for the location"),
         "otherLocations": MessageLookupByLibrary.simpleMessage("Other Locations"),
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "locationList": MessageLookupByLibrary.simpleMessage("Location List"),
@@ -128,6 +132,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "announcementTitle": MessageLookupByLibrary.simpleMessage(
       "Announcement Title",
     ),
+
     "announcements": MessageLookupByLibrary.simpleMessage("Announcements"),
     "appName": MessageLookupByLibrary.simpleMessage("Yusr"),
     "appSlogan": MessageLookupByLibrary.simpleMessage(

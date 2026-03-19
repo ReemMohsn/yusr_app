@@ -61,4 +61,11 @@ class ApiService {
   }) async {
     return await _dio.delete(path, data: data, queryParameters: queryParams);
   }
+  Future<Response> patch(
+    String path, {
+    dynamic data,
+    Map<String, dynamic>? queryParams,
+  }) async {
+    return await _dio.patch(path, data: data, queryParameters: queryParams);
+  }
 }

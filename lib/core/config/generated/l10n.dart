@@ -456,11 +456,35 @@ class AppLocalizations {
       args: [],
     );
   }
+    String get locationList {
+    return Intl.message(
+      'Location List',
+      name: 'locationList',
+      desc: '',
+      args: [],
+    );
+  }
   /// `Current Location`
   String get currentLocation {
     return Intl.message(
       'Current Location',
       name: 'currentLocation',
+      desc: '',
+      args: [],
+    );
+  }
+    String get locationDescription {
+    return Intl.message(
+      'Location Description',
+      name: 'locationDescription',
+      desc: '',
+      args: [],
+    );
+  }
+    String get enterLocationDescription {
+    return Intl.message(
+      'Enter a brief description for the location',
+      name: 'enterLocationDescription',
       desc: '',
       args: [],
     );
@@ -555,6 +579,14 @@ class AppLocalizations {
     return Intl.message(
       'Location updated successfully',
       name: 'updateSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+        String get changeLocation{
+    return Intl.message(
+      'Change Location',
+      name: 'changeLocation',
       desc: '',
       args: [],
     );

@@ -7,6 +7,7 @@ import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/core/constants/app_size.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
+import 'package:yusr/features/campaign_location/providers/campaign_location_controller_provider.dart';
 import 'package:yusr/features/campaign_location/providers/get_locations_provider.dart';
 import '../widgets/current_location_card.dart';
 import '../widgets/other_location_item.dart';
@@ -18,7 +19,19 @@ class CampaignLocationView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = context.locale;
     final locationsAsync = ref.watch(getCampaignLocationsProvider);
-
+    ref.listen(campaignLocationControllerProvider, (previous, next) {
+    next.whenOrNull(
+      error: (error, stack) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(locale.unexpectedError), // تأكدي من وجود الترجمة
+            backgroundColor: AppColor.danger,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      },
+    );
+  });
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F0), // نفس لون الخلفية في الصور
       appBar: AppBar(

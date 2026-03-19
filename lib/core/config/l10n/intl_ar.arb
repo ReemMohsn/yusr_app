@@ -57,10 +57,13 @@
   "edit": "تعديل",
   "chooseCoordinates": "اختر إحداثيات الموقع",
   "saveLocation": "حفظ الموقع",
+  "changeLocation": "تغيير الموقع",
   "cancel": "إلغاء",
   "updateSuccess": "تم تحديث بيانات الموقع بنجاح"
   "locationName": "اسم الموقع",
   "locationList": "قائمة المواقع",
+  "locationDescription": "وصف الموقع",
+  "enterLocationDescription": "أدخل وصفاً مختصراً للموقع"
   "saveChanges": "حفظ التعديل",
   "selectLocationFirst": "يرجى اختيار موقع أولاً",
   "fetchDataError": "حدث خطأ في جلب البيانات",

@@ -12,6 +12,7 @@ class AddLocationController extends _$AddLocationController {
 
   Future<void> addNewLocation({
     required String name,
+    required String description, // أضفنا الوصف هنا
     required double lat,
     required double lng,
   }) async {
@@ -19,6 +20,7 @@ class AddLocationController extends _$AddLocationController {
     state = await AsyncValue.guard(() async {
       final response = await ref.read(campaignLocationRepositoryProvider).addLocation(
         name: name,
+        description: description, // تمرير الوصف للمستودع
         lat: lat,
         lng: lng,
       );

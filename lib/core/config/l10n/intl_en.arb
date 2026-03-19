@@ -55,11 +55,15 @@
   "updateSuccess": "Location updated successfully"
   "addLocation": "Add Location",
   "currentLocation": "Current Location",
+  "changeLocation": "Change Location",
   "otherLocations": "Other Locations",
   "edit": "Edit",
   "chooseCoordinates": "Choose Location Coordinates",
   "saveLocation": "Save Location",
+  "locationList": "Location List"
   "cancel": "Cancel",
+  "locationDescription": "Location Description",
+  "enterLocationDescription": "Enter a brief description for the location"
   "locationName": "Location Name",
   "locationList": "Location List",
   "saveChanges": "Save Changes",

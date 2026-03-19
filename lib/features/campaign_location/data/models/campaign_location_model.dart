@@ -1,30 +1,31 @@
 class CampaignLocationItemModel {
   final int locationId;
   final String locationName;
+  final String? description; // الحقل الجديد (اختياري لتجنب أخطاء null)
   final double latitude;
   final double longitude;
-  final bool isUsed; // تأكدي من إضافة هذا السطر
+  final bool isUsed;
 
   CampaignLocationItemModel({
     required this.locationId,
     required this.locationName,
+    this.description, // أضفناه هنا
     required this.latitude,
     required this.longitude,
-    required this.isUsed, // وتأكدي من إضافته هنا أيضاً
+    required this.isUsed,
   });
 
   factory CampaignLocationItemModel.fromJson(Map<String, dynamic> json) {
     return CampaignLocationItemModel(
-      // استخدمي id أو locationId لضمان عدم وصول القيمة 0
-      locationId: json['locationId'] ?? json['id'] ?? 0, 
+      locationId: json['locationId'] ?? json['id'] ?? 0,
       locationName: json['locationName'] ?? json['name'] ?? '',
+      description: json['description'] ?? '', // قراءة الوصف من السيرفر
       latitude: (json['latitude'] ?? 0).toDouble(),
       longitude: (json['longitude'] ?? 0).toDouble(),
-      isUsed: json['isUsed'] ?? false, 
+      isUsed: json['isUsed'] ?? false,
     );
   }
 }
-
 // أضيفي هذا الكلاس هنا (ضروري جداً لحل خطأ الـ Repository)
 class CampaignLocationsViewModel {
   final CampaignLocationItemModel? currentLocation;
