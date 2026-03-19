@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
+import 'package:yusr/features/campaign_location/data/models/campaign_location_item_model.dart';
 import 'package:yusr/features/campaign_location/data/models/campaign_location_model.dart';
 import 'package:yusr/features/campaign_location/providers/campaign_location_controller_provider.dart';
 import 'package:yusr/features/campaign_location/providers/get_locations_provider.dart';

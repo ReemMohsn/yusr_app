@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 // 1. استيراد موديلات البيانات (Models)
 import 'package:yusr/features/announcements_notifications/data/models/announcement_model.dart';
+import 'package:yusr/features/campaign_location/data/models/campaign_location_item_model.dart';
 import 'package:yusr/features/campaign_location/data/models/campaign_location_model.dart';
 
 // 2. استيراد واجهات المستخدم (Views)
