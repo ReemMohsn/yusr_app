@@ -71,5 +71,8 @@
   "unexpectedError": "حدث خطأ غير متوقع، يرجى المحاولة مرة أخرى",
   "serverNotResponding": "الخادم لا يستجيب حالياً، يرجى المحاولة لاحقاً",
   "serverError": "حدث خطأ من الخادم، يرجى المحاولة لاحقاً",
-  "secureArrivalMessage": "لتنعم برحلة آمنة وتصل لمخيمك بسلام، يرجى تسجيل الدخول أولاً"
+  "secureArrivalMessage": "لتنعم برحلة آمنة وتصل لمخيمك بسلام، يرجى تسجيل الدخول أولاً",
+  "messageFetchingCampLocationmessage": "جاري جلب موقع الحملة...",
+  "km": "كم",
+  "youAreHere": "أنت هنا"
 }
