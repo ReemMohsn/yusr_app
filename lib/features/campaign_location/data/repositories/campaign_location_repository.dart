@@ -62,45 +62,6 @@ Future<ApiResponse<dynamic>> updateLocation({
     fromJson: (data) => data, 
   );
 }
-// Future<ApiResponse<dynamic>> updateLocation({
-//   required int id,
-//   required String name,
-//   required double lat,
-//   required double lng,
-// }) async {
-//   return await repositoryRequestHandler<dynamic>(
-//     // 1. استخدام الرابط الصحيح الذي أصلحناه
-//     () => apiService.put(
-//       "${ApiLink.updateLocationData}/$id", 
-//       data: {
-//         "locationId": id,
-//         "newName": name,
-//         "newLatitude": lat,
-//         "newLongitude": lng,
-//       },
-//     ),
-
-//     fromJson: (data) => data, 
-//   );
-// }
-
-//   // في ملف الـ Repository الخاص بك
-//   Future<ApiResponse<dynamic>> addLocation({
-//     required String name,
-//     required double lat,
-//     required double lng,
-//   }) async {
-//     return await repositoryRequestHandler<dynamic>(
-//       () => apiService.post(
-//         ApiLink.addCampaignLocation,
-//         data: {
-//           "Name": name,      // اجعلي الحرف الأول كبيراً N
-//           "Latitude": lat,   // اجعلي الحرف الأول كبيراً L
-//           "Longitude": lng,  // اجعلي الحرف الأول كبيراً L
-//         },
-//       ),
-//     );
-//   }
 
 // دالة الحذف
 Future<ApiResponse<dynamic>> deleteLocation(int id) async {

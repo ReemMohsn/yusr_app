@@ -5,30 +5,6 @@ import 'campaign_location_repository_provider.dart';
 import 'get_locations_provider.dart'; // تأكدي أن هذا هو اسم الملف الذي يحتوي على دالة جلب البيانات
 
 part 'campaign_location_controller_provider.g.dart';
-// @riverpod
-// class CampaignLocationController extends _$CampaignLocationController {
-//   @override
-//   FutureOr<void> build() {} // تبسيط الـ build
-
-//   // دالة الحذف
-//   // Future<void> removeLocation(int id) async {
-//   //   state = const AsyncValue.loading();
-//   //   state = await AsyncValue.guard(() async {
-//   //     await ref.read(campaignLocationRepositoryProvider).deleteLocation(id);
-//   //     // تحديث البروفايدر المسؤول عن جلب البيانات فوراً
-//   //     ref.invalidate(getCampaignLocationsProvider); 
-//   //   });
-//   // }
-
-//   // دالة تفعيل الموقع كـ "موقع حالي"
-//   Future<void> makeLocationActive(int id) async {
-//     state = const AsyncValue.loading();
-//     state = await AsyncValue.guard(() async {
-//       await ref.read(campaignLocationRepositoryProvider).setActiveLocation(id);
-//       ref.invalidate(getCampaignLocationsProvider);
-//     });
-//   }
-// }
   @riverpod
   class CampaignLocationController extends _$CampaignLocationController {
     @override
