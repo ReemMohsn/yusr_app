@@ -20,8 +20,8 @@ class InstructionModel {
   }
 
   Map<String, dynamic> toJson() => {
-        'title': title,
-        'subtitle': subtitle,
-        'description': description,
-      };
+    'title': title,
+    'subtitle': subtitle,
+    'description': description,
+  };
 }

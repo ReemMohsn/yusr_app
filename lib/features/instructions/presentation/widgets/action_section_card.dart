@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/constants/app_size.dart';
-import 'package:yusr/features/instructions/data/models/hajj_details_models.dart';
+import 'package:yusr/features/instructions/data/models/hajj_action_model.dart';
 
 class ActionSectionCard extends StatelessWidget {
   final ActionSectionModel section;
@@ -32,14 +32,16 @@ class ActionSectionCard extends StatelessWidget {
       margin: EdgeInsets.only(bottom: AppSize.paddingOfPage.h),
       decoration: BoxDecoration(
         color: bgColor,
-        borderRadius: BorderRadius.circular(16.r), // Standard card radius for this feature
+        borderRadius: BorderRadius.circular(
+          16.r,
+        ), // Standard card radius for this feature
         border: Border.all(color: borderColor),
         boxShadow: [
           BoxShadow(
             color: AppColor.darkBlack.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
-          )
+          ),
         ],
       ),
       child: Column(

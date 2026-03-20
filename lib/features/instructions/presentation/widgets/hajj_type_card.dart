@@ -51,52 +51,43 @@ class HajjTypeCard extends StatelessWidget {
             children: [
               Padding(
                 padding: EdgeInsets.all(AppSize.paddingInsideCard.r),
-                child: Directionality(
-                  textDirection: TextDirection.rtl,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        instruction.title,
-                        style: TextStyle(
-                          fontFamily: 'Cairo',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.sp,
-                          color: AppColor.withe,
-                          height: 1.4,
-                        ),
-                        textAlign: TextAlign.right,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      instruction.title,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20.sp,
+                        color: AppColor.withe,
+                        height: 1.4,
                       ),
+                    ),
 
-                      SizedBox(height: AppSize.smallSpace.h),
+                    SizedBox(height: AppSize.smallSpace.h),
 
-                      Text(
-                        instruction.subtitle,
-                        style: TextStyle(
-                          fontFamily: 'Cairo',
-                          fontWeight: FontWeight.normal,
-                          fontSize: 14.sp,
-                          color: AppColor.withe.withValues(alpha: 0.9),
-                          height: 1.625,
-                        ),
-                        textAlign: TextAlign.right,
+                    Text(
+                      instruction.subtitle,
+                      style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 14.sp,
+                        color: AppColor.withe.withValues(alpha: 0.9),
+                        height: 1.625,
                       ),
+                    ),
 
-                      SizedBox(height: AppSize.smallSpace.h),
+                    SizedBox(height: AppSize.smallSpace.h),
 
-                      Text(
-                        instruction.description,
-                        style: TextStyle(
-                          fontFamily: 'Cairo',
-                          fontWeight: FontWeight.normal,
-                          fontSize: 12.sp,
-                          color: AppColor.withe.withValues(alpha: 0.8),
-                          height: 1.625,
-                        ),
-                        textAlign: TextAlign.right,
+                    Text(
+                      instruction.description,
+                      style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 12.sp,
+                        color: AppColor.withe.withValues(alpha: 0.8),
+                        height: 1.625,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
 

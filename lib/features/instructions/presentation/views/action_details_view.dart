@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yusr/core/common/widgets/custom_golden_back_button.dart';
 import 'package:yusr/core/constants/app_size.dart';
-import 'package:yusr/features/instructions/data/models/hajj_details_models.dart';
+import 'package:yusr/features/instructions/data/models/hajj_action_model.dart';
 import 'package:yusr/features/instructions/presentation/widgets/action_section_card.dart';
 
 class ActionDetailsView extends StatelessWidget {
@@ -27,10 +27,7 @@ class ActionDetailsView extends StatelessWidget {
               children: [
                 Hero(
                   tag: action.name,
-                  child: Text(
-                    action.emoji,
-                    style: TextStyle(fontSize: 70.sp),
-                  ),
+                  child: Text(action.emoji, style: TextStyle(fontSize: 70.sp)),
                 ),
                 SizedBox(height: AppSize.spaceBetweenCards.h),
               ],

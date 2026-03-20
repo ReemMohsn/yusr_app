@@ -9,7 +9,7 @@ import 'package:yusr/features/auth/presentation/views/forgot_password.dart';
 import 'package:yusr/features/auth/presentation/views/login_view.dart';
 import 'package:yusr/features/auth/presentation/views/reset_password_view.dart';
 import 'package:yusr/features/home/presentation/views/main_home_view.dart';
-import 'package:yusr/features/instructions/data/models/hajj_details_models.dart';
+import 'package:yusr/features/instructions/data/models/hajj_action_model.dart';
 import 'package:yusr/features/instructions/presentation/views/action_details_view.dart';
 import 'package:yusr/features/instructions/presentation/views/hajj_details_view.dart';
 import 'package:yusr/features/instructions/presentation/views/instructions_view.dart';

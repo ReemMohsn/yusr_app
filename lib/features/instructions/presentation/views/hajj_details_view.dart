@@ -36,7 +36,10 @@ class _HajjDetailsViewState extends ConsumerState<HajjDetailsView> {
 
     if (days.isEmpty) {
       return Scaffold(
-        appBar: AppBar(title: Text(widget.hajjType)),
+        appBar: AppBar(
+          title: Text(widget.hajjType),
+          leading: const CustomGoldenBackButton(),
+        ),
         body: Center(child: Text(l10n.notFound)),
       );
     }

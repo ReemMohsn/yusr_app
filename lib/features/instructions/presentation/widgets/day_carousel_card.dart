@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/constants/app_size.dart';
-import 'package:yusr/features/instructions/data/models/hajj_details_models.dart';
+import 'package:yusr/features/instructions/data/models/hajj_day_model.dart';
 import 'package:yusr/features/instructions/providers/current_day_index_provider.dart';
 
 class DayCarouselCard extends ConsumerStatefulWidget {
@@ -54,7 +54,13 @@ class _DayCarouselCardState extends ConsumerState<DayCarouselCard> {
     final canGoBack = currentPage > 0;
 
     return Container(
-      margin: EdgeInsets.fromLTRB(AppSize.paddingOfPage.w, 16.h, AppSize.paddingOfPage.w, 0),
+      margin: EdgeInsets.fromLTRB(
+        AppSize.paddingOfPage.w,
+        16.h,
+        AppSize.paddingOfPage.w,
+        0,
+      ),
+      width: double.infinity,
       height: 174.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.r),
@@ -84,7 +90,7 @@ class _DayCarouselCardState extends ConsumerState<DayCarouselCard> {
               final day = widget.days[index];
               return Stack(
                 children: [
-                   // Title
+                  // Title
                   Positioned(
                     top: 36.h,
                     left: 0,
@@ -93,7 +99,6 @@ class _DayCarouselCardState extends ConsumerState<DayCarouselCard> {
                       child: Text(
                         day.title,
                         style: TextStyle(
-                          fontFamily: 'Cairo',
                           fontWeight: FontWeight.bold,
                           fontSize: 20.sp,
                           color: AppColor.withe,
@@ -112,7 +117,6 @@ class _DayCarouselCardState extends ConsumerState<DayCarouselCard> {
                       child: Text(
                         day.subtitle,
                         style: TextStyle(
-                          fontFamily: 'Cairo',
                           fontSize: 14.sp,
                           color: AppColor.withe.withValues(alpha: 0.9),
                         ),
@@ -126,7 +130,7 @@ class _DayCarouselCardState extends ConsumerState<DayCarouselCard> {
           ),
 
           // ── Fixed UI Elements (Not Sliding) ──
-          
+
           // Dot indicators
           Positioned(
             bottom: 14.h,
@@ -142,7 +146,9 @@ class _DayCarouselCardState extends ConsumerState<DayCarouselCard> {
                   width: isActive ? 32.w : 6.w,
                   height: 6.h,
                   decoration: BoxDecoration(
-                    color: isActive ? AppColor.withe : AppColor.withe.withValues(alpha: 0.4),
+                    color: isActive
+                        ? AppColor.withe
+                        : AppColor.withe.withValues(alpha: 0.4),
                     borderRadius: BorderRadius.circular(99.r),
                   ),
                 );
@@ -156,7 +162,9 @@ class _DayCarouselCardState extends ConsumerState<DayCarouselCard> {
               left: 8.w,
               top: 67.h,
               child: GestureDetector(
-                onTap: () => ref.read(currentDayIndexProvider.notifier).increment(totalDays),
+                onTap: () => ref
+                    .read(currentDayIndexProvider.notifier)
+                    .increment(totalDays),
                 child: Container(
                   width: 40.w,
                   height: 40.h,
@@ -179,7 +187,8 @@ class _DayCarouselCardState extends ConsumerState<DayCarouselCard> {
               right: 8.w,
               top: 67.h,
               child: GestureDetector(
-                onTap: () => ref.read(currentDayIndexProvider.notifier).decrement(),
+                onTap: () =>
+                    ref.read(currentDayIndexProvider.notifier).decrement(),
                 child: Container(
                   width: 40.w,
                   height: 40.h,
