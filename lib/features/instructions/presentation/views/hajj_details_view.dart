@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:yusr/core/common/widgets/custom_golden_back_button.dart';
+import 'package:yusr/features/auth/presentation/widgets/custom_back_button.dart';
 import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/core/constants/app_size.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
@@ -38,7 +38,14 @@ class _HajjDetailsViewState extends ConsumerState<HajjDetailsView> {
       return Scaffold(
         appBar: AppBar(
           title: Text(widget.hajjType),
-          leading: const CustomGoldenBackButton(),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          scrolledUnderElevation: 0,
+          leadingWidth: 60.w,
+          leading: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.w),
+            child: const UnconstrainedBox(child: CustomBackButton()),
+          ),
         ),
         body: Center(child: Text(l10n.notFound)),
       );
@@ -51,7 +58,14 @@ class _HajjDetailsViewState extends ConsumerState<HajjDetailsView> {
       appBar: AppBar(
         // AppBar title uses the localized label + the type name from the ARB
         title: Text('${l10n.hajjActionsTitle} ${widget.hajjType}'),
-        leading: const CustomGoldenBackButton(),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        leadingWidth: 60.w,
+        leading: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10.w),
+          child: const UnconstrainedBox(child: CustomBackButton()),
+        ),
       ),
       body: SafeArea(
         child: Column(

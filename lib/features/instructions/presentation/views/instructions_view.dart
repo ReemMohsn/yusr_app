@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:yusr/core/common/widgets/custom_golden_back_button.dart';
+import 'package:yusr/features/auth/presentation/widgets/custom_back_button.dart';
 import 'package:yusr/core/constants/app_size.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/features/instructions/presentation/widgets/hajj_type_card.dart';
@@ -18,7 +18,14 @@ class InstructionsView extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.instructions),
-        leading: const CustomGoldenBackButton(),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        leadingWidth: 60.w,
+        leading: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10.w),
+          child: const UnconstrainedBox(child: CustomBackButton()),
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
