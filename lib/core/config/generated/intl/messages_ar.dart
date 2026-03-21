@@ -58,6 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "contentLabel": MessageLookupByLibrary.simpleMessage("المحتوى"),
     "delete": MessageLookupByLibrary.simpleMessage("حذف"),
+    "detiles": MessageLookupByLibrary.simpleMessage("التفاصيل"),
     "dhuhr": MessageLookupByLibrary.simpleMessage("الظهر"),
     "emailLabel": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
     "emailOrPassport": MessageLookupByLibrary.simpleMessage(
@@ -74,6 +75,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "errorFetchingAnnouncements": MessageLookupByLibrary.simpleMessage(
       "حدث خطأ أثناء جلب الإعلانات:",
+    ),
+    "errorFetchingNotifications": MessageLookupByLibrary.simpleMessage(
+      "حدث خطأ أثناء جلب الإشعارات:",
     ),
     "fajr": MessageLookupByLibrary.simpleMessage("الفجر"),
     "forgotPassword": MessageLookupByLibrary.simpleMessage("نسيت كلمة المرور؟"),
@@ -100,6 +104,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "maghrib": MessageLookupByLibrary.simpleMessage("المغرب"),
     "manasekCounter": MessageLookupByLibrary.simpleMessage("عداد المناسك"),
+    "messageContent": MessageLookupByLibrary.simpleMessage("محتوى الرسالة"),
     "newPasswordDescription": MessageLookupByLibrary.simpleMessage(
       "يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمات المرور السابقة",
     ),
@@ -112,7 +117,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "noMatchingSearchResults": MessageLookupByLibrary.simpleMessage(
       "لا توجد نتائج مطابقة للبحث",
     ),
+    "noNotificationsCurrently": MessageLookupByLibrary.simpleMessage(
+      "لا توجد إشعارات حالياً",
+    ),
     "notFound": MessageLookupByLibrary.simpleMessage("لا يوجد"),
+    "notificationSearch": MessageLookupByLibrary.simpleMessage(
+      "\'ابحث عن إشعارات...",
+    ),
+    "notifications": MessageLookupByLibrary.simpleMessage("الإشعارات"),
     "password": MessageLookupByLibrary.simpleMessage("كلمة المرور"),
     "passwordsDoNotMatchError": MessageLookupByLibrary.simpleMessage(
       "كلمتا المرور غير متطابقتين",

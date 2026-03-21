@@ -29,7 +29,7 @@ class _AddAnnouncementViewState extends ConsumerState<AddAnnouncementView> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _bodyController = TextEditingController();
 
-  TargetAudience _selectedAudience = TargetAudience.all;
+  final TargetAudience _selectedAudience = TargetAudience.all;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override

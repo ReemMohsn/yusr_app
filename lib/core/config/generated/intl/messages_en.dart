@@ -62,6 +62,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "contentLabel": MessageLookupByLibrary.simpleMessage("Content"),
     "delete": MessageLookupByLibrary.simpleMessage("Delete"),
+    "detiles": MessageLookupByLibrary.simpleMessage("Details"),
     "dhuhr": MessageLookupByLibrary.simpleMessage("Dhuhr"),
     "emailLabel": MessageLookupByLibrary.simpleMessage("Email"),
     "emailOrPassport": MessageLookupByLibrary.simpleMessage(
@@ -78,6 +79,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "errorFetchingAnnouncements": MessageLookupByLibrary.simpleMessage(
       "An error occurred while fetching announcements:",
+    ),
+    "errorFetchingNotifications": MessageLookupByLibrary.simpleMessage(
+      "An error occurred while fetching notifications:",
     ),
     "fajr": MessageLookupByLibrary.simpleMessage("Fajr"),
     "forgotPassword": MessageLookupByLibrary.simpleMessage("Forgot Password?"),
@@ -107,6 +111,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "maghrib": MessageLookupByLibrary.simpleMessage("Maghrib"),
     "manasekCounter": MessageLookupByLibrary.simpleMessage("Manasek Counter"),
+    "messageContent": MessageLookupByLibrary.simpleMessage("Message Content"),
     "newPasswordDescription": MessageLookupByLibrary.simpleMessage(
       "The new password must be different from previous passwords",
     ),
@@ -117,7 +122,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "noMatchingSearchResults": MessageLookupByLibrary.simpleMessage(
       "No matching search results found",
     ),
+    "noNotificationsCurrently": MessageLookupByLibrary.simpleMessage(
+      "There are currently no notifications",
+    ),
     "notFound": MessageLookupByLibrary.simpleMessage("Not found"),
+    "notificationSearch": MessageLookupByLibrary.simpleMessage(
+      "Search for notifications...",
+    ),
+    "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
     "password": MessageLookupByLibrary.simpleMessage("Password"),
     "passwordsDoNotMatchError": MessageLookupByLibrary.simpleMessage(
       "Passwords do not match",
