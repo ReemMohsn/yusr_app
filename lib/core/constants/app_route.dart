@@ -1,9 +1,12 @@
 // مثال فقط لروابط  التنقل لإتباع نفس الإسلوب
 import 'package:flutter/material.dart';
 import 'package:yusr/features/announcements_notifications/data/models/announcement_model.dart';
+import 'package:yusr/features/announcements_notifications/data/models/notifications_model.dart' show NotificationModel;
 import 'package:yusr/features/announcements_notifications/presentation/views/add_announcement_view.dart';
 import 'package:yusr/features/announcements_notifications/presentation/views/announcement_details_view.dart';
 import 'package:yusr/features/announcements_notifications/presentation/views/announcements_view.dart';
+import 'package:yusr/features/announcements_notifications/presentation/views/notification_details_view.dart' show NotificationDetailsView;
+import 'package:yusr/features/announcements_notifications/presentation/views/notifications_view.dart' show NotificationsView;
 import 'package:yusr/features/auth/presentation/views/account_verification.dart';
 import 'package:yusr/features/auth/presentation/views/forgot_password.dart';
 import 'package:yusr/features/auth/presentation/views/login_view.dart';
@@ -40,6 +43,12 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => AnnouncementDetailsView(announcement: announcement),
         );
+      case AppRoute.notificationsView:
+        return MaterialPageRoute(builder: (_) => const NotificationsView());
+      case AppRoute.notificationDetailsView:
+        final notification = settings.arguments as NotificationModel; // تأكد من نوع البيانات إذا لزم الأمر
+        // هنا يمكنك تمرير بيانات الإشعار إذا لزم الأمر
+        return MaterialPageRoute(builder: (_) =>  NotificationDetailsView(notification: notification));  
       case AppRoute.returnMeMapView:
         return MaterialPageRoute(builder: (_) => const ReturnMeMapView()); 
       case AppRoute.returnMeView:
@@ -71,6 +80,8 @@ class AppRoute {
 
 
   static const String announcementDetailsView = '/AnnouncementDetailsView';
+  static const String notificationsView = '/NotificationsView';
+  static const String notificationDetailsView = '/NotificationDetailsView';
 
   static const String returnMeMapView = '/ReturnMeMapView';
   static const String returnMeView = '/ReturnMeView';
