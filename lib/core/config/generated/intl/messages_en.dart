@@ -25,16 +25,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "accountVerification": MessageLookupByLibrary.simpleMessage(
       "Account Verification",
     ),
-    "addAnnouncement": MessageLookupByLibrary.simpleMessage("Add Announcement"),
-    "announcementContent": MessageLookupByLibrary.simpleMessage(
-      "Announcement Content",
-    ),
-    "announcementSearch": MessageLookupByLibrary.simpleMessage(
-      "Search for announcement...",
-    ),
-    "announcementTitle": MessageLookupByLibrary.simpleMessage(
-      "Announcement Title",
-    ),
     "announcements": MessageLookupByLibrary.simpleMessage("Announcements"),
     "appName": MessageLookupByLibrary.simpleMessage("Yusr"),
     "appSlogan": MessageLookupByLibrary.simpleMessage(
@@ -45,43 +35,19 @@ class MessageLookup extends MessageLookupByLibrary {
     "campaignLocation": MessageLookupByLibrary.simpleMessage(
       "Campaign Location",
     ),
-    "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
-    "confirmDelete": MessageLookupByLibrary.simpleMessage("Confirm Deletion"),
-    "confirmDeleteAnnouncementMessage": MessageLookupByLibrary.simpleMessage(
-      "Are you sure you want to delete this announcement? This action cannot be undone.",
-    ),
     "confirmPasswordLabel": MessageLookupByLibrary.simpleMessage(
       "Confirm Password",
     ),
-    "confirmSend": MessageLookupByLibrary.simpleMessage("Confirm Sending"),
-    "confirmSendAnnouncementQuestion": MessageLookupByLibrary.simpleMessage(
-      "Are you sure you want to send this announcement?",
-    ),
-    "connectionFailed": MessageLookupByLibrary.simpleMessage(
-      "Connection failed, please check your internet connection.",
-    ),
-    "contentLabel": MessageLookupByLibrary.simpleMessage("Content"),
-    "delete": MessageLookupByLibrary.simpleMessage("Delete"),
-    "detiles": MessageLookupByLibrary.simpleMessage("Details"),
     "dhuhr": MessageLookupByLibrary.simpleMessage("Dhuhr"),
     "emailLabel": MessageLookupByLibrary.simpleMessage("Email"),
     "emailOrPassport": MessageLookupByLibrary.simpleMessage(
       "Email or Passport Number",
-    ),
-    "enterAnnouncementTitle": MessageLookupByLibrary.simpleMessage(
-      "Enter announcement title...",
     ),
     "enterRequiredData": MessageLookupByLibrary.simpleMessage(
       "Enter the required data",
     ),
     "enterVerificationCodeDescription": MessageLookupByLibrary.simpleMessage(
       "Enter the 5-digit verification code sent to you",
-    ),
-    "errorFetchingAnnouncements": MessageLookupByLibrary.simpleMessage(
-      "An error occurred while fetching announcements:",
-    ),
-    "errorFetchingNotifications": MessageLookupByLibrary.simpleMessage(
-      "An error occurred while fetching notifications:",
     ),
     "fajr": MessageLookupByLibrary.simpleMessage("Fajr"),
     "forgotPassword": MessageLookupByLibrary.simpleMessage("Forgot Password?"),
@@ -111,33 +77,22 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "maghrib": MessageLookupByLibrary.simpleMessage("Maghrib"),
     "manasekCounter": MessageLookupByLibrary.simpleMessage("Manasek Counter"),
-    "messageContent": MessageLookupByLibrary.simpleMessage("Message Content"),
     "newPasswordDescription": MessageLookupByLibrary.simpleMessage(
       "The new password must be different from previous passwords",
     ),
     "newPasswordLabel": MessageLookupByLibrary.simpleMessage("New Password"),
-    "noAnnouncementsCurrently": MessageLookupByLibrary.simpleMessage(
-      "There are currently no announcements",
-    ),
-    "noMatchingSearchResults": MessageLookupByLibrary.simpleMessage(
-      "No matching search results found",
-    ),
-    "noNotificationsCurrently": MessageLookupByLibrary.simpleMessage(
-      "There are currently no notifications",
-    ),
     "notFound": MessageLookupByLibrary.simpleMessage("Not found"),
-    "notificationSearch": MessageLookupByLibrary.simpleMessage(
-      "Search for notifications...",
-    ),
-    "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
     "password": MessageLookupByLibrary.simpleMessage("Password"),
+    "deleteSuccess": MessageLookupByLibrary.simpleMessage(
+      "Location deleted successfully",
+    ),
+    "updateSuccess": MessageLookupByLibrary.simpleMessage(
+      "Location updated successfully",
+    ),
     "passwordsDoNotMatchError": MessageLookupByLibrary.simpleMessage(
       "Passwords do not match",
     ),
     "prayerTimes": MessageLookupByLibrary.simpleMessage("Prayer Times"),
-    "publishAnnouncement": MessageLookupByLibrary.simpleMessage(
-      "Publish Announcement",
-    ),
     "recoveryLinkNote": MessageLookupByLibrary.simpleMessage(
       "A recovery link will be sent to your email.",
     ),
@@ -149,11 +104,93 @@ class MessageLookup extends MessageLookupByLibrary {
     "ritualsPreparationDesc": MessageLookupByLibrary.simpleMessage(
       "Start your journey to the destinations, and learn the correct steps of Hajj and Umrah with amazing details.",
     ),
-    "sendAnnouncementWarning": MessageLookupByLibrary.simpleMessage(
-      "Once sent, the announcement will reach all users in the selected category and this action cannot be undone.",
-    ),
     "sendVerificationCodeButton": MessageLookupByLibrary.simpleMessage(
       "Send Verification Code",
+    ),
+    "setNewPassword": MessageLookupByLibrary.simpleMessage(
+      "Set a new password",
+    ),
+    "smartMufti": MessageLookupByLibrary.simpleMessage("Smart Mufti"),
+    "verificationCodeLabel": MessageLookupByLibrary.simpleMessage(
+      "Verification Code",
+    ),
+    "verifyCodeButton": MessageLookupByLibrary.simpleMessage("Verify Code"),
+    "addLocation": MessageLookupByLibrary.simpleMessage("Add Location"),
+    "currentLocation": MessageLookupByLibrary.simpleMessage("Current Location"),
+    "otherLocations": MessageLookupByLibrary.simpleMessage("Other Locations"),
+    "edit": MessageLookupByLibrary.simpleMessage("Edit"),
+    "locationList": MessageLookupByLibrary.simpleMessage("Location List"),
+    "locationName": MessageLookupByLibrary.simpleMessage("Location Name"),
+    "saveChanges": MessageLookupByLibrary.simpleMessage("Save Changes"),
+    "saveLocation": MessageLookupByLibrary.simpleMessage("Save Location"),
+    "selectLocationFirst": MessageLookupByLibrary.simpleMessage(
+      "Please select a location first",
+    ),
+    "chooseCoordinates": MessageLookupByLibrary.simpleMessage(
+      "Choose location coordinates",
+    ),
+    "fetchDataError": MessageLookupByLibrary.simpleMessage(
+      "Error fetching data",
+    ),
+    "retry": MessageLookupByLibrary.simpleMessage("Retry"),
+    "delete": MessageLookupByLibrary.simpleMessage("Delete"),
+    "confirmDelete": MessageLookupByLibrary.simpleMessage(
+      "Are you sure you want to delete this location permanently?",
+    ),
+    "enterLocationName": MessageLookupByLibrary.simpleMessage(
+      "Enter location name",
+    ),
+    "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+    "updateLocationTitle": MessageLookupByLibrary.simpleMessage(
+      "Update Location",
+    ),
+    "addAnnouncement": MessageLookupByLibrary.simpleMessage("Add Announcement"),
+    "announcementContent": MessageLookupByLibrary.simpleMessage(
+      "Announcement Content",
+    ),
+    "announcementSearch": MessageLookupByLibrary.simpleMessage(
+      "Search for announcement...",
+    ),
+    "announcementTitle": MessageLookupByLibrary.simpleMessage(
+      "Announcement Title",
+    ),
+    "confirmDeleteAnnouncementMessage": MessageLookupByLibrary.simpleMessage(
+      "Are you sure you want to delete this announcement? This action cannot be undone.",
+    ),
+    "confirmSend": MessageLookupByLibrary.simpleMessage("Confirm Sending"),
+    "confirmSendAnnouncementQuestion": MessageLookupByLibrary.simpleMessage(
+      "Are you sure you want to send this announcement?",
+    ),
+    "connectionFailed": MessageLookupByLibrary.simpleMessage(
+      "Connection failed, please check your internet connection.",
+    ),
+    "contentLabel": MessageLookupByLibrary.simpleMessage("Content"),
+    "detiles": MessageLookupByLibrary.simpleMessage("Details"),
+    "enterAnnouncementTitle": MessageLookupByLibrary.simpleMessage(
+      "Enter announcement title...",
+    ),
+    "errorFetchingAnnouncements": MessageLookupByLibrary.simpleMessage(
+      "An error occurred while fetching announcements:",
+    ),
+    "errorFetchingNotifications": MessageLookupByLibrary.simpleMessage(
+      "An error occurred while fetching notifications:",
+    ),
+    "messageContent": MessageLookupByLibrary.simpleMessage("Message Content"),
+    "noMatchingSearchResults": MessageLookupByLibrary.simpleMessage(
+      "No matching search results found",
+    ),
+    "noNotificationsCurrently": MessageLookupByLibrary.simpleMessage(
+      "There are currently no notifications",
+    ),
+    "notificationSearch": MessageLookupByLibrary.simpleMessage(
+      "Search for notifications...",
+    ),
+    "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
+    "publishAnnouncement": MessageLookupByLibrary.simpleMessage(
+      "Publish Announcement",
+    ),
+    "sendAnnouncementWarning": MessageLookupByLibrary.simpleMessage(
+      "Once sent, the announcement will reach all users in the selected category and this action cannot be undone.",
     ),
     "serverError": MessageLookupByLibrary.simpleMessage(
       "A server error occurred, please try again later.",
@@ -164,19 +201,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "sessionExpiredGuest": MessageLookupByLibrary.simpleMessage(
       "Session expired or your data was modified. You are now browsing as a guest.",
     ),
-    "setNewPassword": MessageLookupByLibrary.simpleMessage(
-      "Set a new password",
-    ),
-    "smartMufti": MessageLookupByLibrary.simpleMessage("Smart Mufti"),
     "targetAudience": MessageLookupByLibrary.simpleMessage("Target Audience"),
     "titleLabel": MessageLookupByLibrary.simpleMessage("Title"),
     "unexpectedError": MessageLookupByLibrary.simpleMessage(
       "An unexpected error occurred, please try again.",
     ),
-    "verificationCodeLabel": MessageLookupByLibrary.simpleMessage(
-      "Verification Code",
-    ),
-    "verifyCodeButton": MessageLookupByLibrary.simpleMessage("Verify Code"),
     "writeAnnouncementContentHere": MessageLookupByLibrary.simpleMessage(
       "Write announcement content here...",
     ),

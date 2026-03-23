@@ -448,6 +448,220 @@ class AppLocalizations {
       args: [],
     );
   }
+/// `Add Location`
+  String get addLocation {
+    return Intl.message(
+      'Add Location',
+      name: 'addLocation',
+      desc: '',
+      args: [],
+    );
+  }
+  /// `Other Locations`
+  String get otherLocations {
+    return Intl.message(
+      'Other Locations',
+      name: 'otherLocations',
+      desc: '',
+      args: [],
+    );
+  }
+    String get locationList {
+    return Intl.message(
+      'Location List',
+      name: 'locationList',
+      desc: '',
+      args: [],
+    );
+  }
+  /// `Current Location`
+  String get currentLocation {
+    return Intl.message(
+      'Current Location',
+      name: 'currentLocation',
+      desc: '',
+      args: [],
+    );
+  }
+    String get locationDescription {
+    return Intl.message(
+      'Location Description',
+      name: 'locationDescription',
+      desc: '',
+      args: [],
+    );
+  }
+    String get enterLocationDescription {
+    return Intl.message(
+      'Enter a brief description for the location',
+      name: 'enterLocationDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+/// `Edit`
+  String get edit {
+    return Intl.message(
+      'Edit',
+      name: 'edit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Location Name`
+  String get locationName {
+    return Intl.message(
+      'Location Name',
+      name: 'locationName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please choose a location first`
+  String get chooseCoordinates {
+    return Intl.message(
+      'Choose location coordinates',
+      name: 'chooseCoordinates',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save Location`
+  String get saveLocation {
+    return Intl.message(
+      'Save Location',
+      name: 'saveLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+  /// `Edit Location`
+  String get editLocation {
+      return Intl.message(
+        'Edit Location',
+        name: 'editLocation', // يجب أن يكون مطابقاً لاسم المفتاح
+        desc: '',
+        args: [],
+      );
+  }
+  /// `An error occurred while fetching data`
+  String get fetchDataError {
+    return Intl.message(
+      'An error occurred while fetching data',
+      name: 'fetchDataError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Retry`
+  String get retry {
+    return Intl.message(
+      'Retry',
+      name: 'retry',
+      desc: '',
+      args: [],
+    );
+  }
+    String get deleteSuccess{
+    return Intl.message(
+      'Location deleted successfully',
+      name: 'deleteSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+      String get updateSuccess{
+    return Intl.message(
+      'Location updated successfully',
+      name: 'updateSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+        String get changeLocation{
+    return Intl.message(
+      'Change Location',
+      name: 'changeLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+
+  /// `Save Changes`
+  String get saveChanges {
+    return Intl.message(
+      'Save Changes',
+      name: 'saveChanges',
+      desc: '',
+      args: [],
+    );
+  }
+  
+
+  /// `Please select a location first`
+  String get selectLocationFirst {
+    return Intl.message(
+      'Please select a location first',
+      name: 'selectLocationFirst',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter location name`
+  String get enterLocationName {
+    return Intl.message(
+      'Enter location name',
+      name: 'enterLocationName',
+      desc: '',
+      args: [],
+    );
+  }
+  
+  /// `Delete`
+  String get delete {
+      return Intl.message(
+        'Delete',
+        name: 'delete',
+        desc: '',
+        args: [],
+      );
+    }
+
+  /// `Are you sure you want to delete this location permanently?`
+  String get confirmDelete {
+      return Intl.message(
+        'Are you sure you want to delete this location permanently?',
+        name: 'confirmDelete',
+        desc: '',
+        args: [],
+      );
+    }
+
+  String get updateLocationTitle {
+      return Intl.message(
+        'Update Location', // القيمة الافتراضية
+        name: 'updateLocationTitle', // هذا هو أهم سطر
+        desc: '',
+        args: [],
+      );
+    }
 
   /// `Search for notifications...`
   String get notificationSearch {
@@ -644,21 +858,6 @@ class AppLocalizations {
     );
   }
 
-  /// `Cancel`
-  String get cancel {
-    return Intl.message('Cancel', name: 'cancel', desc: '', args: []);
-  }
-
-  /// `Confirm Deletion`
-  String get confirmDelete {
-    return Intl.message(
-      'Confirm Deletion',
-      name: 'confirmDelete',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Are you sure you want to delete this announcement? This action cannot be undone.`
   String get confirmDeleteAnnouncementMessage {
     return Intl.message(
@@ -669,10 +868,7 @@ class AppLocalizations {
     );
   }
 
-  /// `Delete`
-  String get delete {
-    return Intl.message('Delete', name: 'delete', desc: '', args: []);
-  }
+
 
   /// `Session expired or your data was modified. You are now browsing as a guest.`
   String get sessionExpiredGuest {
@@ -780,4 +976,6 @@ class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {
     }
     return false;
   }
+  
+  
 }

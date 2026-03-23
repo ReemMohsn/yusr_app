@@ -1,3 +1,5 @@
+
+
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +20,15 @@ void main() async {
   // HijriCalendar.hAdjustment = 0;
   WidgetsFlutterBinding.ensureInitialized();
 
+  // if (!SharedPreferencesService.isOnboardingCompleted) {
+  //   initialRoute = AppRoute.onBoarding;
+  // } else if (!SharedPreferencesService.isLoggedIn) {
+  //   initialRoute = AppRoute.login;
+  // } else {
+  //   initialRoute = AppRoute.mainHome;
+  // }
   String initialRoute = AppRoute.mainHomeView;
+  // String initialRoute = AppRoute.mainHomeView;
   // 3. تهيئة فايربيس باستخدام الملف المولد
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   // 2. تفعيل خدمة التقاط الضغطات والإشعارات التي برمجناها
@@ -36,6 +46,8 @@ void main() async {
           return YusrApp(appRouter: AppRouter(), initialRoute: initialRoute);
         },
       ),
+
+
     ),
   );
 }

@@ -9,6 +9,7 @@ import 'package:yusr/features/home/presentation/widgets/build_drawer_header.dart
 import 'package:yusr/features/home/presentation/widgets/build_logout_button.dart';
 import 'package:yusr/features/home/presentation/widgets/build_menu_item.dart';
 import 'package:yusr/features/home/providers/user_provider.dart';
+import 'package:yusr/features/auth/providers/logout_controller_provider.dart';
 
 class CustomDrawer extends ConsumerWidget {
   const CustomDrawer({super.key});
@@ -107,9 +108,12 @@ class CustomDrawer extends ConsumerWidget {
           ),
           BuildMenuItem(
             context: context,
-            title: locale.campaignLocation,
-            icon: Icons.location_on_outlined,
-            onTap: () {},
+            title: locale.campaignLocation, // "موقع استقرار الحملة"
+            icon: Icons.location_on_outlined, // أيقونة الموقع
+            onTap: () {
+              Navigator.pop(context); // إغلاق القائمة الجانبية أولاً (مهم جداً للاحترافية)
+              Navigator.of(context).pushNamed(AppRoute.campaignLocationView); // الانتقال للصفحة
+            },
           ),
           BuildMenuItem(
             context: context,
