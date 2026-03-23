@@ -10,13 +10,16 @@ class ReturnMeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return GestureDetector(
       onTap: onTap,
-      child: Container(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
         width: 250.w,
         height: 250.w,
         decoration: BoxDecoration(
-          color: AppColor.darkBlack,
+          // استخدام اللون الأسود من الثيم (darkBlack)
+          color: theme.appBarTheme.backgroundColor, 
           shape: BoxShape.circle,
           border: Border.all(color: AppColor.golden, width: 4.w),
           boxShadow: [
@@ -30,8 +33,10 @@ class ReturnMeButton extends StatelessWidget {
         child: Center(
           child: Text(
             title,
-            style: TextStyle(
-              color: AppColor.golden,
+            textAlign: TextAlign.center,
+            style: theme.textTheme.headlineLarge?.copyWith(
+              // نستخدم اللون الذهبي ليكون متبايناً مع الخلفية السوداء
+              color: AppColor.golden, 
               fontSize: 32.sp,
               fontWeight: FontWeight.bold,
             ),

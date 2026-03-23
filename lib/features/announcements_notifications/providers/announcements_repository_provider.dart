@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:yusr/core/common/providers/api_service_provider.dart';
 import 'package:yusr/features/announcements_notifications/data/repositories/announcements_repository.dart';

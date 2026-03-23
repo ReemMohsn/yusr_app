@@ -58,6 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "contentLabel": MessageLookupByLibrary.simpleMessage("المحتوى"),
     "delete": MessageLookupByLibrary.simpleMessage("حذف"),
+    "detiles": MessageLookupByLibrary.simpleMessage("التفاصيل"),
     "dhuhr": MessageLookupByLibrary.simpleMessage("الظهر"),
     "emailLabel": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
     "emailOrPassport": MessageLookupByLibrary.simpleMessage(
@@ -74,6 +75,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "errorFetchingAnnouncements": MessageLookupByLibrary.simpleMessage(
       "حدث خطأ أثناء جلب الإعلانات:",
+    ),
+    "errorFetchingNotifications": MessageLookupByLibrary.simpleMessage(
+      "حدث خطأ أثناء جلب الإشعارات:",
     ),
     "fajr": MessageLookupByLibrary.simpleMessage("الفجر"),
     "forgotPassword": MessageLookupByLibrary.simpleMessage("نسيت كلمة المرور؟"),
@@ -100,6 +104,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "maghrib": MessageLookupByLibrary.simpleMessage("المغرب"),
     "manasekCounter": MessageLookupByLibrary.simpleMessage("عداد المناسك"),
+    "messageContent": MessageLookupByLibrary.simpleMessage("محتوى الرسالة"),
     "newPasswordDescription": MessageLookupByLibrary.simpleMessage(
       "يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمات المرور السابقة",
     ),
@@ -112,7 +117,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "noMatchingSearchResults": MessageLookupByLibrary.simpleMessage(
       "لا توجد نتائج مطابقة للبحث",
     ),
+    "noNotificationsCurrently": MessageLookupByLibrary.simpleMessage(
+      "لا توجد إشعارات حالياً",
+    ),
     "notFound": MessageLookupByLibrary.simpleMessage("لا يوجد"),
+    "notificationSearch": MessageLookupByLibrary.simpleMessage(
+      "\'ابحث عن إشعارات...",
+    ),
+    "notifications": MessageLookupByLibrary.simpleMessage("الإشعارات"),
     "password": MessageLookupByLibrary.simpleMessage("كلمة المرور"),
     "passwordsDoNotMatchError": MessageLookupByLibrary.simpleMessage(
       "كلمتا المرور غير متطابقتين",
@@ -159,74 +171,74 @@ class MessageLookup extends MessageLookupByLibrary {
     "writeAnnouncementContentHere": MessageLookupByLibrary.simpleMessage(
       "اكتب محتوى الإعلان هنا...",
     ),
-                "accountVerification":
-            MessageLookupByLibrary.simpleMessage("التحقق من الحساب"),
-        "announcements": MessageLookupByLibrary.simpleMessage("الإعلانات"),
-        "appName": MessageLookupByLibrary.simpleMessage("يُسر"),
-        "appSlogan": MessageLookupByLibrary.simpleMessage("رفيق الحاج الذكي"),
-        "asr": MessageLookupByLibrary.simpleMessage("العصر"),
-        "becomeALeader": MessageLookupByLibrary.simpleMessage("كن قائد"),
-        "campaignLocation":
-            MessageLookupByLibrary.simpleMessage("موقع استقرار الحملة"),
-        "confirmPasswordLabel":
-            MessageLookupByLibrary.simpleMessage("تأكيد كلمة المرور"),
-        "dhuhr": MessageLookupByLibrary.simpleMessage("الظهر"),
-        "emailLabel": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
-        "emailOrPassport": MessageLookupByLibrary.simpleMessage(
-            "البريد الإلكتروني أو رقم الجواز"),
-        "enterRequiredData":
-            MessageLookupByLibrary.simpleMessage("أدخل البيانات المطلوبة"),
-        "enterVerificationCodeDescription":
-            MessageLookupByLibrary.simpleMessage(
-                "أدخل رمز التحقق المكون من 5 أرقام الذي تم إرساله إليك"),
-        "fajr": MessageLookupByLibrary.simpleMessage("الفجر"),
-        "forgotPassword":
-            MessageLookupByLibrary.simpleMessage("نسيت كلمة المرور؟"),
-        "forgotPasswordDescription": MessageLookupByLibrary.simpleMessage(
-            "لا تقلق، يمكنك استعادة حسابك بسهولة. أدخل بريدك الإلكتروني وسنرسل لك رمز التحقق"),
-        "groupInfo": MessageLookupByLibrary.simpleMessage("معلومات الجروب"),
-        "hajjRituals": MessageLookupByLibrary.simpleMessage("مناسك الحج"),
-        "hijriDate": MessageLookupByLibrary.simpleMessage("التاريخ الهجري"),
-        "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
-        "isha": MessageLookupByLibrary.simpleMessage("العشاء"),
-        "journeyOfFaith":
-            MessageLookupByLibrary.simpleMessage("رِحْلَةُ الإِيمَانِ"),
-        "labbayk": MessageLookupByLibrary.simpleMessage("لبيك اللهم لبيك"),
-        "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
-        "loginButton": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
-        "loginToViewCampaignLocation": MessageLookupByLibrary.simpleMessage(
-            "يرجى تسجيل الدخول لعرض موقع استقرار الحملة"),
-        "logout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
-        "logoutSuccessMessage": MessageLookupByLibrary.simpleMessage(
-            "تم تسجيل الخروج وإبطال التوكن بنجاح"),
-        "maghrib": MessageLookupByLibrary.simpleMessage("المغرب"),
-        "manasekCounter": MessageLookupByLibrary.simpleMessage("عداد المناسك"),
-        "newPasswordDescription": MessageLookupByLibrary.simpleMessage(
-            "يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمات المرور السابقة"),
-        "newPasswordLabel":
-            MessageLookupByLibrary.simpleMessage("كلمة المرور الجديدة"),
-        "notFound": MessageLookupByLibrary.simpleMessage("لا يوجد"),
-        "password": MessageLookupByLibrary.simpleMessage("كلمة المرور"),
-        "passwordsDoNotMatchError":
-            MessageLookupByLibrary.simpleMessage("كلمتا المرور غير متطابقتين"),
-        "prayerTimes": MessageLookupByLibrary.simpleMessage("مواقيت الصلاة"),
-        "recoveryLinkNote": MessageLookupByLibrary.simpleMessage(
-            "سيتم إرسال رابط الاستعادة إلى بريدك الإلكتروني"),
-        "resetButton": MessageLookupByLibrary.simpleMessage("إعادة التعيين"),
-        "returnMe": MessageLookupByLibrary.simpleMessage("ارجعني"),
-        "ritualsPreparation":
-            MessageLookupByLibrary.simpleMessage("تهيئة المناسك خطوة بخطوة"),
-        "ritualsPreparationDesc": MessageLookupByLibrary.simpleMessage(
-            "ابدأ رحلتك إلى الوجهات، وتعلم خطوات الحج والعمرة الصحيحة بتفاصيل مذهبة."),
-        "sendVerificationCodeButton":
-            MessageLookupByLibrary.simpleMessage("إرسال رمز التحقق"),
-        "setNewPassword":
-            MessageLookupByLibrary.simpleMessage("تعيين كلمة مرور جديدة"),
-        "smartMufti": MessageLookupByLibrary.simpleMessage("المفتي الذكي"),
-        "verificationCodeLabel":
-            MessageLookupByLibrary.simpleMessage("رمز التحقق"),
-        "verifyCodeButton":
-            MessageLookupByLibrary.simpleMessage("التحقق من الرمز"),
+        //         "accountVerification":
+        //     MessageLookupByLibrary.simpleMessage("التحقق من الحساب"),
+        // "announcements": MessageLookupByLibrary.simpleMessage("الإعلانات"),
+        // "appName": MessageLookupByLibrary.simpleMessage("يُسر"),
+        // "appSlogan": MessageLookupByLibrary.simpleMessage("رفيق الحاج الذكي"),
+        // "asr": MessageLookupByLibrary.simpleMessage("العصر"),
+        // "becomeALeader": MessageLookupByLibrary.simpleMessage("كن قائد"),
+        // "campaignLocation":
+        //     MessageLookupByLibrary.simpleMessage("موقع استقرار الحملة"),
+        // "confirmPasswordLabel":
+        //     MessageLookupByLibrary.simpleMessage("تأكيد كلمة المرور"),
+        // "dhuhr": MessageLookupByLibrary.simpleMessage("الظهر"),
+        // "emailLabel": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
+        // "emailOrPassport": MessageLookupByLibrary.simpleMessage(
+        //     "البريد الإلكتروني أو رقم الجواز"),
+        // "enterRequiredData":
+        //     MessageLookupByLibrary.simpleMessage("أدخل البيانات المطلوبة"),
+        // "enterVerificationCodeDescription":
+        //     MessageLookupByLibrary.simpleMessage(
+        //         "أدخل رمز التحقق المكون من 5 أرقام الذي تم إرساله إليك"),
+        // "fajr": MessageLookupByLibrary.simpleMessage("الفجر"),
+        // "forgotPassword":
+        //     MessageLookupByLibrary.simpleMessage("نسيت كلمة المرور؟"),
+        // "forgotPasswordDescription": MessageLookupByLibrary.simpleMessage(
+        //     "لا تقلق، يمكنك استعادة حسابك بسهولة. أدخل بريدك الإلكتروني وسنرسل لك رمز التحقق"),
+        // "groupInfo": MessageLookupByLibrary.simpleMessage("معلومات الجروب"),
+        // "hajjRituals": MessageLookupByLibrary.simpleMessage("مناسك الحج"),
+        // "hijriDate": MessageLookupByLibrary.simpleMessage("التاريخ الهجري"),
+        // "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
+        // "isha": MessageLookupByLibrary.simpleMessage("العشاء"),
+        // "journeyOfFaith":
+        //     MessageLookupByLibrary.simpleMessage("رِحْلَةُ الإِيمَانِ"),
+        // "labbayk": MessageLookupByLibrary.simpleMessage("لبيك اللهم لبيك"),
+        // "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
+        // "loginButton": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
+        // "loginToViewCampaignLocation": MessageLookupByLibrary.simpleMessage(
+        //     "يرجى تسجيل الدخول لعرض موقع استقرار الحملة"),
+        // "logout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
+        // "logoutSuccessMessage": MessageLookupByLibrary.simpleMessage(
+        //     "تم تسجيل الخروج وإبطال التوكن بنجاح"),
+        // "maghrib": MessageLookupByLibrary.simpleMessage("المغرب"),
+        // "manasekCounter": MessageLookupByLibrary.simpleMessage("عداد المناسك"),
+        // "newPasswordDescription": MessageLookupByLibrary.simpleMessage(
+        //     "يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمات المرور السابقة"),
+        // "newPasswordLabel":
+        //     MessageLookupByLibrary.simpleMessage("كلمة المرور الجديدة"),
+        // "notFound": MessageLookupByLibrary.simpleMessage("لا يوجد"),
+        // "password": MessageLookupByLibrary.simpleMessage("كلمة المرور"),
+        // "passwordsDoNotMatchError":
+        //     MessageLookupByLibrary.simpleMessage("كلمتا المرور غير متطابقتين"),
+        // "prayerTimes": MessageLookupByLibrary.simpleMessage("مواقيت الصلاة"),
+        // "recoveryLinkNote": MessageLookupByLibrary.simpleMessage(
+        //     "سيتم إرسال رابط الاستعادة إلى بريدك الإلكتروني"),
+        // "resetButton": MessageLookupByLibrary.simpleMessage("إعادة التعيين"),
+        // "returnMe": MessageLookupByLibrary.simpleMessage("ارجعني"),
+        // "ritualsPreparation":
+        //     MessageLookupByLibrary.simpleMessage("تهيئة المناسك خطوة بخطوة"),
+        // "ritualsPreparationDesc": MessageLookupByLibrary.simpleMessage(
+        //     "ابدأ رحلتك إلى الوجهات، وتعلم خطوات الحج والعمرة الصحيحة بتفاصيل مذهبة."),
+        // "sendVerificationCodeButton":
+        //     MessageLookupByLibrary.simpleMessage("إرسال رمز التحقق"),
+        // "setNewPassword":
+        //     MessageLookupByLibrary.simpleMessage("تعيين كلمة مرور جديدة"),
+        // "smartMufti": MessageLookupByLibrary.simpleMessage("المفتي الذكي"),
+        // "verificationCodeLabel":
+        //     MessageLookupByLibrary.simpleMessage("رمز التحقق"),
+        // "verifyCodeButton":
+        //     MessageLookupByLibrary.simpleMessage("التحقق من الرمز"),
             "addLocation": MessageLookupByLibrary.simpleMessage("إضافة موقع"),
         "currentLocation": MessageLookupByLibrary.simpleMessage("الموقع الحالي"),
         "otherLocations": MessageLookupByLibrary.simpleMessage("مواقع استقرار أخرى"),
@@ -236,10 +248,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "selectLocationFirst": MessageLookupByLibrary.simpleMessage("يرجى اختيار موقع أولاً"),
         "chooseCoordinates": MessageLookupByLibrary.simpleMessage("اختر إحداثيات الموقع"),
         "fetchDataError": MessageLookupByLibrary.simpleMessage("حدث خطأ في جلب البيانات"),
-        "notFound": MessageLookupByLibrary.simpleMessage("لا توجد بيانات"),
+        // "notFound": MessageLookupByLibrary.simpleMessage("لا توجد بيانات"),
         "enterLocationName": MessageLookupByLibrary.simpleMessage("أدخل اسم الموقع"),
         "locationName": MessageLookupByLibrary.simpleMessage("اسم الموقع"),
-        "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
+        // "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
         "updateLocationTitle": MessageLookupByLibrary.simpleMessage("تعديل موقع"),
         "deleteSuccess": MessageLookupByLibrary.simpleMessage("تم حذف الموقع بنجاح"),
         "updateSuccess": MessageLookupByLibrary.simpleMessage("تم تحديث بيانات الموقع بنجاح"),

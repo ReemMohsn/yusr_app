@@ -112,7 +112,7 @@ class _AnnouncementsViewState extends ConsumerState<AnnouncementsView> {
                 // 2. حالة الخطأ
                 error: (error, stackTrace) => Center(
                   child: Text(
-                    '${locale.errorFetchingAnnouncements}\n${filteredState.errorMessage}', // 🔥 هنا استخدمنا الإضافة الخاصة بك                    textAlign: TextAlign.center,
+                    '${locale.errorFetchingAnnouncements}\n${filteredState.errorMessage}',                    textAlign: TextAlign.center,
                   ),
                 ),
 
