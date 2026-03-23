@@ -80,5 +80,9 @@
   "secureArrivalMessage": "To ensure a safe journey and arrive peacefully, please login first",
   "messageFetchingCampLocationmessage": "Fetching campaign location...",
   "km": "km",
-  "youAreHere": "You are here"
+  "youAreHere": "You are here",
+  "importantAnnouncement": "Important Announcement",
+  "administration": "Administration",
+  "newNotification": "New Notification",
+  "viewDetails": "View Details"
 }
