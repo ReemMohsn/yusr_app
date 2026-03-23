@@ -202,16 +202,6 @@ class _EditLocationViewState extends ConsumerState<EditLocationView> {
                 horizontal: AppSize.paddingOfPage.w,
                 vertical: 15.h,
               ),
-              decoration: BoxDecoration(
-                color: Theme.of(context).scaffoldBackgroundColor,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    offset: const Offset(0, -4),
-                    blurRadius: 10,
-                  ),
-                ],
-              ),
               child: Row(
                 children: [
                   // زر الحفظ

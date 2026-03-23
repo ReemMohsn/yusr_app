@@ -75,15 +75,15 @@ class CampaignLocationView extends ConsumerWidget {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColor.darkBlack.withOpacity(0.25),
-                              blurRadius: 4,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
-                        ),
+                        // decoration: BoxDecoration(
+                        //   boxShadow: [
+                        //     BoxShadow(
+                        //       color: AppColor.darkBlack.withOpacity(0.25),
+                        //       blurRadius: 4,
+                        //       offset: const Offset(0, 4),
+                        //     ),
+                        //   ],
+                        // ),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColor.golden,

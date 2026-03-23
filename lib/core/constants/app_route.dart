@@ -73,11 +73,11 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const CampaignLocationView());
       case AppRoute.addLocationView:
         return MaterialPageRoute(builder: (_) => const AddLocationView());
-      // case AppRoute.editLocationView:
-      //   final location = settings.arguments as CampaignLocationItemModel;
-      //   return MaterialPageRoute(
-      //     builder: (_) => EditLocationView(location: location),
-      //   );
+      case AppRoute.editLocationView:
+        final location = settings.arguments as CampaignLocationItemModel;
+        return MaterialPageRoute(
+          builder: (_) => EditLocationView(location: location),
+        );
       case AppRoute.setLocationView:
         return MaterialPageRoute(builder: (_) => const SetLocationView());
       default:
