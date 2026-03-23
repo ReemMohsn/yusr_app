@@ -154,6 +154,16 @@ class AppLocalizations {
     );
   }
 
+  /// `Notifications`
+  String get notifications {
+    return Intl.message(
+      'Notifications',
+      name: 'notifications',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Group Information`
   String get groupInfo {
     return Intl.message(
@@ -653,6 +663,51 @@ class AppLocalizations {
       );
     }
 
+  /// `Search for notifications...`
+  String get notificationSearch {
+    return Intl.message(
+      'Search for notifications...',
+      name: 'notificationSearch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An error occurred while fetching notifications:`
+  String get errorFetchingNotifications {
+    return Intl.message(
+      'An error occurred while fetching notifications:',
+      name: 'errorFetchingNotifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There are currently no notifications`
+  String get noNotificationsCurrently {
+    return Intl.message(
+      'There are currently no notifications',
+      name: 'noNotificationsCurrently',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Message Content`
+  String get messageContent {
+    return Intl.message(
+      'Message Content',
+      name: 'messageContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Details`
+  String get detiles {
+    return Intl.message('Details', name: 'detiles', desc: '', args: []);
+  }
+
   /// `Search for announcement...`
   String get announcementSearch {
     return Intl.message(
@@ -803,21 +858,6 @@ class AppLocalizations {
     );
   }
 
-  /// `Cancel`
-  // String get cancel {
-  //   return Intl.message('Cancel', name: 'cancel', desc: '', args: []);
-  // }
-
-  /// `Confirm Deletion`
-  // String get confirmDelete {
-  //   return Intl.message(
-  //     'Confirm Deletion',
-  //     name: 'confirmDelete',
-  //     desc: '',
-  //     args: [],
-  //   );
-  // }
-
   /// `Are you sure you want to delete this announcement? This action cannot be undone.`
   String get confirmDeleteAnnouncementMessage {
     return Intl.message(
@@ -878,6 +918,36 @@ class AppLocalizations {
       desc: '',
       args: [],
     );
+  }
+
+  /// `To ensure a safe journey and arrive peacefully, please login first`
+  String get secureArrivalMessage {
+    return Intl.message(
+      'To ensure a safe journey and arrive peacefully, please login first',
+      name: 'secureArrivalMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fetching campaign location...`
+  String get messageFetchingCampLocationmessage {
+    return Intl.message(
+      'Fetching campaign location...',
+      name: 'messageFetchingCampLocationmessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `km`
+  String get km {
+    return Intl.message('km', name: 'km', desc: '', args: []);
+  }
+
+  /// `You are here`
+  String get youAreHere {
+    return Intl.message('You are here', name: 'youAreHere', desc: '', args: []);
   }
 }
 

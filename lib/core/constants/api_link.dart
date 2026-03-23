@@ -8,14 +8,16 @@ class ApiLink {
   static const String sendCode = '$server/Auth/SendCode';
   static const String resetPassword = '$server/Auth/ResetPassword';
   static const String logout = '$server/Auth/Logout';
-
-  // 3. Announcements (ميزة الإعلانات - شغل ريم)
   static const String syncData = '$server/Announcements/SyncData';
-  static const String getAnnouncements = '$server/Announcements/GetAnnouncements';
-  static const String createAnnouncement = '$server/Announcements/CreateAndPublishAnnouncement';
-  static const String deleteAnnouncement = '$server/Announcements/DeleteAnnouncement';
-
-  // 4. Campaign Location (ميزة مواقع الحملة - شغلكِ)
+  static const String getNotifications =
+      '$server/Announcements/GetNotifications';
+  static const String getAnnouncements =
+      '$server/Announcements/GetAnnouncements';
+  static const String createAnnouncement =
+      '$server/Announcements/CreateAndPublishAnnouncement';
+  static const String deleteAnnouncement =
+      '$server/Announcements/DeleteAnnouncement';
+  // Location
   static const String getActiveLocation = '$server/Location/GetActiveLocation';
   static const String getCampaignLocations = '$server/CampaignLocation/GetCampaignLocationsView';
   static const String addCampaignLocation = '$server/CampaignLocation/AddNewLocation';

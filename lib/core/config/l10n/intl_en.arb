@@ -14,6 +14,7 @@
   "logoutSuccessMessage": "Logged out and token revoked successfully",
   "becomeALeader": "Become a Leader",
   "announcements": "Announcements",
+  "notifications": "Notifications",
   "groupInfo": "Group Information",
   "hajjRituals": "Hajj Rituals",
   "journeyOfFaith": "Journey of Faith",
@@ -75,6 +76,11 @@
   "enterLocationName": "Enter location name...",
   "updateLocationTitle": "Update Location",
   "deleteSuccess": "Location deleted successfully",
+  "notificationSearch": "Search for notifications...",
+  "errorFetchingNotifications": "An error occurred while fetching notifications:",
+  "noNotificationsCurrently": "There are currently no notifications",
+  "messageContent": "Message Content",
+  "detiles": "Details",
   "announcementSearch": "Search for announcement...",
   "errorFetchingAnnouncements": "An error occurred while fetching announcements:",
   "noAnnouncementsCurrently": "There are currently no announcements",
@@ -91,5 +97,8 @@
   "titleLabel": "Title",
   "contentLabel": "Content",
   "sendAnnouncementWarning": "Once sent, the announcement will reach all users in the selected category and this action cannot be undone.",
-  "confirmDeleteAnnouncementMessage": "Are you sure you want to delete this announcement? This action cannot be undone."
+  "confirmDeleteAnnouncementMessage": "Are you sure you want to delete this announcement? This action cannot be undone.",
+  "messageFetchingCampLocationmessage": "Fetching campaign location...",
+  "km": "km",
+  "youAreHere": "You are here"
 }

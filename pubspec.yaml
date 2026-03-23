@@ -31,26 +31,6 @@ dependencies:
   flutter:
     sdk: flutter    
 
-  # المكتبات المفعلة (تمت إزالة التكرار وضبط المسافات)
-  dio: any
-  intl: any
-  shared_preferences: any
-  flutter_localization: any
-  flutter_svg: any
-  device_preview: any
-  flutter_riverpod: any
-  riverpod_annotation: any
-  flutter_screenutil: any
-  hijri: any
-  adhan: any
-  firebase_core: any
-  firebase_messaging: any
-  geolocator: any
-  flutter_map: any
-  latlong2: ^0.9.1
-  cupertino_icons: ^1.0.8
-  http: ^1.2.0
-
   # المكتبات المعلقة (إبقاء للذكرى أو الرجوع إليها)
   # dio: ^5.8.0+1
   # intl: any
@@ -65,7 +45,29 @@ dependencies:
   # flutter_screenutil: ^5.9.3
   # hijri: ^3.0.0
   # adhan: ^2.0.0
-
+  dio: any
+  intl: any
+  shared_preferences: any
+  flutter_localization: any
+  flutter_svg: any
+  device_preview: any
+  flutter_riverpod: any
+  riverpod_annotation: any
+  # build_runner: any
+  # riverpod_generator: any
+  flutter_screenutil: any
+  hijri: any
+  adhan: any
+  firebase_core: any
+  firebase_messaging: any
+  flutter_compass: any
+  flutter_map: any
+  latlong2: ^0.9.1
+  geolocator: ^13.0.1  
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.8
+  http: ^1.2.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
