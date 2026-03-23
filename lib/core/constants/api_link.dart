@@ -1,10 +1,8 @@
 class ApiLink {
-  // فقط أمثله لروابط الثلاثة الأساسية نقدر نعدلهاً بعد ذلك بما يتوافق مع مشاريعنا
-  // Base
+  // 1. Base URL
   static const String server = 'http://yusrapp.runasp.net/api';
-  // static const String server = 'http://192.168.1.5:5161/api';
 
-  // Auth
+  // 2. Auth (التوثيق)
   static const String login = '$server/Auth/LoginMobile';
   static const String forgotPassword = '$server/Auth/ForgotPassword';
   static const String sendCode = '$server/Auth/SendCode';
@@ -21,7 +19,13 @@ class ApiLink {
       '$server/Announcements/DeleteAnnouncement';
   // Location
   static const String getActiveLocation = '$server/Location/GetActiveLocation';
+  static const String getCampaignLocations = '$server/CampaignLocation/GetCampaignLocationsView';
+  static const String addCampaignLocation = '$server/CampaignLocation/AddNewLocation';
+  static const String updateLocationData = '$server/CampaignLocation/UpdateLocationData';
+  static const String setActiveLocation = '$server/CampaignLocation/SetActiveLocation';
+  static const String deleteLocation = '$server/CampaignLocation/DeleteLocation';
 
+  // 5. وظائف ديناميكية
   static String changeResidentialNeighborhoodManager({
     required int neighborhoodId,
   }) {
