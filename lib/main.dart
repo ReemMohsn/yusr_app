@@ -20,6 +20,13 @@ void main() async {
   // إذا كان صحيحاً اتركها 0
   // HijriCalendar.hAdjustment = 0;
 
+  // if (!SharedPreferencesService.isOnboardingCompleted) {
+  //   initialRoute = AppRoute.onBoarding;
+  // } else if (!SharedPreferencesService.isLoggedIn) {
+  //   initialRoute = AppRoute.login;
+  // } else {
+  //   initialRoute = AppRoute.mainHome;
+  // }
   String initialRoute = AppRoute.mainHomeView;
 
   // 3. تهيئة فايربيس باستخدام الملف المولد

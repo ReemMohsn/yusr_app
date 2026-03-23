@@ -26,6 +26,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Account Verification"),
         "addAnnouncement":
             MessageLookupByLibrary.simpleMessage("Add Announcement"),
+        "addLocation": MessageLookupByLibrary.simpleMessage("Add Location"),
         "administration":
             MessageLookupByLibrary.simpleMessage("Administration"),
         "announcementContent":
@@ -44,8 +45,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "campaignLocation":
             MessageLookupByLibrary.simpleMessage("Campaign Location"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
-        "confirmDelete":
-            MessageLookupByLibrary.simpleMessage("Confirm Deletion"),
+        "changeLocation":
+            MessageLookupByLibrary.simpleMessage("Change Location"),
+        "chooseCoordinates":
+            MessageLookupByLibrary.simpleMessage("Choose Location Coordinates"),
+        "confirmDelete": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to delete this item permanently?"),
         "confirmDeleteAnnouncementMessage": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to delete this announcement? This action cannot be undone."),
         "confirmPasswordLabel":
@@ -56,14 +61,23 @@ class MessageLookup extends MessageLookupByLibrary {
         "connectionFailed": MessageLookupByLibrary.simpleMessage(
             "Connection failed, please check your internet connection."),
         "contentLabel": MessageLookupByLibrary.simpleMessage("Content"),
+        "currentLocation":
+            MessageLookupByLibrary.simpleMessage("Current Location"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
+        "deleteSuccess": MessageLookupByLibrary.simpleMessage(
+            "Location deleted successfully"),
         "detiles": MessageLookupByLibrary.simpleMessage("Details"),
         "dhuhr": MessageLookupByLibrary.simpleMessage("Dhuhr"),
+        "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "emailLabel": MessageLookupByLibrary.simpleMessage("Email"),
         "emailOrPassport":
             MessageLookupByLibrary.simpleMessage("Email or Passport Number"),
         "enterAnnouncementTitle":
             MessageLookupByLibrary.simpleMessage("Enter announcement title..."),
+        "enterLocationDescription": MessageLookupByLibrary.simpleMessage(
+            "Enter a brief description for the location"),
+        "enterLocationName":
+            MessageLookupByLibrary.simpleMessage("Enter location name..."),
         "enterRequiredData":
             MessageLookupByLibrary.simpleMessage("Enter the required data"),
         "enterVerificationCodeDescription":
@@ -74,6 +88,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "errorFetchingNotifications": MessageLookupByLibrary.simpleMessage(
             "An error occurred while fetching notifications:"),
         "fajr": MessageLookupByLibrary.simpleMessage("Fajr"),
+        "fetchDataError":
+            MessageLookupByLibrary.simpleMessage("Error fetching data"),
         "forgotPassword":
             MessageLookupByLibrary.simpleMessage("Forgot Password?"),
         "forgotPasswordDescription": MessageLookupByLibrary.simpleMessage(
@@ -92,6 +108,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "km": MessageLookupByLibrary.simpleMessage("km"),
         "labbayk":
             MessageLookupByLibrary.simpleMessage("Labbayk Allahumma Labbayk"),
+        "locationDescription":
+            MessageLookupByLibrary.simpleMessage("Location Description"),
+        "locationList": MessageLookupByLibrary.simpleMessage("Location List"),
+        "locationName": MessageLookupByLibrary.simpleMessage("Location Name"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "loginButton": MessageLookupByLibrary.simpleMessage("Login"),
         "loginToViewCampaignLocation": MessageLookupByLibrary.simpleMessage(
@@ -123,6 +143,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "notificationSearch":
             MessageLookupByLibrary.simpleMessage("Search for notifications..."),
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
+        "otherLocations":
+            MessageLookupByLibrary.simpleMessage("Other Locations"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "passwordsDoNotMatchError":
             MessageLookupByLibrary.simpleMessage("Passwords do not match"),
@@ -132,13 +154,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "recoveryLinkNote": MessageLookupByLibrary.simpleMessage(
             "A recovery link will be sent to your email."),
         "resetButton": MessageLookupByLibrary.simpleMessage("Reset"),
+        "retry": MessageLookupByLibrary.simpleMessage("Retry"),
         "returnMe": MessageLookupByLibrary.simpleMessage("Take me back"),
         "ritualsPreparation": MessageLookupByLibrary.simpleMessage(
             "Step-by-step Rituals Preparation"),
         "ritualsPreparationDesc": MessageLookupByLibrary.simpleMessage(
             "Start your journey to the destinations, and learn the correct steps of Hajj and Umrah with amazing details."),
+        "saveChanges": MessageLookupByLibrary.simpleMessage("Save Changes"),
+        "saveLocation": MessageLookupByLibrary.simpleMessage("Save Location"),
         "secureArrivalMessage": MessageLookupByLibrary.simpleMessage(
             "To ensure a safe journey and arrive peacefully, please login first"),
+        "selectLocationFirst": MessageLookupByLibrary.simpleMessage(
+            "Please select a location first"),
         "sendAnnouncementWarning": MessageLookupByLibrary.simpleMessage(
             "Once sent, the announcement will reach all users in the selected category and this action cannot be undone."),
         "sendVerificationCodeButton":
@@ -157,6 +184,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "titleLabel": MessageLookupByLibrary.simpleMessage("Title"),
         "unexpectedError": MessageLookupByLibrary.simpleMessage(
             "An unexpected error occurred, please try again."),
+        "updateLocationTitle":
+            MessageLookupByLibrary.simpleMessage("Update Location"),
+        "updateSuccess": MessageLookupByLibrary.simpleMessage(
+            "Location updated successfully"),
         "verificationCodeLabel":
             MessageLookupByLibrary.simpleMessage("Verification Code"),
         "verifyCodeButton": MessageLookupByLibrary.simpleMessage("Verify Code"),

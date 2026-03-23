@@ -25,21 +25,23 @@ class MessageLookup extends MessageLookupByLibrary {
         "accountVerification":
             MessageLookupByLibrary.simpleMessage("التحقق من الحساب"),
         "addAnnouncement": MessageLookupByLibrary.simpleMessage("إضافة إعلان"),
+        "addLocation": MessageLookupByLibrary.simpleMessage("إضافة موقع"),
         "administration": MessageLookupByLibrary.simpleMessage("الإدارة"),
         "announcementContent":
             MessageLookupByLibrary.simpleMessage("محتوى الإعلان"),
         "announcementSearch":
-            MessageLookupByLibrary.simpleMessage("\'ابحث عن إعلان..."),
+            MessageLookupByLibrary.simpleMessage("ابحث عن إعلان..."),
         "announcementTitle":
             MessageLookupByLibrary.simpleMessage("عنوان الإعلان"),
         "announcements": MessageLookupByLibrary.simpleMessage("الإعلانات"),
-        "appName": MessageLookupByLibrary.simpleMessage("يُسر"),
-        "appSlogan": MessageLookupByLibrary.simpleMessage("رفيق الحاج الذكي"),
         "asr": MessageLookupByLibrary.simpleMessage("العصر"),
         "becomeALeader": MessageLookupByLibrary.simpleMessage("كن قائد"),
         "campaignLocation":
             MessageLookupByLibrary.simpleMessage("موقع استقرار الحملة"),
         "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
+        "changeLocation": MessageLookupByLibrary.simpleMessage("تغيير الموقع"),
+        "chooseCoordinates":
+            MessageLookupByLibrary.simpleMessage("اختر إحداثيات الموقع"),
         "confirmDelete": MessageLookupByLibrary.simpleMessage("تأكيد الحذف"),
         "confirmDeleteAnnouncementMessage": MessageLookupByLibrary.simpleMessage(
             "هل أنت متأكد من حذف هذا الإعلان؟ لا يمكن التراجع عن هذا الإجراء."),
@@ -51,14 +53,23 @@ class MessageLookup extends MessageLookupByLibrary {
         "connectionFailed": MessageLookupByLibrary.simpleMessage(
             "فشل الاتصال، يرجى التحقق من اتصالك بالإنترنت"),
         "contentLabel": MessageLookupByLibrary.simpleMessage("المحتوى"),
+        "currentLocation":
+            MessageLookupByLibrary.simpleMessage("الموقع الحالي"),
         "delete": MessageLookupByLibrary.simpleMessage("حذف"),
+        "deleteSuccess":
+            MessageLookupByLibrary.simpleMessage("تم حذف الموقع بنجاح"),
         "detiles": MessageLookupByLibrary.simpleMessage("التفاصيل"),
         "dhuhr": MessageLookupByLibrary.simpleMessage("الظهر"),
+        "edit": MessageLookupByLibrary.simpleMessage("تعديل"),
         "emailLabel": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
         "emailOrPassport": MessageLookupByLibrary.simpleMessage(
             "البريد الإلكتروني أو رقم الجواز"),
         "enterAnnouncementTitle":
             MessageLookupByLibrary.simpleMessage("أدخل عنوان الإعلان..."),
+        "enterLocationDescription":
+            MessageLookupByLibrary.simpleMessage("أدخل وصفاً مختصراً للموقع"),
+        "enterLocationName":
+            MessageLookupByLibrary.simpleMessage("أدخل اسم الموقع..."),
         "enterRequiredData":
             MessageLookupByLibrary.simpleMessage("أدخل البيانات المطلوبة"),
         "enterVerificationCodeDescription":
@@ -69,6 +80,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "errorFetchingNotifications": MessageLookupByLibrary.simpleMessage(
             "حدث خطأ أثناء جلب الإشعارات:"),
         "fajr": MessageLookupByLibrary.simpleMessage("الفجر"),
+        "fetchDataError":
+            MessageLookupByLibrary.simpleMessage("حدث خطأ في جلب البيانات"),
         "forgotPassword":
             MessageLookupByLibrary.simpleMessage("نسيت كلمة المرور؟"),
         "forgotPasswordDescription": MessageLookupByLibrary.simpleMessage(
@@ -84,6 +97,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("رِحْلَةُ الإِيمَانِ"),
         "km": MessageLookupByLibrary.simpleMessage("كم"),
         "labbayk": MessageLookupByLibrary.simpleMessage("لبيك اللهم لبيك"),
+        "locationDescription":
+            MessageLookupByLibrary.simpleMessage("وصف الموقع"),
+        "locationList": MessageLookupByLibrary.simpleMessage("قائمة المواقع"),
+        "locationName": MessageLookupByLibrary.simpleMessage("اسم الموقع"),
         "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
         "loginButton": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
         "loginToViewCampaignLocation": MessageLookupByLibrary.simpleMessage(
@@ -111,6 +128,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "notificationSearch":
             MessageLookupByLibrary.simpleMessage("\'ابحث عن إشعارات..."),
         "notifications": MessageLookupByLibrary.simpleMessage("الإشعارات"),
+        "otherLocations":
+            MessageLookupByLibrary.simpleMessage("مواقع استقرار أخرى"),
         "password": MessageLookupByLibrary.simpleMessage("كلمة المرور"),
         "passwordsDoNotMatchError":
             MessageLookupByLibrary.simpleMessage("كلمتا المرور غير متطابقتين"),
@@ -120,13 +139,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "recoveryLinkNote": MessageLookupByLibrary.simpleMessage(
             "سيتم إرسال رابط الاستعادة إلى بريدك الإلكتروني"),
         "resetButton": MessageLookupByLibrary.simpleMessage("إعادة التعيين"),
+        "retry": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
         "returnMe": MessageLookupByLibrary.simpleMessage("ارجعني"),
         "ritualsPreparation":
             MessageLookupByLibrary.simpleMessage("تهيئة المناسك خطوة بخطوة"),
         "ritualsPreparationDesc": MessageLookupByLibrary.simpleMessage(
             "ابدأ رحلتك إلى الوجهات، وتعلم خطوات الحج والعمرة الصحيحة بتفاصيل مذهبة."),
+        "saveChanges": MessageLookupByLibrary.simpleMessage("حفظ التعديل"),
+        "saveLocation": MessageLookupByLibrary.simpleMessage("حفظ الموقع"),
         "secureArrivalMessage": MessageLookupByLibrary.simpleMessage(
             "لتنعم برحلة آمنة وتصل لمخيمك بسلام، يرجى تسجيل الدخول أولاً"),
+        "selectLocationFirst":
+            MessageLookupByLibrary.simpleMessage("يرجى اختيار موقع أولاً"),
         "sendAnnouncementWarning": MessageLookupByLibrary.simpleMessage(
             "بعد الإرسال، سيصل الإعلان إلى جميع المستخدمين في الفئة المحددة ولن يمكن التراجع عن هذا الإجراء."),
         "sendVerificationCodeButton":
@@ -145,6 +169,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "titleLabel": MessageLookupByLibrary.simpleMessage("العنوان"),
         "unexpectedError": MessageLookupByLibrary.simpleMessage(
             "حدث خطأ غير متوقع، يرجى المحاولة مرة أخرى"),
+        "updateLocationTitle":
+            MessageLookupByLibrary.simpleMessage("تعديل موقع"),
+        "updateSuccess": MessageLookupByLibrary.simpleMessage(
+            "تم تحديث بيانات الموقع بنجاح"),
         "verificationCodeLabel":
             MessageLookupByLibrary.simpleMessage("رمز التحقق"),
         "verifyCodeButton":

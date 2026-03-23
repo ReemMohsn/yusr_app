@@ -18,8 +18,10 @@ class AppLocalizations {
   static AppLocalizations? _current;
 
   static AppLocalizations get current {
-    assert(_current != null,
-        'No instance of AppLocalizations was loaded. Try to initialize the AppLocalizations delegate before accessing AppLocalizations.current.');
+    assert(
+      _current != null,
+      'No instance of AppLocalizations was loaded. Try to initialize the AppLocalizations delegate before accessing AppLocalizations.current.',
+    );
     return _current!;
   }
 
@@ -41,8 +43,10 @@ class AppLocalizations {
 
   static AppLocalizations of(BuildContext context) {
     final instance = AppLocalizations.maybeOf(context);
-    assert(instance != null,
-        'No instance of AppLocalizations present in the widget tree. Did you add AppLocalizations.delegate in localizationsDelegates?');
+    assert(
+      instance != null,
+      'No instance of AppLocalizations present in the widget tree. Did you add AppLocalizations.delegate in localizationsDelegates?',
+    );
     return instance!;
   }
 
@@ -50,14 +54,24 @@ class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
-  /// `Home`
-  String get home {
+  /// `Yusr`
+  String get appName {
+    return Intl.message('Yusr', name: 'appName', desc: '', args: []);
+  }
+
+  /// `The Smart Pilgrim Companion`
+  String get appSlogan {
     return Intl.message(
-      'Home',
-      name: 'home',
+      'The Smart Pilgrim Companion',
+      name: 'appSlogan',
       desc: '',
       args: [],
     );
+  }
+
+  /// `Home`
+  String get home {
+    return Intl.message('Home', name: 'home', desc: '', args: []);
   }
 
   /// `Manasek Counter`
@@ -72,32 +86,17 @@ class AppLocalizations {
 
   /// `Smart Mufti`
   String get smartMufti {
-    return Intl.message(
-      'Smart Mufti',
-      name: 'smartMufti',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Smart Mufti', name: 'smartMufti', desc: '', args: []);
   }
 
   /// `Take me back`
   String get returnMe {
-    return Intl.message(
-      'Take me back',
-      name: 'returnMe',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Take me back', name: 'returnMe', desc: '', args: []);
   }
 
   /// `Login`
   String get login {
-    return Intl.message(
-      'Login',
-      name: 'login',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Login', name: 'login', desc: '', args: []);
   }
 
   /// `Prayer Times`
@@ -122,22 +121,12 @@ class AppLocalizations {
 
   /// `Logout`
   String get logout {
-    return Intl.message(
-      'Logout',
-      name: 'logout',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Logout', name: 'logout', desc: '', args: []);
   }
 
   /// `Not found`
   String get notFound {
-    return Intl.message(
-      'Not found',
-      name: 'notFound',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Not found', name: 'notFound', desc: '', args: []);
   }
 
   /// `Please login to view the campaign location`
@@ -232,62 +221,32 @@ class AppLocalizations {
 
   /// `Hijri Date`
   String get hijriDate {
-    return Intl.message(
-      'Hijri Date',
-      name: 'hijriDate',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Hijri Date', name: 'hijriDate', desc: '', args: []);
   }
 
   /// `Fajr`
   String get fajr {
-    return Intl.message(
-      'Fajr',
-      name: 'fajr',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Fajr', name: 'fajr', desc: '', args: []);
   }
 
   /// `Dhuhr`
   String get dhuhr {
-    return Intl.message(
-      'Dhuhr',
-      name: 'dhuhr',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Dhuhr', name: 'dhuhr', desc: '', args: []);
   }
 
   /// `Asr`
   String get asr {
-    return Intl.message(
-      'Asr',
-      name: 'asr',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Asr', name: 'asr', desc: '', args: []);
   }
 
   /// `Maghrib`
   String get maghrib {
-    return Intl.message(
-      'Maghrib',
-      name: 'maghrib',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Maghrib', name: 'maghrib', desc: '', args: []);
   }
 
   /// `Isha`
   String get isha {
-    return Intl.message(
-      'Isha',
-      name: 'isha',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Isha', name: 'isha', desc: '', args: []);
   }
 
   /// `Step-by-step Rituals Preparation`
@@ -372,12 +331,7 @@ class AppLocalizations {
 
   /// `Email`
   String get emailLabel {
-    return Intl.message(
-      'Email',
-      name: 'emailLabel',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Email', name: 'emailLabel', desc: '', args: []);
   }
 
   /// `A recovery link will be sent to your email.`
@@ -395,26 +349,6 @@ class AppLocalizations {
     return Intl.message(
       'Send Verification Code',
       name: 'sendVerificationCodeButton',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Yusr`
-  String get appName {
-    return Intl.message(
-      'Yusr',
-      name: 'appName',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `The Smart Pilgrim Companion`
-  String get appSlogan {
-    return Intl.message(
-      'The Smart Pilgrim Companion',
-      name: 'appSlogan',
       desc: '',
       args: [],
     );
@@ -442,12 +376,7 @@ class AppLocalizations {
 
   /// `Password`
   String get password {
-    return Intl.message(
-      'Password',
-      name: 'password',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Password', name: 'password', desc: '', args: []);
   }
 
   /// `Forgot password?`
@@ -462,12 +391,7 @@ class AppLocalizations {
 
   /// `Login`
   String get loginButton {
-    return Intl.message(
-      'Login',
-      name: 'loginButton',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Login', name: 'loginButton', desc: '', args: []);
   }
 
   /// `Set a new password`
@@ -512,12 +436,7 @@ class AppLocalizations {
 
   /// `Reset`
   String get resetButton {
-    return Intl.message(
-      'Reset',
-      name: 'resetButton',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Reset', name: 'resetButton', desc: '', args: []);
   }
 
   /// `Passwords do not match`
@@ -525,6 +444,266 @@ class AppLocalizations {
     return Intl.message(
       'Passwords do not match',
       name: 'passwordsDoNotMatchError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Session expired or your data was modified. You are now browsing as a guest.`
+  String get sessionExpiredGuest {
+    return Intl.message(
+      'Session expired or your data was modified. You are now browsing as a guest.',
+      name: 'sessionExpiredGuest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connection failed, please check your internet connection.`
+  String get connectionFailed {
+    return Intl.message(
+      'Connection failed, please check your internet connection.',
+      name: 'connectionFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An unexpected error occurred, please try again.`
+  String get unexpectedError {
+    return Intl.message(
+      'An unexpected error occurred, please try again.',
+      name: 'unexpectedError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The server is currently not responding, please try again later.`
+  String get serverNotResponding {
+    return Intl.message(
+      'The server is currently not responding, please try again later.',
+      name: 'serverNotResponding',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A server error occurred, please try again later.`
+  String get serverError {
+    return Intl.message(
+      'A server error occurred, please try again later.',
+      name: 'serverError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `To ensure a safe journey and arrive peacefully, please login first`
+  String get secureArrivalMessage {
+    return Intl.message(
+      'To ensure a safe journey and arrive peacefully, please login first',
+      name: 'secureArrivalMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Location updated successfully`
+  String get updateSuccess {
+    return Intl.message(
+      'Location updated successfully',
+      name: 'updateSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Location`
+  String get addLocation {
+    return Intl.message(
+      'Add Location',
+      name: 'addLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current Location`
+  String get currentLocation {
+    return Intl.message(
+      'Current Location',
+      name: 'currentLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change Location`
+  String get changeLocation {
+    return Intl.message(
+      'Change Location',
+      name: 'changeLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Other Locations`
+  String get otherLocations {
+    return Intl.message(
+      'Other Locations',
+      name: 'otherLocations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit`
+  String get edit {
+    return Intl.message('Edit', name: 'edit', desc: '', args: []);
+  }
+
+  /// `Choose Location Coordinates`
+  String get chooseCoordinates {
+    return Intl.message(
+      'Choose Location Coordinates',
+      name: 'chooseCoordinates',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save Location`
+  String get saveLocation {
+    return Intl.message(
+      'Save Location',
+      name: 'saveLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Location List`
+  String get locationList {
+    return Intl.message(
+      'Location List',
+      name: 'locationList',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message('Cancel', name: 'cancel', desc: '', args: []);
+  }
+
+  /// `Location Description`
+  String get locationDescription {
+    return Intl.message(
+      'Location Description',
+      name: 'locationDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter a brief description for the location`
+  String get enterLocationDescription {
+    return Intl.message(
+      'Enter a brief description for the location',
+      name: 'enterLocationDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Location Name`
+  String get locationName {
+    return Intl.message(
+      'Location Name',
+      name: 'locationName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save Changes`
+  String get saveChanges {
+    return Intl.message(
+      'Save Changes',
+      name: 'saveChanges',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please select a location first`
+  String get selectLocationFirst {
+    return Intl.message(
+      'Please select a location first',
+      name: 'selectLocationFirst',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error fetching data`
+  String get fetchDataError {
+    return Intl.message(
+      'Error fetching data',
+      name: 'fetchDataError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Retry`
+  String get retry {
+    return Intl.message('Retry', name: 'retry', desc: '', args: []);
+  }
+
+  /// `Are you sure you want to delete this item permanently?`
+  String get confirmDelete {
+    return Intl.message(
+      'Are you sure you want to delete this item permanently?',
+      name: 'confirmDelete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete`
+  String get delete {
+    return Intl.message('Delete', name: 'delete', desc: '', args: []);
+  }
+
+  /// `Enter location name...`
+  String get enterLocationName {
+    return Intl.message(
+      'Enter location name...',
+      name: 'enterLocationName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update Location`
+  String get updateLocationTitle {
+    return Intl.message(
+      'Update Location',
+      name: 'updateLocationTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Location deleted successfully`
+  String get deleteSuccess {
+    return Intl.message(
+      'Location deleted successfully',
+      name: 'deleteSuccess',
       desc: '',
       args: [],
     );
@@ -572,12 +751,7 @@ class AppLocalizations {
 
   /// `Details`
   String get detiles {
-    return Intl.message(
-      'Details',
-      name: 'detiles',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Details', name: 'detiles', desc: '', args: []);
   }
 
   /// `Search for announcement...`
@@ -712,22 +886,12 @@ class AppLocalizations {
 
   /// `Title`
   String get titleLabel {
-    return Intl.message(
-      'Title',
-      name: 'titleLabel',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Title', name: 'titleLabel', desc: '', args: []);
   }
 
   /// `Content`
   String get contentLabel {
-    return Intl.message(
-      'Content',
-      name: 'contentLabel',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Content', name: 'contentLabel', desc: '', args: []);
   }
 
   /// `Once sent, the announcement will reach all users in the selected category and this action cannot be undone.`
@@ -740,101 +904,11 @@ class AppLocalizations {
     );
   }
 
-  /// `Cancel`
-  String get cancel {
-    return Intl.message(
-      'Cancel',
-      name: 'cancel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Confirm Deletion`
-  String get confirmDelete {
-    return Intl.message(
-      'Confirm Deletion',
-      name: 'confirmDelete',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Are you sure you want to delete this announcement? This action cannot be undone.`
   String get confirmDeleteAnnouncementMessage {
     return Intl.message(
       'Are you sure you want to delete this announcement? This action cannot be undone.',
       name: 'confirmDeleteAnnouncementMessage',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Delete`
-  String get delete {
-    return Intl.message(
-      'Delete',
-      name: 'delete',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Session expired or your data was modified. You are now browsing as a guest.`
-  String get sessionExpiredGuest {
-    return Intl.message(
-      'Session expired or your data was modified. You are now browsing as a guest.',
-      name: 'sessionExpiredGuest',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Connection failed, please check your internet connection.`
-  String get connectionFailed {
-    return Intl.message(
-      'Connection failed, please check your internet connection.',
-      name: 'connectionFailed',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `An unexpected error occurred, please try again.`
-  String get unexpectedError {
-    return Intl.message(
-      'An unexpected error occurred, please try again.',
-      name: 'unexpectedError',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `The server is currently not responding, please try again later.`
-  String get serverNotResponding {
-    return Intl.message(
-      'The server is currently not responding, please try again later.',
-      name: 'serverNotResponding',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `A server error occurred, please try again later.`
-  String get serverError {
-    return Intl.message(
-      'A server error occurred, please try again later.',
-      name: 'serverError',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `To ensure a safe journey and arrive peacefully, please login first`
-  String get secureArrivalMessage {
-    return Intl.message(
-      'To ensure a safe journey and arrive peacefully, please login first',
-      name: 'secureArrivalMessage',
       desc: '',
       args: [],
     );
@@ -852,22 +926,12 @@ class AppLocalizations {
 
   /// `km`
   String get km {
-    return Intl.message(
-      'km',
-      name: 'km',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('km', name: 'km', desc: '', args: []);
   }
 
   /// `You are here`
   String get youAreHere {
-    return Intl.message(
-      'You are here',
-      name: 'youAreHere',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('You are here', name: 'youAreHere', desc: '', args: []);
   }
 
   /// `Important Announcement`
