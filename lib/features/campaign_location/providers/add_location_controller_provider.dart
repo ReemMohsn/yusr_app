@@ -2,7 +2,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:yusr/core/services/API/ApiResponse.dart';
 import 'campaign_location_repository_provider.dart';
 import 'get_locations_provider.dart';
-
 part 'add_location_controller_provider.g.dart';
 
 @riverpod

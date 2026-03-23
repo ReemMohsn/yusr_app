@@ -3,13 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yusr/core/common/widgets/custom_golden_back_button.dart';
-import 'package:yusr/core/common/widgets/widget.dart';
-import 'package:yusr/core/constants/app_color.dart'; 
+import 'package:yusr/core/constants/app_color.dart';
+import 'package:yusr/core/constants/app_size.dart'; // ملف الأحجام المعتمد
 import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/core/services/API/ApiResponse.dart';
+import 'package:yusr/features/campaign_location/presentation/widgets/location_action_buttons.dart';
+import '../widgets/location_item_card.dart';
 import 'package:yusr/features/campaign_location/providers/get_locations_provider.dart';
 import 'package:yusr/features/campaign_location/providers/set_active_location_controller.dart';
-import 'package:yusr/features/campaign_location/data/models/campaign_locations_view_model.dart';
 
 class SetLocationView extends ConsumerStatefulWidget {
   const SetLocationView({super.key});
@@ -19,13 +20,23 @@ class SetLocationView extends ConsumerStatefulWidget {
 }
 
 class _SetLocationViewState extends ConsumerState<SetLocationView> {
-  int? _selectedLocationId;
-  int? _initialActiveId; 
+  // استخدام ValueNotifier بدلاً من setState لإدارة اختيار الموقع
+  final ValueNotifier<int?> _selectedLocationIdNotifier = ValueNotifier<int?>(
+    null,
+  );
+  int? _initialActiveId;
   bool _isInitialized = false;
+
+  @override
+  void dispose() {
+    _selectedLocationIdNotifier.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final locale = context.locale;
+    final theme = Theme.of(context).textTheme;
     final locationsAsync = ref.watch(getCampaignLocationsProvider);
 
     ref.listen<AsyncValue<ApiResponse<dynamic>?>>(
@@ -38,14 +49,13 @@ class _SetLocationViewState extends ConsumerState<SetLocationView> {
           context.showErrorSnackBar(next.error.toString());
         } else if (next.hasValue && next.value != null) {
           context.closeLoadingDialog();
-          context.showSuccessSnackBar(locale.updateSuccess); 
-          Navigator.pop(context); 
+          context.showSuccessSnackBar(locale.updateSuccess);
+          Navigator.pop(context);
         }
       },
     );
 
     return Scaffold(
-      backgroundColor: AppColor.backgroundColor, 
       appBar: AppBar(
         elevation: 0,
         title: Text(locale.locationList),
@@ -54,204 +64,92 @@ class _SetLocationViewState extends ConsumerState<SetLocationView> {
           child: const UnconstrainedBox(child: CustomGoldenBackButton()),
         ),
       ),
-      body: Directionality(
-        textDirection: TextDirection.rtl,
-        child: locationsAsync.when(
-          data: (data) {
-            if (data == null) return Center(child: Text(locale.notFound));
 
-            final allLocations = [
-              if (data.currentLocation != null) data.currentLocation!,
-              ...data.previousLocations
-            ];
+      body: Padding(
+        padding: EdgeInsets.only(top: AppSize.paddingOfPage.h), // بديل SafeArea
+        child: Column(
+          children: [
+            Expanded(
+              child: locationsAsync.when(
+                data: (data) {
+                  if (data == null)
+                    return Center(
+                      child: Text(locale.notFound, style: theme.bodyMedium),
+                    );
 
-            if (!_isInitialized && data.currentLocation != null) {
-              _isInitialized = true;
-              _initialActiveId = data.currentLocation!.locationId;
-              Future.delayed(Duration.zero, () {
-                if (mounted) {
-                  setState(() => _selectedLocationId = data.currentLocation!.locationId);
-                }
-              });
-            }
+                  final allLocations = [
+                    if (data.currentLocation != null) data.currentLocation!,
+                    ...data.previousLocations,
+                  ];
 
-            return Column(
-              children: [
-                Expanded(
-                  child: ListView.separated(
-                    padding: EdgeInsets.all(20.w),
+                  // تهيئة البيانات لأول مرة بدون setState
+                  if (!_isInitialized && data.currentLocation != null) {
+                    _isInitialized = true;
+                    _initialActiveId = data.currentLocation!.locationId;
+                    _selectedLocationIdNotifier.value =
+                        data.currentLocation!.locationId;
+                  }
+
+                  return ListView.separated(
+                    padding: EdgeInsets.all(AppSize.paddingOfPage.w),
                     itemCount: allLocations.length,
                     separatorBuilder: (_, __) => SizedBox(height: 12.h),
+
                     itemBuilder: (context, index) {
                       final loc = allLocations[index];
-                      final bool isSelected = _selectedLocationId == loc.locationId;
-                      final bool isCurrentlyActive = loc.locationId == _initialActiveId;
 
-                      return _buildLocationItem(loc, isSelected, isCurrentlyActive, locale);
+                      return ValueListenableBuilder<int?>(
+                        valueListenable: _selectedLocationIdNotifier,
+                        builder: (context, selectedId, _) {
+                          return LocationItemCard(
+                            loc: loc,
+                            isSelected: selectedId == loc.locationId,
+                            isCurrentlyActive:
+                                loc.locationId == _initialActiveId,
+                            locale: locale,
+                            theme: theme,
+                            onTap: () {
+                              _selectedLocationIdNotifier.value =
+                                  loc.locationId;
+                            },
+                          );
+                        },
+                      );
                     },
+                  );
+                },
+                loading: () => const Center(
+                  child: CircularProgressIndicator(color: AppColor.golden),
+                ),
+                error: (e, _) => Center(
+                  child: Text(
+                    locale.fetchDataError,
+                    style: theme.bodyMedium?.copyWith(color: AppColor.danger),
                   ),
                 ),
-                _buildActionButtons(locale),
-              ],
-            );
-          },
-          loading: () => const Center(child: CircularProgressIndicator(color: AppColor.golden)),
-          error: (e, _) => Center(child: Text(locale.fetchDataError, style: const TextStyle(color: AppColor.danger))), 
-        ),
-      ),
-    );
-  }
+              ),
+            ),
 
-  Widget _buildLocationItem(dynamic loc, bool isSelected, bool isCurrentlyActive, var locale) {
-    return GestureDetector(
-      onTap: () {
-        HapticFeedback.mediumImpact();
-        setState(() => _selectedLocationId = loc.locationId);
-      },
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 250),
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 15.h),
-        decoration: BoxDecoration(
-          color: AppColor.withe, 
-          borderRadius: BorderRadius.circular(20.r),
-          border: Border.all(
-            // استبدال Colors.transparent بـ AppColor.withe لضمان نعومة الحواف في الـ Animation
-            color: isSelected ? AppColor.golden : (isCurrentlyActive ? AppColor.golden.withOpacity(0.3) : AppColor.withe),
-            width: 1.5.w,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: isSelected ? AppColor.golden.withOpacity(0.08) : AppColor.darkBlack.withOpacity(0.03),
-              blurRadius: 10,
-              offset: const Offset(0, 4)
+            // منطقة الأزرار
+            ValueListenableBuilder<int?>(
+              valueListenable: _selectedLocationIdNotifier,
+              builder: (context, selectedId, _) {
+                return LocationActionButtons(
+                  theme: theme,
+                  canSave: selectedId != null && selectedId != _initialActiveId,
+                  saveLabel: locale.saveChanges,
+                  cancelLabel: locale.cancel,
+                  onCancel: () => Navigator.pop(context),
+                  onSave: () {
+                    ref
+                        .read(setActiveLocationControllerProvider.notifier)
+                        .changeActiveLocation(selectedId!);
+                  },
+                );
+              },
             ),
           ],
         ),
-        child: Row(
-          children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  height: 22.w,
-                  width: 22.w,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: isSelected ? AppColor.golden : AppColor.lightFontColor,
-                      width: 2.w,
-                    ),
-                  ),
-                ),
-                if (isSelected)
-                  Container(
-                    height: 12.w,
-                    width: 12.w,
-                    decoration: const BoxDecoration(color: AppColor.golden, shape: BoxShape.circle),
-                  ),
-              ],
-            ),
-            SizedBox(width: 15.w),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    loc.locationName,
-                    style: TextStyle(
-                      fontWeight: isSelected ? FontWeight.w800 : FontWeight.w700,
-                      fontSize: 15.sp,
-                      color: isSelected ? AppColor.baseFontColor : AppColor.midlineColor,
-                    ),
-                  ),
-                  if (isCurrentlyActive)
-                    Padding(
-                      padding: EdgeInsets.only(top: 4.h),
-                      child: Text(
-                        locale.currentLocation,
-                        style: TextStyle(fontSize: 11.sp, color: AppColor.golden, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                ],
-              ),
-            ),
-            Icon(
-              Icons.location_on_rounded, 
-              color: isSelected ? AppColor.golden : AppColor.inputFieldBoundaries, 
-              size: 24.sp
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildActionButtons(var locale) {
-    final bool canSave = _selectedLocationId != _initialActiveId;
-
-    return Container(
-      padding: EdgeInsets.fromLTRB(20.w, 10.h, 20.w, 40.h),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 2,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: canSave ? AppColor.darkBlack : AppColor.inputFieldBoundaries,
-                padding: EdgeInsets.symmetric(vertical: 15.h),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
-                elevation: canSave ? 2 : 0,
-              ),
-              onPressed: canSave ? () {
-                ref.read(setActiveLocationControllerProvider.notifier)
-                    .changeActiveLocation(_selectedLocationId!);
-              } : null,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                   Icon(Icons.save_outlined, color: canSave ? AppColor.golden : AppColor.lightFontColor, size: 22.sp),
-                   SizedBox(width: 8.w),
-                   Text(
-                    locale.saveChanges,
-                    style: TextStyle(
-                      color: canSave ? AppColor.golden : AppColor.lightFontColor, 
-                      fontWeight: FontWeight.bold, 
-                      fontSize: 16.sp
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(width: 15.w),
-          Expanded(
-            flex: 1,
-            child: OutlinedButton(
-              style: OutlinedButton.styleFrom(
-                backgroundColor: AppColor.withe,
-                padding: EdgeInsets.symmetric(vertical: 15.h),
-                side: const BorderSide(color: AppColor.inputFieldBoundaries),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
-              ),
-              onPressed: () => Navigator.pop(context),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.close_rounded, color: AppColor.midlineColor, size: 18.sp),
-                  SizedBox(width: 4.w),
-                  Text(
-                    locale.cancel,
-                    style: TextStyle(
-                      color: AppColor.midlineColor, 
-                      fontWeight: FontWeight.bold, 
-                      fontSize: 16.sp
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }

@@ -21,27 +21,53 @@ part 'campaign_location_controller_provider.g.dart';
       });
     }
 
-  Future<bool> removeLocation(int id) async {
-    // لا نغير حالة الكنترولر نفسه إلى loading إذا كان ذلك سيؤثر على الشاشة كاملة بشكل مزعج
-    // بل نكتفي بتنفيذ العملية
-    final result = await AsyncValue.guard(() async {
-      return await ref.read(campaignLocationRepositoryProvider).deleteLocation(id);
-    });
+    // Future<void> removeLocation(int id) async {
+    //   // 1. تغيير الحالة إلى تحميل فوراً لكي يظهر الـ Loading Dialog في الواجهة
+    //   state = const AsyncValue.loading();
 
-    if (!result.hasError) {
-      // هذه الخطوة هي الأهم: تجبر المزود المسؤول عن القائمة على إعادة جلب البيانات
-      ref.invalidate(getCampaignLocationsProvider);
-      
-      // انتظر قليلاً لضمان أن الـ Provider بدأ التحميل الجديد
-      await ref.read(getCampaignLocationsProvider.future); 
-      
-      return true;
-    } else {
-      state = AsyncError(result.error!, result.stackTrace!);
-      return false;
-    }
-  }
-          //   // دالة تفعيل الموقع كـ "موقع حالي"
+    //   // 2. تنفيذ عملية الحذف مع حماية من الأخطاء
+    //   final result = await AsyncValue.guard(() async {
+    //     return await ref.read(campaignLocationRepositoryProvider).deleteLocation(id);
+    //   });
+
+    //   if (!result.hasError) {
+    //     // 3. تحديث قائمة المواقع فوراً لكي تختفي من الشاشة
+    //     ref.invalidate(getCampaignLocationsProvider);
+        
+    //     // الانتظار للتأكد من تحديث البيانات قبل إعطاء حالة النجاح
+    //     await ref.read(getCampaignLocationsProvider.future); 
+
+    //     // 4. تعيين النتيجة (النجاح) لكي يقوم الـ listen في الواجهة بإغلاق الدايلوج وإظهار رسالة النجاح
+    //     state = AsyncValue.data(result.value);
+    //   } else {
+    //     // 5. في حال الخطأ، نمرر الخطأ للحالة لكي يظهره الـ listen للمستخدم
+    //     state = AsyncError(result.error!, result.stackTrace!);
+    //   }
+    // }
+Future<void> removeLocation(int id) async {
+  state = const AsyncValue.loading();
+
+  state = await AsyncValue.guard<ApiResponse<CampaignLocationsViewModel>?>(() async {
+    // 1. استدعاء الحذف وتخزينه في متغير
+    final dynamic result = await ref.read(campaignLocationRepositoryProvider).deleteLocation(id);
+    
+    // 2. تحديث القائمة
+    ref.invalidate(getCampaignLocationsProvider);
+
+    // 3. التحويل الآمن: أخبر Dart أن يعامل result كـ ApiResponse
+    // سنستخدم 'as ApiResponse' بدون تحديد النوع الداخلي للوصول للحقول العامة
+    final response = result as ApiResponse;
+
+    // 4. إعادة التغليف بالنوع المطلوب للـ State
+    return ApiResponse<CampaignLocationsViewModel>(
+      message: response.message, // الآن سيتعرف على message
+      // إذا كان الحقل عندك اسمه 'success' أو 'status' تأكدي من مسميات الكلاس لديكِ
+      // status: response.status, 
+      data: null,
+    );
+  });
+}
+              //   // دالة تفعيل الموقع كـ "موقع حالي"
       Future<void> makeLocationActive(int id) async {
         state = const AsyncValue.loading();
         state = await AsyncValue.guard(() async {

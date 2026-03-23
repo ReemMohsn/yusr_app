@@ -22,7 +22,6 @@ void main() async {
   // HijriCalendar.hAdjustment = 0;
   WidgetsFlutterBinding.ensureInitialized();
 
-  String initialRoute;
   // if (!SharedPreferencesService.isOnboardingCompleted) {
   //   initialRoute = AppRoute.onBoarding;
   // } else if (!SharedPreferencesService.isLoggedIn) {
@@ -30,7 +29,7 @@ void main() async {
   // } else {
   //   initialRoute = AppRoute.mainHome;
   // }
- initialRoute = AppRoute.mainHomeView;
+  String initialRoute = AppRoute.mainHomeView;
   // String initialRoute = AppRoute.mainHomeView;
   // 3. تهيئة فايربيس باستخدام الملف المولد
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);

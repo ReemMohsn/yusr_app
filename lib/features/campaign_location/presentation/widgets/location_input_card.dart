@@ -16,13 +16,16 @@ class LocationInputCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // الوصول لثيم النصوص الموحد في المشروع
+    final theme = Theme.of(context).textTheme;
+
     return Container(
       width: double.infinity,
-      height: height,
+      height: height, // يبقى اختيارياً للحالات الخاصة مثل الخريطة
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16.r),
-        // التصميم الذهبي الجانبي
+        // الحفاظ على التصميم الذهبي الجانبي المميز للهوية
         border: const Border(
           right: BorderSide(color: AppColor.golden, width: 4.0),
         ),
@@ -35,6 +38,8 @@ class LocationInputCard extends StatelessWidget {
         ],
       ),
       child: Column(
+        mainAxisSize:
+            MainAxisSize.min, // ليأخذ حجم المحتوى فقط ولا يتمدد بدون داعٍ
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // رأس الكرت (العنوان)
@@ -50,7 +55,6 @@ class LocationInputCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                                
                 Container(
                   width: 4.w,
                   height: 16.h,
@@ -58,24 +62,28 @@ class LocationInputCard extends StatelessWidget {
                     color: AppColor.golden,
                     borderRadius: BorderRadius.circular(10.r),
                   ),
-                  
                 ),
                 SizedBox(width: 8.w),
                 Text(
                   title,
-                  style: TextStyle(
-                    color: const Color(0xFF6A7282),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14.sp,
+                  // 🌟 التعديل هنا: استخدام headlineSmall من التيم الموحد
+                  style: theme.headlineSmall?.copyWith(
+                    color: const Color(
+                      0xFF6A7282,
+                    ), // الحفاظ على اللون المطلوب مع حجم الخط من الثيم
                   ),
                 ),
-
               ],
             ),
           ),
           const Divider(height: 1, color: Color(0xFFF5F5F0)),
-          // محتوى الكرت (Input أو Map)
-          height != null ? Expanded(child: child) : child,
+
+          // 🌟 التعديل هنا: التعامل مع الارتفاع بذكاء
+          // إذا كان هناك طول محدد (للخريطة مثلاً) نستخدم Expanded، وإلا نترك المحتوى يأخذ حجمه الطبيعي
+          if (height != null)
+            Expanded(child: child)
+          else
+            Padding(padding: EdgeInsets.zero, child: child),
         ],
       ),
     );
