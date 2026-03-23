@@ -122,10 +122,7 @@ class OtherLocationItem extends ConsumerWidget {
               size: 28.sp,
             ),
             SizedBox(width: 10.w),
-            Text(
-              locale.delete,
-              style: context.theme.textTheme.bodySmall,
-            ),
+            Text(locale.delete, style: context.theme.textTheme.bodySmall),
           ],
         ),
         content: Column(

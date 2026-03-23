@@ -25,83 +25,171 @@ class NotificationService {
 
   NotificationService(this.prefsService, this.apiService);
 
-  Future<void> syncUserTopics() async {
-    try {
-      // 1. جلب بيانات المستخدم المحفوظة
-      final profile = await prefsService.getProfile();
+  // في ملف notification_service.dart
 
-      // إذا كان زائر (Guest)، نوقف الدالة فوراً
-      if (profile == null) return;
+  Future<void> syncUserTopics({int maxRetries = 3}) async {
+    int attempt = 0; // عداد المحاولات
 
-      final role = profile.userRole.trim();
+    while (attempt < maxRetries) {
+      try {
+        final profile = await prefsService.getProfile();
+        if (profile == null) return;
 
-      // 2. إذا كان مدير حملة، لا نريد أن نستهلك موارد السيرفر لأنه لا يستقبل إشعارات
-      if (role == 'مدير الحملة') {
-        debugPrint(
-          "المستخدم مدير حملة: تم تخطي مزامنة الإشعارات لتوفير الموارد.",
-        );
-        return;
-      }
+        final role = profile.userRole.trim();
 
-      // 3. استدعاء API المزامنة للحاج والمشرف فقط
-      final response = await repositoryRequestHandler<SyncDataModel>(
-        () => apiService.get(ApiLink.syncData),
-        fromJson: (data) => SyncDataModel.fromJson(data),
-      );
-
-      final syncData = response.data;
-
-      if (syncData != null) {
-        int campaignId = syncData.campaignId;
-        int? currentGroupId = syncData.groupId;
-
-        // 4. الاشتراك في القنوات العامة بناءً على الدور
-        if (role == 'حاج') {
-          await FirebaseMessaging.instance.subscribeToTopic(
-            'campaign_${campaignId}_hajjis',
-          );
-          await FirebaseMessaging.instance.subscribeToTopic(
-            'campaign_${campaignId}_all',
-          );
-        } else if (role == 'مشرف') {
-          await FirebaseMessaging.instance.subscribeToTopic(
-            'campaign_${campaignId}_supervisors',
-          );
-          await FirebaseMessaging.instance.subscribeToTopic(
-            'campaign_${campaignId}_all',
-          );
+        if (role == 'مدير الحملة') {
+          debugPrint("المستخدم مدير حملة: تم تخطي المزامنة.");
+          return; // إنهاء الدالة بنجاح
         }
 
-        // ==========================================
-        // 5. معالجة قناة المجموعة (للحجاج فققققط!)
-        // ==========================================
-        if (role == 'حاج') {
-          int? savedGroupId = await prefsService.getInt('saved_group_id');
+        // جلب البيانات من الـ API
+        final response = await repositoryRequestHandler<SyncDataModel>(
+          () => apiService.get(ApiLink.syncData),
+          fromJson: (data) => SyncDataModel.fromJson(data),
+        );
 
-          if (currentGroupId != savedGroupId) {
-            // إلغاء القديم
-            if (savedGroupId != null) {
-              await FirebaseMessaging.instance.unsubscribeFromTopic(
-                'campaign_${campaignId}_group_$savedGroupId',
-              );
-            }
-            // الاشتراك في الجديد
-            if (currentGroupId != null) {
-              await FirebaseMessaging.instance.subscribeToTopic(
-                'campaign_${campaignId}_group_$currentGroupId',
-              );
-              await prefsService.setInt('saved_group_id', currentGroupId);
-            } else {
-              // طُرد الحاج من المجموعة
-              await prefsService.removeInt('saved_group_id');
+        final syncData = response.data;
+
+        if (syncData != null) {
+          int campaignId = syncData.campaignId;
+          int? currentGroupId = syncData.groupId;
+
+          // الاشتراك في القنوات العامة
+          if (role == 'حاج') {
+            await FirebaseMessaging.instance.subscribeToTopic(
+              'campaign_${campaignId}_hajjis',
+            );
+            await FirebaseMessaging.instance.subscribeToTopic(
+              'campaign_${campaignId}_all',
+            );
+          } else if (role == 'مشرف') {
+            await FirebaseMessaging.instance.subscribeToTopic(
+              'campaign_${campaignId}_supervisors',
+            );
+            await FirebaseMessaging.instance.subscribeToTopic(
+              'campaign_${campaignId}_all',
+            );
+          }
+
+          // معالجة قناة المجموعة
+          if (role == 'حاج') {
+            int? savedGroupId = await prefsService.getInt('saved_group_id');
+
+            if (currentGroupId != savedGroupId) {
+              if (savedGroupId != null) {
+                await FirebaseMessaging.instance.unsubscribeFromTopic(
+                  'campaign_${campaignId}_group_$savedGroupId',
+                );
+              }
+              if (currentGroupId != null) {
+                await FirebaseMessaging.instance.subscribeToTopic(
+                  'campaign_${campaignId}_group_$currentGroupId',
+                );
+                await prefsService.setInt('saved_group_id', currentGroupId);
+              } else {
+                await prefsService.removeInt('saved_group_id');
+              }
             }
           }
         }
+
+        debugPrint(
+          '✅ تمت مزامنة الإشعارات بنجاح في المحاولة رقم ${attempt + 1}',
+        );
+        return; // 🚀 الأهم: خروج من الدالة نهائياً بمجرد النجاح ولن يكمل الحلقة (Loop)
+      } catch (e) {
+        attempt++; // زيادة العداد
+        debugPrint('⚠️ فشلت المزامنة في المحاولة رقم $attempt. السبب: $e');
+
+        if (attempt >= maxRetries) {
+          debugPrint(
+            '❌ استنفدت كل المحاولات ($maxRetries). يرجى التأكد من اتصال الإنترنت.',
+          );
+          break; // إيقاف الحلقة بعد 3 محاولات فاشلة
+        }
+
+        // انتظار 5 ثوانٍ قبل المحاولة التالية (لإعطاء فرصة للإنترنت للعودة)
+        await Future.delayed(const Duration(seconds: 5));
       }
-    } catch (e) {
-      debugPrint('حدث خطأ أثناء مزامنة الإشعارات: $e');
     }
   }
+  // Future<void> syncUserTopics() async {
+  //   try {
+  //     // 1. جلب بيانات المستخدم المحفوظة
+  //     final profile = await prefsService.getProfile();
+
+  //     // إذا كان زائر (Guest)، نوقف الدالة فوراً
+  //     if (profile == null) return;
+
+  //     final role = profile.userRole.trim();
+
+  //     // 2. إذا كان مدير حملة، لا نريد أن نستهلك موارد السيرفر لأنه لا يستقبل إشعارات
+  //     if (role == 'مدير الحملة') {
+  //       debugPrint(
+  //         "المستخدم مدير حملة: تم تخطي مزامنة الإشعارات لتوفير الموارد.",
+  //       );
+  //       return;
+  //     }
+
+  //     // 3. استدعاء API المزامنة للحاج والمشرف فقط
+  //     final response = await repositoryRequestHandler<SyncDataModel>(
+  //       () => apiService.get(ApiLink.syncData),
+  //       fromJson: (data) => SyncDataModel.fromJson(data),
+  //     );
+
+  //     final syncData = response.data;
+
+  //     if (syncData != null) {
+  //       int campaignId = syncData.campaignId;
+  //       int? currentGroupId = syncData.groupId;
+
+  //       // 4. الاشتراك في القنوات العامة بناءً على الدور
+  //       if (role == 'حاج') {
+  //         await FirebaseMessaging.instance.subscribeToTopic(
+  //           'campaign_${campaignId}_hajjis',
+  //         );
+  //         await FirebaseMessaging.instance.subscribeToTopic(
+  //           'campaign_${campaignId}_all',
+  //         );
+  //       } else if (role == 'مشرف') {
+  //         await FirebaseMessaging.instance.subscribeToTopic(
+  //           'campaign_${campaignId}_supervisors',
+  //         );
+  //         await FirebaseMessaging.instance.subscribeToTopic(
+  //           'campaign_${campaignId}_all',
+  //         );
+  //       }
+
+  //       // ==========================================
+  //       // 5. معالجة قناة المجموعة (للحجاج فققققط!)
+  //       // ==========================================
+  //       if (role == 'حاج') {
+  //         int? savedGroupId = await prefsService.getInt('saved_group_id');
+
+  //         if (currentGroupId != savedGroupId) {
+  //           // إلغاء القديم
+  //           if (savedGroupId != null) {
+  //             await FirebaseMessaging.instance.unsubscribeFromTopic(
+  //               'campaign_${campaignId}_group_$savedGroupId',
+  //             );
+  //           }
+  //           // الاشتراك في الجديد
+  //           if (currentGroupId != null) {
+  //             await FirebaseMessaging.instance.subscribeToTopic(
+  //               'campaign_${campaignId}_group_$currentGroupId',
+  //             );
+  //             await prefsService.setInt('saved_group_id', currentGroupId);
+  //           } else {
+  //             // طُرد الحاج من المجموعة
+  //             await prefsService.removeInt('saved_group_id');
+  //           }
+  //         }
+  //       }
+  //     }
+  //   } catch (e) {
+  //     debugPrint('حدث خطأ أثناء مزامنة الإشعارات: $e');
+  //   }
+  // }
 
   // دالة لتنظيف الإشعارات عند تسجيل الخروج
   Future<void> clearTopicsOnLogout() async {

@@ -54,6 +54,21 @@ class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
+  /// `Yusr`
+  String get appName {
+    return Intl.message('Yusr', name: 'appName', desc: '', args: []);
+  }
+
+  /// `The Smart Pilgrim Companion`
+  String get appSlogan {
+    return Intl.message(
+      'The Smart Pilgrim Companion',
+      name: 'appSlogan',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Home`
   String get home {
     return Intl.message('Home', name: 'home', desc: '', args: []);
@@ -339,21 +354,6 @@ class AppLocalizations {
     );
   }
 
-  /// `Yusr`
-  String get appName {
-    return Intl.message('Yusr', name: 'appName', desc: '', args: []);
-  }
-
-  /// `The Smart Pilgrim Companion`
-  String get appSlogan {
-    return Intl.message(
-      'The Smart Pilgrim Companion',
-      name: 'appSlogan',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Email or Passport Number`
   String get emailOrPassport {
     return Intl.message(
@@ -448,7 +448,78 @@ class AppLocalizations {
       args: [],
     );
   }
-/// `Add Location`
+
+  /// `Session expired or your data was modified. You are now browsing as a guest.`
+  String get sessionExpiredGuest {
+    return Intl.message(
+      'Session expired or your data was modified. You are now browsing as a guest.',
+      name: 'sessionExpiredGuest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connection failed, please check your internet connection.`
+  String get connectionFailed {
+    return Intl.message(
+      'Connection failed, please check your internet connection.',
+      name: 'connectionFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An unexpected error occurred, please try again.`
+  String get unexpectedError {
+    return Intl.message(
+      'An unexpected error occurred, please try again.',
+      name: 'unexpectedError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The server is currently not responding, please try again later.`
+  String get serverNotResponding {
+    return Intl.message(
+      'The server is currently not responding, please try again later.',
+      name: 'serverNotResponding',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A server error occurred, please try again later.`
+  String get serverError {
+    return Intl.message(
+      'A server error occurred, please try again later.',
+      name: 'serverError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `To ensure a safe journey and arrive peacefully, please login first`
+  String get secureArrivalMessage {
+    return Intl.message(
+      'To ensure a safe journey and arrive peacefully, please login first',
+      name: 'secureArrivalMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Location updated successfully`
+  String get updateSuccess {
+    return Intl.message(
+      'Location updated successfully',
+      name: 'updateSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Location`
   String get addLocation {
     return Intl.message(
       'Add Location',
@@ -457,23 +528,7 @@ class AppLocalizations {
       args: [],
     );
   }
-  /// `Other Locations`
-  String get otherLocations {
-    return Intl.message(
-      'Other Locations',
-      name: 'otherLocations',
-      desc: '',
-      args: [],
-    );
-  }
-    String get locationList {
-    return Intl.message(
-      'Location List',
-      name: 'locationList',
-      desc: '',
-      args: [],
-    );
-  }
+
   /// `Current Location`
   String get currentLocation {
     return Intl.message(
@@ -483,47 +538,36 @@ class AppLocalizations {
       args: [],
     );
   }
-    String get locationDescription {
+
+  /// `Change Location`
+  String get changeLocation {
     return Intl.message(
-      'Location Description',
-      name: 'locationDescription',
-      desc: '',
-      args: [],
-    );
-  }
-    String get enterLocationDescription {
-    return Intl.message(
-      'Enter a brief description for the location',
-      name: 'enterLocationDescription',
+      'Change Location',
+      name: 'changeLocation',
       desc: '',
       args: [],
     );
   }
 
-/// `Edit`
+  /// `Other Locations`
+  String get otherLocations {
+    return Intl.message(
+      'Other Locations',
+      name: 'otherLocations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit`
   String get edit {
-    return Intl.message(
-      'Edit',
-      name: 'edit',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Edit', name: 'edit', desc: '', args: []);
   }
 
-  /// `Location Name`
-  String get locationName {
-    return Intl.message(
-      'Location Name',
-      name: 'locationName',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Please choose a location first`
+  /// `Choose Location Coordinates`
   String get chooseCoordinates {
     return Intl.message(
-      'Choose location coordinates',
+      'Choose Location Coordinates',
       name: 'chooseCoordinates',
       desc: '',
       args: [],
@@ -540,68 +584,50 @@ class AppLocalizations {
     );
   }
 
+  /// `Location List`
+  String get locationList {
+    return Intl.message(
+      'Location List',
+      name: 'locationList',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Cancel`
   String get cancel {
-    return Intl.message(
-      'Cancel',
-      name: 'cancel',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Cancel', name: 'cancel', desc: '', args: []);
   }
-  /// `Edit Location`
-  String get editLocation {
-      return Intl.message(
-        'Edit Location',
-        name: 'editLocation', // يجب أن يكون مطابقاً لاسم المفتاح
-        desc: '',
-        args: [],
-      );
-  }
-  /// `An error occurred while fetching data`
-  String get fetchDataError {
+
+  /// `Location Description`
+  String get locationDescription {
     return Intl.message(
-      'An error occurred while fetching data',
-      name: 'fetchDataError',
+      'Location Description',
+      name: 'locationDescription',
       desc: '',
       args: [],
     );
   }
 
-  /// `Retry`
-  String get retry {
+  /// `Enter a brief description for the location`
+  String get enterLocationDescription {
     return Intl.message(
-      'Retry',
-      name: 'retry',
-      desc: '',
-      args: [],
-    );
-  }
-    String get deleteSuccess{
-    return Intl.message(
-      'Location deleted successfully',
-      name: 'deleteSuccess',
-      desc: '',
-      args: [],
-    );
-  }
-      String get updateSuccess{
-    return Intl.message(
-      'Location updated successfully',
-      name: 'updateSuccess',
-      desc: '',
-      args: [],
-    );
-  }
-        String get changeLocation{
-    return Intl.message(
-      'Change Location',
-      name: 'changeLocation',
+      'Enter a brief description for the location',
+      name: 'enterLocationDescription',
       desc: '',
       args: [],
     );
   }
 
+  /// `Location Name`
+  String get locationName {
+    return Intl.message(
+      'Location Name',
+      name: 'locationName',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `Save Changes`
   String get saveChanges {
@@ -612,7 +638,6 @@ class AppLocalizations {
       args: [],
     );
   }
-  
 
   /// `Please select a location first`
   String get selectLocationFirst {
@@ -624,44 +649,65 @@ class AppLocalizations {
     );
   }
 
-  /// `Enter location name`
+  /// `Error fetching data`
+  String get fetchDataError {
+    return Intl.message(
+      'Error fetching data',
+      name: 'fetchDataError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Retry`
+  String get retry {
+    return Intl.message('Retry', name: 'retry', desc: '', args: []);
+  }
+
+  /// `Are you sure you want to delete this item permanently?`
+  String get confirmDelete {
+    return Intl.message(
+      'Are you sure you want to delete this item permanently?',
+      name: 'confirmDelete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete`
+  String get delete {
+    return Intl.message('Delete', name: 'delete', desc: '', args: []);
+  }
+
+  /// `Enter location name...`
   String get enterLocationName {
     return Intl.message(
-      'Enter location name',
+      'Enter location name...',
       name: 'enterLocationName',
       desc: '',
       args: [],
     );
   }
-  
-  /// `Delete`
-  String get delete {
-      return Intl.message(
-        'Delete',
-        name: 'delete',
-        desc: '',
-        args: [],
-      );
-    }
 
-  /// `Are you sure you want to delete this location permanently?`
-  String get confirmDelete {
-      return Intl.message(
-        'Are you sure you want to delete this location permanently?',
-        name: 'confirmDelete',
-        desc: '',
-        args: [],
-      );
-    }
-
+  /// `Update Location`
   String get updateLocationTitle {
-      return Intl.message(
-        'Update Location', // القيمة الافتراضية
-        name: 'updateLocationTitle', // هذا هو أهم سطر
-        desc: '',
-        args: [],
-      );
-    }
+    return Intl.message(
+      'Update Location',
+      name: 'updateLocationTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Location deleted successfully`
+  String get deleteSuccess {
+    return Intl.message(
+      'Location deleted successfully',
+      name: 'deleteSuccess',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `Search for notifications...`
   String get notificationSearch {
@@ -868,63 +914,61 @@ class AppLocalizations {
     );
   }
 
-
-
-  /// `Session expired or your data was modified. You are now browsing as a guest.`
-  String get sessionExpiredGuest {
+  /// `Fetching campaign location...`
+  String get messageFetchingCampLocationmessage {
     return Intl.message(
-      'Session expired or your data was modified. You are now browsing as a guest.',
-      name: 'sessionExpiredGuest',
+      'Fetching campaign location...',
+      name: 'messageFetchingCampLocationmessage',
       desc: '',
       args: [],
     );
   }
 
-  /// `Connection failed, please check your internet connection.`
-  String get connectionFailed {
+  /// `km`
+  String get km {
+    return Intl.message('km', name: 'km', desc: '', args: []);
+  }
+
+  /// `You are here`
+  String get youAreHere {
+    return Intl.message('You are here', name: 'youAreHere', desc: '', args: []);
+  }
+
+  /// `Important Announcement`
+  String get importantAnnouncement {
     return Intl.message(
-      'Connection failed, please check your internet connection.',
-      name: 'connectionFailed',
+      'Important Announcement',
+      name: 'importantAnnouncement',
       desc: '',
       args: [],
     );
   }
 
-  /// `An unexpected error occurred, please try again.`
-  String get unexpectedError {
+  /// `Administration`
+  String get administration {
     return Intl.message(
-      'An unexpected error occurred, please try again.',
-      name: 'unexpectedError',
+      'Administration',
+      name: 'administration',
       desc: '',
       args: [],
     );
   }
 
-  /// `The server is currently not responding, please try again later.`
-  String get serverNotResponding {
+  /// `New Notification`
+  String get newNotification {
     return Intl.message(
-      'The server is currently not responding, please try again later.',
-      name: 'serverNotResponding',
+      'New Notification',
+      name: 'newNotification',
       desc: '',
       args: [],
     );
   }
 
-  /// `A server error occurred, please try again later.`
-  String get serverError {
+  /// `View Details`
+  String get viewDetails {
     return Intl.message(
-      'A server error occurred, please try again later.',
-      name: 'serverError',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `To ensure a safe journey and arrive peacefully, please login first`
-  String get secureArrivalMessage {
-    return Intl.message(
-      'To ensure a safe journey and arrive peacefully, please login first',
-      name: 'secureArrivalMessage',
+      'View Details',
+      name: 'viewDetails',
       desc: '',
       args: [],
     );
@@ -945,30 +989,30 @@ class AppLocalizations {
     );
   }
 
-  /// `[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Arrival and Makkah Activities","actions":[{"name":"Etiquette and Guidelines","emoji":"📖","sections":[{"title":"Intention and Covenant","items":["Anyone intending Hajj or Umrah should consciously seek closeness to Allah Almighty and purify their intention for this great obligation.","Hajj is an opportunity for sincere repentance, renewing one's covenant with Allah, and abandoning all sins.","Ensure all your wealth funding the Hajj is pure and Halal."],"type":"text"}]},{"name":"Ihram from the Miqat","emoji":"🤲","sections":[{"title":"Instructions and Steps","items":["At or before the Miqat, cleanse yourself, perform Ghusl (full washing), and apply perfume to your body (for men) before putting on the garments.","Men wear two clean, white seamless garments (Izar and Rida). Women wear regular modest clothing without a face-veil (Niqab) or gloves.","Make the intention and recite the Talbiyah: \"Labbayk Allahumma Hajjan\" (Here I am, O Allah, for Hajj).","Begin the continuous Talbiyah: \"Labbayka Allahumma Labbayk...\" and persist in it."],"type":"text"},{"title":"Ihram Prohibitions","items":["Cutting any hair or clipping nails.","Applying perfume to the body or garments.","Covering the head with a fitted cap (for men), or wearing tailored clothes.","Sexual intercourse and its preludes.","Hunting or killing wild game."],"type":"warning"}]},{"name":"Tawaf Al-Qudum (Arrival)","emoji":"🕋","sections":[{"title":"Tawaf Etiquette","items":["It is a Sunnah for the Mufrid and Qarin to perform Tawaf Al-Qudum upon arriving in Makkah.","Stop the Talbiyah when beginning Tawaf. The man should bare his right shoulder (Idtiba) uniquely for this Tawaf.","Walk swiftly with short steps (Raml) during the first three circuits (for men).","Start the Tawaf from the Black Stone, keeping the Kaaba on your left, and complete 7 circuits."],"type":"text"},{"title":"Supplications of Tawaf","items":["Between the Yemeni Corner and the Black Stone, say: \"Rabbana atina fid-dunya hasanatan wa fil-akhirati hasanatan wa qina 'adhaban-nar\" (Our Lord, give us in this world [that which is] good and in the Hereafter [that which is] good and protect us from the punishment of the Fire)."],"type":"dua"}]},{"name":"Station of Ibrahim","emoji":"🕌","sections":[{"title":"The Two Rakahs of Tawaf","items":["After completing Tawaf, head to the Station of Ibrahim and recite: \"And take, [O believers], from the standing place of Abraham a place of prayer.\"","Pray two Rakahs behind the Station if possible, or anywhere in the Sacred Mosque.","Recite Surah Al-Kafirun in the first Rakah and Surah Al-Ikhlas in the second."],"type":"text"}]},{"name":"Zamzam Water","emoji":"💧","sections":[{"title":"Drinking Zamzam","items":["It is recommended to drink deeply from Zamzam water and pour some on your head.","Zamzam water is for whatever it is drunk for, so supplicate to Allah for the good of this world and the Hereafter."],"type":"text"}]},{"name":"Sa'i (Walking)","emoji":"🚶","sections":[{"title":"Sa'i of Hajj","items":["The Mufrid and Qarin can advance the Sa'i of Hajj after Tawaf Al-Qudum (so they do not have to perform Sa'i again on Eid).","Ascend Mount Safa and recite the Quranic verse mentioning Safa and Marwah.","Face the Qiblah, praise Allah, magnify Him three times, and supplicate, then descend walking towards Marwah.","Complete 7 laps, where going from Safa to Marwah is one lap, and returning is another."],"type":"text"},{"title":"Supplications on Safa and Marwah","items":["Allahu Akbar, Allahu Akbar, Allahu Akbar. La ilaha illallahu wahdahu la sharika lah. Lahul mulku wa lahul hamd wahuwa 'ala kulli shay'in qadir. La ilaha illallahu wahdah, anjaza wa'dah, wa nasara 'abdah, wa hazamal ahzaba wahdah."],"type":"dua"}]},{"name":"Staying in Makkah","emoji":"🏨","sections":[{"title":"Waiting in Peace","items":["The Mufrid and Qarin remain in Makkah in their state of Ihram.","Use this time to pray frequently in the Sacred Mosque, recite Quran, and engage in Dhikr, in preparation for the core rites of Hajj."],"type":"text"}]}]},{"title":"The 8th Day","subtitle":"Day of Tarwiyah - 8th Thul-Hijjah","actions":[{"name":"Proceeding to Mina","emoji":"🏕️","sections":[{"title":"Acts of Tarwiyah","items":["Pilgrims head to Mina during the forenoon. (Mutamatti enters Ihram from his location).","Going to Mina on the Day of Tarwiyah is an emphasized Sunnah, not obligatory.","Pray Dhuhr, Asr, Maghrib, Isha, and Fajr of the 9th day in Mina.","Shorten the 4-Rakah prayers to 2 Rakahs (Qasr) but pray each in its respective time without combining.","Engage abundantly in Talbiyah, Dhikr, and reflection on the sanctity of the time."],"type":"text"}]}]},{"title":"The 9th Day","subtitle":"Day of Arafah - 9th Thul-Hijjah","actions":[{"name":"Standing at Arafah","emoji":"⛰️","sections":[{"title":"The Greatest Pillar","items":["After sunrise, move from Mina to Arafah peacefully while reciting Talbiyah.","Pray Dhuhr and Asr together (Jam' Taqdeem) and shortened (Qasr) with one Adhan and two Iqamahs.","Dedicate the entire time to supplication, Dhikr, and sincere pleading, facing the Qiblah with raised hands until sunset.","It is impermissible to leave the boundaries of Arafah before sunset."],"type":"text"},{"title":"The Best Supplication","items":["The best of what I and the Prophets before me have said is: \"La ilaha illallah, wahdahu la sharika lah, lahul mulku wa lahul hamdu, wa huwa 'ala kulli shay'in Qadir\" (There is no deity worthy of worship but Allah alone, having no partner. To Him belongs the dominion, to Him belongs all praise, and He is over all things competent)."],"type":"dua"}]},{"name":"Staying in Muzdalifah","emoji":"🌙","sections":[{"title":"Departing to Muzdalifah","items":["Immediately after sunset, depart to Muzdalifah calmly.","Upon arrival, pray Maghrib (3 Rakahs) and Isha (2 Rakahs) joined (Jam' Ta'kheer).","Sleep in Muzdalifah until Fajr, then stand at the Sacred Monument (or anywhere in Muzdalifah) supplicating until it is very light.","The Prophet ﷺ made a concession for the weak and women to leave Muzdalifah for Mina after midnight."],"type":"text"}]}]},{"title":"The 10th Day","subtitle":"Day of Sacrifice (Eid)","actions":[{"name":"Stoning Jamarat Al-Aqabah","emoji":"🎯","sections":[{"title":"The Stoning","items":["Upon returning to Mina on Eid morning, stone only the major pillar (Jamarat Al-Aqabah) using 7 successive pebbles.","Say \"Allahu Akbar\" with every pebble thrown.","Cut off the Talbiyah when throwing the very first pebble.","Pebbles should be roughly the size of a chickpea and can be picked from Muzdalifah or Mina."],"type":"text"}]},{"name":"Slaughtering the Hady","emoji":"🐑","sections":[{"title":"Rules of Hady","items":["Mufrid: No sacrifice is required.","Qarin & Mutamatti: Required to offer a sacrifice (a sheep, or 1/7th of a camel or cow).","It is permissible to delegate official entities (like the Islamic Development Bank) to slaughter on your behalf."],"type":"text"}]},{"name":"Shaving or Trimming","emoji":"✂️","sections":[{"title":"The First Partial Release","items":["Men should shave their entire head or trim their hair evenly, though shaving is highly preferred.","Women gather their hair and cut approximately an inch (a fingertip's length) from the ends.","This achieves the First Partial Release (Tahallul Al-Awwal), making everything lawful except sexual relations."],"type":"text"}]},{"name":"Tawaf Al-Ifadah","emoji":"🕋","sections":[{"title":"The Second Pillar","items":["Descend to Makkah to perform Tawaf Al-Ifadah (a core pillar without which Hajj is invalid).","Perform 7 circuits. There is no Raml (brisk walking) or Idtiba (baring the shoulder) in this Tawaf.","After this Tawaf (and Sa'i if required), the pilgrim achieves complete release (Tahallul Al-Akbar), and everything is lawful including sexual relations."],"type":"text"}]},{"name":"Sa'i (For those who haven't)","emoji":"🚶","sections":[{"title":"Sa'i of Hajj","items":["Mufrid & Qarin: If they performed Sa'i after Tawaf Al-Qudum, no further Sa'i is required.","Mutamatti: Must perform Sa'i here, because their first Sa'i was for Umrah."],"type":"text"}]}]},{"title":"Days of Tashreeq","subtitle":"11th, 12th, 13th of Thul-Hijjah","actions":[{"name":"Stoning the Three Jamarat","emoji":"🎯","sections":[{"title":"Rules of Stoning","items":["Pilgrims stone all three pillars every day after Zawal (when the time for Dhuhr prayer enters).","Begin with the Smallest Pillar (7 pebbles), then move aside and supplicate at length.","Then the Middle Pillar (7 pebbles), then move aside and supplicate at length.","Finally the Major Pillar of Aqabah (7 pebbles), and then depart without supplicating."],"type":"text"}]},{"name":"Staying in Mina","emoji":"🏕️","sections":[{"title":"Obligation of Staying","items":["Staying in Mina during the nights of Tashreeq is obligatory.","The pilgrim must spend the majority of the night within the boundaries of Mina.","It is permissible to depart early (Ta'ajjul) on the 12th of Thul-Hijjah, provided one leaves Mina before sunset."],"type":"text"}]}]},{"title":"Concluding the Rites","subtitle":"Departure & Farewell Tawaf","actions":[{"name":"Farewell Tawaf (Wada')","emoji":"🕋","sections":[{"title":"Final Act in Makkah","items":["The Farewell Tawaf is obligatory for every pilgrim leaving Makkah to return to their country.","It must be the very last action performed before traveling.","Perform 7 circuits only; there is no Sa'i or Raml.","Women who are menstruating or experiencing postpartum bleeding are exempted from the Farewell Tawaf."],"type":"text"}]}]}]`
+  /// `[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Arrival and Makkah Activities","actions":[{"name":"Etiquette and Guidelines","emoji":"📖","sections":[{"title":"Intention and Covenant","items":["Anyone intending Hajj or Umrah should consciously seek closeness to Allah Almighty and purify their intention for this great obligation.","Hajj is an opportunity for sincere repentance, renewing one's covenant with Allah, and abandoning all sins.","Ensure all your wealth funding the Hajj is pure and Halal."],"type":"text"}]}]}]`
   String get hajjIfradData {
     return Intl.message(
-      '[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Arrival and Makkah Activities","actions":[{"name":"Etiquette and Guidelines","emoji":"📖","sections":[{"title":"Intention and Covenant","items":["Anyone intending Hajj or Umrah should consciously seek closeness to Allah Almighty and purify their intention for this great obligation.","Hajj is an opportunity for sincere repentance, renewing one\'s covenant with Allah, and abandoning all sins.","Ensure all your wealth funding the Hajj is pure and Halal."],"type":"text"}]},{"name":"Ihram from the Miqat","emoji":"🤲","sections":[{"title":"Instructions and Steps","items":["At or before the Miqat, cleanse yourself, perform Ghusl (full washing), and apply perfume to your body (for men) before putting on the garments.","Men wear two clean, white seamless garments (Izar and Rida). Women wear regular modest clothing without a face-veil (Niqab) or gloves.","Make the intention and recite the Talbiyah: \\"Labbayk Allahumma Hajjan\\" (Here I am, O Allah, for Hajj).","Begin the continuous Talbiyah: \\"Labbayka Allahumma Labbayk...\\" and persist in it."],"type":"text"},{"title":"Ihram Prohibitions","items":["Cutting any hair or clipping nails.","Applying perfume to the body or garments.","Covering the head with a fitted cap (for men), or wearing tailored clothes.","Sexual intercourse and its preludes.","Hunting or killing wild game."],"type":"warning"}]},{"name":"Tawaf Al-Qudum (Arrival)","emoji":"🕋","sections":[{"title":"Tawaf Etiquette","items":["It is a Sunnah for the Mufrid and Qarin to perform Tawaf Al-Qudum upon arriving in Makkah.","Stop the Talbiyah when beginning Tawaf. The man should bare his right shoulder (Idtiba) uniquely for this Tawaf.","Walk swiftly with short steps (Raml) during the first three circuits (for men).","Start the Tawaf from the Black Stone, keeping the Kaaba on your left, and complete 7 circuits."],"type":"text"},{"title":"Supplications of Tawaf","items":["Between the Yemeni Corner and the Black Stone, say: \\"Rabbana atina fid-dunya hasanatan wa fil-akhirati hasanatan wa qina \'adhaban-nar\\" (Our Lord, give us in this world [that which is] good and in the Hereafter [that which is] good and protect us from the punishment of the Fire)."],"type":"dua"}]},{"name":"Station of Ibrahim","emoji":"🕌","sections":[{"title":"The Two Rakahs of Tawaf","items":["After completing Tawaf, head to the Station of Ibrahim and recite: \\"And take, [O believers], from the standing place of Abraham a place of prayer.\\"","Pray two Rakahs behind the Station if possible, or anywhere in the Sacred Mosque.","Recite Surah Al-Kafirun in the first Rakah and Surah Al-Ikhlas in the second."],"type":"text"}]},{"name":"Zamzam Water","emoji":"💧","sections":[{"title":"Drinking Zamzam","items":["It is recommended to drink deeply from Zamzam water and pour some on your head.","Zamzam water is for whatever it is drunk for, so supplicate to Allah for the good of this world and the Hereafter."],"type":"text"}]},{"name":"Sa\'i (Walking)","emoji":"🚶","sections":[{"title":"Sa\'i of Hajj","items":["The Mufrid and Qarin can advance the Sa\'i of Hajj after Tawaf Al-Qudum (so they do not have to perform Sa\'i again on Eid).","Ascend Mount Safa and recite the Quranic verse mentioning Safa and Marwah.","Face the Qiblah, praise Allah, magnify Him three times, and supplicate, then descend walking towards Marwah.","Complete 7 laps, where going from Safa to Marwah is one lap, and returning is another."],"type":"text"},{"title":"Supplications on Safa and Marwah","items":["Allahu Akbar, Allahu Akbar, Allahu Akbar. La ilaha illallahu wahdahu la sharika lah. Lahul mulku wa lahul hamd wahuwa \'ala kulli shay\'in qadir. La ilaha illallahu wahdah, anjaza wa\'dah, wa nasara \'abdah, wa hazamal ahzaba wahdah."],"type":"dua"}]},{"name":"Staying in Makkah","emoji":"🏨","sections":[{"title":"Waiting in Peace","items":["The Mufrid and Qarin remain in Makkah in their state of Ihram.","Use this time to pray frequently in the Sacred Mosque, recite Quran, and engage in Dhikr, in preparation for the core rites of Hajj."],"type":"text"}]}]},{"title":"The 8th Day","subtitle":"Day of Tarwiyah - 8th Thul-Hijjah","actions":[{"name":"Proceeding to Mina","emoji":"🏕️","sections":[{"title":"Acts of Tarwiyah","items":["Pilgrims head to Mina during the forenoon. (Mutamatti enters Ihram from his location).","Going to Mina on the Day of Tarwiyah is an emphasized Sunnah, not obligatory.","Pray Dhuhr, Asr, Maghrib, Isha, and Fajr of the 9th day in Mina.","Shorten the 4-Rakah prayers to 2 Rakahs (Qasr) but pray each in its respective time without combining.","Engage abundantly in Talbiyah, Dhikr, and reflection on the sanctity of the time."],"type":"text"}]}]},{"title":"The 9th Day","subtitle":"Day of Arafah - 9th Thul-Hijjah","actions":[{"name":"Standing at Arafah","emoji":"⛰️","sections":[{"title":"The Greatest Pillar","items":["After sunrise, move from Mina to Arafah peacefully while reciting Talbiyah.","Pray Dhuhr and Asr together (Jam\' Taqdeem) and shortened (Qasr) with one Adhan and two Iqamahs.","Dedicate the entire time to supplication, Dhikr, and sincere pleading, facing the Qiblah with raised hands until sunset.","It is impermissible to leave the boundaries of Arafah before sunset."],"type":"text"},{"title":"The Best Supplication","items":["The best of what I and the Prophets before me have said is: \\"La ilaha illallah, wahdahu la sharika lah, lahul mulku wa lahul hamdu, wa huwa \'ala kulli shay\'in Qadir\\" (There is no deity worthy of worship but Allah alone, having no partner. To Him belongs the dominion, to Him belongs all praise, and He is over all things competent)."],"type":"dua"}]},{"name":"Staying in Muzdalifah","emoji":"🌙","sections":[{"title":"Departing to Muzdalifah","items":["Immediately after sunset, depart to Muzdalifah calmly.","Upon arrival, pray Maghrib (3 Rakahs) and Isha (2 Rakahs) joined (Jam\' Ta\'kheer).","Sleep in Muzdalifah until Fajr, then stand at the Sacred Monument (or anywhere in Muzdalifah) supplicating until it is very light.","The Prophet ﷺ made a concession for the weak and women to leave Muzdalifah for Mina after midnight."],"type":"text"}]}]},{"title":"The 10th Day","subtitle":"Day of Sacrifice (Eid)","actions":[{"name":"Stoning Jamarat Al-Aqabah","emoji":"🎯","sections":[{"title":"The Stoning","items":["Upon returning to Mina on Eid morning, stone only the major pillar (Jamarat Al-Aqabah) using 7 successive pebbles.","Say \\"Allahu Akbar\\" with every pebble thrown.","Cut off the Talbiyah when throwing the very first pebble.","Pebbles should be roughly the size of a chickpea and can be picked from Muzdalifah or Mina."],"type":"text"}]},{"name":"Slaughtering the Hady","emoji":"🐑","sections":[{"title":"Rules of Hady","items":["Mufrid: No sacrifice is required.","Qarin & Mutamatti: Required to offer a sacrifice (a sheep, or 1/7th of a camel or cow).","It is permissible to delegate official entities (like the Islamic Development Bank) to slaughter on your behalf."],"type":"text"}]},{"name":"Shaving or Trimming","emoji":"✂️","sections":[{"title":"The First Partial Release","items":["Men should shave their entire head or trim their hair evenly, though shaving is highly preferred.","Women gather their hair and cut approximately an inch (a fingertip\'s length) from the ends.","This achieves the First Partial Release (Tahallul Al-Awwal), making everything lawful except sexual relations."],"type":"text"}]},{"name":"Tawaf Al-Ifadah","emoji":"🕋","sections":[{"title":"The Second Pillar","items":["Descend to Makkah to perform Tawaf Al-Ifadah (a core pillar without which Hajj is invalid).","Perform 7 circuits. There is no Raml (brisk walking) or Idtiba (baring the shoulder) in this Tawaf.","After this Tawaf (and Sa\'i if required), the pilgrim achieves complete release (Tahallul Al-Akbar), and everything is lawful including sexual relations."],"type":"text"}]},{"name":"Sa\'i (For those who haven\'t)","emoji":"🚶","sections":[{"title":"Sa\'i of Hajj","items":["Mufrid & Qarin: If they performed Sa\'i after Tawaf Al-Qudum, no further Sa\'i is required.","Mutamatti: Must perform Sa\'i here, because their first Sa\'i was for Umrah."],"type":"text"}]}]},{"title":"Days of Tashreeq","subtitle":"11th, 12th, 13th of Thul-Hijjah","actions":[{"name":"Stoning the Three Jamarat","emoji":"🎯","sections":[{"title":"Rules of Stoning","items":["Pilgrims stone all three pillars every day after Zawal (when the time for Dhuhr prayer enters).","Begin with the Smallest Pillar (7 pebbles), then move aside and supplicate at length.","Then the Middle Pillar (7 pebbles), then move aside and supplicate at length.","Finally the Major Pillar of Aqabah (7 pebbles), and then depart without supplicating."],"type":"text"}]},{"name":"Staying in Mina","emoji":"🏕️","sections":[{"title":"Obligation of Staying","items":["Staying in Mina during the nights of Tashreeq is obligatory.","The pilgrim must spend the majority of the night within the boundaries of Mina.","It is permissible to depart early (Ta\'ajjul) on the 12th of Thul-Hijjah, provided one leaves Mina before sunset."],"type":"text"}]}]},{"title":"Concluding the Rites","subtitle":"Departure & Farewell Tawaf","actions":[{"name":"Farewell Tawaf (Wada\')","emoji":"🕋","sections":[{"title":"Final Act in Makkah","items":["The Farewell Tawaf is obligatory for every pilgrim leaving Makkah to return to their country.","It must be the very last action performed before traveling.","Perform 7 circuits only; there is no Sa\'i or Raml.","Women who are menstruating or experiencing postpartum bleeding are exempted from the Farewell Tawaf."],"type":"text"}]}]}]',
+      '[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Arrival and Makkah Activities","actions":[{"name":"Etiquette and Guidelines","emoji":"📖","sections":[{"title":"Intention and Covenant","items":["Anyone intending Hajj or Umrah should consciously seek closeness to Allah Almighty and purify their intention for this great obligation.","Hajj is an opportunity for sincere repentance, renewing one\'s covenant with Allah, and abandoning all sins.","Ensure all your wealth funding the Hajj is pure and Halal."],"type":"text"}]}]}]',
       name: 'hajjIfradData',
       desc: '',
       args: [],
     );
   }
 
-  /// `[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Arrival for the Qarin","actions":[{"name":"Intention for Qiran","emoji":"🤲","sections":[{"title":"Combining the Intention","items":["He makes the intention saying: \"Labbayk Allahumma 'Umratan wa Hajjan\" (Here I am, O Allah, for Umrah and Hajj).","The Qarin does not exit Ihram like the Mufrid. He remains in the state of Ihram until the Day of Sacrifice."],"type":"text"}]},{"name":"Arrival Tawaf and Sa'i","emoji":"🕋","sections":[{"title":"Tawaf and Sa'i","items":["He performs Tawaf of Arrival (7 circuits). He may also perform 7 laps of Sa'i, which will suffice him for the Sa'i of Hajj.","He remains in his Ihram after this Sa'i, and does neither shave nor trim."],"type":"text"}]}]},{"title":"The 8th Day","subtitle":"Day of Tarwiyah - 8th Thul-Hijjah","actions":[{"name":"Proceeding to Mina","emoji":"🏕️","sections":[{"title":"Acts of Tarwiyah","items":["Pilgrims head to Mina during the forenoon. (Mutamatti enters Ihram from his location).","Going to Mina on the Day of Tarwiyah is an emphasized Sunnah, not obligatory.","Pray Dhuhr, Asr, Maghrib, Isha, and Fajr of the 9th day in Mina.","Shorten the 4-Rakah prayers to 2 Rakahs (Qasr) but pray each in its respective time without combining.","Engage abundantly in Talbiyah, Dhikr, and reflection on the sanctity of the time."],"type":"text"}]}]},{"title":"The 9th Day","subtitle":"Day of Arafah - 9th Thul-Hijjah","actions":[{"name":"Standing at Arafah","emoji":"⛰️","sections":[{"title":"The Greatest Pillar","items":["After sunrise, move from Mina to Arafah peacefully while reciting Talbiyah.","Pray Dhuhr and Asr together (Jam' Taqdeem) and shortened (Qasr) with one Adhan and two Iqamahs.","Dedicate the entire time to supplication, Dhikr, and sincere pleading, facing the Qiblah with raised hands until sunset.","It is impermissible to leave the boundaries of Arafah before sunset."],"type":"text"},{"title":"The Best Supplication","items":["The best of what I and the Prophets before me have said is: \"La ilaha illallah, wahdahu la sharika lah, lahul mulku wa lahul hamdu, wa huwa 'ala kulli shay'in Qadir\" (There is no deity worthy of worship but Allah alone, having no partner. To Him belongs the dominion, to Him belongs all praise, and He is over all things competent)."],"type":"dua"}]},{"name":"Staying in Muzdalifah","emoji":"🌙","sections":[{"title":"Departing to Muzdalifah","items":["Immediately after sunset, depart to Muzdalifah calmly.","Upon arrival, pray Maghrib (3 Rakahs) and Isha (2 Rakahs) joined (Jam' Ta'kheer).","Sleep in Muzdalifah until Fajr, then stand at the Sacred Monument (or anywhere in Muzdalifah) supplicating until it is very light.","The Prophet ﷺ made a concession for the weak and women to leave Muzdalifah for Mina after midnight."],"type":"text"}]}]},{"title":"The 10th Day","subtitle":"Day of Sacrifice (Eid)","actions":[{"name":"Stoning Jamarat Al-Aqabah","emoji":"🎯","sections":[{"title":"The Stoning","items":["Upon returning to Mina on Eid morning, stone only the major pillar (Jamarat Al-Aqabah) using 7 successive pebbles.","Say \"Allahu Akbar\" with every pebble thrown.","Cut off the Talbiyah when throwing the very first pebble.","Pebbles should be roughly the size of a chickpea and can be picked from Muzdalifah or Mina."],"type":"text"}]},{"name":"Slaughtering the Hady","emoji":"🐑","sections":[{"title":"Rules of Hady","items":["Mufrid: No sacrifice is required.","Qarin & Mutamatti: Required to offer a sacrifice (a sheep, or 1/7th of a camel or cow).","It is permissible to delegate official entities (like the Islamic Development Bank) to slaughter on your behalf."],"type":"text"}]},{"name":"Shaving or Trimming","emoji":"✂️","sections":[{"title":"The First Partial Release","items":["Men should shave their entire head or trim their hair evenly, though shaving is highly preferred.","Women gather their hair and cut approximately an inch (a fingertip's length) from the ends.","This achieves the First Partial Release (Tahallul Al-Awwal), making everything lawful except sexual relations."],"type":"text"}]},{"name":"Tawaf Al-Ifadah","emoji":"🕋","sections":[{"title":"The Second Pillar","items":["Descend to Makkah to perform Tawaf Al-Ifadah (a core pillar without which Hajj is invalid).","Perform 7 circuits. There is no Raml (brisk walking) or Idtiba (baring the shoulder) in this Tawaf.","After this Tawaf (and Sa'i if required), the pilgrim achieves complete release (Tahallul Al-Akbar), and everything is lawful including sexual relations."],"type":"text"}]},{"name":"Sa'i (For those who haven't)","emoji":"🚶","sections":[{"title":"Sa'i of Hajj","items":["Mufrid & Qarin: If they performed Sa'i after Tawaf Al-Qudum, no further Sa'i is required.","Mutamatti: Must perform Sa'i here, because their first Sa'i was for Umrah."],"type":"text"}]}]},{"title":"Days of Tashreeq","subtitle":"11th, 12th, 13th of Thul-Hijjah","actions":[{"name":"Stoning the Three Jamarat","emoji":"🎯","sections":[{"title":"Rules of Stoning","items":["Pilgrims stone all three pillars every day after Zawal (when the time for Dhuhr prayer enters).","Begin with the Smallest Pillar (7 pebbles), then move aside and supplicate at length.","Then the Middle Pillar (7 pebbles), then move aside and supplicate at length.","Finally the Major Pillar of Aqabah (7 pebbles), and then depart without supplicating."],"type":"text"}]},{"name":"Staying in Mina","emoji":"🏕️","sections":[{"title":"Obligation of Staying","items":["Staying in Mina during the nights of Tashreeq is obligatory.","The pilgrim must spend the majority of the night within the boundaries of Mina.","It is permissible to depart early (Ta'ajjul) on the 12th of Thul-Hijjah, provided one leaves Mina before sunset."],"type":"text"}]}]},{"title":"Concluding the Rites","subtitle":"Departure & Farewell Tawaf","actions":[{"name":"Farewell Tawaf (Wada')","emoji":"🕋","sections":[{"title":"Final Act in Makkah","items":["The Farewell Tawaf is obligatory for every pilgrim leaving Makkah to return to their country.","It must be the very last action performed before traveling.","Perform 7 circuits only; there is no Sa'i or Raml.","Women who are menstruating or experiencing postpartum bleeding are exempted from the Farewell Tawaf."],"type":"text"}]}]}]`
+  /// `[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Arrival for the Qarin","actions":[{"name":"Intention for Qiran","emoji":"🤲","sections":[{"title":"Combining the Intention","items":["He makes the intention saying: Labbayk Allahumma Umratan wa Hajjan.","The Qarin does not exit Ihram like the Mufrid."],"type":"text"}]}]}]`
   String get hajjQiranData {
     return Intl.message(
-      '[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Arrival for the Qarin","actions":[{"name":"Intention for Qiran","emoji":"🤲","sections":[{"title":"Combining the Intention","items":["He makes the intention saying: \\"Labbayk Allahumma \'Umratan wa Hajjan\\" (Here I am, O Allah, for Umrah and Hajj).","The Qarin does not exit Ihram like the Mufrid. He remains in the state of Ihram until the Day of Sacrifice."],"type":"text"}]},{"name":"Arrival Tawaf and Sa\'i","emoji":"🕋","sections":[{"title":"Tawaf and Sa\'i","items":["He performs Tawaf of Arrival (7 circuits). He may also perform 7 laps of Sa\'i, which will suffice him for the Sa\'i of Hajj.","He remains in his Ihram after this Sa\'i, and does neither shave nor trim."],"type":"text"}]}]},{"title":"The 8th Day","subtitle":"Day of Tarwiyah - 8th Thul-Hijjah","actions":[{"name":"Proceeding to Mina","emoji":"🏕️","sections":[{"title":"Acts of Tarwiyah","items":["Pilgrims head to Mina during the forenoon. (Mutamatti enters Ihram from his location).","Going to Mina on the Day of Tarwiyah is an emphasized Sunnah, not obligatory.","Pray Dhuhr, Asr, Maghrib, Isha, and Fajr of the 9th day in Mina.","Shorten the 4-Rakah prayers to 2 Rakahs (Qasr) but pray each in its respective time without combining.","Engage abundantly in Talbiyah, Dhikr, and reflection on the sanctity of the time."],"type":"text"}]}]},{"title":"The 9th Day","subtitle":"Day of Arafah - 9th Thul-Hijjah","actions":[{"name":"Standing at Arafah","emoji":"⛰️","sections":[{"title":"The Greatest Pillar","items":["After sunrise, move from Mina to Arafah peacefully while reciting Talbiyah.","Pray Dhuhr and Asr together (Jam\' Taqdeem) and shortened (Qasr) with one Adhan and two Iqamahs.","Dedicate the entire time to supplication, Dhikr, and sincere pleading, facing the Qiblah with raised hands until sunset.","It is impermissible to leave the boundaries of Arafah before sunset."],"type":"text"},{"title":"The Best Supplication","items":["The best of what I and the Prophets before me have said is: \\"La ilaha illallah, wahdahu la sharika lah, lahul mulku wa lahul hamdu, wa huwa \'ala kulli shay\'in Qadir\\" (There is no deity worthy of worship but Allah alone, having no partner. To Him belongs the dominion, to Him belongs all praise, and He is over all things competent)."],"type":"dua"}]},{"name":"Staying in Muzdalifah","emoji":"🌙","sections":[{"title":"Departing to Muzdalifah","items":["Immediately after sunset, depart to Muzdalifah calmly.","Upon arrival, pray Maghrib (3 Rakahs) and Isha (2 Rakahs) joined (Jam\' Ta\'kheer).","Sleep in Muzdalifah until Fajr, then stand at the Sacred Monument (or anywhere in Muzdalifah) supplicating until it is very light.","The Prophet ﷺ made a concession for the weak and women to leave Muzdalifah for Mina after midnight."],"type":"text"}]}]},{"title":"The 10th Day","subtitle":"Day of Sacrifice (Eid)","actions":[{"name":"Stoning Jamarat Al-Aqabah","emoji":"🎯","sections":[{"title":"The Stoning","items":["Upon returning to Mina on Eid morning, stone only the major pillar (Jamarat Al-Aqabah) using 7 successive pebbles.","Say \\"Allahu Akbar\\" with every pebble thrown.","Cut off the Talbiyah when throwing the very first pebble.","Pebbles should be roughly the size of a chickpea and can be picked from Muzdalifah or Mina."],"type":"text"}]},{"name":"Slaughtering the Hady","emoji":"🐑","sections":[{"title":"Rules of Hady","items":["Mufrid: No sacrifice is required.","Qarin & Mutamatti: Required to offer a sacrifice (a sheep, or 1/7th of a camel or cow).","It is permissible to delegate official entities (like the Islamic Development Bank) to slaughter on your behalf."],"type":"text"}]},{"name":"Shaving or Trimming","emoji":"✂️","sections":[{"title":"The First Partial Release","items":["Men should shave their entire head or trim their hair evenly, though shaving is highly preferred.","Women gather their hair and cut approximately an inch (a fingertip\'s length) from the ends.","This achieves the First Partial Release (Tahallul Al-Awwal), making everything lawful except sexual relations."],"type":"text"}]},{"name":"Tawaf Al-Ifadah","emoji":"🕋","sections":[{"title":"The Second Pillar","items":["Descend to Makkah to perform Tawaf Al-Ifadah (a core pillar without which Hajj is invalid).","Perform 7 circuits. There is no Raml (brisk walking) or Idtiba (baring the shoulder) in this Tawaf.","After this Tawaf (and Sa\'i if required), the pilgrim achieves complete release (Tahallul Al-Akbar), and everything is lawful including sexual relations."],"type":"text"}]},{"name":"Sa\'i (For those who haven\'t)","emoji":"🚶","sections":[{"title":"Sa\'i of Hajj","items":["Mufrid & Qarin: If they performed Sa\'i after Tawaf Al-Qudum, no further Sa\'i is required.","Mutamatti: Must perform Sa\'i here, because their first Sa\'i was for Umrah."],"type":"text"}]}]},{"title":"Days of Tashreeq","subtitle":"11th, 12th, 13th of Thul-Hijjah","actions":[{"name":"Stoning the Three Jamarat","emoji":"🎯","sections":[{"title":"Rules of Stoning","items":["Pilgrims stone all three pillars every day after Zawal (when the time for Dhuhr prayer enters).","Begin with the Smallest Pillar (7 pebbles), then move aside and supplicate at length.","Then the Middle Pillar (7 pebbles), then move aside and supplicate at length.","Finally the Major Pillar of Aqabah (7 pebbles), and then depart without supplicating."],"type":"text"}]},{"name":"Staying in Mina","emoji":"🏕️","sections":[{"title":"Obligation of Staying","items":["Staying in Mina during the nights of Tashreeq is obligatory.","The pilgrim must spend the majority of the night within the boundaries of Mina.","It is permissible to depart early (Ta\'ajjul) on the 12th of Thul-Hijjah, provided one leaves Mina before sunset."],"type":"text"}]}]},{"title":"Concluding the Rites","subtitle":"Departure & Farewell Tawaf","actions":[{"name":"Farewell Tawaf (Wada\')","emoji":"🕋","sections":[{"title":"Final Act in Makkah","items":["The Farewell Tawaf is obligatory for every pilgrim leaving Makkah to return to their country.","It must be the very last action performed before traveling.","Perform 7 circuits only; there is no Sa\'i or Raml.","Women who are menstruating or experiencing postpartum bleeding are exempted from the Farewell Tawaf."],"type":"text"}]}]}]',
+      '[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Arrival for the Qarin","actions":[{"name":"Intention for Qiran","emoji":"🤲","sections":[{"title":"Combining the Intention","items":["He makes the intention saying: Labbayk Allahumma Umratan wa Hajjan.","The Qarin does not exit Ihram like the Mufrid."],"type":"text"}]}]}]',
       name: 'hajjQiranData',
       desc: '',
       args: [],
     );
   }
 
-  /// `[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Performing Umrah for Tamattu","actions":[{"name":"Etiquette and Guidelines","emoji":"📖","sections":[{"title":"Intention for Tamattu","items":["At the Miqat, the pilgrim intends only Umrah by saying: \"Labbayk Allahumma 'Umratan mutamatti'an biha ilal-Hajj\" (Here I am, O Allah, for Umrah seeking the enjoyment of release until Hajj)."],"type":"text"}]},{"name":"Tawaf and Sa'i of Umrah","emoji":"🕋","sections":[{"title":"A Complete Umrah","items":["Arrive in Makkah, perform Tawaf of the Kaaba (7 circuits) for Umrah, and Sa'i between Safa and Marwah (7 laps) for Umrah."],"type":"text"}]},{"name":"Hair Trimming and Release","emoji":"✂️","sections":[{"title":"Complete Release from Umrah","items":["The pilgrim trims his hair (rather than shaving, to save the shaving for Hajj).","By doing so, the pilgrim fully exits the state of Ihram, wears regular clothes, and all prohibitions are lifted until the 8th of Thul-Hijjah."],"type":"text"}]}]},{"title":"The 8th Day","subtitle":"Day of Tarwiyah & Ihram for Hajj","actions":[{"name":"Ihram from Makkah","emoji":"🤲","sections":[{"title":"Intention for Hajj","items":["The Mutamatti bathes, applies perfume, and puts on the Ihram garments from his residence in Makkah.","He recites the Talbiyah saying: \"Labbayk Allahumma Hajjan\"."],"type":"text"}]},{"name":"Staying in Mina","emoji":"🏕️","sections":[{"title":"Acts of Tarwiyah","items":["He heads to Mina with the pilgrims to pray Dhuhr, Asr, Maghrib, Isha, and Fajr of the 9th, shortened but not combined."],"type":"text"}]}]},{"title":"The 9th Day","subtitle":"Day of Arafah - 9th Thul-Hijjah","actions":[{"name":"Standing at Arafah","emoji":"⛰️","sections":[{"title":"The Greatest Pillar","items":["After sunrise, move from Mina to Arafah peacefully while reciting Talbiyah.","Pray Dhuhr and Asr together (Jam' Taqdeem) and shortened (Qasr) with one Adhan and two Iqamahs.","Dedicate the entire time to supplication, Dhikr, and sincere pleading, facing the Qiblah with raised hands until sunset.","It is impermissible to leave the boundaries of Arafah before sunset."],"type":"text"},{"title":"The Best Supplication","items":["The best of what I and the Prophets before me have said is: \"La ilaha illallah, wahdahu la sharika lah, lahul mulku wa lahul hamdu, wa huwa 'ala kulli shay'in Qadir\" (There is no deity worthy of worship but Allah alone, having no partner. To Him belongs the dominion, to Him belongs all praise, and He is over all things competent)."],"type":"dua"}]},{"name":"Staying in Muzdalifah","emoji":"🌙","sections":[{"title":"Departing to Muzdalifah","items":["Immediately after sunset, depart to Muzdalifah calmly.","Upon arrival, pray Maghrib (3 Rakahs) and Isha (2 Rakahs) joined (Jam' Ta'kheer).","Sleep in Muzdalifah until Fajr, then stand at the Sacred Monument (or anywhere in Muzdalifah) supplicating until it is very light.","The Prophet ﷺ made a concession for the weak and women to leave Muzdalifah for Mina after midnight."],"type":"text"}]}]},{"title":"The 10th Day","subtitle":"Day of Sacrifice (Eid)","actions":[{"name":"Stoning Jamarat Al-Aqabah","emoji":"🎯","sections":[{"title":"The Stoning","items":["Upon returning to Mina on Eid morning, stone only the major pillar (Jamarat Al-Aqabah) using 7 successive pebbles.","Say \"Allahu Akbar\" with every pebble thrown.","Cut off the Talbiyah when throwing the very first pebble.","Pebbles should be roughly the size of a chickpea and can be picked from Muzdalifah or Mina."],"type":"text"}]},{"name":"Slaughtering the Hady","emoji":"🐑","sections":[{"title":"Rules of Hady","items":["Mufrid: No sacrifice is required.","Qarin & Mutamatti: Required to offer a sacrifice (a sheep, or 1/7th of a camel or cow).","It is permissible to delegate official entities (like the Islamic Development Bank) to slaughter on your behalf."],"type":"text"}]},{"name":"Shaving or Trimming","emoji":"✂️","sections":[{"title":"The First Partial Release","items":["Men should shave their entire head or trim their hair evenly, though shaving is highly preferred.","Women gather their hair and cut approximately an inch (a fingertip's length) from the ends.","This achieves the First Partial Release (Tahallul Al-Awwal), making everything lawful except sexual relations."],"type":"text"}]},{"name":"Tawaf Al-Ifadah","emoji":"🕋","sections":[{"title":"The Second Pillar","items":["Descend to Makkah to perform Tawaf Al-Ifadah (a core pillar without which Hajj is invalid).","Perform 7 circuits. There is no Raml (brisk walking) or Idtiba (baring the shoulder) in this Tawaf.","After this Tawaf (and Sa'i if required), the pilgrim achieves complete release (Tahallul Al-Akbar), and everything is lawful including sexual relations."],"type":"text"}]},{"name":"Sa'i (For those who haven't)","emoji":"🚶","sections":[{"title":"Sa'i of Hajj","items":["Mufrid & Qarin: If they performed Sa'i after Tawaf Al-Qudum, no further Sa'i is required.","Mutamatti: Must perform Sa'i here, because their first Sa'i was for Umrah."],"type":"text"}]}]},{"title":"Days of Tashreeq","subtitle":"11th, 12th, 13th of Thul-Hijjah","actions":[{"name":"Stoning the Three Jamarat","emoji":"🎯","sections":[{"title":"Rules of Stoning","items":["Pilgrims stone all three pillars every day after Zawal (when the time for Dhuhr prayer enters).","Begin with the Smallest Pillar (7 pebbles), then move aside and supplicate at length.","Then the Middle Pillar (7 pebbles), then move aside and supplicate at length.","Finally the Major Pillar of Aqabah (7 pebbles), and then depart without supplicating."],"type":"text"}]},{"name":"Staying in Mina","emoji":"🏕️","sections":[{"title":"Obligation of Staying","items":["Staying in Mina during the nights of Tashreeq is obligatory.","The pilgrim must spend the majority of the night within the boundaries of Mina.","It is permissible to depart early (Ta'ajjul) on the 12th of Thul-Hijjah, provided one leaves Mina before sunset."],"type":"text"}]}]},{"title":"Concluding the Rites","subtitle":"Departure & Farewell Tawaf","actions":[{"name":"Farewell Tawaf (Wada')","emoji":"🕋","sections":[{"title":"Final Act in Makkah","items":["The Farewell Tawaf is obligatory for every pilgrim leaving Makkah to return to their country.","It must be the very last action performed before traveling.","Perform 7 circuits only; there is no Sa'i or Raml.","Women who are menstruating or experiencing postpartum bleeding are exempted from the Farewell Tawaf."],"type":"text"}]}]}]`
+  /// `[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Performing Umrah for Tamattu","actions":[{"name":"Etiquette and Guidelines","emoji":"📖","sections":[{"title":"Intention for Tamattu","items":["At the Miqat, the pilgrim intends only Umrah."],"type":"text"}]}]}]`
   String get hajjTamattuData {
     return Intl.message(
-      '[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Performing Umrah for Tamattu","actions":[{"name":"Etiquette and Guidelines","emoji":"📖","sections":[{"title":"Intention for Tamattu","items":["At the Miqat, the pilgrim intends only Umrah by saying: \\"Labbayk Allahumma \'Umratan mutamatti\'an biha ilal-Hajj\\" (Here I am, O Allah, for Umrah seeking the enjoyment of release until Hajj)."],"type":"text"}]},{"name":"Tawaf and Sa\'i of Umrah","emoji":"🕋","sections":[{"title":"A Complete Umrah","items":["Arrive in Makkah, perform Tawaf of the Kaaba (7 circuits) for Umrah, and Sa\'i between Safa and Marwah (7 laps) for Umrah."],"type":"text"}]},{"name":"Hair Trimming and Release","emoji":"✂️","sections":[{"title":"Complete Release from Umrah","items":["The pilgrim trims his hair (rather than shaving, to save the shaving for Hajj).","By doing so, the pilgrim fully exits the state of Ihram, wears regular clothes, and all prohibitions are lifted until the 8th of Thul-Hijjah."],"type":"text"}]}]},{"title":"The 8th Day","subtitle":"Day of Tarwiyah & Ihram for Hajj","actions":[{"name":"Ihram from Makkah","emoji":"🤲","sections":[{"title":"Intention for Hajj","items":["The Mutamatti bathes, applies perfume, and puts on the Ihram garments from his residence in Makkah.","He recites the Talbiyah saying: \\"Labbayk Allahumma Hajjan\\"."],"type":"text"}]},{"name":"Staying in Mina","emoji":"🏕️","sections":[{"title":"Acts of Tarwiyah","items":["He heads to Mina with the pilgrims to pray Dhuhr, Asr, Maghrib, Isha, and Fajr of the 9th, shortened but not combined."],"type":"text"}]}]},{"title":"The 9th Day","subtitle":"Day of Arafah - 9th Thul-Hijjah","actions":[{"name":"Standing at Arafah","emoji":"⛰️","sections":[{"title":"The Greatest Pillar","items":["After sunrise, move from Mina to Arafah peacefully while reciting Talbiyah.","Pray Dhuhr and Asr together (Jam\' Taqdeem) and shortened (Qasr) with one Adhan and two Iqamahs.","Dedicate the entire time to supplication, Dhikr, and sincere pleading, facing the Qiblah with raised hands until sunset.","It is impermissible to leave the boundaries of Arafah before sunset."],"type":"text"},{"title":"The Best Supplication","items":["The best of what I and the Prophets before me have said is: \\"La ilaha illallah, wahdahu la sharika lah, lahul mulku wa lahul hamdu, wa huwa \'ala kulli shay\'in Qadir\\" (There is no deity worthy of worship but Allah alone, having no partner. To Him belongs the dominion, to Him belongs all praise, and He is over all things competent)."],"type":"dua"}]},{"name":"Staying in Muzdalifah","emoji":"🌙","sections":[{"title":"Departing to Muzdalifah","items":["Immediately after sunset, depart to Muzdalifah calmly.","Upon arrival, pray Maghrib (3 Rakahs) and Isha (2 Rakahs) joined (Jam\' Ta\'kheer).","Sleep in Muzdalifah until Fajr, then stand at the Sacred Monument (or anywhere in Muzdalifah) supplicating until it is very light.","The Prophet ﷺ made a concession for the weak and women to leave Muzdalifah for Mina after midnight."],"type":"text"}]}]},{"title":"The 10th Day","subtitle":"Day of Sacrifice (Eid)","actions":[{"name":"Stoning Jamarat Al-Aqabah","emoji":"🎯","sections":[{"title":"The Stoning","items":["Upon returning to Mina on Eid morning, stone only the major pillar (Jamarat Al-Aqabah) using 7 successive pebbles.","Say \\"Allahu Akbar\\" with every pebble thrown.","Cut off the Talbiyah when throwing the very first pebble.","Pebbles should be roughly the size of a chickpea and can be picked from Muzdalifah or Mina."],"type":"text"}]},{"name":"Slaughtering the Hady","emoji":"🐑","sections":[{"title":"Rules of Hady","items":["Mufrid: No sacrifice is required.","Qarin & Mutamatti: Required to offer a sacrifice (a sheep, or 1/7th of a camel or cow).","It is permissible to delegate official entities (like the Islamic Development Bank) to slaughter on your behalf."],"type":"text"}]},{"name":"Shaving or Trimming","emoji":"✂️","sections":[{"title":"The First Partial Release","items":["Men should shave their entire head or trim their hair evenly, though shaving is highly preferred.","Women gather their hair and cut approximately an inch (a fingertip\'s length) from the ends.","This achieves the First Partial Release (Tahallul Al-Awwal), making everything lawful except sexual relations."],"type":"text"}]},{"name":"Tawaf Al-Ifadah","emoji":"🕋","sections":[{"title":"The Second Pillar","items":["Descend to Makkah to perform Tawaf Al-Ifadah (a core pillar without which Hajj is invalid).","Perform 7 circuits. There is no Raml (brisk walking) or Idtiba (baring the shoulder) in this Tawaf.","After this Tawaf (and Sa\'i if required), the pilgrim achieves complete release (Tahallul Al-Akbar), and everything is lawful including sexual relations."],"type":"text"}]},{"name":"Sa\'i (For those who haven\'t)","emoji":"🚶","sections":[{"title":"Sa\'i of Hajj","items":["Mufrid & Qarin: If they performed Sa\'i after Tawaf Al-Qudum, no further Sa\'i is required.","Mutamatti: Must perform Sa\'i here, because their first Sa\'i was for Umrah."],"type":"text"}]}]},{"title":"Days of Tashreeq","subtitle":"11th, 12th, 13th of Thul-Hijjah","actions":[{"name":"Stoning the Three Jamarat","emoji":"🎯","sections":[{"title":"Rules of Stoning","items":["Pilgrims stone all three pillars every day after Zawal (when the time for Dhuhr prayer enters).","Begin with the Smallest Pillar (7 pebbles), then move aside and supplicate at length.","Then the Middle Pillar (7 pebbles), then move aside and supplicate at length.","Finally the Major Pillar of Aqabah (7 pebbles), and then depart without supplicating."],"type":"text"}]},{"name":"Staying in Mina","emoji":"🏕️","sections":[{"title":"Obligation of Staying","items":["Staying in Mina during the nights of Tashreeq is obligatory.","The pilgrim must spend the majority of the night within the boundaries of Mina.","It is permissible to depart early (Ta\'ajjul) on the 12th of Thul-Hijjah, provided one leaves Mina before sunset."],"type":"text"}]}]},{"title":"Concluding the Rites","subtitle":"Departure & Farewell Tawaf","actions":[{"name":"Farewell Tawaf (Wada\')","emoji":"🕋","sections":[{"title":"Final Act in Makkah","items":["The Farewell Tawaf is obligatory for every pilgrim leaving Makkah to return to their country.","It must be the very last action performed before traveling.","Perform 7 circuits only; there is no Sa\'i or Raml.","Women who are menstruating or experiencing postpartum bleeding are exempted from the Farewell Tawaf."],"type":"text"}]}]}]',
+      '[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Performing Umrah for Tamattu","actions":[{"name":"Etiquette and Guidelines","emoji":"📖","sections":[{"title":"Intention for Tamattu","items":["At the Miqat, the pilgrim intends only Umrah."],"type":"text"}]}]}]',
       name: 'hajjTamattuData',
       desc: '',
       args: [],
@@ -983,28 +1027,6 @@ class AppLocalizations {
       desc: '',
       args: [],
     );
-  }
-
-  /// `To ensure a safe journey and arrive peacefully, please login first`
-
-  /// `Fetching campaign location...`
-  String get messageFetchingCampLocationmessage {
-    return Intl.message(
-      'Fetching campaign location...',
-      name: 'messageFetchingCampLocationmessage',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `km`
-  String get km {
-    return Intl.message('km', name: 'km', desc: '', args: []);
-  }
-
-  /// `You are here`
-  String get youAreHere {
-    return Intl.message('You are here', name: 'youAreHere', desc: '', args: []);
   }
 }
 
@@ -1033,6 +1055,4 @@ class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {
     }
     return false;
   }
-  
-  
 }
