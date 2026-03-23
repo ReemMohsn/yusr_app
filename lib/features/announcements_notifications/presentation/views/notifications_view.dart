@@ -7,9 +7,12 @@ import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/core/constants/app_size.dart';
 import 'package:yusr/core/extensions/async_value_ui.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
-import 'package:yusr/features/announcements_notifications/presentation/widgets/notification_card.dart' show NotificationCard;
-import 'package:yusr/features/announcements_notifications/providers/filtered_notifications_provider.dart' show filteredNotificationsProvider;
-import 'package:yusr/features/announcements_notifications/providers/notifications_provider.dart' show notificationsProvider;
+import 'package:yusr/features/announcements_notifications/presentation/widgets/notification_card.dart'
+    show NotificationCard;
+import 'package:yusr/features/announcements_notifications/providers/filtered_notifications_provider.dart'
+    show filteredNotificationsProvider;
+import 'package:yusr/features/announcements_notifications/providers/notifications_provider.dart'
+    show notificationsProvider;
 // استدعِ ملفات الكنترولر والموديل هنا
 
 class NotificationsView extends ConsumerStatefulWidget {
@@ -50,7 +53,9 @@ class _NotificationsViewState extends ConsumerState<NotificationsView> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: Text(locale.notifications), // استخدم الترجمة من الإضافة الخاصة بك
+        title: Text(
+          locale.notifications,
+        ), // استخدم الترجمة من الإضافة الخاصة بك
         leading: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.w),
           child: const UnconstrainedBox(child: CustomGoldenBackButton()),
@@ -66,7 +71,8 @@ class _NotificationsViewState extends ConsumerState<NotificationsView> {
                 Expanded(
                   child: CustomTextField(
                     controller: _searchController,
-                    hintText: locale.notificationSearch, // استخدم الترجمة من الإضافة الخاصة بك
+                    hintText: locale
+                        .notificationSearch, // استخدم الترجمة من الإضافة الخاصة بك
                     prefixIcon: Icons.search,
                     textInputAction: TextInputAction.search,
                     onChanged: (value) {
@@ -89,7 +95,6 @@ class _NotificationsViewState extends ConsumerState<NotificationsView> {
                   ),
                 ),
                 SizedBox(width: 12.w),
-            
               ],
             ),
             const SizedBox(height: 20),
@@ -140,8 +145,8 @@ class _NotificationsViewState extends ConsumerState<NotificationsView> {
                           title: notification.title, // تمرير العنوان
                           description: notification.body, // تمرير التفاصيل
                           time: notification.sentAtTime, // تمرير الوقت
-                          senderName: notification
-                              .senderName, // تمرير الجمهور المستهدف
+                          senderName:
+                              notification.senderName, // تمرير الجمهور المستهدف
                           // onDelete: () async {
                           //   // إظهار نافذة التأكيد
                           //   final shouldDelete = await showDialog<bool>(

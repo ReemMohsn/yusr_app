@@ -4,6 +4,7 @@
     "project_id": "yusr-applicatin",
     "storage_bucket": "yusr-applicatin.firebasestorage.app"
   },
+  
   "client": [
     {
       "client_info": {

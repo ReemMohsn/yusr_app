@@ -54,6 +54,21 @@ class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
+  /// `Yusr`
+  String get appName {
+    return Intl.message('Yusr', name: 'appName', desc: '', args: []);
+  }
+
+  /// `The Smart Pilgrim Companion`
+  String get appSlogan {
+    return Intl.message(
+      'The Smart Pilgrim Companion',
+      name: 'appSlogan',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Home`
   String get home {
     return Intl.message('Home', name: 'home', desc: '', args: []);
@@ -339,21 +354,6 @@ class AppLocalizations {
     );
   }
 
-  /// `Yusr`
-  String get appName {
-    return Intl.message('Yusr', name: 'appName', desc: '', args: []);
-  }
-
-  /// `The Smart Pilgrim Companion`
-  String get appSlogan {
-    return Intl.message(
-      'The Smart Pilgrim Companion',
-      name: 'appSlogan',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Email or Passport Number`
   String get emailOrPassport {
     return Intl.message(
@@ -448,7 +448,78 @@ class AppLocalizations {
       args: [],
     );
   }
-/// `Add Location`
+
+  /// `Session expired or your data was modified. You are now browsing as a guest.`
+  String get sessionExpiredGuest {
+    return Intl.message(
+      'Session expired or your data was modified. You are now browsing as a guest.',
+      name: 'sessionExpiredGuest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connection failed, please check your internet connection.`
+  String get connectionFailed {
+    return Intl.message(
+      'Connection failed, please check your internet connection.',
+      name: 'connectionFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An unexpected error occurred, please try again.`
+  String get unexpectedError {
+    return Intl.message(
+      'An unexpected error occurred, please try again.',
+      name: 'unexpectedError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The server is currently not responding, please try again later.`
+  String get serverNotResponding {
+    return Intl.message(
+      'The server is currently not responding, please try again later.',
+      name: 'serverNotResponding',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A server error occurred, please try again later.`
+  String get serverError {
+    return Intl.message(
+      'A server error occurred, please try again later.',
+      name: 'serverError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `To ensure a safe journey and arrive peacefully, please login first`
+  String get secureArrivalMessage {
+    return Intl.message(
+      'To ensure a safe journey and arrive peacefully, please login first',
+      name: 'secureArrivalMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Location updated successfully`
+  String get updateSuccess {
+    return Intl.message(
+      'Location updated successfully',
+      name: 'updateSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Location`
   String get addLocation {
     return Intl.message(
       'Add Location',
@@ -457,23 +528,7 @@ class AppLocalizations {
       args: [],
     );
   }
-  /// `Other Locations`
-  String get otherLocations {
-    return Intl.message(
-      'Other Locations',
-      name: 'otherLocations',
-      desc: '',
-      args: [],
-    );
-  }
-    String get locationList {
-    return Intl.message(
-      'Location List',
-      name: 'locationList',
-      desc: '',
-      args: [],
-    );
-  }
+
   /// `Current Location`
   String get currentLocation {
     return Intl.message(
@@ -483,47 +538,36 @@ class AppLocalizations {
       args: [],
     );
   }
-    String get locationDescription {
+
+  /// `Change Location`
+  String get changeLocation {
     return Intl.message(
-      'Location Description',
-      name: 'locationDescription',
-      desc: '',
-      args: [],
-    );
-  }
-    String get enterLocationDescription {
-    return Intl.message(
-      'Enter a brief description for the location',
-      name: 'enterLocationDescription',
+      'Change Location',
+      name: 'changeLocation',
       desc: '',
       args: [],
     );
   }
 
-/// `Edit`
+  /// `Other Locations`
+  String get otherLocations {
+    return Intl.message(
+      'Other Locations',
+      name: 'otherLocations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit`
   String get edit {
-    return Intl.message(
-      'Edit',
-      name: 'edit',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Edit', name: 'edit', desc: '', args: []);
   }
 
-  /// `Location Name`
-  String get locationName {
-    return Intl.message(
-      'Location Name',
-      name: 'locationName',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Please choose a location first`
+  /// `Choose Location Coordinates`
   String get chooseCoordinates {
     return Intl.message(
-      'Choose location coordinates',
+      'Choose Location Coordinates',
       name: 'chooseCoordinates',
       desc: '',
       args: [],
@@ -540,68 +584,50 @@ class AppLocalizations {
     );
   }
 
+  /// `Location List`
+  String get locationList {
+    return Intl.message(
+      'Location List',
+      name: 'locationList',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Cancel`
   String get cancel {
-    return Intl.message(
-      'Cancel',
-      name: 'cancel',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Cancel', name: 'cancel', desc: '', args: []);
   }
-  /// `Edit Location`
-  String get editLocation {
-      return Intl.message(
-        'Edit Location',
-        name: 'editLocation', // يجب أن يكون مطابقاً لاسم المفتاح
-        desc: '',
-        args: [],
-      );
-  }
-  /// `An error occurred while fetching data`
-  String get fetchDataError {
+
+  /// `Location Description`
+  String get locationDescription {
     return Intl.message(
-      'An error occurred while fetching data',
-      name: 'fetchDataError',
+      'Location Description',
+      name: 'locationDescription',
       desc: '',
       args: [],
     );
   }
 
-  /// `Retry`
-  String get retry {
+  /// `Enter a brief description for the location`
+  String get enterLocationDescription {
     return Intl.message(
-      'Retry',
-      name: 'retry',
-      desc: '',
-      args: [],
-    );
-  }
-    String get deleteSuccess{
-    return Intl.message(
-      'Location deleted successfully',
-      name: 'deleteSuccess',
-      desc: '',
-      args: [],
-    );
-  }
-      String get updateSuccess{
-    return Intl.message(
-      'Location updated successfully',
-      name: 'updateSuccess',
-      desc: '',
-      args: [],
-    );
-  }
-        String get changeLocation{
-    return Intl.message(
-      'Change Location',
-      name: 'changeLocation',
+      'Enter a brief description for the location',
+      name: 'enterLocationDescription',
       desc: '',
       args: [],
     );
   }
 
+  /// `Location Name`
+  String get locationName {
+    return Intl.message(
+      'Location Name',
+      name: 'locationName',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `Save Changes`
   String get saveChanges {
@@ -612,7 +638,6 @@ class AppLocalizations {
       args: [],
     );
   }
-  
 
   /// `Please select a location first`
   String get selectLocationFirst {
@@ -624,44 +649,65 @@ class AppLocalizations {
     );
   }
 
-  /// `Enter location name`
+  /// `Error fetching data`
+  String get fetchDataError {
+    return Intl.message(
+      'Error fetching data',
+      name: 'fetchDataError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Retry`
+  String get retry {
+    return Intl.message('Retry', name: 'retry', desc: '', args: []);
+  }
+
+  /// `Are you sure you want to delete this item permanently?`
+  String get confirmDelete {
+    return Intl.message(
+      'Are you sure you want to delete this item permanently?',
+      name: 'confirmDelete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete`
+  String get delete {
+    return Intl.message('Delete', name: 'delete', desc: '', args: []);
+  }
+
+  /// `Enter location name...`
   String get enterLocationName {
     return Intl.message(
-      'Enter location name',
+      'Enter location name...',
       name: 'enterLocationName',
       desc: '',
       args: [],
     );
   }
-  
-  /// `Delete`
-  String get delete {
-      return Intl.message(
-        'Delete',
-        name: 'delete',
-        desc: '',
-        args: [],
-      );
-    }
 
-  /// `Are you sure you want to delete this location permanently?`
-  String get confirmDelete {
-      return Intl.message(
-        'Are you sure you want to delete this location permanently?',
-        name: 'confirmDelete',
-        desc: '',
-        args: [],
-      );
-    }
-
+  /// `Update Location`
   String get updateLocationTitle {
-      return Intl.message(
-        'Update Location', // القيمة الافتراضية
-        name: 'updateLocationTitle', // هذا هو أهم سطر
-        desc: '',
-        args: [],
-      );
-    }
+    return Intl.message(
+      'Update Location',
+      name: 'updateLocationTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Location deleted successfully`
+  String get deleteSuccess {
+    return Intl.message(
+      'Location deleted successfully',
+      name: 'deleteSuccess',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `Search for notifications...`
   String get notificationSearch {
@@ -868,68 +914,6 @@ class AppLocalizations {
     );
   }
 
-
-
-  /// `Session expired or your data was modified. You are now browsing as a guest.`
-  String get sessionExpiredGuest {
-    return Intl.message(
-      'Session expired or your data was modified. You are now browsing as a guest.',
-      name: 'sessionExpiredGuest',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Connection failed, please check your internet connection.`
-  String get connectionFailed {
-    return Intl.message(
-      'Connection failed, please check your internet connection.',
-      name: 'connectionFailed',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `An unexpected error occurred, please try again.`
-  String get unexpectedError {
-    return Intl.message(
-      'An unexpected error occurred, please try again.',
-      name: 'unexpectedError',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `The server is currently not responding, please try again later.`
-  String get serverNotResponding {
-    return Intl.message(
-      'The server is currently not responding, please try again later.',
-      name: 'serverNotResponding',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `A server error occurred, please try again later.`
-  String get serverError {
-    return Intl.message(
-      'A server error occurred, please try again later.',
-      name: 'serverError',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `To ensure a safe journey and arrive peacefully, please login first`
-  String get secureArrivalMessage {
-    return Intl.message(
-      'To ensure a safe journey and arrive peacefully, please login first',
-      name: 'secureArrivalMessage',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Fetching campaign location...`
   String get messageFetchingCampLocationmessage {
     return Intl.message(
@@ -948,6 +932,46 @@ class AppLocalizations {
   /// `You are here`
   String get youAreHere {
     return Intl.message('You are here', name: 'youAreHere', desc: '', args: []);
+  }
+
+  /// `Important Announcement`
+  String get importantAnnouncement {
+    return Intl.message(
+      'Important Announcement',
+      name: 'importantAnnouncement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Administration`
+  String get administration {
+    return Intl.message(
+      'Administration',
+      name: 'administration',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New Notification`
+  String get newNotification {
+    return Intl.message(
+      'New Notification',
+      name: 'newNotification',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View Details`
+  String get viewDetails {
+    return Intl.message(
+      'View Details',
+      name: 'viewDetails',
+      desc: '',
+      args: [],
+    );
   }
 }
 
@@ -976,6 +1000,4 @@ class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {
     }
     return false;
   }
-  
-  
 }
