@@ -183,5 +183,19 @@ class MessageLookup extends MessageLookupByLibrary {
     "writeAnnouncementContentHere": MessageLookupByLibrary.simpleMessage(
       "Write announcement content here...",
     ),
+    "instructions": MessageLookupByLibrary.simpleMessage("Hajj Types"),
+    "hajjActionsTitle": MessageLookupByLibrary.simpleMessage("Hajj Rituals of"),
+    "hajjIfradData": MessageLookupByLibrary.simpleMessage(
+      '[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Arrival and Makkah Activities","actions":[{"name":"Etiquette and Guidelines","emoji":"📖","sections":[{"title":"Intention and Covenant","items":["Anyone intending Hajj or Umrah should consciously seek closeness to Allah Almighty and purify their intention for this great obligation.","Hajj is an opportunity for sincere repentance, renewing one\'s covenant with Allah, and abandoning all sins.","Ensure all your wealth funding the Hajj is pure and Halal."],"type":"text"}]}]}]',
+    ),
+    "hajjQiranData": MessageLookupByLibrary.simpleMessage(
+      '[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Arrival for the Qarin","actions":[{"name":"Intention for Qiran","emoji":"🤲","sections":[{"title":"Combining the Intention","items":["He makes the intention saying: Labbayk Allahumma Umratan wa Hajjan.","The Qarin does not exit Ihram like the Mufrid."],"type":"text"}]}]}]',
+    ),
+    "hajjTamattuData": MessageLookupByLibrary.simpleMessage(
+      '[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Performing Umrah for Tamattu","actions":[{"name":"Etiquette and Guidelines","emoji":"📖","sections":[{"title":"Intention for Tamattu","items":["At the Miqat, the pilgrim intends only Umrah."],"type":"text"}]}]}]',
+    ),
+    "instructionsListData": MessageLookupByLibrary.simpleMessage(
+      '[{"title":"Ifrad","subtitle":"Ihram for Hajj only","description":"Entering Ihram for Hajj alone from the Miqat, saying: Labbayk Hajjan"},{"title":"Qiran","subtitle":"Ihram for Hajj and Umrah together","description":"Entering Ihram for both Umrah and Hajj together, saying: Labbayk Umratan wa Hajjan"},{"title":"Tamattu","subtitle":"Umrah then Hajj in the months of Hajj","description":"Entering Ihram for Umrah, exiting it fully, then entering Ihram again for Hajj"}]',
+    ),
   };
 }
