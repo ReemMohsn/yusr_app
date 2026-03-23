@@ -32,7 +32,7 @@ class PushNotificationService {
   // ==========================================
   static void _handleMessage(RemoteMessage message) {
     // نتأكد أن الباك إند أرسل نوع الإشعار في الـ Data Payload
-    if (message.data['type'] == 'announcement') {
+    if (message.data['status'] == 'new_announcement') {
       // يمكننا استخراج رقم الإعلان إذا أردنا عرض إعلان محدد
       // final announcementId = message.data['announcement_id'];
 

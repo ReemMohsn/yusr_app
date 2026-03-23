@@ -1,3 +1,5 @@
+// تأكدي من مسار الملف الصحيح حسب مشروعك
+import 'package:yusr/features/announcements_notifications/providers/unread_notifications_count_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yusr/core/common/providers/api_service_provider.dart';
@@ -193,6 +195,7 @@ class _MainHomeViewState extends ConsumerState<MainHomeView> {
 
   /// الواجهة في حالة المستخدم المسجل (صورة + جرس)
   Widget _buildLoggedInLeading(BuildContext context,ProfileModel profile) {
+    final unreadCount = ref.watch(unreadNotificationsCountProvider);
     return Row(
       children: [
         const SizedBox(width: 10),
@@ -218,11 +221,31 @@ class _MainHomeViewState extends ConsumerState<MainHomeView> {
         ),
         const SizedBox(width: 10),
         // أيقونة الجرس
-        IconButton(
-          icon: const Icon(Icons.notifications_none_outlined, color: AppColor.golden),
-          onPressed: () => _navigateToNotifications(context)
-            // معالجة النقر على أيقونة الجرس
-          ,
+        // IconButton(
+        //   icon: const Icon(Icons.notifications_none_outlined, color: AppColor.golden),
+        //   onPressed: () => _navigateToNotifications(context)
+        //     // معالجة النقر على أيقونة الجرس
+        //   ,
+        // ),
+        // 🌟 2. إضافة الـ Badge حول أيقونة الجرس
+        Badge(
+          // إظهار البادج فقط إذا كان هناك إشعارات جديدة (أكبر من 0)
+          isLabelVisible: unreadCount > 0,
+          // عرض الرقم داخل البادج
+          label: Text(
+            unreadCount > 99 ? '+99' : unreadCount.toString(), // للتعامل مع الأرقام الكبيرة
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 10,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          backgroundColor: Colors.red, // لون البادج أحمر ليدل على التنبيه
+          alignment: const Alignment(0.4, -0.4), // ضبط موضع البادج أعلى يمين الجرس
+          child: IconButton(
+            icon: const Icon(Icons.notifications_none_outlined, color: AppColor.golden),
+            onPressed: () => _navigateToNotifications(context),
+          ),
         ),
       ],
     );
