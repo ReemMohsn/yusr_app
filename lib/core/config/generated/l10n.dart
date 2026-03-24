@@ -973,6 +973,81 @@ class AppLocalizations {
       args: [],
     );
   }
+
+  /// `Tawaf`
+  String get tawaf {
+    return Intl.message('Tawaf', name: 'tawaf', desc: '', args: []);
+  }
+
+  /// `Saei`
+  String get saei {
+    return Intl.message('Saei', name: 'saei', desc: '', args: []);
+  }
+
+  /// `Start`
+  String get start {
+    return Intl.message('Start', name: 'start', desc: '', args: []);
+  }
+
+  /// `Click to start counting`
+  String get clickToStart {
+    return Intl.message(
+      'Click to start counting',
+      name: 'clickToStart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current Stroke`
+  String get currentStroke {
+    return Intl.message(
+      'Current Stroke',
+      name: 'currentStroke',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Auto Update`
+  String get autoUpdate {
+    return Intl.message('Auto Update', name: 'autoUpdate', desc: '', args: []);
+  }
+
+  /// `Remaining`
+  String get remaining {
+    return Intl.message('Remaining', name: 'remaining', desc: '', args: []);
+  }
+
+  /// `Total`
+  String get total {
+    return Intl.message('Total', name: 'total', desc: '', args: []);
+  }
+
+  /// `Reset`
+  String get reset {
+    return Intl.message('Reset', name: 'reset', desc: '', args: []);
+  }
+
+  /// `Strokes`
+  String get strokes {
+    return Intl.message('Strokes', name: 'strokes', desc: '', args: []);
+  }
+
+  /// `of`
+  String get ofWord {
+    return Intl.message('of', name: 'ofWord', desc: '', args: []);
+  }
+
+  /// `Strokes are updated automatically based on your location from the Black Stone and your movement around the Kaaba.`
+  String get tawafDescription {
+    return Intl.message(
+      'Strokes are updated automatically based on your location from the Black Stone and your movement around the Kaaba.',
+      name: 'tawafDescription',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {

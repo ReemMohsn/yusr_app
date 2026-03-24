@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
+import 'package:yusr/features/auto_counter/presentation/widgets/toggle_tab_item.dart';
+import 'package:yusr/features/auto_counter/providers/counter_provider.dart';
 
-class TawafSaeiToggle extends StatefulWidget {
-  const TawafSaeiToggle({super.key});
+class TawafSaeiToggle extends StatelessWidget {
+  final WidgetRef ref; 
 
-  @override
-  State<TawafSaeiToggle> createState() => _TawafSaeiToggleState();
-}
-
-class _TawafSaeiToggleState extends State<TawafSaeiToggle> {
-  bool isTawaf = true;
+  const TawafSaeiToggle({super.key, required this.ref});
 
   @override
   Widget build(BuildContext context) {
     final locale = context.locale;
+    final isTawaf = ref.watch(counterTypeProvider);
 
     return Container(
       height: 50.h,
@@ -31,36 +30,17 @@ class _TawafSaeiToggleState extends State<TawafSaeiToggle> {
         ),
         child: Row(
           children: [
-            Expanded(child: _buildTab(locale.saei, !isTawaf, false)),
-            Expanded(child: _buildTab(locale.tawaf, isTawaf, true)),
+            ToggleTabItem(
+              title: locale.saei,
+              isSelected: !isTawaf,
+              onTap: () => ref.read(counterTypeProvider.notifier).state = false,
+            ),
+            ToggleTabItem(
+              title: locale.tawaf,
+              isSelected: isTawaf,
+              onTap: () => ref.read(counterTypeProvider.notifier).state = true,
+            ),          
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTab(String title, bool isSelected, bool isTawafTab) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          isTawaf = isTawafTab;
-        });
-      },
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 250),
-        curve: Curves.easeInOut,
-        decoration: BoxDecoration(
-          color: isSelected ? AppColor.golden : Colors.transparent,
-          borderRadius: BorderRadius.circular(25.r),
-        ),
-        alignment: Alignment.center,
-        child: Text(
-          title,
-          style: TextStyle(
-            color: isSelected ? AppColor.darkBlack : AppColor.withe,
-            fontWeight: FontWeight.bold,
-            fontSize: 14.sp,
-          ),
         ),
       ),
     );

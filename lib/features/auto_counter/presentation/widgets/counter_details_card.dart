@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
+import 'package:yusr/features/auto_counter/presentation/widgets/counter_info_item.dart';
 
 class CounterDetailsCard extends StatelessWidget {
   const CounterDetailsCard({super.key});
@@ -31,17 +32,17 @@ class CounterDetailsCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _infoItem(
-                locale.remaining,
-                "${totalStrokes - current} ${locale.strokes}",
-                AppColor.golden,
-                CrossAxisAlignment.end,
+              CounterInfoItem(
+                label: locale.remaining,
+                value: "${totalStrokes - current} ${locale.strokes}",
+                color: AppColor.golden,
+                align: CrossAxisAlignment.end,
               ),
-              _infoItem(
-                locale.total,
-                "$current ${locale.ofWord} $totalStrokes",
-                AppColor.baseFontColor,
-                CrossAxisAlignment.start,
+              CounterInfoItem(
+                label: locale.total,
+                value: "$current ${locale.ofWord} $totalStrokes",
+                color: AppColor.baseFontColor,
+                align: CrossAxisAlignment.start,
               ),
             ],
           ),
@@ -79,29 +80,6 @@ class CounterDetailsCard extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _infoItem(String label, String value, Color color, CrossAxisAlignment align) {
-    return Column(
-      crossAxisAlignment: align,
-      children: [
-        Text(
-          label,
-          style: TextStyle(
-            color: AppColor.lightFontColor,
-            fontSize: 12.sp,
-          ),
-        ),
-        Text(
-          value,
-          style: TextStyle(
-            color: color,
-            fontWeight: FontWeight.bold,
-            fontSize: 17.sp,
-          ),
-        ),
-      ],
     );
   }
 }

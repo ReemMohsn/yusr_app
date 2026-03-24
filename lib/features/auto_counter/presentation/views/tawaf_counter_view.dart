@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
@@ -6,11 +7,11 @@ import 'package:yusr/features/auto_counter/presentation/widgets/circular_counter
 import 'package:yusr/features/auto_counter/presentation/widgets/counter_details_card.dart';
 import 'package:yusr/features/auto_counter/presentation/widgets/tawaf_saei_toggle.dart';
 
-class TawafCounterView extends StatelessWidget {
+class TawafCounterView extends ConsumerWidget {
   const TawafCounterView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final locale = context.locale;
     return Scaffold(
       backgroundColor: AppColor.background,
@@ -34,7 +35,7 @@ class TawafCounterView extends StatelessWidget {
                     bottomRight: Radius.circular(30.r),
                   ),
                 ),
-                child: const TawafSaeiToggle(),
+                child: TawafSaeiToggle(ref: ref),
               ),
 
               // العداد الدائري 
