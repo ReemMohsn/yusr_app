@@ -103,5 +103,17 @@
   "importantAnnouncement": "Important Announcement",
   "administration": "Administration",
   "newNotification": "New Notification",
-  "viewDetails": "View Details"
+  "viewDetails": "View Details",
+  "tawaf": "Tawaf",
+  "saei": "Saei",
+  "start": "Start",
+  "clickToStart": "Click to start counting",
+  "currentStroke": "Current Stroke",
+  "autoUpdate": "Auto Update",
+  "remaining": "Remaining",
+  "total": "Total",
+  "reset": "Reset",
+  "strokes": "Strokes",
+  "ofWord": "of",
+  "tawafDescription": "Strokes are updated automatically based on your location from the Black Stone and your movement around the Kaaba."
 }

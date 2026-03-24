@@ -100,5 +100,17 @@
   "importantAnnouncement": "إعلان هام",
   "administration": "الإدارة",
   "newNotification": "إشعار جديد",
-  "viewDetails": "عرض التفاصيل"
+  "viewDetails": "عرض التفاصيل",
+  "tawaf": "طواف",
+  "saei": "سعي",
+  "start": "أبدأ",
+  "clickToStart": "انقر لبدء العد",
+  "currentStroke": "الشوط الحالي",
+  "autoUpdate": "تحديث تلقائي",
+  "remaining": "المتبقي",
+  "total": "الإجمالي",
+  "reset": "إعادة التعيين",
+  "strokes": "أشواط",
+  "ofWord": "من",
+  "tawafDescription": "يتم تحديث الأشواط تلقائياً بناءً على موقعك من الحجر الأسود وحركتك حول الكعبة المشرفة."
 }
