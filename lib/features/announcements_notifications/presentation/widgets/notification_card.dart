@@ -8,9 +8,10 @@ class NotificationCard extends StatelessWidget {
   final String title;
   final String description;
   final String time;
-    final String senderName;
+  final String senderName;
+  // 🌟 أضفنا متغير يحدد ما إذا كان الإشعار مقروءاً أم لا
+  final bool isRead;
 
-  
   const NotificationCard({
     super.key,
     required this.date,
@@ -18,6 +19,8 @@ class NotificationCard extends StatelessWidget {
     required this.description,
     required this.time,
     required this.senderName,
+    // 🌟 اجعلناه مطلوباً (أو يمكن إعطاؤه قيمة افتراضية false)
+    required this.isRead,
   });
 
   @override
@@ -92,9 +95,21 @@ class NotificationCard extends StatelessWidget {
                     title,
                     maxLines: 1, // صف واحد فقط
                     overflow: TextOverflow.ellipsis, // إظهار النقاط عند الزيادة
-                    style: context.theme.textTheme.headlineSmall,
+                    style: context.theme.textTheme.headlineSmall?.copyWith(
+                      fontWeight: isRead ? FontWeight.normal : FontWeight.bold,
+                    ),
                   ),
                 ),
+                // 🌟 النقطة الحمراء (تظهر فقط إذا كان الإشعار غير مقروء)
+                if (!isRead)
+                  Container(
+                    width: 10.w,
+                    height: 10.w,
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
               ],
             ),
 
@@ -112,28 +127,14 @@ class NotificationCard extends StatelessWidget {
             // 5. التاج (يمين) والتوقيت (يسار)
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // Container(
-                //   padding: EdgeInsets.symmetric(
-                //     horizontal: 16.w,
-                //     vertical: 8.h,
-                //   ),
-                //   decoration: BoxDecoration(
-                //     color: AppColor.golden,
-                //     borderRadius: BorderRadius.circular(16.r),
-                //   ),
-                //   child: Text(
-                //     tag,
-                //     style: TextStyle(
-                //       color: AppColor.withe,
-                //       fontSize: 14.sp,
-                //       fontWeight: FontWeight.bold,
-                //     ),
-                //   ),
-                // ),
-                 Row(
+              children: [             
+                Row(
                   children: [
-                    Icon(Icons.person_outline, color: AppColor.lightFontColor, size: 18),
+                    Icon(
+                      Icons.person_outline,
+                      color: AppColor.lightFontColor,
+                      size: 18,
+                    ),
                     const SizedBox(width: 6),
                     Text(
                       senderName,
@@ -141,7 +142,6 @@ class NotificationCard extends StatelessWidget {
                       style: context.theme.textTheme.bodySmall,
                     ),
                     SizedBox(width: 12.w), // مسافة بين الوقت والسلة
-                    
                   ],
                 ),
                 // التوقيت + سلة الحذف
@@ -155,22 +155,7 @@ class NotificationCard extends StatelessWidget {
                       style: context.theme.textTheme.bodySmall,
                     ),
                     SizedBox(width: 12.w), // مسافة بين الوقت والسلة
-                    // 🌟 زر الحذف الذهبي
-                    // GestureDetector(
-                    //   onTap: onDelete,
-                    //   child: Container(
-                    //     padding: EdgeInsets.all(4.w),
-                    //     decoration: BoxDecoration(
-                    //       color: AppColor.golden.withValues(alpha: 0.1),
-                    //       borderRadius: BorderRadius.circular(6.r),
-                    //     ),
-                    //     child: Icon(
-                    //       Icons.delete_outline,
-                    //       color: AppColor.golden,
-                    //       size: 20.sp,
-                    //     ),
-                    //   ),
-                    // ),
+                  
                   ],
                 ),
               ],

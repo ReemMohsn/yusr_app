@@ -327,17 +327,10 @@ class PushNotificationService {
   // دالة التوجيه
   // ==========================================
   static void _handleMessage(RemoteMessage message) {
-    print("==================================================");
-    print("تم الضغط على الإشعار! البيانات المستلمة هي:");
-    print(message.data);
-    print("==================================================");
-
-    // 🔥 جلب الـ context من الـ navigatorKey لاستخدام الترجمة
-    final context = navigatorKey.currentContext;
-
-    // قيم افتراضية في حال كان التطبيق في الخلفية والـ context لم يجهز بعد
-    String defaultTitle = 'إعلان هام';
-    String defaultSender = 'الإدارة';
+    // نتأكد أن الباك إند أرسل نوع الإشعار في الـ Data Payload
+    if (message.data['status'] == 'new_announcement') {
+      // يمكننا استخراج رقم الإعلان إذا أردنا عرض إعلان محدد
+      // final announcementId = message.data['announcement_id'];
 
     // إذا كان الـ context متاحاً، نستخدم الترجمة
     if (context != null) {

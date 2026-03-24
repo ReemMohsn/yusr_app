@@ -129,4 +129,25 @@ class SharedPreferencesService {
   Future<void> removeOtpCode() async {
     await _prefs.remove(SharedPreferencesKeys.otpCode);
   }
+  // ===========================================================================
+  // 3. Notifications Status Logic (منطق الإشعارات المقروءة)
+  // ===========================================================================
+
+  /// جلب قائمة أرقام الإشعارات المقروءة
+  Future<List<String>> getReadNotifications() async {
+    final String? data = await _prefs.getString('read_notifications_ids');
+    if (data != null) {
+      return List<String>.from(jsonDecode(data));
+    }
+    return [];
+  }
+
+  /// إضافة إشعار كـ "مقروء"
+  Future<void> markNotificationAsRead(String id) async {
+    final list = await getReadNotifications();
+    if (!list.contains(id)) {
+      list.add(id);
+      await _prefs.setString('read_notifications_ids', jsonEncode(list));
+    }
+  }
 }
