@@ -9,4 +9,8 @@ class AppSize {
   // static const double spasingBetweenInputBloc = 25;
   // static const double spasingBetweenInputsAndLabale = 15;
   // static const double spasingBetweenAppTitleAndForm = 40;
+  static const double borderRadiusCard = 24.0;
+  static const double paddingInsideCard = 24.0;
+  static const double spaceBetweenCards = 26.0;
+  static const double smallSpace = 4.0;
 }
