@@ -974,6 +974,26 @@ class AppLocalizations {
     );
   }
 
+  /// `Tawaf`
+  String get tawaf {
+    return Intl.message('Tawaf', name: 'tawaf', desc: '', args: []);
+  }
+
+  /// `Saei`
+  String get saei {
+    return Intl.message('Saei', name: 'saei', desc: '', args: []);
+  }
+
+  /// `Start`
+  String get start {
+    return Intl.message('Start', name: 'start', desc: '', args: []);
+  }
+
+  /// `Click to start counting`
+  String get clickToStart {
+    return Intl.message(
+      'Click to start counting',
+      name: 'clickToStart',
   /// `Hajj Types`
   String get instructions {
     return Intl.message('Hajj Types', name: 'instructions', desc: '', args: []);
@@ -989,6 +1009,11 @@ class AppLocalizations {
     );
   }
 
+  /// `Current Stroke`
+  String get currentStroke {
+    return Intl.message(
+      'Current Stroke',
+      name: 'currentStroke',
   /// `[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Arrival and Makkah Activities","actions":[{"name":"Etiquette and Guidelines","emoji":"📖","sections":[{"title":"Intention and Covenant","items":["Anyone intending Hajj or Umrah should consciously seek closeness to Allah Almighty and purify their intention for this great obligation.","Hajj is an opportunity for sincere repentance, renewing one's covenant with Allah, and abandoning all sins.","Ensure all your wealth funding the Hajj is pure and Halal."],"type":"text"}]}]}]`
   String get hajjIfradData {
     return Intl.message(
@@ -999,6 +1024,41 @@ class AppLocalizations {
     );
   }
 
+  /// `Auto Update`
+  String get autoUpdate {
+    return Intl.message('Auto Update', name: 'autoUpdate', desc: '', args: []);
+  }
+
+  /// `Remaining`
+  String get remaining {
+    return Intl.message('Remaining', name: 'remaining', desc: '', args: []);
+  }
+
+  /// `Total`
+  String get total {
+    return Intl.message('Total', name: 'total', desc: '', args: []);
+  }
+
+  /// `Reset`
+  String get reset {
+    return Intl.message('Reset', name: 'reset', desc: '', args: []);
+  }
+
+  /// `Strokes`
+  String get strokes {
+    return Intl.message('Strokes', name: 'strokes', desc: '', args: []);
+  }
+
+  /// `of`
+  String get ofWord {
+    return Intl.message('of', name: 'ofWord', desc: '', args: []);
+  }
+
+  /// `Strokes are updated automatically based on your location from the Black Stone and your movement around the Kaaba.`
+  String get tawafDescription {
+    return Intl.message(
+      'Strokes are updated automatically based on your location from the Black Stone and your movement around the Kaaba.',
+      name: 'tawafDescription',
   /// `[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Arrival for the Qarin","actions":[{"name":"Intention for Qiran","emoji":"🤲","sections":[{"title":"Combining the Intention","items":["He makes the intention saying: Labbayk Allahumma Umratan wa Hajjan.","The Qarin does not exit Ihram like the Mufrid."],"type":"text"}]}]}]`
   String get hajjQiranData {
     return Intl.message(

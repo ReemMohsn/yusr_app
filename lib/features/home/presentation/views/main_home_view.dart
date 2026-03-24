@@ -9,6 +9,7 @@ import 'package:yusr/core/constants/app_size.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/core/services/notification_service.dart';
 import 'package:yusr/features/auth/data/models/login_model.dart';
+import 'package:yusr/features/auto_counter/presentation/views/tawaf_counter_view.dart';
 import 'package:yusr/features/home/data/models/navigation_item_model.dart';
 import 'package:yusr/features/home/presentation/views/home_view.dart';
 import 'package:yusr/features/home/presentation/widgets/custom_drawer.dart';
@@ -56,7 +57,7 @@ class _MainHomeViewState extends ConsumerState<MainHomeView> {
       ),
       NavigationItemModel(
         label: locale.manasekCounter,
-        page: const Placeholder(),
+        page: const TawafCounterView(),
         activeIconPath: AppImage.timerIcon,
       ),
       NavigationItemModel(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 // 1. استيراد موديلات البيانات (Models)
 import 'package:yusr/features/announcements_notifications/data/models/announcement_model.dart';
+import 'package:yusr/features/auto_counter/presentation/views/tawaf_counter_view.dart';
 import 'package:yusr/features/campaign_location/data/models/campaign_location_item_model.dart';
 import 'package:yusr/features/announcements_notifications/data/models/notifications_model.dart' show NotificationModel;
 import 'package:yusr/features/announcements_notifications/presentation/views/add_announcement_view.dart';
@@ -85,6 +86,8 @@ class AppRouter {
         );
       case AppRoute.setLocationView:
         return MaterialPageRoute(builder: (_) => const SetLocationView());
+      case AppRoute.tawafCounterView:
+        return MaterialPageRoute(builder: (_) => const TawafCounterView());
       case AppRoute.instructionsView:
         return MaterialPageRoute(builder: (_) => const InstructionsView());
       case AppRoute.hajjDetailsView:
@@ -121,6 +124,8 @@ class AppRoute {
 
   static const String returnMeMapView = '/ReturnMeMapView';
   static const String returnMeView = '/ReturnMeView';
+
+  static const String tawafCounterView = '/TawafCounterView';
   static const String instructionsView = '/InstructionsView';
   static const String hajjDetailsView = '/HajjDetailsView';
   static const String actionDetailsView = '/ActionDetailsView';
