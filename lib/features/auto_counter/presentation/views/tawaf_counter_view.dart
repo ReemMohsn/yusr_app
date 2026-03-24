@@ -14,7 +14,6 @@ class TawafCounterView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = context.locale;
     return Scaffold(
-      backgroundColor: AppColor.background,
       body: SafeArea(
         top: false,
         child: SingleChildScrollView(
