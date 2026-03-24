@@ -18,6 +18,11 @@ import 'package:yusr/features/campaign_location/presentation/views/campaign_loca
 import 'package:yusr/features/campaign_location/presentation/views/add_location_view.dart';
 import 'package:yusr/features/campaign_location/presentation/views/edit_location_view.dart';
 import 'package:yusr/features/campaign_location/presentation/views/set_location_view.dart';
+import 'package:yusr/features/instructions/data/models/hajj_action_model.dart';
+import 'package:yusr/features/instructions/presentation/views/action_details_view.dart';
+import 'package:yusr/features/instructions/presentation/views/hajj_details_view.dart';
+import 'package:yusr/features/instructions/presentation/views/instructions_view.dart';
+
 import 'package:yusr/features/return_to_compaign_location/presentation/views/return_me_map_view.dart';
 import 'package:yusr/features/return_to_compaign_location/presentation/views/return_me_view.dart';
 
@@ -80,6 +85,16 @@ class AppRouter {
         );
       case AppRoute.setLocationView:
         return MaterialPageRoute(builder: (_) => const SetLocationView());
+      case AppRoute.instructionsView:
+        return MaterialPageRoute(builder: (_) => const InstructionsView());
+      case AppRoute.hajjDetailsView:
+        final hajjType = settings.arguments as String;
+        return MaterialPageRoute(
+            builder: (_) => HajjDetailsView(hajjType: hajjType));
+      case AppRoute.actionDetailsView:
+        final action = settings.arguments as HajjActionModel;
+        return MaterialPageRoute(
+            builder: (_) => ActionDetailsView(action: action));
       default:
         return null;
     }
@@ -106,4 +121,7 @@ class AppRoute {
 
   static const String returnMeMapView = '/ReturnMeMapView';
   static const String returnMeView = '/ReturnMeView';
+  static const String instructionsView = '/InstructionsView';
+  static const String hajjDetailsView = '/HajjDetailsView';
+  static const String actionDetailsView = '/ActionDetailsView';
 }

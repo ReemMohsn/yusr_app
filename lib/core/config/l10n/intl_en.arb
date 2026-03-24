@@ -103,5 +103,19 @@
   "importantAnnouncement": "Important Announcement",
   "administration": "Administration",
   "newNotification": "New Notification",
-  "viewDetails": "View Details"
+  "viewDetails": "View Details",
+  "youAreHere": "You are here",
+  "delete": "Delete",
+  "sessionExpiredGuest": "Session expired or your data was modified. You are now browsing as a guest.",
+  "connectionFailed": "Connection failed, please check your internet connection.",
+  "unexpectedError": "An unexpected error occurred, please try again.",
+  "serverNotResponding": "The server is currently not responding, please try again later.",
+  "serverError": "A server error occurred, please try again later.",
+  "secureArrivalMessage": "To ensure a safe journey and arrive peacefully, please login first",
+  "instructions": "Hajj Types",
+  "hajjActionsTitle": "Hajj Rituals of",
+  "hajjIfradData": "[{\"title\":\"Before the 8th of Thul-Hijjah\",\"subtitle\":\"Arrival and Makkah Activities\",\"actions\":[{\"name\":\"Etiquette and Guidelines\",\"emoji\":\"📖\",\"sections\":[{\"title\":\"Intention and Covenant\",\"items\":[\"Anyone intending Hajj or Umrah should consciously seek closeness to Allah Almighty and purify their intention for this great obligation.\",\"Hajj is an opportunity for sincere repentance, renewing one's covenant with Allah, and abandoning all sins.\",\"Ensure all your wealth funding the Hajj is pure and Halal.\"],\"type\":\"text\"}]}]}]",
+  "hajjQiranData": "[{\"title\":\"Before the 8th of Thul-Hijjah\",\"subtitle\":\"Arrival for the Qarin\",\"actions\":[{\"name\":\"Intention for Qiran\",\"emoji\":\"🤲\",\"sections\":[{\"title\":\"Combining the Intention\",\"items\":[\"He makes the intention saying: Labbayk Allahumma Umratan wa Hajjan.\",\"The Qarin does not exit Ihram like the Mufrid.\"],\"type\":\"text\"}]}]}]",
+  "hajjTamattuData": "[{\"title\":\"Before the 8th of Thul-Hijjah\",\"subtitle\":\"Performing Umrah for Tamattu\",\"actions\":[{\"name\":\"Etiquette and Guidelines\",\"emoji\":\"📖\",\"sections\":[{\"title\":\"Intention for Tamattu\",\"items\":[\"At the Miqat, the pilgrim intends only Umrah.\"],\"type\":\"text\"}]}]}]",
+  "instructionsListData": "[{\"title\":\"Ifrad\",\"subtitle\":\"Ihram for Hajj only\",\"description\":\"Entering Ihram for Hajj alone from the Miqat, saying: Labbayk Hajjan\"},{\"title\":\"Qiran\",\"subtitle\":\"Ihram for Hajj and Umrah together\",\"description\":\"Entering Ihram for both Umrah and Hajj together, saying: Labbayk Umratan wa Hajjan\"},{\"title\":\"Tamattu\",\"subtitle\":\"Umrah then Hajj in the months of Hajj\",\"description\":\"Entering Ihram for Umrah, exiting it fully, then entering Ihram again for Hajj\"}]"
 }
