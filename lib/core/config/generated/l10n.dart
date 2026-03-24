@@ -54,6 +54,21 @@ class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
+  /// `Yusr`
+  String get appName {
+    return Intl.message('Yusr', name: 'appName', desc: '', args: []);
+  }
+
+  /// `The Smart Pilgrim Companion`
+  String get appSlogan {
+    return Intl.message(
+      'The Smart Pilgrim Companion',
+      name: 'appSlogan',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Home`
   String get home {
     return Intl.message('Home', name: 'home', desc: '', args: []);
@@ -339,21 +354,6 @@ class AppLocalizations {
     );
   }
 
-  /// `Yusr`
-  String get appName {
-    return Intl.message('Yusr', name: 'appName', desc: '', args: []);
-  }
-
-  /// `The Smart Pilgrim Companion`
-  String get appSlogan {
-    return Intl.message(
-      'The Smart Pilgrim Companion',
-      name: 'appSlogan',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Email or Passport Number`
   String get emailOrPassport {
     return Intl.message(
@@ -444,6 +444,266 @@ class AppLocalizations {
     return Intl.message(
       'Passwords do not match',
       name: 'passwordsDoNotMatchError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Session expired or your data was modified. You are now browsing as a guest.`
+  String get sessionExpiredGuest {
+    return Intl.message(
+      'Session expired or your data was modified. You are now browsing as a guest.',
+      name: 'sessionExpiredGuest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connection failed, please check your internet connection.`
+  String get connectionFailed {
+    return Intl.message(
+      'Connection failed, please check your internet connection.',
+      name: 'connectionFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An unexpected error occurred, please try again.`
+  String get unexpectedError {
+    return Intl.message(
+      'An unexpected error occurred, please try again.',
+      name: 'unexpectedError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The server is currently not responding, please try again later.`
+  String get serverNotResponding {
+    return Intl.message(
+      'The server is currently not responding, please try again later.',
+      name: 'serverNotResponding',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A server error occurred, please try again later.`
+  String get serverError {
+    return Intl.message(
+      'A server error occurred, please try again later.',
+      name: 'serverError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `To ensure a safe journey and arrive peacefully, please login first`
+  String get secureArrivalMessage {
+    return Intl.message(
+      'To ensure a safe journey and arrive peacefully, please login first',
+      name: 'secureArrivalMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Location updated successfully`
+  String get updateSuccess {
+    return Intl.message(
+      'Location updated successfully',
+      name: 'updateSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Location`
+  String get addLocation {
+    return Intl.message(
+      'Add Location',
+      name: 'addLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current Location`
+  String get currentLocation {
+    return Intl.message(
+      'Current Location',
+      name: 'currentLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change Location`
+  String get changeLocation {
+    return Intl.message(
+      'Change Location',
+      name: 'changeLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Other Locations`
+  String get otherLocations {
+    return Intl.message(
+      'Other Locations',
+      name: 'otherLocations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit`
+  String get edit {
+    return Intl.message('Edit', name: 'edit', desc: '', args: []);
+  }
+
+  /// `Choose Location Coordinates`
+  String get chooseCoordinates {
+    return Intl.message(
+      'Choose Location Coordinates',
+      name: 'chooseCoordinates',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save Location`
+  String get saveLocation {
+    return Intl.message(
+      'Save Location',
+      name: 'saveLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Location List`
+  String get locationList {
+    return Intl.message(
+      'Location List',
+      name: 'locationList',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message('Cancel', name: 'cancel', desc: '', args: []);
+  }
+
+  /// `Location Description`
+  String get locationDescription {
+    return Intl.message(
+      'Location Description',
+      name: 'locationDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter a brief description for the location`
+  String get enterLocationDescription {
+    return Intl.message(
+      'Enter a brief description for the location',
+      name: 'enterLocationDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Location Name`
+  String get locationName {
+    return Intl.message(
+      'Location Name',
+      name: 'locationName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save Changes`
+  String get saveChanges {
+    return Intl.message(
+      'Save Changes',
+      name: 'saveChanges',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please select a location first`
+  String get selectLocationFirst {
+    return Intl.message(
+      'Please select a location first',
+      name: 'selectLocationFirst',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error fetching data`
+  String get fetchDataError {
+    return Intl.message(
+      'Error fetching data',
+      name: 'fetchDataError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Retry`
+  String get retry {
+    return Intl.message('Retry', name: 'retry', desc: '', args: []);
+  }
+
+  /// `Are you sure you want to delete this item permanently?`
+  String get confirmDelete {
+    return Intl.message(
+      'Are you sure you want to delete this item permanently?',
+      name: 'confirmDelete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete`
+  String get delete {
+    return Intl.message('Delete', name: 'delete', desc: '', args: []);
+  }
+
+  /// `Enter location name...`
+  String get enterLocationName {
+    return Intl.message(
+      'Enter location name...',
+      name: 'enterLocationName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update Location`
+  String get updateLocationTitle {
+    return Intl.message(
+      'Update Location',
+      name: 'updateLocationTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Location deleted successfully`
+  String get deleteSuccess {
+    return Intl.message(
+      'Location deleted successfully',
+      name: 'deleteSuccess',
       desc: '',
       args: [],
     );
@@ -644,91 +904,11 @@ class AppLocalizations {
     );
   }
 
-  /// `Cancel`
-  String get cancel {
-    return Intl.message('Cancel', name: 'cancel', desc: '', args: []);
-  }
-
-  /// `Confirm Deletion`
-  String get confirmDelete {
-    return Intl.message(
-      'Confirm Deletion',
-      name: 'confirmDelete',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Are you sure you want to delete this announcement? This action cannot be undone.`
   String get confirmDeleteAnnouncementMessage {
     return Intl.message(
       'Are you sure you want to delete this announcement? This action cannot be undone.',
       name: 'confirmDeleteAnnouncementMessage',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Delete`
-  String get delete {
-    return Intl.message('Delete', name: 'delete', desc: '', args: []);
-  }
-
-  /// `Session expired or your data was modified. You are now browsing as a guest.`
-  String get sessionExpiredGuest {
-    return Intl.message(
-      'Session expired or your data was modified. You are now browsing as a guest.',
-      name: 'sessionExpiredGuest',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Connection failed, please check your internet connection.`
-  String get connectionFailed {
-    return Intl.message(
-      'Connection failed, please check your internet connection.',
-      name: 'connectionFailed',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `An unexpected error occurred, please try again.`
-  String get unexpectedError {
-    return Intl.message(
-      'An unexpected error occurred, please try again.',
-      name: 'unexpectedError',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `The server is currently not responding, please try again later.`
-  String get serverNotResponding {
-    return Intl.message(
-      'The server is currently not responding, please try again later.',
-      name: 'serverNotResponding',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `A server error occurred, please try again later.`
-  String get serverError {
-    return Intl.message(
-      'A server error occurred, please try again later.',
-      name: 'serverError',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `To ensure a safe journey and arrive peacefully, please login first`
-  String get secureArrivalMessage {
-    return Intl.message(
-      'To ensure a safe journey and arrive peacefully, please login first',
-      name: 'secureArrivalMessage',
       desc: '',
       args: [],
     );
@@ -752,6 +932,161 @@ class AppLocalizations {
   /// `You are here`
   String get youAreHere {
     return Intl.message('You are here', name: 'youAreHere', desc: '', args: []);
+  }
+
+  /// `Important Announcement`
+  String get importantAnnouncement {
+    return Intl.message(
+      'Important Announcement',
+      name: 'importantAnnouncement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Administration`
+  String get administration {
+    return Intl.message(
+      'Administration',
+      name: 'administration',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New Notification`
+  String get newNotification {
+    return Intl.message(
+      'New Notification',
+      name: 'newNotification',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View Details`
+  String get viewDetails {
+    return Intl.message(
+      'View Details',
+      name: 'viewDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tawaf`
+  String get tawaf {
+    return Intl.message('Tawaf', name: 'tawaf', desc: '', args: []);
+  }
+
+  /// `Saei`
+  String get saei {
+    return Intl.message('Saei', name: 'saei', desc: '', args: []);
+  }
+
+  /// `Start`
+  String get start {
+    return Intl.message('Start', name: 'start', desc: '', args: []);
+  }
+
+  /// `Click to start counting`
+  String get clickToStart {
+    return Intl.message(
+      'Click to start counting',
+      name: 'clickToStart',
+  /// `Hajj Types`
+  String get instructions {
+    return Intl.message('Hajj Types', name: 'instructions', desc: '', args: []);
+  }
+
+  /// `Hajj Rituals of`
+  String get hajjActionsTitle {
+    return Intl.message(
+      'Hajj Rituals of',
+      name: 'hajjActionsTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current Stroke`
+  String get currentStroke {
+    return Intl.message(
+      'Current Stroke',
+      name: 'currentStroke',
+  /// `[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Arrival and Makkah Activities","actions":[{"name":"Etiquette and Guidelines","emoji":"📖","sections":[{"title":"Intention and Covenant","items":["Anyone intending Hajj or Umrah should consciously seek closeness to Allah Almighty and purify their intention for this great obligation.","Hajj is an opportunity for sincere repentance, renewing one's covenant with Allah, and abandoning all sins.","Ensure all your wealth funding the Hajj is pure and Halal."],"type":"text"}]}]}]`
+  String get hajjIfradData {
+    return Intl.message(
+      '[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Arrival and Makkah Activities","actions":[{"name":"Etiquette and Guidelines","emoji":"📖","sections":[{"title":"Intention and Covenant","items":["Anyone intending Hajj or Umrah should consciously seek closeness to Allah Almighty and purify their intention for this great obligation.","Hajj is an opportunity for sincere repentance, renewing one\'s covenant with Allah, and abandoning all sins.","Ensure all your wealth funding the Hajj is pure and Halal."],"type":"text"}]}]}]',
+      name: 'hajjIfradData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Auto Update`
+  String get autoUpdate {
+    return Intl.message('Auto Update', name: 'autoUpdate', desc: '', args: []);
+  }
+
+  /// `Remaining`
+  String get remaining {
+    return Intl.message('Remaining', name: 'remaining', desc: '', args: []);
+  }
+
+  /// `Total`
+  String get total {
+    return Intl.message('Total', name: 'total', desc: '', args: []);
+  }
+
+  /// `Reset`
+  String get reset {
+    return Intl.message('Reset', name: 'reset', desc: '', args: []);
+  }
+
+  /// `Strokes`
+  String get strokes {
+    return Intl.message('Strokes', name: 'strokes', desc: '', args: []);
+  }
+
+  /// `of`
+  String get ofWord {
+    return Intl.message('of', name: 'ofWord', desc: '', args: []);
+  }
+
+  /// `Strokes are updated automatically based on your location from the Black Stone and your movement around the Kaaba.`
+  String get tawafDescription {
+    return Intl.message(
+      'Strokes are updated automatically based on your location from the Black Stone and your movement around the Kaaba.',
+      name: 'tawafDescription',
+  /// `[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Arrival for the Qarin","actions":[{"name":"Intention for Qiran","emoji":"🤲","sections":[{"title":"Combining the Intention","items":["He makes the intention saying: Labbayk Allahumma Umratan wa Hajjan.","The Qarin does not exit Ihram like the Mufrid."],"type":"text"}]}]}]`
+  String get hajjQiranData {
+    return Intl.message(
+      '[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Arrival for the Qarin","actions":[{"name":"Intention for Qiran","emoji":"🤲","sections":[{"title":"Combining the Intention","items":["He makes the intention saying: Labbayk Allahumma Umratan wa Hajjan.","The Qarin does not exit Ihram like the Mufrid."],"type":"text"}]}]}]',
+      name: 'hajjQiranData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Performing Umrah for Tamattu","actions":[{"name":"Etiquette and Guidelines","emoji":"📖","sections":[{"title":"Intention for Tamattu","items":["At the Miqat, the pilgrim intends only Umrah."],"type":"text"}]}]}]`
+  String get hajjTamattuData {
+    return Intl.message(
+      '[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Performing Umrah for Tamattu","actions":[{"name":"Etiquette and Guidelines","emoji":"📖","sections":[{"title":"Intention for Tamattu","items":["At the Miqat, the pilgrim intends only Umrah."],"type":"text"}]}]}]',
+      name: 'hajjTamattuData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `[{"title":"Ifrad","subtitle":"Ihram for Hajj only","description":"Entering Ihram for Hajj alone from the Miqat, saying: Labbayk Hajjan"},{"title":"Qiran","subtitle":"Ihram for Hajj and Umrah together","description":"Entering Ihram for both Umrah and Hajj together, saying: Labbayk Umratan wa Hajjan"},{"title":"Tamattu","subtitle":"Umrah then Hajj in the months of Hajj","description":"Entering Ihram for Umrah, exiting it fully, then entering Ihram again for Hajj"}]`
+  String get instructionsListData {
+    return Intl.message(
+      '[{"title":"Ifrad","subtitle":"Ihram for Hajj only","description":"Entering Ihram for Hajj alone from the Miqat, saying: Labbayk Hajjan"},{"title":"Qiran","subtitle":"Ihram for Hajj and Umrah together","description":"Entering Ihram for both Umrah and Hajj together, saying: Labbayk Umratan wa Hajjan"},{"title":"Tamattu","subtitle":"Umrah then Hajj in the months of Hajj","description":"Entering Ihram for Umrah, exiting it fully, then entering Ihram again for Hajj"}]',
+      name: 'instructionsListData',
+      desc: '',
+      args: [],
+    );
   }
 }
 

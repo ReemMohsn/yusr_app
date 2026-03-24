@@ -43,7 +43,9 @@ class _NotificationsViewState extends ConsumerState<NotificationsView> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: Text(locale.notifications), // استخدم الترجمة من الإضافة الخاصة بك
+        title: Text(
+          locale.notifications,
+        ), // استخدم الترجمة من الإضافة الخاصة بك
         leading: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.w),
           child: const UnconstrainedBox(child: CustomGoldenBackButton()),
@@ -59,7 +61,8 @@ class _NotificationsViewState extends ConsumerState<NotificationsView> {
                 Expanded(
                   child: CustomTextField(
                     controller: _searchController,
-                    hintText: locale.notificationSearch, // استخدم الترجمة من الإضافة الخاصة بك
+                    hintText: locale
+                        .notificationSearch, // استخدم الترجمة من الإضافة الخاصة بك
                     prefixIcon: Icons.search,
                     textInputAction: TextInputAction.search,
                     onChanged: (value) {
@@ -82,7 +85,6 @@ class _NotificationsViewState extends ConsumerState<NotificationsView> {
                   ),
                 ),
                 SizedBox(width: 12.w),
-            
               ],
             ),
             const SizedBox(height: 20),
