@@ -43,6 +43,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "The Smart Pilgrim Companion",
     ),
     "asr": MessageLookupByLibrary.simpleMessage("Asr"),
+    "autoUpdate": MessageLookupByLibrary.simpleMessage("Auto Update"),
     "becomeALeader": MessageLookupByLibrary.simpleMessage("Become a Leader"),
     "campaignLocation": MessageLookupByLibrary.simpleMessage(
       "Campaign Location",
@@ -51,6 +52,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "changeLocation": MessageLookupByLibrary.simpleMessage("Change Location"),
     "chooseCoordinates": MessageLookupByLibrary.simpleMessage(
       "Choose Location Coordinates",
+    ),
+    "clickToStart": MessageLookupByLibrary.simpleMessage(
+      "Click to start counting",
     ),
     "confirmDelete": MessageLookupByLibrary.simpleMessage(
       "Are you sure you want to delete this item permanently?",
@@ -70,6 +74,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "contentLabel": MessageLookupByLibrary.simpleMessage("Content"),
     "currentLocation": MessageLookupByLibrary.simpleMessage("Current Location"),
+    "currentStroke": MessageLookupByLibrary.simpleMessage("Current Stroke"),
     "delete": MessageLookupByLibrary.simpleMessage("Delete"),
     "deleteSuccess": MessageLookupByLibrary.simpleMessage(
       "Location deleted successfully",
@@ -179,6 +184,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Search for notifications...",
     ),
     "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
+    "ofWord": MessageLookupByLibrary.simpleMessage("of"),
     "otherLocations": MessageLookupByLibrary.simpleMessage("Other Locations"),
     "password": MessageLookupByLibrary.simpleMessage("Password"),
     "passwordsDoNotMatchError": MessageLookupByLibrary.simpleMessage(
@@ -191,6 +197,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "recoveryLinkNote": MessageLookupByLibrary.simpleMessage(
       "A recovery link will be sent to your email.",
     ),
+    "remaining": MessageLookupByLibrary.simpleMessage("Remaining"),
+    "reset": MessageLookupByLibrary.simpleMessage("Reset"),
     "resetButton": MessageLookupByLibrary.simpleMessage("Reset"),
     "retry": MessageLookupByLibrary.simpleMessage("Retry"),
     "returnMe": MessageLookupByLibrary.simpleMessage("Take me back"),
@@ -200,6 +208,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "ritualsPreparationDesc": MessageLookupByLibrary.simpleMessage(
       "Start your journey to the destinations, and learn the correct steps of Hajj and Umrah with amazing details.",
     ),
+    "saei": MessageLookupByLibrary.simpleMessage("Saei"),
     "saveChanges": MessageLookupByLibrary.simpleMessage("Save Changes"),
     "saveLocation": MessageLookupByLibrary.simpleMessage("Save Location"),
     "secureArrivalMessage": MessageLookupByLibrary.simpleMessage(
@@ -227,8 +236,15 @@ class MessageLookup extends MessageLookupByLibrary {
       "Set a new password",
     ),
     "smartMufti": MessageLookupByLibrary.simpleMessage("Smart Mufti"),
+    "start": MessageLookupByLibrary.simpleMessage("Start"),
+    "strokes": MessageLookupByLibrary.simpleMessage("Strokes"),
     "targetAudience": MessageLookupByLibrary.simpleMessage("Target Audience"),
+    "tawaf": MessageLookupByLibrary.simpleMessage("Tawaf"),
+    "tawafDescription": MessageLookupByLibrary.simpleMessage(
+      "Strokes are updated automatically based on your location from the Black Stone and your movement around the Kaaba.",
+    ),
     "titleLabel": MessageLookupByLibrary.simpleMessage("Title"),
+    "total": MessageLookupByLibrary.simpleMessage("Total"),
     "unexpectedError": MessageLookupByLibrary.simpleMessage(
       "An unexpected error occurred, please try again.",
     ),

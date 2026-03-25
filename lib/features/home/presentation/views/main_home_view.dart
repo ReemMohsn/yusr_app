@@ -69,7 +69,7 @@ class _MainHomeViewState extends ConsumerState<MainHomeView> {
       ),
       NavigationItemModel(
         label: locale.returnMe,
-        page: const ReturnMeView(), 
+        page: const ReturnMeView(),
         activeIconPath: AppImage.arjeneeIcon,
       ),
     ];
@@ -85,7 +85,7 @@ class _MainHomeViewState extends ConsumerState<MainHomeView> {
       appBar: AppBar(
         leadingWidth: isLoggedIn ? 100 : 140,
         leading: isLoggedIn
-            ? _buildLoggedInLeading(context,profile) // عرض البروفايل + الجرس
+            ? _buildLoggedInLeading(context, profile) // عرض البروفايل + الجرس
             : Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextButton(
@@ -195,7 +195,7 @@ class _MainHomeViewState extends ConsumerState<MainHomeView> {
   }
 
   /// الواجهة في حالة المستخدم المسجل (صورة + جرس)
-  Widget _buildLoggedInLeading(BuildContext context,ProfileModel profile) {
+  Widget _buildLoggedInLeading(BuildContext context, ProfileModel profile) {
     final unreadCount = ref.watch(unreadNotificationsCountProvider);
     return Row(
       children: [
@@ -234,7 +234,9 @@ class _MainHomeViewState extends ConsumerState<MainHomeView> {
           isLabelVisible: unreadCount > 0,
           // عرض الرقم داخل البادج
           label: Text(
-            unreadCount > 99 ? '+99' : unreadCount.toString(), // للتعامل مع الأرقام الكبيرة
+            unreadCount > 99
+                ? '+99'
+                : unreadCount.toString(), // للتعامل مع الأرقام الكبيرة
             style: const TextStyle(
               color: Colors.white,
               fontSize: 10,
@@ -242,15 +244,22 @@ class _MainHomeViewState extends ConsumerState<MainHomeView> {
             ),
           ),
           backgroundColor: Colors.red, // لون البادج أحمر ليدل على التنبيه
-          alignment: const Alignment(0.4, -0.4), // ضبط موضع البادج أعلى يمين الجرس
+          alignment: const Alignment(
+            0.4,
+            -0.4,
+          ), // ضبط موضع البادج أعلى يمين الجرس
           child: IconButton(
-            icon: const Icon(Icons.notifications_none_outlined, color: AppColor.golden),
+            icon: const Icon(
+              Icons.notifications_none_outlined,
+              color: AppColor.golden,
+            ),
             onPressed: () => _navigateToNotifications(context),
           ),
         ),
       ],
     );
   }
+
   // دالة التنقل المنفصلة لزيادة وضوح الكود
   void _navigateToNotifications(BuildContext context) {
     Navigator.pushNamed(context, AppRoute.notificationsView);

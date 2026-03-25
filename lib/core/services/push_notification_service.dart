@@ -277,46 +277,164 @@
 //   }
 // }
 
+// import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:flutter/material.dart';
+// import 'package:yusr/core/constants/app_color.dart';
+// import 'package:yusr/core/constants/app_route.dart';
+// import 'package:yusr/core/extensions/context_extension.dart';
+// import 'package:yusr/features/announcements_notifications/data/models/notifications_model.dart';
+
+// @pragma('vm:entry-point')
+// Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   print("تم استلام إشعار في الخلفية: ${message.messageId}");
+// }
+
+// class PushNotificationService {
+//   static Future<void> init() async {
+//     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+
+//     // 1. حالة التطبيق مغلق تماماً
+//     RemoteMessage? initialMessage = await FirebaseMessaging.instance
+//         .getInitialMessage();
+//     print(
+//       "🔎 فحص الإشعارات والتطبيق مغلق: ${initialMessage != null ? 'يوجد إشعار!' : 'لا يوجد'}",
+//     );
+
+//     if (initialMessage != null) {
+//       print("🌟 تم التقاط الإشعار من حالة الإغلاق التام (Terminated) 🌟");
+//       Future.delayed(const Duration(seconds: 1), () {
+//         _handleMessage(initialMessage);
+//       });
+//     }
+
+//     // 2. حالة التطبيق في الخلفية
+//     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+//       print("🔥🔥 تم التقاط الضغطة بنجاح من الخلفية (Background) 🔥🔥");
+//       Future.delayed(const Duration(milliseconds: 500), () {
+//         _handleMessage(message);
+//       });
+//     });
+
+//     // 3. حالة التطبيق مفتوح
+//     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+//       if (message.notification != null) {
+//         _showInAppNotification(message);
+//       }
+//     });
+//   }
+
+//   // ==========================================
+//   // دالة التوجيه
+//   // ==========================================
+//   static void _handleMessage(RemoteMessage message) {
+//     // نتأكد أن الباك إند أرسل نوع الإشعار في الـ Data Payload
+//     if (message.data['status'] == 'new_announcement') {
+//       // يمكننا استخراج رقم الإعلان إذا أردنا عرض إعلان محدد
+//       // final announcementId = message.data['announcement_id'];
+
+//     // إذا كان الـ context متاحاً، نستخدم الترجمة
+//     if (context != null) {
+//       defaultTitle = context.locale.importantAnnouncement;
+//       defaultSender = context.locale.administration;
+//     }
+
+//     // التحقق من الشرط
+//     if (message.data['status'] == 'new_announcement') {
+//       final notificationModel = NotificationModel(
+//         notificationId:
+//             int.tryParse(message.data['notificationId'] ?? '0') ?? 0,
+//         title:
+//             message.notification?.title ?? defaultTitle, // استخدام الترجمة هنا
+//         body: message.notification?.body ?? '',
+//         sentAtDate: message.data['sentAtDate'] ?? '',
+//         sentAtTime: message.data['sentAtTime'] ?? '',
+//         senderName:
+//             message.data['senderName'] ?? defaultSender, // استخدام الترجمة هنا
+//       );
+
+//       if (navigatorKey.currentState != null) {
+//         navigatorKey.currentState!.pushNamed(
+//           AppRoute.notificationDetailsView,
+//           arguments: notificationModel,
+//         );
+//       } else {
+//         print("⚠️ خطأ: navigatorKey غير جاهز للتوجيه!");
+//       }
+//     } else {
+//       print(
+//         "⚠️ التوجيه لم يحدث! لأن قيمة status ليست 'new_announcement' أو أنها غير موجودة أصلاً.",
+//       );
+//     }
+//   }
+
+//   // ==========================================
+//   // دالة إظهار تنبيه إذا كان التطبيق مفتوحاً
+//   // ==========================================
+//   static void _showInAppNotification(RemoteMessage message) {
+//     final context = navigatorKey.currentContext;
+
+//     if (context != null) {
+//       // 🔥 بما أن الـ context متاح هنا دائماً، يمكننا استخدام الترجمة مباشرة
+//       final locale = context.locale;
+
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         SnackBar(
+//           content: Column(
+//             mainAxisSize: MainAxisSize.min,
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             children: [
+//               Text(
+//                 message.notification?.title ??
+//                     locale.newNotification, // استخدام الترجمة
+//                 maxLines: 1,
+//                 overflow: TextOverflow.ellipsis,
+//                 style: const TextStyle(fontWeight: FontWeight.bold),
+//               ),
+//               Text(
+//                 message.notification?.body ?? '',
+//                 maxLines: 1,
+//                 overflow: TextOverflow.ellipsis,
+//               ),
+//             ],
+//           ),
+//           backgroundColor: AppColor.baseFontColor,
+//           duration: const Duration(seconds: 5),
+//           action: SnackBarAction(
+//             label: locale.viewDetails, // استخدام الترجمة
+//             textColor: AppColor.golden,
+//             onPressed: () {
+//               _handleMessage(message);
+//             },
+//           ),
+//         ),
+//       );
+//     }
+//   }
+// }
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:yusr/core/constants/app_color.dart';
-import 'package:yusr/core/constants/app_route.dart';
-import 'package:yusr/core/extensions/context_extension.dart';
-import 'package:yusr/features/announcements_notifications/data/models/notifications_model.dart';
-
-@pragma('vm:entry-point')
-Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print("تم استلام إشعار في الخلفية: ${message.messageId}");
-}
+import 'package:yusr/core/constants/app_route.dart'; // مسار ملف الروتس الخاص بك
 
 class PushNotificationService {
+  // دالة التهيئة الرئيسية التي سنستدعيها عند تشغيل التطبيق
   static Future<void> init() async {
-    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-
-    // 1. حالة التطبيق مغلق تماماً
+    // 1. حالة التطبيق مغلق تماماً (Terminated)
+    // إذا فتح المستخدم التطبيق عن طريق الضغط على إشعار
     RemoteMessage? initialMessage = await FirebaseMessaging.instance
         .getInitialMessage();
-    print(
-      "🔎 فحص الإشعارات والتطبيق مغلق: ${initialMessage != null ? 'يوجد إشعار!' : 'لا يوجد'}",
-    );
-
     if (initialMessage != null) {
-      print("🌟 تم التقاط الإشعار من حالة الإغلاق التام (Terminated) 🌟");
-      Future.delayed(const Duration(seconds: 1), () {
-        _handleMessage(initialMessage);
-      });
+      _handleMessage(initialMessage);
     }
 
-    // 2. حالة التطبيق في الخلفية
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print("🔥🔥 تم التقاط الضغطة بنجاح من الخلفية (Background) 🔥🔥");
-      Future.delayed(const Duration(milliseconds: 500), () {
-        _handleMessage(message);
-      });
-    });
+    // 2. حالة التطبيق في الخلفية (Background)
+    // إذا ضغط المستخدم على إشعار والتطبيق يعمل في الخلفية
+    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
 
-    // 3. حالة التطبيق مفتوح
+    // 3. حالة التطبيق مفتوح ومستخدم حالياً (Foreground)
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      // 💡 لأن النظام لا يظهر إشعاراً من نفسه والتطبيق مفتوح،
+      // سنقوم نحن بعرض رسالة (SnackBar أو Dialog) داخل التطبيق للمستخدم
       if (message.notification != null) {
         _showInAppNotification(message);
       }
@@ -324,7 +442,7 @@ class PushNotificationService {
   }
 
   // ==========================================
-  // دالة التوجيه
+  // دالة التوجيه (هنا السحر للذهاب لصفحة الإعلانات)
   // ==========================================
   static void _handleMessage(RemoteMessage message) {
     // نتأكد أن الباك إند أرسل نوع الإشعار في الـ Data Payload
@@ -332,51 +450,17 @@ class PushNotificationService {
       // يمكننا استخراج رقم الإعلان إذا أردنا عرض إعلان محدد
       // final announcementId = message.data['announcement_id'];
 
-    // إذا كان الـ context متاحاً، نستخدم الترجمة
-    if (context != null) {
-      defaultTitle = context.locale.importantAnnouncement;
-      defaultSender = context.locale.administration;
-    }
-
-    // التحقق من الشرط
-    if (message.data['status'] == 'new_announcement') {
-      final notificationModel = NotificationModel(
-        notificationId:
-            int.tryParse(message.data['notificationId'] ?? '0') ?? 0,
-        title:
-            message.notification?.title ?? defaultTitle, // استخدام الترجمة هنا
-        body: message.notification?.body ?? '',
-        sentAtDate: message.data['sentAtDate'] ?? '',
-        sentAtTime: message.data['sentAtTime'] ?? '',
-        senderName:
-            message.data['senderName'] ?? defaultSender, // استخدام الترجمة هنا
-      );
-
-      if (navigatorKey.currentState != null) {
-        navigatorKey.currentState!.pushNamed(
-          AppRoute.notificationDetailsView,
-          arguments: notificationModel,
-        );
-      } else {
-        print("⚠️ خطأ: navigatorKey غير جاهز للتوجيه!");
-      }
-    } else {
-      print(
-        "⚠️ التوجيه لم يحدث! لأن قيمة status ليست 'new_announcement' أو أنها غير موجودة أصلاً.",
-      );
+      // نستخدم navigatorKey للانتقال لصفحة الإعلانات فوراً
+      navigatorKey.currentState?.pushNamed(AppRoute.announcementsView);
     }
   }
 
   // ==========================================
-  // دالة إظهار تنبيه إذا كان التطبيق مفتوحاً
+  // دالة إظهار تنبيه إذا كان التطبيق مفتوحاً في يد المستخدم
   // ==========================================
   static void _showInAppNotification(RemoteMessage message) {
     final context = navigatorKey.currentContext;
-
     if (context != null) {
-      // 🔥 بما أن الـ context متاح هنا دائماً، يمكننا استخدام الترجمة مباشرة
-      final locale = context.locale;
-
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Column(
@@ -384,25 +468,19 @@ class PushNotificationService {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                message.notification?.title ??
-                    locale.newNotification, // استخدام الترجمة
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+                message.notification?.title ?? 'إشعار جديد',
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
-              Text(
-                message.notification?.body ?? '',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
+              Text(message.notification?.body ?? ''),
             ],
           ),
-          backgroundColor: AppColor.baseFontColor,
+          backgroundColor: Colors.blueGrey.shade800,
           duration: const Duration(seconds: 5),
           action: SnackBarAction(
-            label: locale.viewDetails, // استخدام الترجمة
-            textColor: AppColor.golden,
+            label: 'عرض التفاصيل',
+            textColor: Colors.amber,
             onPressed: () {
+              // عند الضغط على الزر في السناك بار، نوجهه للصفحة
               _handleMessage(message);
             },
           ),
