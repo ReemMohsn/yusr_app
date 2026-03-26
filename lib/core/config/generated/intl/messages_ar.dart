@@ -22,6 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "accepted": MessageLookupByLibrary.simpleMessage("موافق"),
         "accountVerification":
             MessageLookupByLibrary.simpleMessage("التحقق من الحساب"),
         "addAnnouncement": MessageLookupByLibrary.simpleMessage("إضافة إعلان"),
@@ -34,6 +35,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "announcementTitle":
             MessageLookupByLibrary.simpleMessage("عنوان الإعلان"),
         "announcements": MessageLookupByLibrary.simpleMessage("الإعلانات"),
+        "appName": MessageLookupByLibrary.simpleMessage("يسر"),
+        "appSlogan": MessageLookupByLibrary.simpleMessage("مرافق الحاج الذكي"),
         "asr": MessageLookupByLibrary.simpleMessage("العصر"),
         "becomeALeader": MessageLookupByLibrary.simpleMessage("كن قائد"),
         "campaignLocation":
@@ -79,6 +82,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "حدث خطأ أثناء جلب الإعلانات:"),
         "errorFetchingNotifications": MessageLookupByLibrary.simpleMessage(
             "حدث خطأ أثناء جلب الإشعارات:"),
+        "errorOccurred": MessageLookupByLibrary.simpleMessage("حدث خطأ: "),
         "fajr": MessageLookupByLibrary.simpleMessage("الفجر"),
         "fetchDataError":
             MessageLookupByLibrary.simpleMessage("حدث خطأ في جلب البيانات"),
@@ -124,6 +128,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("لا توجد نتائج مطابقة للبحث"),
         "noNotificationsCurrently":
             MessageLookupByLibrary.simpleMessage("لا توجد إشعارات حالياً"),
+        "noPilgrimsInSession": MessageLookupByLibrary.simpleMessage(
+            "لا يوجد حجاج مرتبطين بهذه الجلسة."),
+        "notActive": MessageLookupByLibrary.simpleMessage("غير مفعل"),
         "notFound": MessageLookupByLibrary.simpleMessage("لا يوجد"),
         "notificationSearch":
             MessageLookupByLibrary.simpleMessage("\'ابحث عن إشعارات..."),
@@ -133,11 +140,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "password": MessageLookupByLibrary.simpleMessage("كلمة المرور"),
         "passwordsDoNotMatchError":
             MessageLookupByLibrary.simpleMessage("كلمتا المرور غير متطابقتين"),
+        "pending": MessageLookupByLibrary.simpleMessage("قيد الانتظار"),
+        "pilgrimsListTitle":
+            MessageLookupByLibrary.simpleMessage("قائمة الحجاج"),
         "prayerTimes": MessageLookupByLibrary.simpleMessage("مواقيت الصلاة"),
         "publishAnnouncement":
             MessageLookupByLibrary.simpleMessage("نشر الإعلان"),
         "recoveryLinkNote": MessageLookupByLibrary.simpleMessage(
             "سيتم إرسال رابط الاستعادة إلى بريدك الإلكتروني"),
+        "rejected": MessageLookupByLibrary.simpleMessage("رافض"),
         "resetButton": MessageLookupByLibrary.simpleMessage("إعادة التعيين"),
         "retry": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
         "returnMe": MessageLookupByLibrary.simpleMessage("ارجعني"),
@@ -163,7 +174,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "انتهت صلاحية الجلسة أو تم تعديل بياناتك. أنت الآن تتصفح كزائر."),
         "setNewPassword":
             MessageLookupByLibrary.simpleMessage("تعيين كلمة مرور جديدة"),
+        "showMap": MessageLookupByLibrary.simpleMessage("عرض الخريطة"),
         "smartMufti": MessageLookupByLibrary.simpleMessage("المفتي الذكي"),
+        "startSession": MessageLookupByLibrary.simpleMessage("بدء الجلسة"),
         "targetAudience":
             MessageLookupByLibrary.simpleMessage("الفئة المستهدفة"),
         "titleLabel": MessageLookupByLibrary.simpleMessage("العنوان"),

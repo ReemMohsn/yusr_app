@@ -103,5 +103,14 @@
   "importantAnnouncement": "Important Announcement",
   "administration": "Administration",
   "newNotification": "New Notification",
-  "viewDetails": "View Details"
+  "viewDetails": "View Details",
+  "startSession": "Start Session",
+  "showMap": "Show Map",
+  "errorOccurred": "An error occurred: ",
+  "accepted": "Accepted",
+  "pending": "Pending",
+  "rejected": "Rejected",
+  "notActive": "Not Active",
+  "pilgrimsListTitle": "Pilgrims List",
+  "noPilgrimsInSession": "No pilgrims associated with this session."
 }

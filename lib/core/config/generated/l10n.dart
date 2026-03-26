@@ -18,10 +18,8 @@ class AppLocalizations {
   static AppLocalizations? _current;
 
   static AppLocalizations get current {
-    assert(
-      _current != null,
-      'No instance of AppLocalizations was loaded. Try to initialize the AppLocalizations delegate before accessing AppLocalizations.current.',
-    );
+    assert(_current != null,
+        'No instance of AppLocalizations was loaded. Try to initialize the AppLocalizations delegate before accessing AppLocalizations.current.');
     return _current!;
   }
 
@@ -43,10 +41,8 @@ class AppLocalizations {
 
   static AppLocalizations of(BuildContext context) {
     final instance = AppLocalizations.maybeOf(context);
-    assert(
-      instance != null,
-      'No instance of AppLocalizations present in the widget tree. Did you add AppLocalizations.delegate in localizationsDelegates?',
-    );
+    assert(instance != null,
+        'No instance of AppLocalizations present in the widget tree. Did you add AppLocalizations.delegate in localizationsDelegates?');
     return instance!;
   }
 
@@ -56,7 +52,12 @@ class AppLocalizations {
 
   /// `Yusr`
   String get appName {
-    return Intl.message('Yusr', name: 'appName', desc: '', args: []);
+    return Intl.message(
+      'Yusr',
+      name: 'appName',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `The Smart Pilgrim Companion`
@@ -71,7 +72,12 @@ class AppLocalizations {
 
   /// `Home`
   String get home {
-    return Intl.message('Home', name: 'home', desc: '', args: []);
+    return Intl.message(
+      'Home',
+      name: 'home',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Manasek Counter`
@@ -86,17 +92,32 @@ class AppLocalizations {
 
   /// `Smart Mufti`
   String get smartMufti {
-    return Intl.message('Smart Mufti', name: 'smartMufti', desc: '', args: []);
+    return Intl.message(
+      'Smart Mufti',
+      name: 'smartMufti',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Take me back`
   String get returnMe {
-    return Intl.message('Take me back', name: 'returnMe', desc: '', args: []);
+    return Intl.message(
+      'Take me back',
+      name: 'returnMe',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Login`
   String get login {
-    return Intl.message('Login', name: 'login', desc: '', args: []);
+    return Intl.message(
+      'Login',
+      name: 'login',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Prayer Times`
@@ -121,12 +142,22 @@ class AppLocalizations {
 
   /// `Logout`
   String get logout {
-    return Intl.message('Logout', name: 'logout', desc: '', args: []);
+    return Intl.message(
+      'Logout',
+      name: 'logout',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Not found`
   String get notFound {
-    return Intl.message('Not found', name: 'notFound', desc: '', args: []);
+    return Intl.message(
+      'Not found',
+      name: 'notFound',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Please login to view the campaign location`
@@ -221,32 +252,62 @@ class AppLocalizations {
 
   /// `Hijri Date`
   String get hijriDate {
-    return Intl.message('Hijri Date', name: 'hijriDate', desc: '', args: []);
+    return Intl.message(
+      'Hijri Date',
+      name: 'hijriDate',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Fajr`
   String get fajr {
-    return Intl.message('Fajr', name: 'fajr', desc: '', args: []);
+    return Intl.message(
+      'Fajr',
+      name: 'fajr',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Dhuhr`
   String get dhuhr {
-    return Intl.message('Dhuhr', name: 'dhuhr', desc: '', args: []);
+    return Intl.message(
+      'Dhuhr',
+      name: 'dhuhr',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Asr`
   String get asr {
-    return Intl.message('Asr', name: 'asr', desc: '', args: []);
+    return Intl.message(
+      'Asr',
+      name: 'asr',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Maghrib`
   String get maghrib {
-    return Intl.message('Maghrib', name: 'maghrib', desc: '', args: []);
+    return Intl.message(
+      'Maghrib',
+      name: 'maghrib',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Isha`
   String get isha {
-    return Intl.message('Isha', name: 'isha', desc: '', args: []);
+    return Intl.message(
+      'Isha',
+      name: 'isha',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Step-by-step Rituals Preparation`
@@ -331,7 +392,12 @@ class AppLocalizations {
 
   /// `Email`
   String get emailLabel {
-    return Intl.message('Email', name: 'emailLabel', desc: '', args: []);
+    return Intl.message(
+      'Email',
+      name: 'emailLabel',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `A recovery link will be sent to your email.`
@@ -376,7 +442,12 @@ class AppLocalizations {
 
   /// `Password`
   String get password {
-    return Intl.message('Password', name: 'password', desc: '', args: []);
+    return Intl.message(
+      'Password',
+      name: 'password',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Forgot password?`
@@ -391,7 +462,12 @@ class AppLocalizations {
 
   /// `Login`
   String get loginButton {
-    return Intl.message('Login', name: 'loginButton', desc: '', args: []);
+    return Intl.message(
+      'Login',
+      name: 'loginButton',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Set a new password`
@@ -436,7 +512,12 @@ class AppLocalizations {
 
   /// `Reset`
   String get resetButton {
-    return Intl.message('Reset', name: 'resetButton', desc: '', args: []);
+    return Intl.message(
+      'Reset',
+      name: 'resetButton',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Passwords do not match`
@@ -561,7 +642,12 @@ class AppLocalizations {
 
   /// `Edit`
   String get edit {
-    return Intl.message('Edit', name: 'edit', desc: '', args: []);
+    return Intl.message(
+      'Edit',
+      name: 'edit',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Choose Location Coordinates`
@@ -596,7 +682,12 @@ class AppLocalizations {
 
   /// `Cancel`
   String get cancel {
-    return Intl.message('Cancel', name: 'cancel', desc: '', args: []);
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Location Description`
@@ -661,7 +752,12 @@ class AppLocalizations {
 
   /// `Retry`
   String get retry {
-    return Intl.message('Retry', name: 'retry', desc: '', args: []);
+    return Intl.message(
+      'Retry',
+      name: 'retry',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Are you sure you want to delete this item permanently?`
@@ -676,7 +772,12 @@ class AppLocalizations {
 
   /// `Delete`
   String get delete {
-    return Intl.message('Delete', name: 'delete', desc: '', args: []);
+    return Intl.message(
+      'Delete',
+      name: 'delete',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Enter location name...`
@@ -751,7 +852,12 @@ class AppLocalizations {
 
   /// `Details`
   String get detiles {
-    return Intl.message('Details', name: 'detiles', desc: '', args: []);
+    return Intl.message(
+      'Details',
+      name: 'detiles',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Search for announcement...`
@@ -886,12 +992,22 @@ class AppLocalizations {
 
   /// `Title`
   String get titleLabel {
-    return Intl.message('Title', name: 'titleLabel', desc: '', args: []);
+    return Intl.message(
+      'Title',
+      name: 'titleLabel',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Content`
   String get contentLabel {
-    return Intl.message('Content', name: 'contentLabel', desc: '', args: []);
+    return Intl.message(
+      'Content',
+      name: 'contentLabel',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Once sent, the announcement will reach all users in the selected category and this action cannot be undone.`
@@ -926,12 +1042,22 @@ class AppLocalizations {
 
   /// `km`
   String get km {
-    return Intl.message('km', name: 'km', desc: '', args: []);
+    return Intl.message(
+      'km',
+      name: 'km',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `You are here`
   String get youAreHere {
-    return Intl.message('You are here', name: 'youAreHere', desc: '', args: []);
+    return Intl.message(
+      'You are here',
+      name: 'youAreHere',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Important Announcement`
@@ -969,6 +1095,96 @@ class AppLocalizations {
     return Intl.message(
       'View Details',
       name: 'viewDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start Session`
+  String get startSession {
+    return Intl.message(
+      'Start Session',
+      name: 'startSession',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Show Map`
+  String get showMap {
+    return Intl.message(
+      'Show Map',
+      name: 'showMap',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An error occurred: `
+  String get errorOccurred {
+    return Intl.message(
+      'An error occurred: ',
+      name: 'errorOccurred',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Accepted`
+  String get accepted {
+    return Intl.message(
+      'Accepted',
+      name: 'accepted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pending`
+  String get pending {
+    return Intl.message(
+      'Pending',
+      name: 'pending',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rejected`
+  String get rejected {
+    return Intl.message(
+      'Rejected',
+      name: 'rejected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not Active`
+  String get notActive {
+    return Intl.message(
+      'Not Active',
+      name: 'notActive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pilgrims List`
+  String get pilgrimsListTitle {
+    return Intl.message(
+      'Pilgrims List',
+      name: 'pilgrimsListTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No pilgrims associated with this session.`
+  String get noPilgrimsInSession {
+    return Intl.message(
+      'No pilgrims associated with this session.',
+      name: 'noPilgrimsInSession',
       desc: '',
       args: [],
     );

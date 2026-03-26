@@ -10,6 +10,7 @@ import 'package:yusr/core/services/errors/errormodel.dart';
 import 'package:yusr/core/services/errors/exception.dart';
 import 'package:yusr/core/services/notification_service.dart';
 import 'package:yusr/features/auth/data/models/login_model.dart';
+import 'package:yusr/features/home/providers/user_provider.dart';
 
 class AuthRepository {
   final ApiService apiService;
@@ -43,11 +44,11 @@ class AuthRepository {
     }
     final sharedPrefs = ref.read(sharedPreferencesServiceProvider);
     await sharedPrefs.setProfile(response.data!);
-
-    final notificationService = NotificationService(sharedPrefs, apiService);
+    await ref.read(userProfileProvider.notifier).refreshProfile();
+    // final notificationService = NotificationService(sharedPrefs, apiService);
 
     // نستدعيها بدون await لكي تعمل في الخلفية ولا تؤخر انتقال المستخدم للشاشة الرئيسية
-    notificationService.syncUserTopics();
+    // notificationService.syncUserTopics();
     return response;
   }
 

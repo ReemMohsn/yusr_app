@@ -22,6 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "accepted": MessageLookupByLibrary.simpleMessage("Accepted"),
         "accountVerification":
             MessageLookupByLibrary.simpleMessage("Account Verification"),
         "addAnnouncement":
@@ -87,6 +88,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "An error occurred while fetching announcements:"),
         "errorFetchingNotifications": MessageLookupByLibrary.simpleMessage(
             "An error occurred while fetching notifications:"),
+        "errorOccurred":
+            MessageLookupByLibrary.simpleMessage("An error occurred: "),
         "fajr": MessageLookupByLibrary.simpleMessage("Fajr"),
         "fetchDataError":
             MessageLookupByLibrary.simpleMessage("Error fetching data"),
@@ -139,6 +142,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "No matching search results found"),
         "noNotificationsCurrently": MessageLookupByLibrary.simpleMessage(
             "There are currently no notifications"),
+        "noPilgrimsInSession": MessageLookupByLibrary.simpleMessage(
+            "No pilgrims associated with this session."),
+        "notActive": MessageLookupByLibrary.simpleMessage("Not Active"),
         "notFound": MessageLookupByLibrary.simpleMessage("Not found"),
         "notificationSearch":
             MessageLookupByLibrary.simpleMessage("Search for notifications..."),
@@ -148,11 +154,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "passwordsDoNotMatchError":
             MessageLookupByLibrary.simpleMessage("Passwords do not match"),
+        "pending": MessageLookupByLibrary.simpleMessage("Pending"),
+        "pilgrimsListTitle":
+            MessageLookupByLibrary.simpleMessage("Pilgrims List"),
         "prayerTimes": MessageLookupByLibrary.simpleMessage("Prayer Times"),
         "publishAnnouncement":
             MessageLookupByLibrary.simpleMessage("Publish Announcement"),
         "recoveryLinkNote": MessageLookupByLibrary.simpleMessage(
             "A recovery link will be sent to your email."),
+        "rejected": MessageLookupByLibrary.simpleMessage("Rejected"),
         "resetButton": MessageLookupByLibrary.simpleMessage("Reset"),
         "retry": MessageLookupByLibrary.simpleMessage("Retry"),
         "returnMe": MessageLookupByLibrary.simpleMessage("Take me back"),
@@ -178,7 +188,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "Session expired or your data was modified. You are now browsing as a guest."),
         "setNewPassword":
             MessageLookupByLibrary.simpleMessage("Set a new password"),
+        "showMap": MessageLookupByLibrary.simpleMessage("Show Map"),
         "smartMufti": MessageLookupByLibrary.simpleMessage("Smart Mufti"),
+        "startSession": MessageLookupByLibrary.simpleMessage("Start Session"),
         "targetAudience":
             MessageLookupByLibrary.simpleMessage("Target Audience"),
         "titleLabel": MessageLookupByLibrary.simpleMessage("Title"),

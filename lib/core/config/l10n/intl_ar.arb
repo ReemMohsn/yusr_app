@@ -1,4 +1,6 @@
 {
+   "appName": "يسر",
+  "appSlogan": "مرافق الحاج الذكي",
     "home": "الرئيسية",
     "manasekCounter": "عداد المناسك",
     "smartMufti": "المفتي الذكي",
@@ -100,5 +102,15 @@
   "importantAnnouncement": "إعلان هام",
   "administration": "الإدارة",
   "newNotification": "إشعار جديد",
-  "viewDetails": "عرض التفاصيل"
+  "viewDetails": "عرض التفاصيل",
+  "startSession": "بدء الجلسة",
+  "showMap": "عرض الخريطة",
+  "errorOccurred": "حدث خطأ: ",
+  "accepted": "موافق",
+  "pending": "قيد الانتظار",
+  "rejected": "رافض",
+  "notActive": "غير مفعل",
+  "pilgrimsListTitle": "قائمة الحجاج",
+  "noPilgrimsInSession": "لا يوجد حجاج مرتبطين بهذه الجلسة."
+  
 }
