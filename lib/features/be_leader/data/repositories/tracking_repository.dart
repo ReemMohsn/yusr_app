@@ -1,11 +1,16 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 
 class TrackingRepository {
   final Ref ref;
-  final FirebaseDatabase _db = FirebaseDatabase.instance;
-
+  // final FirebaseDatabase _db = FirebaseDatabase.instance;
+  final FirebaseDatabase _db = FirebaseDatabase.instanceFor(
+    app: Firebase.app(),
+    databaseURL:
+        'https://yusr-applicatin-default-rtdb.europe-west1.firebasedatabase.app',
+  );
   TrackingRepository(this.ref);
 
   // ==========================================

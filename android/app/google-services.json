@@ -1,10 +1,10 @@
 {
   "project_info": {
     "project_number": "155223789652",
+    "firebase_url": "https://yusr-applicatin-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "yusr-applicatin",
     "storage_bucket": "yusr-applicatin.firebasestorage.app"
   },
-  
   "client": [
     {
       "client_info": {
