@@ -8,9 +8,12 @@ import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/core/constants/app_size.dart';
 import 'package:yusr/core/extensions/async_value_ui.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
-import 'package:yusr/features/announcements_notifications/presentation/widgets/notification_card.dart' show NotificationCard;
-import 'package:yusr/features/announcements_notifications/providers/filtered_notifications_provider.dart' show filteredNotificationsProvider;
-import 'package:yusr/features/announcements_notifications/providers/notifications_provider.dart' show notificationsProvider;
+import 'package:yusr/features/announcements_notifications/presentation/widgets/notification_card.dart'
+    show NotificationCard;
+import 'package:yusr/features/announcements_notifications/providers/filtered_notifications_provider.dart'
+    show filteredNotificationsProvider;
+import 'package:yusr/features/announcements_notifications/providers/notifications_provider.dart'
+    show notificationsProvider;
 import 'package:yusr/features/announcements_notifications/providers/read_notifications_provider.dart';
 // استدعِ ملفات الكنترولر والموديل هنا
 
@@ -37,9 +40,11 @@ class _NotificationsViewState extends ConsumerState<NotificationsView> {
     final notificationsState = ref.watch(notificationsProvider);
     final filteredState = ref.watch(filteredNotificationsProvider);
     // 🌟 يجب أن يكون هذا السطر موجوداً هنا لكي يتعرف على readIds
-    final readNotificationsState = ref.watch(readNotificationsProvider as ProviderListenable<dynamic>);
+    final readNotificationsState = ref.watch(
+      readNotificationsProvider as ProviderListenable<dynamic>,
+    );
     final List<String> readIds = readNotificationsState.value ?? [];
-   
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -125,13 +130,17 @@ class _NotificationsViewState extends ConsumerState<NotificationsView> {
                       final notification = notificationsList[index];
                       // 🌟 التحقق مما إذا كان هذا الإشعار مقروءاً أم لا
                       // تأكدي من اسم المتغير للـ ID في الموديل الخاص بك (notificationId أو announcementId)
-                      final bool isRead = readIds.contains(notification.notificationId.toString());
+                      final bool isRead = readIds.contains(
+                        notification.notificationId.toString(),
+                      );
                       return GestureDetector(
                         onTap: () {
                           // 🌟 بمجرد النقر، نقوم بتسجيل هذا الإشعار كـ "مقروء" في الذاكرة
                           ref
                               .read(readNotificationsProvider.notifier)
-                              .markAsRead(notification.notificationId.toString());
+                              .markAsRead(
+                                notification.notificationId.toString(),
+                              );
                           Navigator.of(context).pushNamed(
                             AppRoute.notificationDetailsView,
                             arguments: notification, // تمرير الموديل كامل
@@ -142,8 +151,8 @@ class _NotificationsViewState extends ConsumerState<NotificationsView> {
                           title: notification.title, // تمرير العنوان
                           description: notification.body, // تمرير التفاصيل
                           time: notification.sentAtTime, // تمرير الوقت
-                          senderName: notification
-                              .senderName, // تمرير الجمهور المستهدف    
+                          senderName:
+                              notification.senderName, // تمرير الجمهور المستهدف
                           isRead: isRead, // تمرير حالة القراءة
                         ),
                       );

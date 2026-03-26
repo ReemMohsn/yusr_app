@@ -37,6 +37,15 @@ class _MainHomeViewState extends ConsumerState<MainHomeView> {
 
   Future<void> _syncNotifications() async {
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      // 1. التحقق من حالة تسجيل الدخول
+      final userProfileState = ref.read(userProfileProvider);
+      final profile = userProfileState.asData?.value;
+
+      // 2. إذا لم يكن هناك بروفايل (أي زائر)، نخرج من الدالة ولا نستدعي المزامنة
+      if (profile == null) {
+        debugPrint("المستخدم زائر: تم تخطي مزامنة الإشعارات.");
+        return;
+      }
       final prefsService = ref.read(sharedPreferencesServiceProvider);
       final apiService = ref.read(apiServiceProvider);
       final notificationService = NotificationService(prefsService, apiService);
@@ -221,7 +230,7 @@ class _MainHomeViewState extends ConsumerState<MainHomeView> {
           ),
         ),
         const SizedBox(width: 10),
-        // أيقونة الجرس
+
         // IconButton(
         //   icon: const Icon(Icons.notifications_none_outlined, color: AppColor.golden),
         //   onPressed: () => _navigateToNotifications(context)

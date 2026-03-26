@@ -3,13 +3,19 @@ import 'package:flutter/material.dart';
 // 1. استيراد موديلات البيانات (Models)
 import 'package:yusr/features/announcements_notifications/data/models/announcement_model.dart';
 import 'package:yusr/features/auto_counter/presentation/views/tawaf_counter_view.dart';
+import 'package:yusr/features/be_leader/presentation/views/leader_map_tracking_view.dart';
+import 'package:yusr/features/be_leader/presentation/views/leader_pilgrims_list_view.dart';
+import 'package:yusr/features/be_leader/presentation/views/leader_start_session_view.dart';
 import 'package:yusr/features/campaign_location/data/models/campaign_location_item_model.dart';
-import 'package:yusr/features/announcements_notifications/data/models/notifications_model.dart' show NotificationModel;
+import 'package:yusr/features/announcements_notifications/data/models/notifications_model.dart'
+    show NotificationModel;
 import 'package:yusr/features/announcements_notifications/presentation/views/add_announcement_view.dart';
 import 'package:yusr/features/announcements_notifications/presentation/views/announcement_details_view.dart';
 import 'package:yusr/features/announcements_notifications/presentation/views/announcements_view.dart';
-import 'package:yusr/features/announcements_notifications/presentation/views/notification_details_view.dart' show NotificationDetailsView;
-import 'package:yusr/features/announcements_notifications/presentation/views/notifications_view.dart' show NotificationsView;
+import 'package:yusr/features/announcements_notifications/presentation/views/notification_details_view.dart'
+    show NotificationDetailsView;
+import 'package:yusr/features/announcements_notifications/presentation/views/notifications_view.dart'
+    show NotificationsView;
 import 'package:yusr/features/auth/presentation/views/account_verification.dart';
 import 'package:yusr/features/auth/presentation/views/forgot_password.dart';
 import 'package:yusr/features/auth/presentation/views/login_view.dart';
@@ -28,20 +34,6 @@ import 'package:yusr/features/return_to_compaign_location/presentation/views/ret
 import 'package:yusr/features/return_to_compaign_location/presentation/views/return_me_view.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
-// class AppRoute {
-//   static const String mainHomeView = '/MainHomeView';
-//   static const String loginView = '/loginView';
-//   static const String forgotPassword = '/ForgotPassword';
-//   static const String otpVerificationView = '/OtpVerificationView';
-//   static const String resetPasswordView = '/ResetPasswordView';
-//   static const String announcementsView = '/AnnouncementsView';
-//   static const String addAnnouncementView = '/AddAnnouncementView';
-//   static const String announcementDetailsView = '/AnnouncementDetailsView';
-//   static const String returnMeMapView = '/ReturnMeMapView';
-//   static const String returnMeView = '/ReturnMeView';
-
-// }
 
 class AppRouter {
   Route? generateRoute(RouteSettings settings) {
@@ -68,9 +60,10 @@ class AppRouter {
       case AppRoute.notificationsView:
         return MaterialPageRoute(builder: (_) => const NotificationsView());
       case AppRoute.notificationDetailsView:
-        final notification = settings.arguments as NotificationModel; // تأكد من نوع البيانات إذا لزم الأمر
-        // هنا يمكنك تمرير بيانات الإشعار إذا لزم الأمر
-        return MaterialPageRoute(builder: (_) =>  NotificationDetailsView(notification: notification));  
+        final notification = settings.arguments as NotificationModel;
+        return MaterialPageRoute(
+          builder: (_) => NotificationDetailsView(notification: notification),
+        );
       case AppRoute.returnMeMapView:
         return MaterialPageRoute(builder: (_) => const ReturnMeMapView());
       case AppRoute.returnMeView:
@@ -86,6 +79,16 @@ class AppRouter {
         );
       case AppRoute.setLocationView:
         return MaterialPageRoute(builder: (_) => const SetLocationView());
+      case AppRoute.leaderStartSessionView:
+        return MaterialPageRoute(builder: (_) => LeaderStartSessionView());
+      case AppRoute.leaderPilgrimsListView:
+        final int sessionId = settings.arguments as int;
+        return MaterialPageRoute(
+          builder: (_) => LeaderPilgrimsListView(sessionId: sessionId),
+        );
+      case AppRoute.leaderMapTrackingView:
+        final int sessionId = settings.arguments as int;
+        return MaterialPageRoute(builder: (_) => LeaderMapTrackingView());
       case AppRoute.tawafCounterView:
         return MaterialPageRoute(builder: (_) => const TawafCounterView());
       case AppRoute.instructionsView:
@@ -93,17 +96,18 @@ class AppRouter {
       case AppRoute.hajjDetailsView:
         final hajjType = settings.arguments as String;
         return MaterialPageRoute(
-            builder: (_) => HajjDetailsView(hajjType: hajjType));
+          builder: (_) => HajjDetailsView(hajjType: hajjType),
+        );
       case AppRoute.actionDetailsView:
         final action = settings.arguments as HajjActionModel;
         return MaterialPageRoute(
-            builder: (_) => ActionDetailsView(action: action));
+          builder: (_) => ActionDetailsView(action: action),
+        );
       default:
         return null;
     }
   }
 }
-
 
 class AppRoute {
   static const String mainHomeView = '/MainHomeView';
@@ -124,6 +128,9 @@ class AppRoute {
 
   static const String returnMeMapView = '/ReturnMeMapView';
   static const String returnMeView = '/ReturnMeView';
+  static const String leaderPilgrimsListView = '/LeaderPilgrimsListView';
+  static const String leaderMapTrackingView = '/LeaderMapTrackingView';
+  static const String leaderStartSessionView = '/LeaderStartSessionView';
 
   static const String tawafCounterView = '/TawafCounterView';
   static const String instructionsView = '/InstructionsView';

@@ -75,7 +75,14 @@ class CustomDrawer extends ConsumerWidget {
             context: context,
             title: locale.becomeALeader,
             icon: Icons.workspace_premium_outlined,
-            onTap: () {},
+            onTap: () {
+              Navigator.pop(
+                context,
+              ); // إغلاق القائمة الجانبية أولاً (مهم جداً للاحترافية)
+              Navigator.of(
+                context,
+              ).pushNamed(AppRoute.leaderStartSessionView); // الانتقال للصفحة
+            },
           ),
           BuildMenuItem(
             context: context,
@@ -112,8 +119,12 @@ class CustomDrawer extends ConsumerWidget {
             title: locale.campaignLocation, // "موقع استقرار الحملة"
             icon: Icons.location_on_outlined, // أيقونة الموقع
             onTap: () {
-              Navigator.pop(context); // إغلاق القائمة الجانبية أولاً (مهم جداً للاحترافية)
-              Navigator.of(context).pushNamed(AppRoute.campaignLocationView); // الانتقال للصفحة
+              Navigator.pop(
+                context,
+              ); // إغلاق القائمة الجانبية أولاً (مهم جداً للاحترافية)
+              Navigator.of(
+                context,
+              ).pushNamed(AppRoute.campaignLocationView); // الانتقال للصفحة
             },
           ),
           BuildMenuItem(
@@ -124,7 +135,7 @@ class CustomDrawer extends ConsumerWidget {
                 Navigator.of(context).pushNamed(AppRoute.instructionsView),
           ),
         ];
-      case 'الحاج':
+      case 'حاج':
         return [
           BuildMenuItem(
             context: context,
