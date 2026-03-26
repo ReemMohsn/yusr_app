@@ -2,7 +2,7 @@ name: yusr
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -29,7 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   flutter:
-    sdk: flutter    
+    sdk: flutter
 
   # المكتبات المعلقة (إبقاء للذكرى أو الرجوع إليها)
   # dio: ^5.8.0+1
@@ -66,6 +66,10 @@ dependencies:
   http: ^1.2.0
   firebase_database: any
   
+  sensors_plus: any
+  pedometer: any
+  permission_handler: any
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -80,6 +84,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
+  intl_utils: ^2.8.14
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -95,7 +100,7 @@ flutter:
   assets:
     - asset/icons/
     - asset/images/
-    - asset/fonts/   
+    - asset/fonts/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
@@ -124,5 +129,5 @@ flutter_intl:
   enabled: true
   class_name: AppLocalizations
   main_locale: en
-  arb_dir: lib/core/config/l10n 
+  arb_dir: lib/core/config/l10n
   output_dir: lib/core/config/generated

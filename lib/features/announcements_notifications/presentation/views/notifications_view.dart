@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:riverpod/src/framework.dart';
 import 'package:yusr/core/common/widgets/custom_golden_back_button.dart';
 import 'package:yusr/core/common/widgets/custom_text_field.dart';
 import 'package:yusr/core/constants/app_route.dart';
@@ -13,6 +14,7 @@ import 'package:yusr/features/announcements_notifications/providers/filtered_not
     show filteredNotificationsProvider;
 import 'package:yusr/features/announcements_notifications/providers/notifications_provider.dart'
     show notificationsProvider;
+import 'package:yusr/features/announcements_notifications/providers/read_notifications_provider.dart';
 // استدعِ ملفات الكنترولر والموديل هنا
 
 class NotificationsView extends ConsumerStatefulWidget {
@@ -37,19 +39,12 @@ class _NotificationsViewState extends ConsumerState<NotificationsView> {
     // 🌟 مراقبة حالة الإعلانات (تحميل، خطأ، أو داتا)
     final notificationsState = ref.watch(notificationsProvider);
     final filteredState = ref.watch(filteredNotificationsProvider);
+    // 🌟 يجب أن يكون هذا السطر موجوداً هنا لكي يتعرف على readIds
+    final readNotificationsState = ref.watch(
+      readNotificationsProvider as ProviderListenable<dynamic>,
+    );
+    final List<String> readIds = readNotificationsState.value ?? [];
 
-    // ref.listen(deleteAnnouncementProvider, (_, state) {
-    //   if (state.isLoading) {
-    //     context.showLoadingDialog();
-    //   } else if (state.hasError) {
-    //     context.closeLoadingDialog();
-    //     context.showErrorSnackBar(state.errorMessage);
-    //   } else if (state.hasValue && state.value != null) {
-    //     context.closeLoadingDialog();
-    //     context.showSuccessSnackBar(state.value!.message);
-    //     ref.invalidate(announcementsProvider); // تحديث القائمة فوراً
-    //   }
-    // });
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -133,8 +128,19 @@ class _NotificationsViewState extends ConsumerState<NotificationsView> {
                     itemCount: notificationsList.length,
                     itemBuilder: (context, index) {
                       final notification = notificationsList[index];
+                      // 🌟 التحقق مما إذا كان هذا الإشعار مقروءاً أم لا
+                      // تأكدي من اسم المتغير للـ ID في الموديل الخاص بك (notificationId أو announcementId)
+                      final bool isRead = readIds.contains(
+                        notification.notificationId.toString(),
+                      );
                       return GestureDetector(
                         onTap: () {
+                          // 🌟 بمجرد النقر، نقوم بتسجيل هذا الإشعار كـ "مقروء" في الذاكرة
+                          ref
+                              .read(readNotificationsProvider.notifier)
+                              .markAsRead(
+                                notification.notificationId.toString(),
+                              );
                           Navigator.of(context).pushNamed(
                             AppRoute.notificationDetailsView,
                             arguments: notification, // تمرير الموديل كامل
@@ -147,21 +153,7 @@ class _NotificationsViewState extends ConsumerState<NotificationsView> {
                           time: notification.sentAtTime, // تمرير الوقت
                           senderName:
                               notification.senderName, // تمرير الجمهور المستهدف
-                          // onDelete: () async {
-                          //   // إظهار نافذة التأكيد
-                          //   final shouldDelete = await showDialog<bool>(
-                          //     context: context,
-                          //     builder: (context) => const ConfirmDeleteDialog(),
-                          //   );
-                          //   // إذا ضغط المستخدم "حذف" (true)
-                          //   if (shouldDelete == true) {
-                          //     ref
-                          //         .read(deleteAnnouncementProvider.notifier)
-                          //         .deleteAnnouncement(
-                          //           notification.announcementId,
-                          //         );
-                          //   }
-                          // },
+                          isRead: isRead, // تمرير حالة القراءة
                         ),
                       );
                     },

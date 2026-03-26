@@ -1,3 +1,5 @@
+// تأكدي من مسار الملف الصحيح حسب مشروعك
+import 'package:yusr/features/announcements_notifications/providers/unread_notifications_count_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yusr/core/common/providers/api_service_provider.dart';
@@ -9,6 +11,7 @@ import 'package:yusr/core/constants/app_size.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/core/services/notification_service.dart';
 import 'package:yusr/features/auth/data/models/login_model.dart';
+import 'package:yusr/features/auto_counter/presentation/views/tawaf_counter_view.dart';
 import 'package:yusr/features/home/data/models/navigation_item_model.dart';
 import 'package:yusr/features/home/presentation/views/home_view.dart';
 import 'package:yusr/features/home/presentation/widgets/custom_drawer.dart';
@@ -65,7 +68,7 @@ class _MainHomeViewState extends ConsumerState<MainHomeView> {
       ),
       NavigationItemModel(
         label: locale.manasekCounter,
-        page: const Placeholder(),
+        page: const TawafCounterView(),
         activeIconPath: AppImage.timerIcon,
       ),
       NavigationItemModel(
@@ -202,6 +205,7 @@ class _MainHomeViewState extends ConsumerState<MainHomeView> {
 
   /// الواجهة في حالة المستخدم المسجل (صورة + جرس)
   Widget _buildLoggedInLeading(BuildContext context, ProfileModel profile) {
+    final unreadCount = ref.watch(unreadNotificationsCountProvider);
     return Row(
       children: [
         const SizedBox(width: 10),
@@ -226,14 +230,40 @@ class _MainHomeViewState extends ConsumerState<MainHomeView> {
           ),
         ),
         const SizedBox(width: 10),
-        // أيقونة الجرس
-        IconButton(
-          icon: const Icon(
-            Icons.notifications_none_outlined,
-            color: AppColor.golden,
+
+        // IconButton(
+        //   icon: const Icon(Icons.notifications_none_outlined, color: AppColor.golden),
+        //   onPressed: () => _navigateToNotifications(context)
+        //     // معالجة النقر على أيقونة الجرس
+        //   ,
+        // ),
+        // 🌟 2. إضافة الـ Badge حول أيقونة الجرس
+        Badge(
+          // إظهار البادج فقط إذا كان هناك إشعارات جديدة (أكبر من 0)
+          isLabelVisible: unreadCount > 0,
+          // عرض الرقم داخل البادج
+          label: Text(
+            unreadCount > 99
+                ? '+99'
+                : unreadCount.toString(), // للتعامل مع الأرقام الكبيرة
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 10,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-          onPressed: () => _navigateToNotifications(context),
-          // معالجة النقر على أيقونة الجرس
+          backgroundColor: Colors.red, // لون البادج أحمر ليدل على التنبيه
+          alignment: const Alignment(
+            0.4,
+            -0.4,
+          ), // ضبط موضع البادج أعلى يمين الجرس
+          child: IconButton(
+            icon: const Icon(
+              Icons.notifications_none_outlined,
+              color: AppColor.golden,
+            ),
+            onPressed: () => _navigateToNotifications(context),
+          ),
         ),
       ],
     );

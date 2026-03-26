@@ -18,8 +18,10 @@ class AppLocalizations {
   static AppLocalizations? _current;
 
   static AppLocalizations get current {
-    assert(_current != null,
-        'No instance of AppLocalizations was loaded. Try to initialize the AppLocalizations delegate before accessing AppLocalizations.current.');
+    assert(
+      _current != null,
+      'No instance of AppLocalizations was loaded. Try to initialize the AppLocalizations delegate before accessing AppLocalizations.current.',
+    );
     return _current!;
   }
 
@@ -41,8 +43,10 @@ class AppLocalizations {
 
   static AppLocalizations of(BuildContext context) {
     final instance = AppLocalizations.maybeOf(context);
-    assert(instance != null,
-        'No instance of AppLocalizations present in the widget tree. Did you add AppLocalizations.delegate in localizationsDelegates?');
+    assert(
+      instance != null,
+      'No instance of AppLocalizations present in the widget tree. Did you add AppLocalizations.delegate in localizationsDelegates?',
+    );
     return instance!;
   }
 
@@ -52,12 +56,7 @@ class AppLocalizations {
 
   /// `Yusr`
   String get appName {
-    return Intl.message(
-      'Yusr',
-      name: 'appName',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Yusr', name: 'appName', desc: '', args: []);
   }
 
   /// `The Smart Pilgrim Companion`
@@ -72,12 +71,7 @@ class AppLocalizations {
 
   /// `Home`
   String get home {
-    return Intl.message(
-      'Home',
-      name: 'home',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Home', name: 'home', desc: '', args: []);
   }
 
   /// `Manasek Counter`
@@ -92,32 +86,17 @@ class AppLocalizations {
 
   /// `Smart Mufti`
   String get smartMufti {
-    return Intl.message(
-      'Smart Mufti',
-      name: 'smartMufti',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Smart Mufti', name: 'smartMufti', desc: '', args: []);
   }
 
   /// `Take me back`
   String get returnMe {
-    return Intl.message(
-      'Take me back',
-      name: 'returnMe',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Take me back', name: 'returnMe', desc: '', args: []);
   }
 
   /// `Login`
   String get login {
-    return Intl.message(
-      'Login',
-      name: 'login',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Login', name: 'login', desc: '', args: []);
   }
 
   /// `Prayer Times`
@@ -142,22 +121,12 @@ class AppLocalizations {
 
   /// `Logout`
   String get logout {
-    return Intl.message(
-      'Logout',
-      name: 'logout',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Logout', name: 'logout', desc: '', args: []);
   }
 
   /// `Not found`
   String get notFound {
-    return Intl.message(
-      'Not found',
-      name: 'notFound',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Not found', name: 'notFound', desc: '', args: []);
   }
 
   /// `Please login to view the campaign location`
@@ -252,62 +221,32 @@ class AppLocalizations {
 
   /// `Hijri Date`
   String get hijriDate {
-    return Intl.message(
-      'Hijri Date',
-      name: 'hijriDate',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Hijri Date', name: 'hijriDate', desc: '', args: []);
   }
 
   /// `Fajr`
   String get fajr {
-    return Intl.message(
-      'Fajr',
-      name: 'fajr',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Fajr', name: 'fajr', desc: '', args: []);
   }
 
   /// `Dhuhr`
   String get dhuhr {
-    return Intl.message(
-      'Dhuhr',
-      name: 'dhuhr',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Dhuhr', name: 'dhuhr', desc: '', args: []);
   }
 
   /// `Asr`
   String get asr {
-    return Intl.message(
-      'Asr',
-      name: 'asr',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Asr', name: 'asr', desc: '', args: []);
   }
 
   /// `Maghrib`
   String get maghrib {
-    return Intl.message(
-      'Maghrib',
-      name: 'maghrib',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Maghrib', name: 'maghrib', desc: '', args: []);
   }
 
   /// `Isha`
   String get isha {
-    return Intl.message(
-      'Isha',
-      name: 'isha',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Isha', name: 'isha', desc: '', args: []);
   }
 
   /// `Step-by-step Rituals Preparation`
@@ -392,12 +331,7 @@ class AppLocalizations {
 
   /// `Email`
   String get emailLabel {
-    return Intl.message(
-      'Email',
-      name: 'emailLabel',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Email', name: 'emailLabel', desc: '', args: []);
   }
 
   /// `A recovery link will be sent to your email.`
@@ -442,12 +376,7 @@ class AppLocalizations {
 
   /// `Password`
   String get password {
-    return Intl.message(
-      'Password',
-      name: 'password',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Password', name: 'password', desc: '', args: []);
   }
 
   /// `Forgot password?`
@@ -462,12 +391,7 @@ class AppLocalizations {
 
   /// `Login`
   String get loginButton {
-    return Intl.message(
-      'Login',
-      name: 'loginButton',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Login', name: 'loginButton', desc: '', args: []);
   }
 
   /// `Set a new password`
@@ -512,12 +436,7 @@ class AppLocalizations {
 
   /// `Reset`
   String get resetButton {
-    return Intl.message(
-      'Reset',
-      name: 'resetButton',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Reset', name: 'resetButton', desc: '', args: []);
   }
 
   /// `Passwords do not match`
@@ -642,12 +561,7 @@ class AppLocalizations {
 
   /// `Edit`
   String get edit {
-    return Intl.message(
-      'Edit',
-      name: 'edit',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Edit', name: 'edit', desc: '', args: []);
   }
 
   /// `Choose Location Coordinates`
@@ -682,12 +596,7 @@ class AppLocalizations {
 
   /// `Cancel`
   String get cancel {
-    return Intl.message(
-      'Cancel',
-      name: 'cancel',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Cancel', name: 'cancel', desc: '', args: []);
   }
 
   /// `Location Description`
@@ -752,12 +661,7 @@ class AppLocalizations {
 
   /// `Retry`
   String get retry {
-    return Intl.message(
-      'Retry',
-      name: 'retry',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Retry', name: 'retry', desc: '', args: []);
   }
 
   /// `Are you sure you want to delete this item permanently?`
@@ -765,16 +669,6 @@ class AppLocalizations {
     return Intl.message(
       'Are you sure you want to delete this item permanently?',
       name: 'confirmDelete',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Delete`
-  String get delete {
-    return Intl.message(
-      'Delete',
-      name: 'delete',
       desc: '',
       args: [],
     );
@@ -852,12 +746,7 @@ class AppLocalizations {
 
   /// `Details`
   String get detiles {
-    return Intl.message(
-      'Details',
-      name: 'detiles',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Details', name: 'detiles', desc: '', args: []);
   }
 
   /// `Search for announcement...`
@@ -992,22 +881,12 @@ class AppLocalizations {
 
   /// `Title`
   String get titleLabel {
-    return Intl.message(
-      'Title',
-      name: 'titleLabel',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Title', name: 'titleLabel', desc: '', args: []);
   }
 
   /// `Content`
   String get contentLabel {
-    return Intl.message(
-      'Content',
-      name: 'contentLabel',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Content', name: 'contentLabel', desc: '', args: []);
   }
 
   /// `Once sent, the announcement will reach all users in the selected category and this action cannot be undone.`
@@ -1042,22 +921,7 @@ class AppLocalizations {
 
   /// `km`
   String get km {
-    return Intl.message(
-      'km',
-      name: 'km',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `You are here`
-  String get youAreHere {
-    return Intl.message(
-      'You are here',
-      name: 'youAreHere',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('km', name: 'km', desc: '', args: []);
   }
 
   /// `Important Announcement`
@@ -1112,12 +976,7 @@ class AppLocalizations {
 
   /// `Show Map`
   String get showMap {
-    return Intl.message(
-      'Show Map',
-      name: 'showMap',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Show Map', name: 'showMap', desc: '', args: []);
   }
 
   /// `An error occurred: `
@@ -1132,42 +991,22 @@ class AppLocalizations {
 
   /// `Accepted`
   String get accepted {
-    return Intl.message(
-      'Accepted',
-      name: 'accepted',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Accepted', name: 'accepted', desc: '', args: []);
   }
 
   /// `Pending`
   String get pending {
-    return Intl.message(
-      'Pending',
-      name: 'pending',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Pending', name: 'pending', desc: '', args: []);
   }
 
   /// `Rejected`
   String get rejected {
-    return Intl.message(
-      'Rejected',
-      name: 'rejected',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Rejected', name: 'rejected', desc: '', args: []);
   }
 
   /// `Not Active`
   String get notActive {
-    return Intl.message(
-      'Not Active',
-      name: 'notActive',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Not Active', name: 'notActive', desc: '', args: []);
   }
 
   /// `Pilgrims List`
@@ -1185,6 +1024,146 @@ class AppLocalizations {
     return Intl.message(
       'No pilgrims associated with this session.',
       name: 'noPilgrimsInSession',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You are here`
+  String get youAreHere {
+    return Intl.message('You are here', name: 'youAreHere', desc: '', args: []);
+  }
+
+  /// `Delete`
+  String get delete {
+    return Intl.message('Delete', name: 'delete', desc: '', args: []);
+  }
+
+  /// `Hajj Types`
+  String get instructions {
+    return Intl.message('Hajj Types', name: 'instructions', desc: '', args: []);
+  }
+
+  /// `Hajj Rituals of`
+  String get hajjActionsTitle {
+    return Intl.message(
+      'Hajj Rituals of',
+      name: 'hajjActionsTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Arrival and Makkah Activities","actions":[{"name":"Etiquette and Guidelines","emoji":"📖","sections":[{"title":"Intention and Covenant","items":["Anyone intending Hajj or Umrah should consciously seek closeness to Allah Almighty and purify their intention for this great obligation.","Hajj is an opportunity for sincere repentance, renewing one's covenant with Allah, and abandoning all sins.","Ensure all your wealth funding the Hajj is pure and Halal."],"type":"text"}]}]}]`
+  String get hajjIfradData {
+    return Intl.message(
+      '[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Arrival and Makkah Activities","actions":[{"name":"Etiquette and Guidelines","emoji":"📖","sections":[{"title":"Intention and Covenant","items":["Anyone intending Hajj or Umrah should consciously seek closeness to Allah Almighty and purify their intention for this great obligation.","Hajj is an opportunity for sincere repentance, renewing one\'s covenant with Allah, and abandoning all sins.","Ensure all your wealth funding the Hajj is pure and Halal."],"type":"text"}]}]}]',
+      name: 'hajjIfradData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Arrival for the Qarin","actions":[{"name":"Intention for Qiran","emoji":"🤲","sections":[{"title":"Combining the Intention","items":["He makes the intention saying: Labbayk Allahumma Umratan wa Hajjan.","The Qarin does not exit Ihram like the Mufrid."],"type":"text"}]}]}]`
+  String get hajjQiranData {
+    return Intl.message(
+      '[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Arrival for the Qarin","actions":[{"name":"Intention for Qiran","emoji":"🤲","sections":[{"title":"Combining the Intention","items":["He makes the intention saying: Labbayk Allahumma Umratan wa Hajjan.","The Qarin does not exit Ihram like the Mufrid."],"type":"text"}]}]}]',
+      name: 'hajjQiranData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Performing Umrah for Tamattu","actions":[{"name":"Etiquette and Guidelines","emoji":"📖","sections":[{"title":"Intention for Tamattu","items":["At the Miqat, the pilgrim intends only Umrah."],"type":"text"}]}]}]`
+  String get hajjTamattuData {
+    return Intl.message(
+      '[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Performing Umrah for Tamattu","actions":[{"name":"Etiquette and Guidelines","emoji":"📖","sections":[{"title":"Intention for Tamattu","items":["At the Miqat, the pilgrim intends only Umrah."],"type":"text"}]}]}]',
+      name: 'hajjTamattuData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `[{"title":"Ifrad","subtitle":"Ihram for Hajj only","description":"Entering Ihram for Hajj alone from the Miqat, saying: Labbayk Hajjan"},{"title":"Qiran","subtitle":"Ihram for Hajj and Umrah together","description":"Entering Ihram for both Umrah and Hajj together, saying: Labbayk Umratan wa Hajjan"},{"title":"Tamattu","subtitle":"Umrah then Hajj in the months of Hajj","description":"Entering Ihram for Umrah, exiting it fully, then entering Ihram again for Hajj"}]`
+  String get instructionsListData {
+    return Intl.message(
+      '[{"title":"Ifrad","subtitle":"Ihram for Hajj only","description":"Entering Ihram for Hajj alone from the Miqat, saying: Labbayk Hajjan"},{"title":"Qiran","subtitle":"Ihram for Hajj and Umrah together","description":"Entering Ihram for both Umrah and Hajj together, saying: Labbayk Umratan wa Hajjan"},{"title":"Tamattu","subtitle":"Umrah then Hajj in the months of Hajj","description":"Entering Ihram for Umrah, exiting it fully, then entering Ihram again for Hajj"}]',
+      name: 'instructionsListData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tawaf`
+  String get tawaf {
+    return Intl.message('Tawaf', name: 'tawaf', desc: '', args: []);
+  }
+
+  /// `Saei`
+  String get saei {
+    return Intl.message('Saei', name: 'saei', desc: '', args: []);
+  }
+
+  /// `Start`
+  String get start {
+    return Intl.message('Start', name: 'start', desc: '', args: []);
+  }
+
+  /// `Click to start counting`
+  String get clickToStart {
+    return Intl.message(
+      'Click to start counting',
+      name: 'clickToStart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current Stroke`
+  String get currentStroke {
+    return Intl.message(
+      'Current Stroke',
+      name: 'currentStroke',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Auto Update`
+  String get autoUpdate {
+    return Intl.message('Auto Update', name: 'autoUpdate', desc: '', args: []);
+  }
+
+  /// `Remaining`
+  String get remaining {
+    return Intl.message('Remaining', name: 'remaining', desc: '', args: []);
+  }
+
+  /// `Total`
+  String get total {
+    return Intl.message('Total', name: 'total', desc: '', args: []);
+  }
+
+  /// `Reset`
+  String get reset {
+    return Intl.message('Reset', name: 'reset', desc: '', args: []);
+  }
+
+  /// `Strokes`
+  String get strokes {
+    return Intl.message('Strokes', name: 'strokes', desc: '', args: []);
+  }
+
+  /// `of`
+  String get ofWord {
+    return Intl.message('of', name: 'ofWord', desc: '', args: []);
+  }
+
+  /// `Strokes are updated automatically based on your location from the Black Stone and your movement around the Kaaba.`
+  String get tawafDescription {
+    return Intl.message(
+      'Strokes are updated automatically based on your location from the Black Stone and your movement around the Kaaba.',
+      name: 'tawafDescription',
       desc: '',
       args: [],
     );

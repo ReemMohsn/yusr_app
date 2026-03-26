@@ -162,33 +162,24 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
 
 class PushNotificationService {
+  // دالة التهيئة الرئيسية التي سنستدعيها عند تشغيل التطبيق
   static Future<void> init() async {
-    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-
-    // 1. حالة التطبيق مغلق تماماً
+    // 1. حالة التطبيق مغلق تماماً (Terminated)
+    // إذا فتح المستخدم التطبيق عن طريق الضغط على إشعار
     RemoteMessage? initialMessage = await FirebaseMessaging.instance
         .getInitialMessage();
-    print(
-      "🔎 فحص الإشعارات والتطبيق مغلق: ${initialMessage != null ? 'يوجد إشعار!' : 'لا يوجد'}",
-    );
-
     if (initialMessage != null) {
-      print("🌟 تم التقاط الإشعار من حالة الإغلاق التام (Terminated) 🌟");
-      Future.delayed(const Duration(seconds: 1), () {
-        _handleMessage(initialMessage);
-      });
+      _handleMessage(initialMessage);
     }
 
-    // 2. حالة التطبيق في الخلفية
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print("🔥🔥 تم التقاط الضغطة بنجاح من الخلفية (Background) 🔥🔥");
-      Future.delayed(const Duration(milliseconds: 500), () {
-        _handleMessage(message);
-      });
-    });
+    // 2. حالة التطبيق في الخلفية (Background)
+    // إذا ضغط المستخدم على إشعار والتطبيق يعمل في الخلفية
+    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
 
-    // 3. حالة التطبيق مفتوح
+    // 3. حالة التطبيق مفتوح ومستخدم حالياً (Foreground)
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      // 💡 لأن النظام لا يظهر إشعاراً من نفسه والتطبيق مفتوح،
+      // سنقوم نحن بعرض رسالة (SnackBar أو Dialog) داخل التطبيق للمستخدم
       if (message.notification != null) {
         _showInAppNotification(message);
       }
