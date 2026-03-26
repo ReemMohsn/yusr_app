@@ -8,9 +8,9 @@ class CircularCounterWidget extends StatelessWidget {
   final int currentStroke;
 
   const CircularCounterWidget({
-    super.key, 
-    this.isStarted = false, 
-    this.currentStroke = 0
+    super.key,
+    this.isStarted = false,
+    this.currentStroke = 0,
   });
 
   @override
@@ -47,7 +47,11 @@ class CircularCounterWidget extends StatelessWidget {
             SizedBox(height: 5.h),
             Text(
               locale.autoUpdate,
-              style: TextStyle(color: AppColor.golden, fontSize: 11.sp, fontWeight: FontWeight.w600),
+              style: TextStyle(
+                color: AppColor.golden,
+                fontSize: 11.sp,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ],
         ),

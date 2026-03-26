@@ -22,12 +22,7 @@ class TawafCounterView extends ConsumerWidget {
             children: [
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.fromLTRB(
-                  30.w,
-                  30.h,
-                  30.w,
-                  20.h,
-                ), 
+                padding: EdgeInsets.fromLTRB(30.w, 30.h, 30.w, 20.h),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(30.r),
@@ -37,18 +32,18 @@ class TawafCounterView extends ConsumerWidget {
                 child: TawafSaeiToggle(ref: ref),
               ),
 
-              // العداد الدائري 
+              // العداد الدائري
               SizedBox(height: 20.h),
               const CircularCounterWidget(isStarted: false),
 
-              // بطاقة التفاصيل 
+              // بطاقة التفاصيل
               SizedBox(height: 20.h),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: const CounterDetailsCard(),
               ),
 
-              // النص السفلي 
+              // النص السفلي
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 15.h),
                 child: Text(
@@ -56,7 +51,7 @@ class TawafCounterView extends ConsumerWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: AppColor.lightFontColor,
-                    fontSize: 10.sp, 
+                    fontSize: 10.sp,
                     height: 1.3,
                   ),
                 ),

@@ -37,6 +37,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "announcementTitle": MessageLookupByLibrary.simpleMessage("عنوان الإعلان"),
     "announcements": MessageLookupByLibrary.simpleMessage("الإعلانات"),
     "asr": MessageLookupByLibrary.simpleMessage("العصر"),
+    "autoUpdate": MessageLookupByLibrary.simpleMessage("تحديث تلقائي"),
     "becomeALeader": MessageLookupByLibrary.simpleMessage("كن قائد"),
     "campaignLocation": MessageLookupByLibrary.simpleMessage(
       "موقع استقرار الحملة",
@@ -46,6 +47,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "chooseCoordinates": MessageLookupByLibrary.simpleMessage(
       "اختر إحداثيات الموقع",
     ),
+    "clickToStart": MessageLookupByLibrary.simpleMessage("انقر لبدء العد"),
     "confirmDelete": MessageLookupByLibrary.simpleMessage("تأكيد الحذف"),
     "confirmDeleteAnnouncementMessage": MessageLookupByLibrary.simpleMessage(
       "هل أنت متأكد من حذف هذا الإعلان؟ لا يمكن التراجع عن هذا الإجراء.",
@@ -62,6 +64,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "contentLabel": MessageLookupByLibrary.simpleMessage("المحتوى"),
     "currentLocation": MessageLookupByLibrary.simpleMessage("الموقع الحالي"),
+    "currentStroke": MessageLookupByLibrary.simpleMessage("الشوط الحالي"),
     "delete": MessageLookupByLibrary.simpleMessage("حذف"),
     "deleteSuccess": MessageLookupByLibrary.simpleMessage(
       "تم حذف الموقع بنجاح",
@@ -165,6 +168,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "notificationSearch": MessageLookupByLibrary.simpleMessage(
       "\'ابحث عن إشعارات...",
     ),
+    "ofWord": MessageLookupByLibrary.simpleMessage("من"),
     "otherLocations": MessageLookupByLibrary.simpleMessage(
       "مواقع استقرار أخرى",
     ),
@@ -177,6 +181,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "recoveryLinkNote": MessageLookupByLibrary.simpleMessage(
       "سيتم إرسال رابط الاستعادة إلى بريدك الإلكتروني",
     ),
+    "remaining": MessageLookupByLibrary.simpleMessage("المتبقي"),
+    "reset": MessageLookupByLibrary.simpleMessage("إعادة التعيين"),
     "resetButton": MessageLookupByLibrary.simpleMessage("إعادة التعيين"),
     "retry": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
     "returnMe": MessageLookupByLibrary.simpleMessage("ارجعني"),
@@ -186,6 +192,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "ritualsPreparationDesc": MessageLookupByLibrary.simpleMessage(
       "ابدأ رحلتك إلى الوجهات، وتعلم خطوات الحج والعمرة الصحيحة بتفاصيل مذهبة.",
     ),
+    "saei": MessageLookupByLibrary.simpleMessage("سعي"),
     "saveChanges": MessageLookupByLibrary.simpleMessage("حفظ التعديل"),
     "saveLocation": MessageLookupByLibrary.simpleMessage("حفظ الموقع"),
     "secureArrivalMessage": MessageLookupByLibrary.simpleMessage(
@@ -213,8 +220,15 @@ class MessageLookup extends MessageLookupByLibrary {
       "تعيين كلمة مرور جديدة",
     ),
     "smartMufti": MessageLookupByLibrary.simpleMessage("المفتي الذكي"),
+    "start": MessageLookupByLibrary.simpleMessage("أبدأ"),
+    "strokes": MessageLookupByLibrary.simpleMessage("أشواط"),
     "targetAudience": MessageLookupByLibrary.simpleMessage("الفئة المستهدفة"),
+    "tawaf": MessageLookupByLibrary.simpleMessage("طواف"),
+    "tawafDescription": MessageLookupByLibrary.simpleMessage(
+      "يتم تحديث الأشواط تلقائياً بناءً على موقعك من الحجر الأسود وحركتك حول الكعبة المشرفة.",
+    ),
     "titleLabel": MessageLookupByLibrary.simpleMessage("العنوان"),
+    "total": MessageLookupByLibrary.simpleMessage("الإجمالي"),
     "unexpectedError": MessageLookupByLibrary.simpleMessage(
       "حدث خطأ غير متوقع، يرجى المحاولة مرة أخرى",
     ),
