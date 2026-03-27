@@ -20,13 +20,19 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ar';
 
+  static String m0(text) => "تم النسخ: ${text}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "accountVerification": MessageLookupByLibrary.simpleMessage(
       "التحقق من الحساب",
     ),
+    "active": MessageLookupByLibrary.simpleMessage("نشط"),
     "addAnnouncement": MessageLookupByLibrary.simpleMessage("إضافة إعلان"),
     "addLocation": MessageLookupByLibrary.simpleMessage("إضافة موقع"),
+    "addSaudiNumberAction": MessageLookupByLibrary.simpleMessage(
+      "إضافة رقم سعودي",
+    ),
     "administration": MessageLookupByLibrary.simpleMessage("الإدارة"),
     "announcementContent": MessageLookupByLibrary.simpleMessage(
       "محتوى الإعلان",
@@ -37,6 +43,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "announcementTitle": MessageLookupByLibrary.simpleMessage("عنوان الإعلان"),
     "announcements": MessageLookupByLibrary.simpleMessage("الإعلانات"),
     "asr": MessageLookupByLibrary.simpleMessage("العصر"),
+    "autoUpdate": MessageLookupByLibrary.simpleMessage("تحديث تلقائي"),
     "becomeALeader": MessageLookupByLibrary.simpleMessage("كن قائد"),
     "campaignLocation": MessageLookupByLibrary.simpleMessage(
       "موقع استقرار الحملة",
@@ -46,6 +53,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "chooseCoordinates": MessageLookupByLibrary.simpleMessage(
       "اختر إحداثيات الموقع",
     ),
+    "clickToStart": MessageLookupByLibrary.simpleMessage("انقر لبدء العد"),
     "confirmDelete": MessageLookupByLibrary.simpleMessage("تأكيد الحذف"),
     "confirmDeleteAnnouncementMessage": MessageLookupByLibrary.simpleMessage(
       "هل أنت متأكد من حذف هذا الإعلان؟ لا يمكن التراجع عن هذا الإجراء.",
@@ -60,8 +68,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "connectionFailed": MessageLookupByLibrary.simpleMessage(
       "فشل الاتصال، يرجى التحقق من اتصالك بالإنترنت",
     ),
+    "contactData": MessageLookupByLibrary.simpleMessage("بيانات التواصل"),
     "contentLabel": MessageLookupByLibrary.simpleMessage("المحتوى"),
+    "copiedSuccessfully": m0,
+    "copiedText": MessageLookupByLibrary.simpleMessage("تم النسخ"),
     "currentLocation": MessageLookupByLibrary.simpleMessage("الموقع الحالي"),
+    "currentStroke": MessageLookupByLibrary.simpleMessage("الشوط الحالي"),
+    "dateOfBirth": MessageLookupByLibrary.simpleMessage("تاريخ الميلاد"),
     "delete": MessageLookupByLibrary.simpleMessage("حذف"),
     "deleteSuccess": MessageLookupByLibrary.simpleMessage(
       "تم حذف الموقع بنجاح",
@@ -94,6 +107,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "errorFetchingNotifications": MessageLookupByLibrary.simpleMessage(
       "حدث خطأ أثناء جلب الإشعارات:",
     ),
+    "errorLoadingData": MessageLookupByLibrary.simpleMessage(
+      "حدث خطأ أثناء تحميل البيانات",
+    ),
     "fajr": MessageLookupByLibrary.simpleMessage("الفجر"),
     "fetchDataError": MessageLookupByLibrary.simpleMessage(
       "حدث خطأ في جلب البيانات",
@@ -102,6 +118,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "forgotPasswordDescription": MessageLookupByLibrary.simpleMessage(
       "لا تقلق، يمكنك استعادة حسابك بسهولة. أدخل بريدك الإلكتروني وسنرسل لك رمز التحقق",
     ),
+    "fullName": MessageLookupByLibrary.simpleMessage("الاسم الكامل"),
+    "gender": MessageLookupByLibrary.simpleMessage("الجنس"),
     "groupInfo": MessageLookupByLibrary.simpleMessage("معلومات الجروب"),
     "hajjActionsTitle": MessageLookupByLibrary.simpleMessage("أعمال حج"),
     "hajjIfradData": MessageLookupByLibrary.simpleMessage(
@@ -114,9 +132,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "hajjTamattuData": MessageLookupByLibrary.simpleMessage(
       "[{\"title\":\"ما قبل اليوم الثامن\",\"subtitle\":\"أداء العمرة للتمتع\",\"actions\":[{\"name\":\"آداب وتوجيهات\",\"emoji\":\"📖\",\"sections\":[{\"title\":\"نية التمتع\",\"items\":[\"ينوي الحاج عند الميقات العمرة فقط قائلاً: \\\"لبيك اللهم عمرة متمتعاً بها إلى الحج\\\".\"],\"type\":\"text\"}]},{\"name\":\"الطواف والسعي للعمرة\",\"emoji\":\"🕋\",\"sections\":[{\"title\":\"عمرة كاملة\",\"items\":[\"يصل مكة ويطوف بالبيت ٧ أشواط للعمرة، ويسعى بين الصفا والمروة ٧ أشواط للعمرة.\"],\"type\":\"text\"}]},{\"name\":\"التقصير والتحلل\",\"emoji\":\"✂️\",\"sections\":[{\"title\":\"التحلل من العمرة\",\"items\":[\"يقصر الحاج شعره ليبقى الحلق للحج.\",\"بذلك تتحلل من العمرة تحللاً كاملاً ويلبس ملابسه العادية وتحل له جميع المحظورات حتى يوم ٨ ذي الحجة.\"],\"type\":\"text\"}]}]},{\"title\":\"اليوم الثامن\",\"subtitle\":\"يوم التروية والإحرام بالحج\",\"actions\":[{\"name\":\"الإحرام من مكة\",\"emoji\":\"🤲\",\"sections\":[{\"title\":\"نية الحج\",\"items\":[\"يغتسل المتمتع ويطيب في بدنه ويلبس الإزار والرداء من مكانه بمكة.\",\"يلبي قائلاً: \\\"لبيك اللهم حجاً\\\".\"],\"type\":\"text\"}]},{\"name\":\"المبيت بمنى\",\"emoji\":\"🏕️\",\"sections\":[{\"title\":\"أعمال يوم التروية\",\"items\":[\"يتوجه مع الحجاج إلى منى ليصلي الظهر والعصر والمغرب والعشاء وفجر التاسع قصراً بلا جمع.\"],\"type\":\"text\"}]}]},{\"title\":\"اليوم التاسع\",\"subtitle\":\"يوم عرفة - ٩ ذو الحجة\",\"actions\":[{\"name\":\"الوقوف بعرفة\",\"emoji\":\"⛰️\",\"sections\":[{\"title\":\"الركن الأعظم\",\"items\":[\"يتوجه الحاج من منى إلى عرفة بعد طلوع الشمس بهدوء وتلبية.\",\"يصلي الظهر والعصر ومعهما الإمام بمسجد نمرة أو في مخيمه (جمع تقديم وقصراً بأذان وإقامتين).\",\"يتفرغ الحاج تماماً للدعاء والذكر والتضرع، مستقبلاً القبلة، رافعاً يديه، ملحاً على الله حاجته، حتى غروب الشمس.\",\"لا يجوز الخروج من حدود عرفة قبل غروب الشمس.\"],\"type\":\"text\"},{\"title\":\"خير الدعاء دعاء عرفة\",\"items\":[\"خير ما قلت أنا والنبيون من قبلي: لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير.\"],\"type\":\"dua\"}]},{\"name\":\"المبيت بمزدلفة\",\"emoji\":\"🌙\",\"sections\":[{\"title\":\"النفور إلى مزدلفة\",\"items\":[\"بعد غروب الشمس ينفر الحاج إلى مزدلفة بسكينة ووقار ملبياً.\",\"يصلي في مزدلفة المغرب ثلاثاً والعشاء ركعتين (جمع تأخير) فور وصوله ولو في منتصف الليل.\",\"يبيت في مزدلفة حتى يصلي الفجر، ثم يقف عند المشعر الحرام (أو في مكانه) يدعو الله حتى يُسفر جداً.\",\"رخص النبي صلى الله عليه وسلم للضعفاء والنساء بالدفع من مزدلفة إلى منى بعد منتصف الليل.\"],\"type\":\"text\"}]}]},{\"title\":\"اليوم العاشر\",\"subtitle\":\"يوم النحر - العيد\",\"actions\":[{\"name\":\"رمي جمرة العقبة\",\"emoji\":\"🎯\",\"sections\":[{\"title\":\"الرمي\",\"items\":[\"يصل الحاج إلى منى يوم العيد، فيرمي جمرة العقبة الكبرى بـ ٧ حصيات متعاقبات.\",\"يكبر مع كل حصاة: (الله أكبر).\",\"يُقطع التلبية عند رمي أول حصاة من جمرة العقبة.\",\"يُفضل أن تكون الحصى بحجم حبة الحمص وتُجمع من مزدلفة أو منى.\"],\"type\":\"text\"}]},{\"name\":\"ذبح الهدي\",\"emoji\":\"🐑\",\"sections\":[{\"title\":\"أحكام الهدي\",\"items\":[\"المفرد: ليس عليه هدي.\",\"القارن والمتمتع: يجب عليهما ذبح الهدي (شاة، أو سبع بدنة، أو سبع بقرة).\",\"يجوز توكيل الجهات الرسمية (بنوك التنمية الإسلامية) بذبح الهدي عن الحاج.\"],\"type\":\"text\"}]},{\"name\":\"الحلق أو التقصير\",\"emoji\":\"✂️\",\"sections\":[{\"title\":\"التحلل الأول\",\"items\":[\"يحلق الرجل جميع شعر رأسه أو يقصره، والحلق أفضل لقوله ﷺ: (اللهم ارحم المحلقين).\",\"المرأة تجمع شعرها وتقص من أطرافه قدر أنملة.\",\"بذلك يحل للحاج التحلل الأول (يحل له كل شيء من محظورات الإحرام إلا النساء والجماع).\"],\"type\":\"text\"}]},{\"name\":\"طواف الإفاضة\",\"emoji\":\"🕋\",\"sections\":[{\"title\":\"الركن الثاني\",\"items\":[\"ينزل مكة ليطوف طواف الإفاضة (ركن لا يتم الحج إلا به).\",\"يطوف ٧ أشواط، وليس فيه رمل ولا اضطباع.\",\"بعد الطواف (والسعي لمن عليه سعي) يحل للحاج التحلل الأكبر الشامل لكل شيء بما فيه النساء.\"],\"type\":\"text\"}]},{\"name\":\"السعي لمن لم يسع\",\"emoji\":\"🚶\",\"sections\":[{\"title\":\"سعي الحج\",\"items\":[\"المفرد والقارن: إذا كانا قد سعيا بعد طواف القدوم، فلا سعي عليهما الآن.\",\"المتمتع: يجب عليه السعي (لأن سعيه الأول كان للعمرة وهذا للحج).\"],\"type\":\"text\"}]}]},{\"title\":\"أيام التشريق\",\"subtitle\":\"١١، ١٢، ١٣ ذو الحجة\",\"actions\":[{\"name\":\"رمي الجمرات الثلاث\",\"emoji\":\"🎯\",\"sections\":[{\"title\":\"أحكام الرمي في التشريق\",\"items\":[\"يرمي الحاج الجمرات الثلاث كل يوم بعد زوال الشمس (دخول وقت الظهر).\",\"يبدأ بالجمرة الصغرى (٧ حصيات)، ثم يتقدم ويدعو طويلاً.\",\"ثم الجمرة الوسطى (٧ حصيات)، ثم يتقدم ويدعو طويلاً.\",\"ثم جمرة العقبة الكبرى (٧ حصيات) وينصرف ولا يدعو بعدها.\"],\"type\":\"text\"}]},{\"name\":\"المبيت بمنى\",\"emoji\":\"🏕️\",\"sections\":[{\"title\":\"واجب المبيت\",\"items\":[\"المبيت بمنى ليالي أيام التشريق واجب.\",\"يجب على الحاج أن يقضي معظم الليل في منى.\",\"يجوز للحاج أن يتعجل فيغادر منى يوم ١٢ ذي الحجة شريطة أن ينفر قبل غروب الشمس.\"],\"type\":\"text\"}]}]},{\"title\":\"ختام المناسك\",\"subtitle\":\"المغادرة وطواف الوداع\",\"actions\":[{\"name\":\"طواف الوداع\",\"emoji\":\"🕋\",\"sections\":[{\"title\":\"آخر العهد بالبيت\",\"items\":[\"طواف الوداع واجب على كل حاج أراد مغادرة مكة عائداً لبلده.\",\"يكون طواف الوداع آخر شيء يفعله الحاج قبل سفره مباشرة.\",\"يطوف ٧ أشواط، بدون سعي، ولا رمل.\",\"يسقط طواف الوداع عن المرأة الحائض والنفساء.\"],\"type\":\"text\"}]}]}]",
     ),
+    "healthStatus": MessageLookupByLibrary.simpleMessage("الحالة الصحية"),
     "hijriDate": MessageLookupByLibrary.simpleMessage("التاريخ الهجري"),
     "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
     "importantAnnouncement": MessageLookupByLibrary.simpleMessage("إعلان هام"),
+    "inactive": MessageLookupByLibrary.simpleMessage("غير نشط"),
     "instructions": MessageLookupByLibrary.simpleMessage("أنواع الحج"),
     "instructionsListData": MessageLookupByLibrary.simpleMessage(
       "[{\"title\":\"الإفراد\",\"subtitle\":\"الإحرام بالحج فقط\",\"description\":\"أن يُحرم بالحج وحده من الميقات، ويقول: لبيك حجًا\"},{\"title\":\"القران\",\"subtitle\":\"الإحرام بالحج والعمرة معاً\",\"description\":\"أن يُحرم بالعمرة والحج معًا من الميقات، ويقول: لبيك عمرة وحجًا\"},{\"title\":\"التمتع\",\"subtitle\":\"العمرة ثم الحج في أشهر الحج\",\"description\":\"أن يُحرم بالعمرة في أشهر الحج، ثم يتحلل منها ثم يُحرم بالحج\"}]",
@@ -140,6 +160,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "تم تسجيل الخروج وإبطال التوكن بنجاح",
     ),
     "maghrib": MessageLookupByLibrary.simpleMessage("المغرب"),
+    "male": MessageLookupByLibrary.simpleMessage("ذكر"),
     "manasekCounter": MessageLookupByLibrary.simpleMessage("عداد المناسك"),
     "messageContent": MessageLookupByLibrary.simpleMessage("محتوى الرسالة"),
     "messageFetchingCampLocationmessage": MessageLookupByLibrary.simpleMessage(
@@ -161,10 +182,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "noNotificationsCurrently": MessageLookupByLibrary.simpleMessage(
       "لا توجد إشعارات حالياً",
     ),
+    "notAdded": MessageLookupByLibrary.simpleMessage("لم يتم الإضافة"),
     "notFound": MessageLookupByLibrary.simpleMessage("لا يوجد"),
     "notificationSearch": MessageLookupByLibrary.simpleMessage(
       "\'ابحث عن إشعارات...",
     ),
+    "ofWord": MessageLookupByLibrary.simpleMessage("من"),
     "otherLocations": MessageLookupByLibrary.simpleMessage(
       "مواقع استقرار أخرى",
     ),
@@ -172,12 +195,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "passwordsDoNotMatchError": MessageLookupByLibrary.simpleMessage(
       "كلمتا المرور غير متطابقتين",
     ),
+    "personalData": MessageLookupByLibrary.simpleMessage("البيانات الشخصية"),
     "prayerTimes": MessageLookupByLibrary.simpleMessage("مواقيت الصلاة"),
+    "profileTitle": MessageLookupByLibrary.simpleMessage("الملف الشخصي"),
     "publishAnnouncement": MessageLookupByLibrary.simpleMessage("نشر الإعلان"),
     "recoveryLinkNote": MessageLookupByLibrary.simpleMessage(
       "سيتم إرسال رابط الاستعادة إلى بريدك الإلكتروني",
     ),
+    "relativeContact": MessageLookupByLibrary.simpleMessage("قريب للتواصل"),
+    "remaining": MessageLookupByLibrary.simpleMessage("المتبقي"),
+    "reset": MessageLookupByLibrary.simpleMessage("إعادة التعيين"),
     "resetButton": MessageLookupByLibrary.simpleMessage("إعادة التعيين"),
+    "residentialLocation": MessageLookupByLibrary.simpleMessage("موقع الإقامة"),
     "retry": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
     "returnMe": MessageLookupByLibrary.simpleMessage("ارجعني"),
     "ritualsPreparation": MessageLookupByLibrary.simpleMessage(
@@ -185,6 +214,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "ritualsPreparationDesc": MessageLookupByLibrary.simpleMessage(
       "ابدأ رحلتك إلى الوجهات، وتعلم خطوات الحج والعمرة الصحيحة بتفاصيل مذهبة.",
+    ),
+    "saei": MessageLookupByLibrary.simpleMessage("سعي"),
+    "saudiMobileNumber": MessageLookupByLibrary.simpleMessage(
+      "رقم الجوال السعودي",
     ),
     "saveChanges": MessageLookupByLibrary.simpleMessage("حفظ التعديل"),
     "saveLocation": MessageLookupByLibrary.simpleMessage("حفظ الموقع"),
@@ -212,9 +245,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "setNewPassword": MessageLookupByLibrary.simpleMessage(
       "تعيين كلمة مرور جديدة",
     ),
+    "sharing": MessageLookupByLibrary.simpleMessage("جاري المشاركة..."),
     "smartMufti": MessageLookupByLibrary.simpleMessage("المفتي الذكي"),
+    "start": MessageLookupByLibrary.simpleMessage("أبدأ"),
+    "strokes": MessageLookupByLibrary.simpleMessage("أشواط"),
     "targetAudience": MessageLookupByLibrary.simpleMessage("الفئة المستهدفة"),
+    "tawaf": MessageLookupByLibrary.simpleMessage("طواف"),
+    "tawafDescription": MessageLookupByLibrary.simpleMessage(
+      "يتم تحديث الأشواط تلقائياً بناءً على موقعك من الحجر الأسود وحركتك حول الكعبة المشرفة.",
+    ),
     "titleLabel": MessageLookupByLibrary.simpleMessage("العنوان"),
+    "total": MessageLookupByLibrary.simpleMessage("الإجمالي"),
     "unexpectedError": MessageLookupByLibrary.simpleMessage(
       "حدث خطأ غير متوقع، يرجى المحاولة مرة أخرى",
     ),
@@ -222,11 +263,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "updateSuccess": MessageLookupByLibrary.simpleMessage(
       "تم تحديث بيانات الموقع بنجاح",
     ),
+    "userRole": MessageLookupByLibrary.simpleMessage("مستخدم"),
     "verificationCodeLabel": MessageLookupByLibrary.simpleMessage("رمز التحقق"),
     "verifyCodeButton": MessageLookupByLibrary.simpleMessage("التحقق من الرمز"),
     "viewDetails": MessageLookupByLibrary.simpleMessage("عرض التفاصيل"),
+    "whatsappNumber": MessageLookupByLibrary.simpleMessage("رقم الواتساب"),
     "writeAnnouncementContentHere": MessageLookupByLibrary.simpleMessage(
       "اكتب محتوى الإعلان هنا...",
+    ),
+    "yemeniMobileNumber": MessageLookupByLibrary.simpleMessage(
+      "رقم الجوال اليمني",
     ),
     "youAreHere": MessageLookupByLibrary.simpleMessage("أنت هنا"),
   };

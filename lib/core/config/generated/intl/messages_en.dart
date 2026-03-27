@@ -20,13 +20,19 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static String m0(text) => "Copied successfully: ${text}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "accountVerification": MessageLookupByLibrary.simpleMessage(
       "Account Verification",
     ),
+    "active": MessageLookupByLibrary.simpleMessage("Active"),
     "addAnnouncement": MessageLookupByLibrary.simpleMessage("Add Announcement"),
     "addLocation": MessageLookupByLibrary.simpleMessage("Add Location"),
+    "addSaudiNumberAction": MessageLookupByLibrary.simpleMessage(
+      "Add Saudi Number",
+    ),
     "administration": MessageLookupByLibrary.simpleMessage("Administration"),
     "announcementContent": MessageLookupByLibrary.simpleMessage(
       "Announcement Content",
@@ -43,6 +49,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "The Smart Pilgrim Companion",
     ),
     "asr": MessageLookupByLibrary.simpleMessage("Asr"),
+    "autoUpdate": MessageLookupByLibrary.simpleMessage("Auto Update"),
     "becomeALeader": MessageLookupByLibrary.simpleMessage("Become a Leader"),
     "campaignLocation": MessageLookupByLibrary.simpleMessage(
       "Campaign Location",
@@ -51,6 +58,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "changeLocation": MessageLookupByLibrary.simpleMessage("Change Location"),
     "chooseCoordinates": MessageLookupByLibrary.simpleMessage(
       "Choose Location Coordinates",
+    ),
+    "clickToStart": MessageLookupByLibrary.simpleMessage(
+      "Click to start counting",
     ),
     "confirmDelete": MessageLookupByLibrary.simpleMessage(
       "Are you sure you want to delete this item permanently?",
@@ -68,8 +78,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "connectionFailed": MessageLookupByLibrary.simpleMessage(
       "Connection failed, please check your internet connection.",
     ),
+    "contactData": MessageLookupByLibrary.simpleMessage("Contact Data"),
     "contentLabel": MessageLookupByLibrary.simpleMessage("Content"),
+    "copiedSuccessfully": m0,
+    "copiedText": MessageLookupByLibrary.simpleMessage("Copied"),
     "currentLocation": MessageLookupByLibrary.simpleMessage("Current Location"),
+    "currentStroke": MessageLookupByLibrary.simpleMessage("Current Stroke"),
+    "dateOfBirth": MessageLookupByLibrary.simpleMessage("Date of Birth"),
     "delete": MessageLookupByLibrary.simpleMessage("Delete"),
     "deleteSuccess": MessageLookupByLibrary.simpleMessage(
       "Location deleted successfully",
@@ -102,6 +117,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "errorFetchingNotifications": MessageLookupByLibrary.simpleMessage(
       "An error occurred while fetching notifications:",
     ),
+    "errorLoadingData": MessageLookupByLibrary.simpleMessage(
+      "An error occurred while loading data",
+    ),
     "fajr": MessageLookupByLibrary.simpleMessage("Fajr"),
     "fetchDataError": MessageLookupByLibrary.simpleMessage(
       "Error fetching data",
@@ -113,6 +131,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "forgotPasswordPrompt": MessageLookupByLibrary.simpleMessage(
       "Forgot password?",
     ),
+    "fullName": MessageLookupByLibrary.simpleMessage("Full Name"),
+    "gender": MessageLookupByLibrary.simpleMessage("Gender"),
     "groupInfo": MessageLookupByLibrary.simpleMessage("Group Information"),
     "hajjActionsTitle": MessageLookupByLibrary.simpleMessage("Hajj Rituals of"),
     "hajjIfradData": MessageLookupByLibrary.simpleMessage(
@@ -125,11 +145,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "hajjTamattuData": MessageLookupByLibrary.simpleMessage(
       "[{\"title\":\"Before the 8th of Thul-Hijjah\",\"subtitle\":\"Performing Umrah for Tamattu\",\"actions\":[{\"name\":\"Etiquette and Guidelines\",\"emoji\":\"📖\",\"sections\":[{\"title\":\"Intention for Tamattu\",\"items\":[\"At the Miqat, the pilgrim intends only Umrah.\"],\"type\":\"text\"}]}]}]",
     ),
+    "healthStatus": MessageLookupByLibrary.simpleMessage("Health Status"),
     "hijriDate": MessageLookupByLibrary.simpleMessage("Hijri Date"),
     "home": MessageLookupByLibrary.simpleMessage("Home"),
     "importantAnnouncement": MessageLookupByLibrary.simpleMessage(
       "Important Announcement",
     ),
+    "inactive": MessageLookupByLibrary.simpleMessage("Inactive"),
     "instructions": MessageLookupByLibrary.simpleMessage("Hajj Types"),
     "instructionsListData": MessageLookupByLibrary.simpleMessage(
       "[{\"title\":\"Ifrad\",\"subtitle\":\"Ihram for Hajj only\",\"description\":\"Entering Ihram for Hajj alone from the Miqat, saying: Labbayk Hajjan\"},{\"title\":\"Qiran\",\"subtitle\":\"Ihram for Hajj and Umrah together\",\"description\":\"Entering Ihram for both Umrah and Hajj together, saying: Labbayk Umratan wa Hajjan\"},{\"title\":\"Tamattu\",\"subtitle\":\"Umrah then Hajj in the months of Hajj\",\"description\":\"Entering Ihram for Umrah, exiting it fully, then entering Ihram again for Hajj\"}]",
@@ -155,6 +177,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Logged out and token revoked successfully",
     ),
     "maghrib": MessageLookupByLibrary.simpleMessage("Maghrib"),
+    "male": MessageLookupByLibrary.simpleMessage("Male"),
     "manasekCounter": MessageLookupByLibrary.simpleMessage("Manasek Counter"),
     "messageContent": MessageLookupByLibrary.simpleMessage("Message Content"),
     "messageFetchingCampLocationmessage": MessageLookupByLibrary.simpleMessage(
@@ -174,24 +197,34 @@ class MessageLookup extends MessageLookupByLibrary {
     "noNotificationsCurrently": MessageLookupByLibrary.simpleMessage(
       "There are currently no notifications",
     ),
+    "notAdded": MessageLookupByLibrary.simpleMessage("Not Added"),
     "notFound": MessageLookupByLibrary.simpleMessage("Not found"),
     "notificationSearch": MessageLookupByLibrary.simpleMessage(
       "Search for notifications...",
     ),
     "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
+    "ofWord": MessageLookupByLibrary.simpleMessage("of"),
     "otherLocations": MessageLookupByLibrary.simpleMessage("Other Locations"),
     "password": MessageLookupByLibrary.simpleMessage("Password"),
     "passwordsDoNotMatchError": MessageLookupByLibrary.simpleMessage(
       "Passwords do not match",
     ),
+    "personalData": MessageLookupByLibrary.simpleMessage("Personal Data"),
     "prayerTimes": MessageLookupByLibrary.simpleMessage("Prayer Times"),
+    "profileTitle": MessageLookupByLibrary.simpleMessage("Profile"),
     "publishAnnouncement": MessageLookupByLibrary.simpleMessage(
       "Publish Announcement",
     ),
     "recoveryLinkNote": MessageLookupByLibrary.simpleMessage(
       "A recovery link will be sent to your email.",
     ),
+    "relativeContact": MessageLookupByLibrary.simpleMessage("Relative Contact"),
+    "remaining": MessageLookupByLibrary.simpleMessage("Remaining"),
+    "reset": MessageLookupByLibrary.simpleMessage("Reset"),
     "resetButton": MessageLookupByLibrary.simpleMessage("Reset"),
+    "residentialLocation": MessageLookupByLibrary.simpleMessage(
+      "Residential Location",
+    ),
     "retry": MessageLookupByLibrary.simpleMessage("Retry"),
     "returnMe": MessageLookupByLibrary.simpleMessage("Take me back"),
     "ritualsPreparation": MessageLookupByLibrary.simpleMessage(
@@ -199,6 +232,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "ritualsPreparationDesc": MessageLookupByLibrary.simpleMessage(
       "Start your journey to the destinations, and learn the correct steps of Hajj and Umrah with amazing details.",
+    ),
+    "saei": MessageLookupByLibrary.simpleMessage("Saei"),
+    "saudiMobileNumber": MessageLookupByLibrary.simpleMessage(
+      "Saudi Mobile Number",
     ),
     "saveChanges": MessageLookupByLibrary.simpleMessage("Save Changes"),
     "saveLocation": MessageLookupByLibrary.simpleMessage("Save Location"),
@@ -226,9 +263,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "setNewPassword": MessageLookupByLibrary.simpleMessage(
       "Set a new password",
     ),
+    "sharing": MessageLookupByLibrary.simpleMessage("Sharing..."),
     "smartMufti": MessageLookupByLibrary.simpleMessage("Smart Mufti"),
+    "start": MessageLookupByLibrary.simpleMessage("Start"),
+    "strokes": MessageLookupByLibrary.simpleMessage("Strokes"),
     "targetAudience": MessageLookupByLibrary.simpleMessage("Target Audience"),
+    "tawaf": MessageLookupByLibrary.simpleMessage("Tawaf"),
+    "tawafDescription": MessageLookupByLibrary.simpleMessage(
+      "Strokes are updated automatically based on your location from the Black Stone and your movement around the Kaaba.",
+    ),
     "titleLabel": MessageLookupByLibrary.simpleMessage("Title"),
+    "total": MessageLookupByLibrary.simpleMessage("Total"),
     "unexpectedError": MessageLookupByLibrary.simpleMessage(
       "An unexpected error occurred, please try again.",
     ),
@@ -238,13 +283,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "updateSuccess": MessageLookupByLibrary.simpleMessage(
       "Location updated successfully",
     ),
+    "userRole": MessageLookupByLibrary.simpleMessage("User"),
     "verificationCodeLabel": MessageLookupByLibrary.simpleMessage(
       "Verification Code",
     ),
     "verifyCodeButton": MessageLookupByLibrary.simpleMessage("Verify Code"),
     "viewDetails": MessageLookupByLibrary.simpleMessage("View Details"),
+    "whatsappNumber": MessageLookupByLibrary.simpleMessage("WhatsApp Number"),
     "writeAnnouncementContentHere": MessageLookupByLibrary.simpleMessage(
       "Write announcement content here...",
+    ),
+    "yemeniMobileNumber": MessageLookupByLibrary.simpleMessage(
+      "Yemeni Mobile Number",
     ),
     "youAreHere": MessageLookupByLibrary.simpleMessage("You are here"),
   };

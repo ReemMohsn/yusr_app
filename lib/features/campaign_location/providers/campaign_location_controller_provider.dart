@@ -1,7 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:yusr/core/services/API/ApiResponse.dart';
 import 'package:yusr/features/campaign_location/data/models/campaign_locations_view_model.dart';
-import '../data/models/campaign_location_model.dart';
 import 'campaign_location_repository_provider.dart';
 import 'get_locations_provider.dart'; // تأكدي أن هذا هو اسم الملف الذي يحتوي على دالة جلب البيانات
 
@@ -73,6 +72,7 @@ Future<void> removeLocation(int id) async {
         state = await AsyncValue.guard(() async {
           await ref.read(campaignLocationRepositoryProvider).setActiveLocation(id);
           ref.invalidate(getCampaignLocationsProvider);
+          return null;
         });
       }
     }

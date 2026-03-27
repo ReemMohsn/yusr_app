@@ -974,6 +974,61 @@ class AppLocalizations {
     );
   }
 
+  /// `Hajj Types`
+  String get instructions {
+    return Intl.message('Hajj Types', name: 'instructions', desc: '', args: []);
+  }
+
+  /// `Hajj Rituals of`
+  String get hajjActionsTitle {
+    return Intl.message(
+      'Hajj Rituals of',
+      name: 'hajjActionsTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Arrival and Makkah Activities","actions":[{"name":"Etiquette and Guidelines","emoji":"📖","sections":[{"title":"Intention and Covenant","items":["Anyone intending Hajj or Umrah should consciously seek closeness to Allah Almighty and purify their intention for this great obligation.","Hajj is an opportunity for sincere repentance, renewing one's covenant with Allah, and abandoning all sins.","Ensure all your wealth funding the Hajj is pure and Halal."],"type":"text"}]}]}]`
+  String get hajjIfradData {
+    return Intl.message(
+      '[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Arrival and Makkah Activities","actions":[{"name":"Etiquette and Guidelines","emoji":"📖","sections":[{"title":"Intention and Covenant","items":["Anyone intending Hajj or Umrah should consciously seek closeness to Allah Almighty and purify their intention for this great obligation.","Hajj is an opportunity for sincere repentance, renewing one\'s covenant with Allah, and abandoning all sins.","Ensure all your wealth funding the Hajj is pure and Halal."],"type":"text"}]}]}]',
+      name: 'hajjIfradData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Arrival for the Qarin","actions":[{"name":"Intention for Qiran","emoji":"🤲","sections":[{"title":"Combining the Intention","items":["He makes the intention saying: Labbayk Allahumma Umratan wa Hajjan.","The Qarin does not exit Ihram like the Mufrid."],"type":"text"}]}]}]`
+  String get hajjQiranData {
+    return Intl.message(
+      '[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Arrival for the Qarin","actions":[{"name":"Intention for Qiran","emoji":"🤲","sections":[{"title":"Combining the Intention","items":["He makes the intention saying: Labbayk Allahumma Umratan wa Hajjan.","The Qarin does not exit Ihram like the Mufrid."],"type":"text"}]}]}]',
+      name: 'hajjQiranData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Performing Umrah for Tamattu","actions":[{"name":"Etiquette and Guidelines","emoji":"📖","sections":[{"title":"Intention for Tamattu","items":["At the Miqat, the pilgrim intends only Umrah."],"type":"text"}]}]}]`
+  String get hajjTamattuData {
+    return Intl.message(
+      '[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Performing Umrah for Tamattu","actions":[{"name":"Etiquette and Guidelines","emoji":"📖","sections":[{"title":"Intention for Tamattu","items":["At the Miqat, the pilgrim intends only Umrah."],"type":"text"}]}]}]',
+      name: 'hajjTamattuData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `[{"title":"Ifrad","subtitle":"Ihram for Hajj only","description":"Entering Ihram for Hajj alone from the Miqat, saying: Labbayk Hajjan"},{"title":"Qiran","subtitle":"Ihram for Hajj and Umrah together","description":"Entering Ihram for both Umrah and Hajj together, saying: Labbayk Umratan wa Hajjan"},{"title":"Tamattu","subtitle":"Umrah then Hajj in the months of Hajj","description":"Entering Ihram for Umrah, exiting it fully, then entering Ihram again for Hajj"}]`
+  String get instructionsListData {
+    return Intl.message(
+      '[{"title":"Ifrad","subtitle":"Ihram for Hajj only","description":"Entering Ihram for Hajj alone from the Miqat, saying: Labbayk Hajjan"},{"title":"Qiran","subtitle":"Ihram for Hajj and Umrah together","description":"Entering Ihram for both Umrah and Hajj together, saying: Labbayk Umratan wa Hajjan"},{"title":"Tamattu","subtitle":"Umrah then Hajj in the months of Hajj","description":"Entering Ihram for Umrah, exiting it fully, then entering Ihram again for Hajj"}]',
+      name: 'instructionsListData',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Tawaf`
   String get tawaf {
     return Intl.message('Tawaf', name: 'tawaf', desc: '', args: []);
@@ -994,16 +1049,6 @@ class AppLocalizations {
     return Intl.message(
       'Click to start counting',
       name: 'clickToStart',
-  /// `Hajj Types`
-  String get instructions {
-    return Intl.message('Hajj Types', name: 'instructions', desc: '', args: []);
-  }
-
-  /// `Hajj Rituals of`
-  String get hajjActionsTitle {
-    return Intl.message(
-      'Hajj Rituals of',
-      name: 'hajjActionsTitle',
       desc: '',
       args: [],
     );
@@ -1014,11 +1059,6 @@ class AppLocalizations {
     return Intl.message(
       'Current Stroke',
       name: 'currentStroke',
-  /// `[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Arrival and Makkah Activities","actions":[{"name":"Etiquette and Guidelines","emoji":"📖","sections":[{"title":"Intention and Covenant","items":["Anyone intending Hajj or Umrah should consciously seek closeness to Allah Almighty and purify their intention for this great obligation.","Hajj is an opportunity for sincere repentance, renewing one's covenant with Allah, and abandoning all sins.","Ensure all your wealth funding the Hajj is pure and Halal."],"type":"text"}]}]}]`
-  String get hajjIfradData {
-    return Intl.message(
-      '[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Arrival and Makkah Activities","actions":[{"name":"Etiquette and Guidelines","emoji":"📖","sections":[{"title":"Intention and Covenant","items":["Anyone intending Hajj or Umrah should consciously seek closeness to Allah Almighty and purify their intention for this great obligation.","Hajj is an opportunity for sincere repentance, renewing one\'s covenant with Allah, and abandoning all sins.","Ensure all your wealth funding the Hajj is pure and Halal."],"type":"text"}]}]}]',
-      name: 'hajjIfradData',
       desc: '',
       args: [],
     );
@@ -1059,34 +1099,179 @@ class AppLocalizations {
     return Intl.message(
       'Strokes are updated automatically based on your location from the Black Stone and your movement around the Kaaba.',
       name: 'tawafDescription',
-  /// `[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Arrival for the Qarin","actions":[{"name":"Intention for Qiran","emoji":"🤲","sections":[{"title":"Combining the Intention","items":["He makes the intention saying: Labbayk Allahumma Umratan wa Hajjan.","The Qarin does not exit Ihram like the Mufrid."],"type":"text"}]}]}]`
-  String get hajjQiranData {
-    return Intl.message(
-      '[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Arrival for the Qarin","actions":[{"name":"Intention for Qiran","emoji":"🤲","sections":[{"title":"Combining the Intention","items":["He makes the intention saying: Labbayk Allahumma Umratan wa Hajjan.","The Qarin does not exit Ihram like the Mufrid."],"type":"text"}]}]}]',
-      name: 'hajjQiranData',
       desc: '',
       args: [],
     );
   }
 
-  /// `[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Performing Umrah for Tamattu","actions":[{"name":"Etiquette and Guidelines","emoji":"📖","sections":[{"title":"Intention for Tamattu","items":["At the Miqat, the pilgrim intends only Umrah."],"type":"text"}]}]}]`
-  String get hajjTamattuData {
+  /// `Profile`
+  String get profileTitle {
+    return Intl.message('Profile', name: 'profileTitle', desc: '', args: []);
+  }
+
+  /// `An error occurred while loading data`
+  String get errorLoadingData {
     return Intl.message(
-      '[{"title":"Before the 8th of Thul-Hijjah","subtitle":"Performing Umrah for Tamattu","actions":[{"name":"Etiquette and Guidelines","emoji":"📖","sections":[{"title":"Intention for Tamattu","items":["At the Miqat, the pilgrim intends only Umrah."],"type":"text"}]}]}]',
-      name: 'hajjTamattuData',
+      'An error occurred while loading data',
+      name: 'errorLoadingData',
       desc: '',
       args: [],
     );
   }
 
-  /// `[{"title":"Ifrad","subtitle":"Ihram for Hajj only","description":"Entering Ihram for Hajj alone from the Miqat, saying: Labbayk Hajjan"},{"title":"Qiran","subtitle":"Ihram for Hajj and Umrah together","description":"Entering Ihram for both Umrah and Hajj together, saying: Labbayk Umratan wa Hajjan"},{"title":"Tamattu","subtitle":"Umrah then Hajj in the months of Hajj","description":"Entering Ihram for Umrah, exiting it fully, then entering Ihram again for Hajj"}]`
-  String get instructionsListData {
+  /// `Personal Data`
+  String get personalData {
     return Intl.message(
-      '[{"title":"Ifrad","subtitle":"Ihram for Hajj only","description":"Entering Ihram for Hajj alone from the Miqat, saying: Labbayk Hajjan"},{"title":"Qiran","subtitle":"Ihram for Hajj and Umrah together","description":"Entering Ihram for both Umrah and Hajj together, saying: Labbayk Umratan wa Hajjan"},{"title":"Tamattu","subtitle":"Umrah then Hajj in the months of Hajj","description":"Entering Ihram for Umrah, exiting it fully, then entering Ihram again for Hajj"}]',
-      name: 'instructionsListData',
+      'Personal Data',
+      name: 'personalData',
       desc: '',
       args: [],
     );
+  }
+
+  /// `Full Name`
+  String get fullName {
+    return Intl.message('Full Name', name: 'fullName', desc: '', args: []);
+  }
+
+  /// `Gender`
+  String get gender {
+    return Intl.message('Gender', name: 'gender', desc: '', args: []);
+  }
+
+  /// `Male`
+  String get male {
+    return Intl.message('Male', name: 'male', desc: '', args: []);
+  }
+
+  /// `Date of Birth`
+  String get dateOfBirth {
+    return Intl.message(
+      'Date of Birth',
+      name: 'dateOfBirth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Health Status`
+  String get healthStatus {
+    return Intl.message(
+      'Health Status',
+      name: 'healthStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Active`
+  String get active {
+    return Intl.message('Active', name: 'active', desc: '', args: []);
+  }
+
+  /// `Inactive`
+  String get inactive {
+    return Intl.message('Inactive', name: 'inactive', desc: '', args: []);
+  }
+
+  /// `Residential Location`
+  String get residentialLocation {
+    return Intl.message(
+      'Residential Location',
+      name: 'residentialLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact Data`
+  String get contactData {
+    return Intl.message(
+      'Contact Data',
+      name: 'contactData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Saudi Mobile Number`
+  String get saudiMobileNumber {
+    return Intl.message(
+      'Saudi Mobile Number',
+      name: 'saudiMobileNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yemeni Mobile Number`
+  String get yemeniMobileNumber {
+    return Intl.message(
+      'Yemeni Mobile Number',
+      name: 'yemeniMobileNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `WhatsApp Number`
+  String get whatsappNumber {
+    return Intl.message(
+      'WhatsApp Number',
+      name: 'whatsappNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Relative Contact`
+  String get relativeContact {
+    return Intl.message(
+      'Relative Contact',
+      name: 'relativeContact',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Copied successfully: {text}`
+  String copiedSuccessfully(String text) {
+    return Intl.message(
+      'Copied successfully: $text',
+      name: 'copiedSuccessfully',
+      desc: '',
+      args: [text],
+    );
+  }
+
+  /// `Sharing...`
+  String get sharing {
+    return Intl.message('Sharing...', name: 'sharing', desc: '', args: []);
+  }
+
+  /// `User`
+  String get userRole {
+    return Intl.message('User', name: 'userRole', desc: '', args: []);
+  }
+
+  /// `Not Added`
+  String get notAdded {
+    return Intl.message('Not Added', name: 'notAdded', desc: '', args: []);
+  }
+
+  /// `Add Saudi Number`
+  String get addSaudiNumberAction {
+    return Intl.message(
+      'Add Saudi Number',
+      name: 'addSaudiNumberAction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Copied`
+  String get copiedText {
+    return Intl.message('Copied', name: 'copiedText', desc: '', args: []);
   }
 }
 

@@ -59,7 +59,7 @@ class MapLogicController extends _$MapLogicController {
       _gpsSub = service.positionStream.listen((position) {
         if (!ref.mounted) return;
 
-        if (state.isTracking && state.targetLocation != null) {
+        if (state.isTracking) {
           final userPos = LatLng(position.latitude, position.longitude);
           _updateProgress(userPos);
         }
@@ -70,7 +70,7 @@ class MapLogicController extends _$MapLogicController {
   void _updateProgress(LatLng userPos) {
     final dist = Geolocator.distanceBetween(
       userPos.latitude, userPos.longitude,
-      state.targetLocation!.latitude, state.targetLocation!.longitude,
+      state.targetLocation.latitude, state.targetLocation.longitude,
     );
 
     // تحديث الموقع الحالي والمسافة المتبقية بالكيلومتر

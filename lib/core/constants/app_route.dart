@@ -26,6 +26,7 @@ import 'package:yusr/features/instructions/presentation/views/instructions_view.
 
 import 'package:yusr/features/return_to_compaign_location/presentation/views/return_me_map_view.dart';
 import 'package:yusr/features/return_to_compaign_location/presentation/views/return_me_view.dart';
+import 'package:yusr/features/profile/presentation/views/profile_view.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -56,6 +57,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const OtpVerificationView());
       case AppRoute.resetPasswordView:
         return MaterialPageRoute(builder: (_) => const ResetPasswordView());
+      case AppRoute.profileView:
+        return MaterialPageRoute(builder: (_) => const ProfileView());
       case AppRoute.announcementsView:
         return MaterialPageRoute(builder: (_) => const AnnouncementsView());
       case AppRoute.addAnnouncementView:
@@ -129,4 +132,5 @@ class AppRoute {
   static const String instructionsView = '/InstructionsView';
   static const String hajjDetailsView = '/HajjDetailsView';
   static const String actionDetailsView = '/ActionDetailsView';
+  static const String profileView = '/ProfileView';
 }

@@ -9,7 +9,6 @@ import 'package:yusr/features/home/presentation/widgets/build_drawer_header.dart
 import 'package:yusr/features/home/presentation/widgets/build_logout_button.dart';
 import 'package:yusr/features/home/presentation/widgets/build_menu_item.dart';
 import 'package:yusr/features/home/providers/user_provider.dart';
-import 'package:yusr/features/auth/providers/logout_controller_provider.dart';
 
 class CustomDrawer extends ConsumerWidget {
   const CustomDrawer({super.key});

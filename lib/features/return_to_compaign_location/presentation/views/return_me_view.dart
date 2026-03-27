@@ -23,8 +23,8 @@ class ReturnMeView extends ConsumerWidget {
               title: locale.returnMe,
               onTap: () async {
                 final response = await ref.read(fetchCampLocationControllerProvider.future);
-                if (response?.data != null && context.mounted) {
-                  Navigator.of(context).pushNamed(AppRoute.returnMeMapView, arguments: response!.data);
+                if (response.data != null && context.mounted) {
+                  Navigator.of(context).pushNamed(AppRoute.returnMeMapView, arguments: response.data);
                 }
               },
             ),

@@ -8,6 +8,12 @@ class ApiLink {
   static const String sendCode = '$server/Auth/SendCode';
   static const String resetPassword = '$server/Auth/ResetPassword';
   static const String logout = '$server/Auth/Logout';
+
+  // 3. Profile
+  static const String getProfile = '$server/Profile/GetUserDetails';
+  static const String updateProfile = '$server/Profile/UpdateUserProfile';
+
+  // 4. Announcements & Notifications
   static const String syncData = '$server/Announcements/SyncData';
   static const String getNotifications =
       '$server/Announcements/GetNotifications';
