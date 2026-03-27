@@ -12,21 +12,8 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // 1. تفعيل اللغة العربية لكل التطبيق
   HijriCalendar.setLocal('ar');
 
-  // 2. ضبط التاريخ (اختياري)
-  // إذا اكتشفت أن التاريخ في التطبيق متأخر بيوم عن الواقع، اجعلها 1
-  // إذا كان صحيحاً اتركها 0
-  // HijriCalendar.hAdjustment = 0;
-
-  // if (!SharedPreferencesService.isOnboardingCompleted) {
-  //   initialRoute = AppRoute.onBoarding;
-  // } else if (!SharedPreferencesService.isLoggedIn) {
-  //   initialRoute = AppRoute.login;
-  // } else {
-  //   initialRoute = AppRoute.mainHome;
-  // }
   String initialRoute = AppRoute.mainHomeView;
 
   // 3. تهيئة فايربيس باستخدام الملف المولد
@@ -42,10 +29,6 @@ void main() async {
 
   // 2. تفعيل خدمة التقاط الضغطات والإشعارات التي برمجناها
   await PushNotificationService.init();
-  // await Firebase.initializeApp();
-
-  // طلب صلاحية الإشعارات
-  // await FirebaseMessaging.instance.requestPermission();
 
   runApp(
     ProviderScope(

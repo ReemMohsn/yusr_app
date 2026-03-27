@@ -61,13 +61,14 @@ class CounterDetailsCard extends StatelessWidget {
             onPressed: () {
               // منطق إعادة التعيين هنا
             },
-            icon: Icon(Icons.refresh, color: AppColor.lightFontColor, size: 18.w),
+            icon: Icon(
+              Icons.refresh,
+              color: AppColor.lightFontColor,
+              size: 18.w,
+            ),
             label: Text(
-              locale.reset, 
-              style: TextStyle(
-                color: AppColor.lightFontColor,
-                fontSize: 14.sp,
-              ),
+              locale.reset,
+              style: TextStyle(color: AppColor.lightFontColor, fontSize: 14.sp),
             ),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColor.inputFieldColor,

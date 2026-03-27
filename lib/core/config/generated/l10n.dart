@@ -674,11 +674,6 @@ class AppLocalizations {
     );
   }
 
-  /// `Delete`
-  String get delete {
-    return Intl.message('Delete', name: 'delete', desc: '', args: []);
-  }
-
   /// `Enter location name...`
   String get enterLocationName {
     return Intl.message(
@@ -929,11 +924,6 @@ class AppLocalizations {
     return Intl.message('km', name: 'km', desc: '', args: []);
   }
 
-  /// `You are here`
-  String get youAreHere {
-    return Intl.message('You are here', name: 'youAreHere', desc: '', args: []);
-  }
-
   /// `Important Announcement`
   String get importantAnnouncement {
     return Intl.message(
@@ -972,6 +962,81 @@ class AppLocalizations {
       desc: '',
       args: [],
     );
+  }
+
+  /// `Start Session`
+  String get startSession {
+    return Intl.message(
+      'Start Session',
+      name: 'startSession',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Show Map`
+  String get showMap {
+    return Intl.message('Show Map', name: 'showMap', desc: '', args: []);
+  }
+
+  /// `An error occurred: `
+  String get errorOccurred {
+    return Intl.message(
+      'An error occurred: ',
+      name: 'errorOccurred',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Accepted`
+  String get accepted {
+    return Intl.message('Accepted', name: 'accepted', desc: '', args: []);
+  }
+
+  /// `Pending`
+  String get pending {
+    return Intl.message('Pending', name: 'pending', desc: '', args: []);
+  }
+
+  /// `Rejected`
+  String get rejected {
+    return Intl.message('Rejected', name: 'rejected', desc: '', args: []);
+  }
+
+  /// `Not Active`
+  String get notActive {
+    return Intl.message('Not Active', name: 'notActive', desc: '', args: []);
+  }
+
+  /// `Pilgrims List`
+  String get pilgrimsListTitle {
+    return Intl.message(
+      'Pilgrims List',
+      name: 'pilgrimsListTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No pilgrims associated with this session.`
+  String get noPilgrimsInSession {
+    return Intl.message(
+      'No pilgrims associated with this session.',
+      name: 'noPilgrimsInSession',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You are here`
+  String get youAreHere {
+    return Intl.message('You are here', name: 'youAreHere', desc: '', args: []);
+  }
+
+  /// `Delete`
+  String get delete {
+    return Intl.message('Delete', name: 'delete', desc: '', args: []);
   }
 
   /// `Hajj Types`

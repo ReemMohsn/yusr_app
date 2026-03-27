@@ -36,7 +36,7 @@ class _ReturnMeMapViewState extends ConsumerState<ReturnMeMapView> {
     return Scaffold(
       body: Stack(
         children: [
-          // الخريطة 
+          // الخريطة
           RouteMapWidget(
             campaignLocation: mapState.targetLocation,
             userLocation: mapState.userLocation,
@@ -44,13 +44,13 @@ class _ReturnMeMapViewState extends ConsumerState<ReturnMeMapView> {
             mapController: _mapController,
           ),
 
-          // مؤشر التحميل 
+          // مؤشر التحميل
           LoadingOverlay(
             isLoading:
                 campLocationAsync.isLoading,
           ),
 
-          // زر التتبع 
+          // زر التتبع
           TrackingFAB(
             isTracking: mapState.isTracking,
             onPressed: () =>

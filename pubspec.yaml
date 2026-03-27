@@ -2,7 +2,7 @@ name: yusr
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -29,7 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   flutter:
-    sdk: flutter    
+    sdk: flutter
 
   # المكتبات المعلقة (إبقاء للذكرى أو الرجوع إليها)
   # dio: ^5.8.0+1
@@ -53,8 +53,6 @@ dependencies:
   device_preview: any
   flutter_riverpod: any
   riverpod_annotation: any
-  # build_runner: any
-  # riverpod_generator: any
   flutter_screenutil: any
   hijri: any
   adhan: any
@@ -64,12 +62,17 @@ dependencies:
   flutter_map: any
   latlong2: ^0.9.1
   geolocator: ^13.0.1  
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   http: ^1.2.0
-  riverpod: any
-  flutter_localizations: any
+  firebase_database: any
+  
+  sensors_plus: any
+  pedometer: any
+  permission_handler: any
+  audioplayers: ^5.2.1   # لتشغيل صوت الإنذار
+  vibration: ^3.1.3     # للاهتزاز
+  flutter_local_notifications: ^17.0.0 # للإشعارات المحلية
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -100,7 +103,7 @@ flutter:
   assets:
     - asset/icons/
     - asset/images/
-    - asset/fonts/   
+    - asset/fonts/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
@@ -129,5 +132,5 @@ flutter_intl:
   enabled: true
   class_name: AppLocalizations
   main_locale: en
-  arb_dir: lib/core/config/l10n 
+  arb_dir: lib/core/config/l10n
   output_dir: lib/core/config/generated

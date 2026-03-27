@@ -25,11 +25,22 @@ class ApiLink {
       '$server/Announcements/DeleteAnnouncement';
   // Location
   static const String getActiveLocation = '$server/Location/GetActiveLocation';
-  static const String getCampaignLocations = '$server/CampaignLocation/GetCampaignLocationsView';
-  static const String addCampaignLocation = '$server/CampaignLocation/AddNewLocation';
-  static const String updateLocationData = '$server/CampaignLocation/UpdateLocationData';
-  static const String setActiveLocation = '$server/CampaignLocation/SetActiveLocation';
-  static const String deleteLocation = '$server/CampaignLocation/DeleteLocation';
+  static const String getCampaignLocations =
+      '$server/CampaignLocation/GetCampaignLocationsView';
+  static const String addCampaignLocation =
+      '$server/CampaignLocation/AddNewLocation';
+  static const String updateLocationData =
+      '$server/CampaignLocation/UpdateLocationData';
+  static const String setActiveLocation =
+      '$server/CampaignLocation/SetActiveLocation';
+  static const String deleteLocation =
+      '$server/CampaignLocation/DeleteLocation';
+
+  // be a leader
+  static const String startTrackingSession = '$server/Monitoring/StartSession';
+  static const String getPilgrims = '$server/Monitoring/GetSessionParticipants';
+  static const String participantResponse =
+      '$server/Monitoring/ParticipantResponse';
 
   // 5. وظائف ديناميكية
   static String changeResidentialNeighborhoodManager({

@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "accepted": MessageLookupByLibrary.simpleMessage("Accepted"),
     "accountVerification": MessageLookupByLibrary.simpleMessage(
       "Account Verification",
     ),
@@ -120,6 +121,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "errorLoadingData": MessageLookupByLibrary.simpleMessage(
       "An error occurred while loading data",
     ),
+    "errorOccurred": MessageLookupByLibrary.simpleMessage(
+      "An error occurred: ",
+    ),
     "fajr": MessageLookupByLibrary.simpleMessage("Fajr"),
     "fetchDataError": MessageLookupByLibrary.simpleMessage(
       "Error fetching data",
@@ -197,6 +201,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "noNotificationsCurrently": MessageLookupByLibrary.simpleMessage(
       "There are currently no notifications",
     ),
+    "noPilgrimsInSession": MessageLookupByLibrary.simpleMessage(
+      "No pilgrims associated with this session.",
+    ),
+    "notActive": MessageLookupByLibrary.simpleMessage("Not Active"),
     "notAdded": MessageLookupByLibrary.simpleMessage("Not Added"),
     "notFound": MessageLookupByLibrary.simpleMessage("Not found"),
     "notificationSearch": MessageLookupByLibrary.simpleMessage(
@@ -209,7 +217,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "passwordsDoNotMatchError": MessageLookupByLibrary.simpleMessage(
       "Passwords do not match",
     ),
+    "pending": MessageLookupByLibrary.simpleMessage("Pending"),
     "personalData": MessageLookupByLibrary.simpleMessage("Personal Data"),
+    "pilgrimsListTitle": MessageLookupByLibrary.simpleMessage("Pilgrims List"),
     "prayerTimes": MessageLookupByLibrary.simpleMessage("Prayer Times"),
     "profileTitle": MessageLookupByLibrary.simpleMessage("Profile"),
     "publishAnnouncement": MessageLookupByLibrary.simpleMessage(
@@ -218,6 +228,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "recoveryLinkNote": MessageLookupByLibrary.simpleMessage(
       "A recovery link will be sent to your email.",
     ),
+    "rejected": MessageLookupByLibrary.simpleMessage("Rejected"),
     "relativeContact": MessageLookupByLibrary.simpleMessage("Relative Contact"),
     "remaining": MessageLookupByLibrary.simpleMessage("Remaining"),
     "reset": MessageLookupByLibrary.simpleMessage("Reset"),
@@ -264,8 +275,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Set a new password",
     ),
     "sharing": MessageLookupByLibrary.simpleMessage("Sharing..."),
+    "showMap": MessageLookupByLibrary.simpleMessage("Show Map"),
     "smartMufti": MessageLookupByLibrary.simpleMessage("Smart Mufti"),
     "start": MessageLookupByLibrary.simpleMessage("Start"),
+    "startSession": MessageLookupByLibrary.simpleMessage("Start Session"),
     "strokes": MessageLookupByLibrary.simpleMessage("Strokes"),
     "targetAudience": MessageLookupByLibrary.simpleMessage("Target Audience"),
     "tawaf": MessageLookupByLibrary.simpleMessage("Tawaf"),

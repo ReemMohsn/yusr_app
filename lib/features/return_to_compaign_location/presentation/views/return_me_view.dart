@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/core/constants/app_size.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
-import '../widgets/return_me_button.dart';
+import '../../../../core/common/widgets/big_circular_button.dart';
 import '../../providers/fetch_camp_location_controller.dart';
 
 class ReturnMeView extends ConsumerWidget {
@@ -19,12 +19,17 @@ class ReturnMeView extends ConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ReturnMeButton(
+            BigcircularButton(
               title: locale.returnMe,
               onTap: () async {
-                final response = await ref.read(fetchCampLocationControllerProvider.future);
+                final response = await ref.read(
+                  fetchCampLocationControllerProvider.future,
+                );
                 if (response.data != null && context.mounted) {
-                  Navigator.of(context).pushNamed(AppRoute.returnMeMapView, arguments: response.data);
+                  Navigator.of(context).pushNamed(
+                    AppRoute.returnMeMapView,
+                    arguments: response!.data,
+                  );
                 }
               },
             ),

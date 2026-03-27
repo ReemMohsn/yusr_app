@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yusr/core/constants/app_color.dart';
 
-class ReturnMeButton extends StatelessWidget {
+class BigcircularButton extends StatelessWidget {
   final VoidCallback onTap;
   final String title;
 
-  const ReturnMeButton({super.key, required this.onTap, required this.title});
+  const BigcircularButton({
+    super.key,
+    required this.onTap,
+    required this.title,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +23,7 @@ class ReturnMeButton extends StatelessWidget {
         height: 250.w,
         decoration: BoxDecoration(
           // استخدام اللون الأسود من الثيم (darkBlack)
-          color: theme.appBarTheme.backgroundColor, 
+          color: theme.appBarTheme.backgroundColor,
           shape: BoxShape.circle,
           border: Border.all(color: AppColor.golden, width: 4.w),
           boxShadow: [
@@ -36,7 +40,7 @@ class ReturnMeButton extends StatelessWidget {
             textAlign: TextAlign.center,
             style: theme.textTheme.headlineLarge?.copyWith(
               // نستخدم اللون الذهبي ليكون متبايناً مع الخلفية السوداء
-              color: AppColor.golden, 
+              color: AppColor.golden,
               fontSize: 32.sp,
               fontWeight: FontWeight.bold,
             ),
