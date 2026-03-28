@@ -29,9 +29,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "addAnnouncement": MessageLookupByLibrary.simpleMessage("Add Announcement"),
     "addLocation": MessageLookupByLibrary.simpleMessage("Add Location"),
     "administration": MessageLookupByLibrary.simpleMessage("Administration"),
-    "all_rounds_completed": MessageLookupByLibrary.simpleMessage(
-      "You have successfully completed all rounds",
-    ),
     "announcementContent": MessageLookupByLibrary.simpleMessage(
       "Announcement Content",
     ),
@@ -73,9 +70,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "confirmSendAnnouncementQuestion": MessageLookupByLibrary.simpleMessage(
       "Are you sure you want to send this announcement?",
     ),
-    "congratulations": MessageLookupByLibrary.simpleMessage(
-      "🎉 Congratulations!",
-    ),
     "connectionFailed": MessageLookupByLibrary.simpleMessage(
       "Connection failed, please check your internet connection.",
     ),
@@ -88,7 +82,6 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "detiles": MessageLookupByLibrary.simpleMessage("Details"),
     "dhuhr": MessageLookupByLibrary.simpleMessage("Dhuhr"),
-    "done": MessageLookupByLibrary.simpleMessage("Done"),
     "edit": MessageLookupByLibrary.simpleMessage("Edit"),
     "emailLabel": MessageLookupByLibrary.simpleMessage("Email"),
     "emailOrPassport": MessageLookupByLibrary.simpleMessage(
@@ -262,9 +255,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "tawaf": MessageLookupByLibrary.simpleMessage("Tawaf"),
     "tawafDescription": MessageLookupByLibrary.simpleMessage(
       "Strokes are updated automatically based on your location from the Black Stone and your movement around the Kaaba.",
-    ),
-    "tawaf_saei_success_msg": MessageLookupByLibrary.simpleMessage(
-      "May Allah accept",
     ),
     "titleLabel": MessageLookupByLibrary.simpleMessage("Title"),
     "total": MessageLookupByLibrary.simpleMessage("Total"),

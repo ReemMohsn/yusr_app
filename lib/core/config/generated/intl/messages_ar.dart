@@ -29,9 +29,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "addAnnouncement": MessageLookupByLibrary.simpleMessage("إضافة إعلان"),
     "addLocation": MessageLookupByLibrary.simpleMessage("إضافة موقع"),
     "administration": MessageLookupByLibrary.simpleMessage("الإدارة"),
-    "all_rounds_completed": MessageLookupByLibrary.simpleMessage(
-      "لقد أتممت جميع الأشواط بنجاح",
-    ),
     "announcementContent": MessageLookupByLibrary.simpleMessage(
       "محتوى الإعلان",
     ),
@@ -65,7 +62,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "confirmSendAnnouncementQuestion": MessageLookupByLibrary.simpleMessage(
       "هل أنت متأكد من إرسال هذا الإعلان؟",
     ),
-    "congratulations": MessageLookupByLibrary.simpleMessage("🎉 مبارك عليك!"),
     "connectionFailed": MessageLookupByLibrary.simpleMessage(
       "فشل الاتصال، يرجى التحقق من اتصالك بالإنترنت",
     ),
@@ -78,7 +74,6 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "detiles": MessageLookupByLibrary.simpleMessage("التفاصيل"),
     "dhuhr": MessageLookupByLibrary.simpleMessage("الظهر"),
-    "done": MessageLookupByLibrary.simpleMessage("تم"),
     "edit": MessageLookupByLibrary.simpleMessage("تعديل"),
     "emailLabel": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
     "emailOrPassport": MessageLookupByLibrary.simpleMessage(
@@ -245,9 +240,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "tawaf": MessageLookupByLibrary.simpleMessage("طواف"),
     "tawafDescription": MessageLookupByLibrary.simpleMessage(
       "يتم تحديث الأشواط تلقائياً بناءً على موقعك من الحجر الأسود وحركتك حول الكعبة المشرفة.",
-    ),
-    "tawaf_saei_success_msg": MessageLookupByLibrary.simpleMessage(
-      "تقبل الله !",
     ),
     "titleLabel": MessageLookupByLibrary.simpleMessage("العنوان"),
     "total": MessageLookupByLibrary.simpleMessage("الإجمالي"),

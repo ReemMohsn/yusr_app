@@ -6,13 +6,15 @@ import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/features/auto_counter/presentation/widgets/toggle_tab_item.dart';
 import 'package:yusr/features/auto_counter/providers/counter_provider.dart';
 
-class TawafSaeiToggle extends ConsumerWidget {
-  const TawafSaeiToggle({super.key});
+class TawafSaeiToggle extends StatelessWidget {
+  final WidgetRef ref; 
+
+  const TawafSaeiToggle({super.key, required this.ref});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) { 
-    final locale = context.locale;  
-    final isTawaf = ref.watch(counterTypeControllerProvider);
+  Widget build(BuildContext context) {
+    final locale = context.locale;
+    final isTawaf = ref.watch(counterTypeProvider);
 
     return Container(
       height: 50.h,
@@ -23,7 +25,7 @@ class TawafSaeiToggle extends ConsumerWidget {
       ),
       child: Container(
         decoration: BoxDecoration(
-          color: AppColor.withe.withOpacity(0.15), 
+          color: Colors.white.withOpacity(0.15), 
           borderRadius: BorderRadius.circular(28.r),
         ),
         child: Row(
@@ -31,12 +33,12 @@ class TawafSaeiToggle extends ConsumerWidget {
             ToggleTabItem(
               title: locale.saei,
               isSelected: !isTawaf,
-              onTap: () => ref.read(counterTypeControllerProvider.notifier).setType(false),
+              onTap: () => ref.read(counterTypeProvider.notifier).state = false,
             ),
             ToggleTabItem(
               title: locale.tawaf,
               isSelected: isTawaf,
-              onTap: () => ref.read(counterTypeControllerProvider.notifier).setType(true),
+              onTap: () => ref.read(counterTypeProvider.notifier).state = true,
             ),          
           ],
         ),
