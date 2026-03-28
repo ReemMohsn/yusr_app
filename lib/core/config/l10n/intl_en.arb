@@ -130,5 +130,9 @@
   "reset": "Reset",
   "strokes": "Strokes",
   "ofWord": "of",
-  "tawafDescription": "Strokes are updated automatically based on your location from the Black Stone and your movement around the Kaaba."
+  "tawafDescription": "Strokes are updated automatically based on your location from the Black Stone and your movement around the Kaaba.",
+  "done": "Done",
+  "congratulations": "🎉 Congratulations!",
+  "all_rounds_completed": "You have successfully completed all rounds",
+  "tawaf_saei_success_msg": "May Allah accept"
 }

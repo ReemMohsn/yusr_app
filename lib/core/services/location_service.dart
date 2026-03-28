@@ -6,7 +6,7 @@ class LocationService {
   Stream<Position> get positionStream => Geolocator.getPositionStream(
     locationSettings: const LocationSettings(
       accuracy: LocationAccuracy.high,
-      distanceFilter: 5,
+      distanceFilter: 1,
     ),
   );
 

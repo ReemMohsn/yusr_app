@@ -87,13 +87,8 @@ class AppRouter {
           builder: (_) => LeaderPilgrimsListView(sessionId: sessionId),
         );
       case AppRoute.leaderMapTrackingView:
-        // استقبال المتغير كرقم
         final int sessionId = settings.arguments as int;
-        return MaterialPageRoute(
-          builder: (_) => LeaderMapTrackingView(
-            sessionId: sessionId, // 🚨 تمرير الرقم للواجهة هنا
-          ),
-        );
+        return MaterialPageRoute(builder: (_) => LeaderMapTrackingView());
       case AppRoute.tawafCounterView:
         return MaterialPageRoute(builder: (_) => const TawafCounterView());
       case AppRoute.instructionsView:
