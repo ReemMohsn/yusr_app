@@ -1168,41 +1168,6 @@ class AppLocalizations {
       args: [],
     );
   }
-
-  /// `Done`
-  String get done {
-    return Intl.message('Done', name: 'done', desc: '', args: []);
-  }
-
-  /// `🎉 Congratulations!`
-  String get congratulations {
-    return Intl.message(
-      '🎉 Congratulations!',
-      name: 'congratulations',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `You have successfully completed all rounds`
-  String get all_rounds_completed {
-    return Intl.message(
-      'You have successfully completed all rounds',
-      name: 'all_rounds_completed',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `May Allah accept`
-  String get tawaf_saei_success_msg {
-    return Intl.message(
-      'May Allah accept',
-      name: 'tawaf_saei_success_msg',
-      desc: '',
-      args: [],
-    );
-  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {

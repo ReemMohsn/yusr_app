@@ -78,8 +78,26 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
       );
       print("🚀 تم رفع الموقع الأولي للفايربيس بنجاح!");
 
+      // print("5️⃣ جاري بدء الاستماع للتحركات المستمرة...");
+      // final locationService = ref.read(locationServiceProvider);
+      // _positionStreamSub = locationService.positionStream.listen((
+      //   Position position,
+      // ) {
+      //   final currentPos = LatLng(position.latitude, position.longitude);
+      //   trackingRepo.updatePilgrimLocation(
+      //     sessionId: sessionId,
+      //     pilgrimId: pilgrimId,
+      //     pilgrimName: pilgrimName,
+      //     location: currentPos,
+      //   );
+      //   print("📍 تم تحديث موقع الحاج في الفايربيس بنجاح!");
+      // });
       print("5️⃣ جاري بدء الاستماع للتحركات المستمرة...");
       final locationService = ref.read(locationServiceProvider);
+
+      // 👈 التعديل هنا: إغلاق أي استماع قديم قبل فتح واحد جديد لمنع التكرار
+      await _positionStreamSub?.cancel();
+
       _positionStreamSub = locationService.positionStream.listen((
         Position position,
       ) {

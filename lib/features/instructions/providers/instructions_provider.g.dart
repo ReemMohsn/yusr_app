@@ -10,7 +10,7 @@ part of 'instructions_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(instructionsRepository)
-const instructionsRepositoryProvider = InstructionsRepositoryProvider._();
+final instructionsRepositoryProvider = InstructionsRepositoryProvider._();
 
 final class InstructionsRepositoryProvider
     extends
@@ -20,7 +20,7 @@ final class InstructionsRepositoryProvider
           InstructionsRepository
         >
     with $Provider<InstructionsRepository> {
-  const InstructionsRepositoryProvider._()
+  InstructionsRepositoryProvider._()
     : super(
         from: null,
         argument: null,
@@ -58,7 +58,7 @@ String _$instructionsRepositoryHash() =>
     r'cd61b58ba8a45395c6caaf4dd77322073fa0aa21';
 
 @ProviderFor(instructions)
-const instructionsProvider = InstructionsFamily._();
+final instructionsProvider = InstructionsFamily._();
 
 final class InstructionsProvider
     extends
@@ -68,7 +68,7 @@ final class InstructionsProvider
           List<InstructionModel>
         >
     with $Provider<List<InstructionModel>> {
-  const InstructionsProvider._({
+  InstructionsProvider._({
     required InstructionsFamily super.from,
     required AppLocalizations super.argument,
   }) : super(
@@ -124,7 +124,7 @@ String _$instructionsHash() => r'16e00ec341cba8e8ac787b8fdaacb2389f9f6064';
 
 final class InstructionsFamily extends $Family
     with $FunctionalFamilyOverride<List<InstructionModel>, AppLocalizations> {
-  const InstructionsFamily._()
+  InstructionsFamily._()
     : super(
         retry: null,
         name: r'instructionsProvider',
