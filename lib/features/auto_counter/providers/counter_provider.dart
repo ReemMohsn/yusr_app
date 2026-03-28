@@ -1,4 +1,22 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final counterTypeProvider = StateProvider<bool>((ref) => true);
+part 'counter_provider.g.dart';
+
+@riverpod
+class CounterTypeController extends _$CounterTypeController {
+  @override
+  bool build() {
+    // القيمة الابتدائية (true تعني طواف مثلاً)
+    return true;
+  }
+
+  /// دالة لتغيير النوع (Toggle)
+  void toggle() {
+    state = !state;
+  }
+
+  /// دالة لضبط النوع بشكل مباشر
+  void setType(bool isTawaf) {
+    state = isTawaf;
+  }
+}
