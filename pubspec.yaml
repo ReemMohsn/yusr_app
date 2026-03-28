@@ -69,7 +69,7 @@ dependencies:
   sensors_plus: any
   pedometer: any
   permission_handler: any
-  
+  vibration: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
