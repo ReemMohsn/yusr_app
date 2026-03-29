@@ -1,167 +1,153 @@
 import 'dart:async';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:sensors_plus/sensors_plus.dart';
-import 'package:pedometer/pedometer.dart';
+import 'package:vibration/vibration.dart';
 import 'state/auto_counter_state.dart';
 
 part 'auto_counter_controller.g.dart';
 
+// --- 1. تعريف شكل البيانات الخام القادمة من المستشعرات ---
+class TawafRawData {
+  final double heading;
+  final int stepCount;
+  TawafRawData({required this.heading, required this.stepCount});
+}
+
+// --- 2. المحرك الوهمي (Mock Engine) - تم وضعه هنا كبديل للملف المفقود ---
+class MockTawafEngine {
+  StreamController<TawafRawData>? _controller;
+  Timer? _timer;
+  double _angle = 0;
+  int _steps = 0;
+
+  Stream<TawafRawData> get dataStream => _controller!.stream;
+
+  void start() {
+    _controller = StreamController<TawafRawData>();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      _angle = (_angle + 15) % 360; // محاكاة دوران الحاج
+      _steps += 2; // محاكاة المشي
+      if (!_controller!.isClosed) {
+        _controller!.add(TawafRawData(heading: _angle, stepCount: _steps));
+      }
+    });
+  }
+
+  void stop() {
+    _timer?.cancel();
+    _controller?.close();
+  }
+}
+
+@riverpod
+MockTawafEngine mockEngine(Ref ref) {
+  return MockTawafEngine();
+}
+
 @riverpod
 class AutoCounterController extends _$AutoCounterController {
-  StreamSubscription? _gyroSub;
-  StreamSubscription? _accelSub;
-  StreamSubscription? _stepSub;
-
-  // إعدادات الدقة
-  static const double _moveThreshold = 0.15;
-  static const double _gyroDeadZone = 0.01;
-  // حد الأمان: لا نبحث عن الالتفاف إلا بعد 300 خطوة
-  static const int _minStepsToStartLookingForTurn = 300;
-  // زاوية الالتفاف المطلوبة لاعتبار الشوط منتهياً (140 درجة كافية لرصد الاستدارة عند الصفا والمروة)
-  static const double _turnThreshold = 140.0;
-
-  // متغير داخلي لتتبع الدوران في السعي (لا يحتاج أن يكون في الـ State)
-  double _saeeTurnAngle = 0.0;
+  StreamSubscription? _subscription;
 
   @override
   AutoCounterState build() {
-    ref.onDispose(() => _stopAllSensors());
+    // تنظيف الموارد تلقائياً عند إغلاق الشاشة أو الـ Provider
+    ref.onDispose(() {
+      _subscription?.cancel();
+    });
     return const AutoCounterState();
   }
 
-  void startTracking(TrackingType type) async {
-    state = state.copyWith(permissionError: null);
-
-    if (type == TrackingType.saee) {
-      var status = await Permission.activityRecognition.request();
-      if (!status.isGranted) {
-        state = state.copyWith(
-          isRunning: false,
-          permissionError:
-              "نحتاج لتفعيل إذن النشاط البدني لعد خطوات السعي تلقائياً.",
-        );
-        return;
-      }
-    }
-
-    _stopAllSensors();
-    _saeeTurnAngle = 0.0; // تصفير زاوية الالتفاف عند البدء الجديد
+  /// بدء الطواف
+  void startTracking() {
+    if (state.isRunning) return;
 
     state = state.copyWith(
       isRunning: true,
       isCompleted: false,
-      currentLap: 0,
-      accumulatedAngle: 0.0,
+      currentLap: 1,
+      accumulatedAngle: 0,
       stepsInCurrentLap: 0,
-      startSteps: 0,
-      trackingType: type,
     );
-    _initSensors();
-  }
 
-  void _initSensors() {
-    _accelSub = userAccelerometerEventStream().listen((
-      UserAccelerometerEvent event,
-    ) {
-      double totalMotion = event.x.abs() + event.y.abs() + event.z.abs();
-      bool moving = totalMotion > _moveThreshold;
-      if (state.isMoving != moving) {
-        state = state.copyWith(isMoving: moving);
-      }
-    });
+    final engine = ref.read(mockEngineProvider);
+    engine.start();
 
-    _gyroSub = gyroscopeEventStream().listen((GyroscopeEvent event) {
-      if (state.isRunning && state.isMoving) {
-        if (state.trackingType == TrackingType.tawaf) {
-          _processTawafLogic(event);
-        } else if (state.trackingType == TrackingType.saee) {
-          // استخدام الجيروسكوب في السعي لرصد الالتفاف عند الصفا والمروة
-          _processSaeeTurnLogic(event);
-        }
-      }
-    });
-
-    _stepSub = Pedometer.stepCountStream.listen((StepCount event) {
-      if (state.trackingType == TrackingType.saee && state.isRunning) {
-        _processSaeeStepsLogic(event.steps);
-      }
+    // الاستماع لبيانات المحرك الوهمي
+    _subscription = engine.dataStream.listen((data) {
+      _processData(data);
     });
   }
 
-  // منطق الطواف
-  void _processTawafLogic(GyroscopeEvent event) {
-    double deltaAngle = event.z * (180 / 3.14) * 0.02;
-    if (deltaAngle.abs() > _gyroDeadZone) {
-      double newAngle = state.accumulatedAngle + deltaAngle;
-      if (newAngle.abs() >= 360) {
-        _onLapCompleted();
-      } else {
-        state = state.copyWith(accumulatedAngle: newAngle);
-      }
-    }
-  }
+  void _processData(TawafRawData data) {
+    // تحديث الحالة بالبيانات القادمة
+    state = state.copyWith(
+      accumulatedAngle: data.heading,
+      stepsInCurrentLap: data.stepCount,
+    );
 
-  // منطق خطوات السعي
-  void _processSaeeStepsLogic(int totalSteps) {
-    if (state.startSteps == 0) {
-      state = state.copyWith(startSteps: totalSteps);
-      return;
-    }
-    int stepsDiff = totalSteps - state.startSteps;
-    state = state.copyWith(stepsInCurrentLap: stepsDiff);
-  }
-
-  // منطق الالتفاف في السعي (هو المسؤول عن إنهاء الشوط)
-  void _processSaeeTurnLogic(GyroscopeEvent event) {
-    // نحسب الدوران حول المحور الرأسي للجهاز
-    double delta = event.z * (180 / 3.14) * 0.02;
-    _saeeTurnAngle += delta;
-
-    // الشرط الذكي:
-    // 1. يجب أن يكون المعتمر قد قطع عدداً معقولاً من الخطوات (صمام أمان المسافة)
-    // 2. يجب أن يرصد الجيروسكوب التفافاً حقيقياً (تغيير اتجاه)
-    if (state.stepsInCurrentLap >= _minStepsToStartLookingForTurn &&
-        _saeeTurnAngle.abs() >= _turnThreshold) {
+    // لتجربة الاهتزاز الآن: إذا وصل لزاوية قريبة من 360 (دورة كاملة)
+    if (state.accumulatedAngle >= 345 && state.stepsInCurrentLap >= 20) {
       _onLapCompleted();
-      _saeeTurnAngle = 0.0; // تصفير الزاوية للشوط القادم
-
-      // ملاحظة: إعادة تعيين startSteps ستحدث تلقائياً في Pedometer stream
-      // بمجرد أن يتم استدعاء _onLapCompleted وتصفير الـ state
     }
   }
 
   void _onLapCompleted() {
-    int nextLap = state.currentLap + 1;
-    if (nextLap >= 7) {
+    _triggerVibration();
+
+    if (state.currentLap < state.totalLaps) {
       state = state.copyWith(
-        currentLap: 7,
-        isCompleted: true,
-        isRunning: false,
-      );
-      _stopAllSensors();
-    } else {
-      state = state.copyWith(
-        currentLap: nextLap,
-        accumulatedAngle: 0.0,
+        currentLap: state.currentLap + 1,
+        accumulatedAngle: 0,
         stepsInCurrentLap: 0,
-        startSteps:
-            0, // تصفير البداية ليتم التقاط القيمة الجديدة في الخطوة القادمة
+      );
+    } else {
+      _finishTawaf();
+    }
+  }
+
+  void _finishTawaf() {
+    state = state.copyWith(isRunning: false, isCompleted: true, currentLap: 7);
+    _triggerVibration();
+    ref.read(mockEngineProvider).stop();
+    _subscription?.cancel();
+  }
+
+  void reset() {
+    ref.read(mockEngineProvider).stop();
+    _subscription?.cancel();
+    state = const AutoCounterState();
+  }
+
+  Future<void> _triggerVibration() async {
+    if (await Vibration.hasVibrator()) {
+      Vibration.vibrate(
+        pattern: [
+          0, // ابدأ فوراً
+          300, // نبضة 1 (قوية جداً)
+          100, // فاصل قصير جداً لزيادة حدة الشعور بالنبضة التالية
+          300, // نبضة 2
+          100, // فاصل
+          300, // نبضة 3
+          100, // فاصل
+          300, // نبضة 4
+          100, // فاصل
+          400, // نبضة 5 (الأطول والختامية لضمان أقصى تنبيه)
+        ],
       );
     }
   }
 
-  void reset() {
-    _stopAllSensors();
-    state = const AutoCounterState();
-  }
-
-  void _stopAllSensors() {
-    _gyroSub?.cancel();
-    _accelSub?.cancel();
-    _stepSub?.cancel();
-    _gyroSub = null;
-    _accelSub = null;
-    _stepSub = null;
-  }
+  //   Future<void> _triggerVibration() async {
+  //   if (await Vibration.hasVibrator()) {
+  //     // التحقق مما إذا كان الجهاز يدعم التحكم في الشدة (Amplitude)
+  //     if (await Vibration.hasAmplitudeControl()) {
+  //       Vibration.vibrate(
+  //         pattern: [0, 500, 200, 500], // اهتزاز نصف ثانية، توقف بسيط، ثم نصف ثانية أخرى
+  //         intensities: [0, 255, 0, 255], // 255 هي أقصى قوة ممكنة للمحرك
+  //       );
+  //     } else {
+  //       // إذا كان الجهاز لا يدعم التحكم بالشدة، نكتفي بنمط طويل وقوي
+  //       Vibration.vibrate(pattern: [0, 1000]); // اهتزاز متواصل لمدة ثانية كاملة
+  //     }
+  //   }
+  // }
 }
