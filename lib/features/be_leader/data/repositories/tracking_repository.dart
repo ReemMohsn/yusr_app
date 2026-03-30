@@ -76,4 +76,31 @@ class TrackingRepository {
   Stream<DatabaseEvent> leaderStream(String sessionId) {
     return _db.ref('TrackingSessions/$sessionId/leaderLocation').onValue;
   }
+
+  /// حذف الحاج من الجلسة عند إيقاف التتبع
+  Future<void> removePilgrimFromSession({
+    required String sessionId,
+    required String pilgrimId,
+  }) async {
+    try {
+      await _db.ref('TrackingSessions/$sessionId/pilgrims/$pilgrimId').remove();
+    } catch (e) {
+      throw Exception("فشل في حذف الحاج من الفايربيس: $e");
+    }
+  }
+
+  // دالة لجلب وقت آخر تحديث للمشرف (بالميلي ثانية)
+  Future<int?> getLeaderLastUpdate(String sessionId) async {
+    try {
+      final snapshot = await _db
+          .ref('TrackingSessions/$sessionId/leaderLocation/lastUpdate')
+          .get();
+      if (snapshot.exists) {
+        return snapshot.value as int; // الفايربيس يحفظ الـ timestamp كـ int
+      }
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
 }

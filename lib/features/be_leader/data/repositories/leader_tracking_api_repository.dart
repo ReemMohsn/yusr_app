@@ -64,4 +64,11 @@ class LeaderTrackingApiRepository {
       ),
     );
   }
+
+  // دالة لإنهاء الجلسة في الباك إند
+  Future<ApiResponse<void>> endSession(int sessionId) async {
+    return await repositoryRequestHandler<void>(
+      () => apiService.post("${ApiLink.endTrackingSession}/$sessionId"),
+    );
+  }
 }

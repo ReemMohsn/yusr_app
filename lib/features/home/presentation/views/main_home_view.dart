@@ -1,4 +1,5 @@
 // تأكدي من مسار الملف الصحيح حسب مشروعك
+import 'package:yusr/core/constants/shared_preferences_keys.dart';
 import 'package:yusr/features/announcements_notifications/providers/unread_notifications_count_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -92,7 +93,7 @@ class _MainHomeViewState extends ConsumerState<MainHomeView> {
     return Scaffold(
       endDrawer: isLoggedIn ? const CustomDrawer() : null,
       appBar: AppBar(
-        leadingWidth: isLoggedIn ? 100 : 140,
+        leadingWidth: isLoggedIn ? 150 : 140,
         leading: isLoggedIn
             ? _buildLoggedInLeading(context, profile) // عرض البروفايل + الجرس
             : Padding(
@@ -203,9 +204,10 @@ class _MainHomeViewState extends ConsumerState<MainHomeView> {
     );
   }
 
-  /// الواجهة في حالة المستخدم المسجل (صورة + جرس)
+  /// الواجهة في حالة المستخدم المسجل (صورة + خريطة التتبع + جرس)
   Widget _buildLoggedInLeading(BuildContext context, ProfileModel profile) {
     final unreadCount = ref.watch(unreadNotificationsCountProvider);
+
     return Row(
       children: [
         const SizedBox(width: 10),
@@ -229,38 +231,64 @@ class _MainHomeViewState extends ConsumerState<MainHomeView> {
             ),
           ),
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: 5),
+        // 🌟 2. استخدام FutureBuilder للتعامل مع Future<int?> القادم من SharedPreferences
+        if (profile.userRole == 'حاج')
+          FutureBuilder<int?>(
+            // نمرر الـ Future هنا
+            future: ref
+                .read(sharedPreferencesServiceProvider)
+                .getInt(SharedPreferencesKeys.currentSessionId),
+            builder: (context, snapshot) {
+              // نستخرج القيمة، وإذا كانت null نعتبرها 0
+              final activeSessionId = snapshot.data ?? 0;
 
-        // IconButton(
-        //   icon: const Icon(Icons.notifications_none_outlined, color: AppColor.golden),
-        //   onPressed: () => _navigateToNotifications(context)
-        //     // معالجة النقر على أيقونة الجرس
-        //   ,
-        // ),
-        // 🌟 2. إضافة الـ Badge حول أيقونة الجرس
+              // إذا كان هناك جلسة نشطة، نظهر الزر الأخضر
+              if (activeSessionId > 0) {
+                return Padding(
+                  padding: const EdgeInsets.only(right: 5),
+                  child: IconButton(
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                    icon: const Icon(
+                      Icons.location_on,
+                      color:
+                          Colors.greenAccent, // لون مميز يدل على أن التتبع نشط
+                      size: 28,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(
+                        AppRoute.pilgrimMapTrackingView,
+                        arguments: activeSessionId,
+                      );
+                    },
+                  ),
+                );
+              }
+              // إذا لم تكن هناك جلسة نشطة، لا نعرض شيئاً
+              return const SizedBox.shrink();
+            },
+          ),
+
+        // 🌟 3. الـ Badge حول أيقونة الجرس
         Badge(
-          // إظهار البادج فقط إذا كان هناك إشعارات جديدة (أكبر من 0)
           isLabelVisible: unreadCount > 0,
-          // عرض الرقم داخل البادج
           label: Text(
-            unreadCount > 99
-                ? '+99'
-                : unreadCount.toString(), // للتعامل مع الأرقام الكبيرة
+            unreadCount > 99 ? '+99' : unreadCount.toString(),
             style: const TextStyle(
               color: Colors.white,
               fontSize: 10,
               fontWeight: FontWeight.bold,
             ),
           ),
-          backgroundColor: Colors.red, // لون البادج أحمر ليدل على التنبيه
-          alignment: const Alignment(
-            0.4,
-            -0.4,
-          ), // ضبط موضع البادج أعلى يمين الجرس
+          backgroundColor: Colors.red,
+          alignment: const Alignment(0.4, -0.4),
           child: IconButton(
+            padding: EdgeInsets.zero,
             icon: const Icon(
               Icons.notifications_none_outlined,
               color: AppColor.golden,
+              size: 28,
             ),
             onPressed: () => _navigateToNotifications(context),
           ),
@@ -268,6 +296,153 @@ class _MainHomeViewState extends ConsumerState<MainHomeView> {
       ],
     );
   }
+
+  /// الواجهة في حالة المستخدم المسجل (صورة + خريطة التتبع + جرس)
+  // Widget _buildLoggedInLeading(BuildContext context, ProfileModel profile) {
+  //   final unreadCount = ref.watch(unreadNotificationsCountProvider);
+
+  //   // 1. قراءة التفضيلات المحلية لمعرفة إذا كان هناك جلسة نشطة
+  //   final sharedPrefs = ref.read(sharedPreferencesServiceProvider);
+  //   final activeSessionId = sharedPrefs.getInt(SharedPreferencesKeys.sessionId) ?? 0;
+
+  //   return Row(
+  //     children: [
+  //       const SizedBox(width: 10),
+  //       // أيقونة البروفايل
+  //       Container(
+  //         width: 35,
+  //         height: 35,
+  //         decoration: const BoxDecoration(
+  //           color: AppColor.golden,
+  //           shape: BoxShape.circle,
+  //         ),
+  //         child: Center(
+  //           child: Text(
+  //             profile.fullName.isNotEmpty
+  //                 ? profile.fullName[0].toUpperCase()
+  //                 : "P",
+  //             style: const TextStyle(
+  //               fontWeight: FontWeight.bold,
+  //               color: Colors.black,
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //       const SizedBox(width: 5), // تقليل المسافة قليلاً لتوفير المساحة
+
+  //       // 🌟 2. زر الوصول السريع لخريطة التتبع (يظهر فقط إذا كان هناك جلسة نشطة)
+  //       if (activeSessionId > 0 && profile.userRole == 'حاج')
+  //         IconButton(
+  //           padding: EdgeInsets.zero,
+  //           constraints: const BoxConstraints(), // لتقليل المساحة المحيطة بالزر
+  //           icon: const Icon(
+  //             Icons.location_on, // أيقونة الموقع أو الخريطة
+  //             color: Colors.greenAccent, // لون مميز يدل على أن التتبع نشط
+  //             size: 28,
+  //           ),
+  //           onPressed: () {
+  //             // توجيه الحاج مباشرة لشاشة الخريطة مع تمرير رقم الجلسة
+  //             Navigator.of(context).pushNamed(
+  //               AppRoute.pilgrimMapTrackingView,
+  //               arguments: activeSessionId,
+  //             );
+  //           },
+  //         ),
+
+  //       const SizedBox(width: 5),
+
+  //       // 🌟 3. الـ Badge حول أيقونة الجرس
+  //       Badge(
+  //         isLabelVisible: unreadCount > 0,
+  //         label: Text(
+  //           unreadCount > 99 ? '+99' : unreadCount.toString(),
+  //           style: const TextStyle(
+  //             color: Colors.white,
+  //             fontSize: 10,
+  //             fontWeight: FontWeight.bold,
+  //           ),
+  //         ),
+  //         backgroundColor: Colors.red,
+  //         alignment: const Alignment(0.4, -0.4),
+  //         child: IconButton(
+  //           padding: EdgeInsets.zero,
+  //           icon: const Icon(
+  //             Icons.notifications_none_outlined,
+  //             color: AppColor.golden,
+  //             size: 28,
+  //           ),
+  //           onPressed: () => _navigateToNotifications(context),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
+
+  /// الواجهة في حالة المستخدم المسجل (صورة + جرس)
+  // Widget _buildLoggedInLeading(BuildContext context, ProfileModel profile) {
+  //   final unreadCount = ref.watch(unreadNotificationsCountProvider);
+  //   return Row(
+  //     children: [
+  //       const SizedBox(width: 10),
+  //       // أيقونة البروفايل
+  //       Container(
+  //         width: 35,
+  //         height: 35,
+  //         decoration: const BoxDecoration(
+  //           color: AppColor.golden,
+  //           shape: BoxShape.circle,
+  //         ),
+  //         child: Center(
+  //           child: Text(
+  //             profile.fullName.isNotEmpty
+  //                 ? profile.fullName[0].toUpperCase()
+  //                 : "P",
+  //             style: const TextStyle(
+  //               fontWeight: FontWeight.bold,
+  //               color: Colors.black,
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //       const SizedBox(width: 10),
+
+  //       // IconButton(
+  //       //   icon: const Icon(Icons.notifications_none_outlined, color: AppColor.golden),
+  //       //   onPressed: () => _navigateToNotifications(context)
+  //       //     // معالجة النقر على أيقونة الجرس
+  //       //   ,
+  //       // ),
+  //       // 🌟 2. إضافة الـ Badge حول أيقونة الجرس
+  //       Badge(
+  //         // إظهار البادج فقط إذا كان هناك إشعارات جديدة (أكبر من 0)
+  //         isLabelVisible: unreadCount > 0,
+  //         // عرض الرقم داخل البادج
+  //         label: Text(
+  //           unreadCount > 99
+  //               ? '+99'
+  //               : unreadCount.toString(), // للتعامل مع الأرقام الكبيرة
+  //           style: const TextStyle(
+  //             color: Colors.white,
+  //             fontSize: 10,
+  //             fontWeight: FontWeight.bold,
+  //           ),
+  //         ),
+  //         backgroundColor: Colors.red, // لون البادج أحمر ليدل على التنبيه
+  //         alignment: const Alignment(
+  //           0.4,
+  //           -0.4,
+  //         ), // ضبط موضع البادج أعلى يمين الجرس
+  //         child: IconButton(
+  //           icon: const Icon(
+  //             Icons.notifications_none_outlined,
+  //             color: AppColor.golden,
+  //           ),
+  //           onPressed: () => _navigateToNotifications(context),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   // دالة التنقل المنفصلة لزيادة وضوح الكود
   void _navigateToNotifications(BuildContext context) {
