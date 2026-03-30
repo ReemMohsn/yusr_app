@@ -147,25 +147,74 @@
 // }
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as ref show read;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/constants/app_route.dart';
+import 'package:yusr/core/constants/shared_preferences_keys.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/features/announcements_notifications/data/models/notifications_model.dart';
+import 'package:yusr/features/be_leader/providers/leader_tracking_controller.dart';
 import 'package:yusr/features/be_leader/providers/pilgrim_tracking_controller.dart';
+import 'package:yusr/features/be_leader/providers/pilgrims_list_provider.dart';
 import 'package:yusr/features/home/providers/user_provider.dart';
 
+// @pragma('vm:entry-point')
+// Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   print("تم استلام إشعار في الخلفية: ${message.messageId}");
+// }
+// خارج الكلاس، دالة الخلفية الرئيسية
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("تم استلام إشعار في الخلفية: ${message.messageId}");
+
+  if (message.data['status'] == 'tracking_session_ended') {
+    // تهيئة SharedPreferencesAsync المستقلة وحذف الـ sessionId
+    final prefs = SharedPreferencesAsync();
+    await prefs.remove(SharedPreferencesKeys.sessionId);
+    print("تم مسح الجلسة من الهاتف في الخلفية بسبب إيقافها من المشرف");
+  }
 }
 
 class PushNotificationService {
+  // تعريف متغير الإشعارات المحلية
+  static final FlutterLocalNotificationsPlugin _localNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
   // دالة التهيئة الرئيسية التي سنستدعيها عند تشغيل التطبيق
   static Future<void> init() async {
+    // ==========================================
+    // 1. تهيئة الإشعارات المحلية (Local Notifications)
+    // ==========================================
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+
+    const InitializationSettings initializationSettings =
+        InitializationSettings(android: initializationSettingsAndroid);
+
+    await _localNotificationsPlugin.initialize(
+      initializationSettings,
+      onDidReceiveNotificationResponse: (NotificationResponse response) {
+        // 🔥 هنا نستمع للضغطات على الإشعارات المحلية 🔥
+        if (response.payload == 'emergency_alarm') {
+          // إذا كان الإشعار هو إشعار طوارئ المشرف، نوقف الصوت
+          final context = navigatorKey.currentContext;
+          if (context != null) {
+            ProviderScope.containerOf(
+              context,
+            ).read(leaderTrackingControllerProvider.notifier).stopAlarmManual();
+          }
+        }
+      },
+    );
+
+    // ==========================================
+    // 2. تهيئة إشعارات فايربيس (FCM) - (الكود الحالي الخاص بك)
+    // ==========================================
+
     // 1. حالة التطبيق مغلق تماماً (Terminated)
-    // إذا فتح المستخدم التطبيق عن طريق الضغط على إشعار
     RemoteMessage? initialMessage = await FirebaseMessaging.instance
         .getInitialMessage();
     if (initialMessage != null) {
@@ -173,18 +222,38 @@ class PushNotificationService {
     }
 
     // 2. حالة التطبيق في الخلفية (Background)
-    // إذا ضغط المستخدم على إشعار والتطبيق يعمل في الخلفية
     FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
 
     // 3. حالة التطبيق مفتوح ومستخدم حالياً (Foreground)
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      // 💡 لأن النظام لا يظهر إشعاراً من نفسه والتطبيق مفتوح،
-      // سنقوم نحن بعرض رسالة (SnackBar أو Dialog) داخل التطبيق للمستخدم
       if (message.notification != null) {
         _showInAppNotification(message);
       }
     });
   }
+  // // دالة التهيئة الرئيسية التي سنستدعيها عند تشغيل التطبيق
+  // static Future<void> init() async {
+  //   // 1. حالة التطبيق مغلق تماماً (Terminated)
+  //   // إذا فتح المستخدم التطبيق عن طريق الضغط على إشعار
+  //   RemoteMessage? initialMessage = await FirebaseMessaging.instance
+  //       .getInitialMessage();
+  //   if (initialMessage != null) {
+  //     _handleMessage(initialMessage);
+  //   }
+
+  //   // 2. حالة التطبيق في الخلفية (Background)
+  //   // إذا ضغط المستخدم على إشعار والتطبيق يعمل في الخلفية
+  //   FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
+
+  //   // 3. حالة التطبيق مفتوح ومستخدم حالياً (Foreground)
+  //   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  //     // 💡 لأن النظام لا يظهر إشعاراً من نفسه والتطبيق مفتوح،
+  //     // سنقوم نحن بعرض رسالة (SnackBar أو Dialog) داخل التطبيق للمستخدم
+  //     if (message.notification != null) {
+  //       _showInAppNotification(message);
+  //     }
+  //   });
+  // }
 
   // ==========================================
   // دالة التوجيه (عند الضغط على الإشعار من الخلفية أو الإغلاق)
@@ -233,6 +302,28 @@ class PushNotificationService {
       if (sessionId > 0) {
         _showTrackingAcceptDialog(context, sessionId, notificationBody);
       }
+    } else if (message.data['status'] == 'pilgrim_status_changed') {
+      final sessionId =
+          int.tryParse(message.data['sessionId']?.toString() ?? '0') ?? 0;
+
+      if (sessionId > 0) {
+        // تحديث البيانات قبل الانتقال
+        ProviderScope.containerOf(
+          context,
+        ).invalidate(pilgrimsListProvider(sessionId));
+
+        // التوجيه إلى صفحة قائمة الحجاج
+        navigatorKey.currentState!.pushNamed(
+          AppRoute.leaderPilgrimsListView,
+          arguments: sessionId,
+        );
+      }
+    } // 🌟🌟 4. معالجة إشعار إنهاء الجلسة من المشرف (للحاج) 🌟🌟
+    else if (message.data['status'] == 'tracking_session_ended') {
+      // فقط نقوم بإيقاف التتبع محلياً في الخلفية
+      ProviderScope.containerOf(
+        context,
+      ).read(pilgrimTrackingControllerProvider.notifier).stopTracking();
     } else {
       print("⚠️ التوجيه لم يحدث! نوع الإشعار غير معروف.");
     }
@@ -244,7 +335,8 @@ class PushNotificationService {
   static void _showInAppNotification(RemoteMessage message) {
     final context = navigatorKey.currentContext;
     if (context == null) return;
-
+    final status = message.data['status'];
+    final locale = context.locale;
     // 🌟 إذا كان الإشعار لطلب المراقبة والتطبيق مفتوح، نظهر الدايلوج فوراً!
     // 🔥 2. معالجة إشعار طلب بدء المراقبة
     if (message.data['status'] == 'start_tracking_session') {
@@ -261,9 +353,61 @@ class PushNotificationService {
       }
       return; // نخرج من الدالة حتى لا يظهر SnackBar لهذا النوع من الإشعارات
     }
+    if (status == 'tracking_session_ended') {
+      // 1. نوقف التتبع محلياً
+      ProviderScope.containerOf(
+        context,
+      ).read(pilgrimTrackingControllerProvider.notifier).stopTracking();
+      // 2. نتحقق مما إذا كانت واجهة خريطة الحاج مفتوحة لإغلاقها
+      // يمكننا معرفة ذلك عبر محاولة إغلاقها، لكن الأفضل التأكد من نوع الـ Widget الحالية
+      // طريقة آمنة للرجوع للخلف إذا كنا في شاشة التتبع:
+      Navigator.popUntil(context, (route) {
+        // نفترض أن مسار الشاشة الرئيسية هو '/' أو اسم مسارك الرئيسي
+        // سيقوم بعمل pop للواجهات حتى يصل للرئيسية، وبالتالي يغلق شاشة الخريطة إن وجدت
+        return route.settings.name == AppRoute.mainHomeView || route.isFirst;
+      });
+    }
+    // 🔥 إضافة الكود الجديد هنا: معالجة إشعار تغير حالة الحاج 🔥
+    if (message.data['status'] == 'pilgrim_status_changed') {
+      final sessionId =
+          int.tryParse(message.data['sessionId']?.toString() ?? '0') ?? 0;
 
-    // 🌟 أما إذا كان إشعاراً عادياً، نظهره كشريط (SnackBar) كما كان سابقاً
-    final locale = context.locale;
+      if (sessionId > 0) {
+        // 1. أمرنا Riverpod بمسح البيانات القديمة وجلب الجديدة من الداتا بيس فوراً
+        ProviderScope.containerOf(
+          context,
+        ).invalidate(pilgrimsListProvider(sessionId));
+      }
+    }
+    // 3. بناء الـ SnackBar بشكل ديناميكي
+    // إذا كان الإشعار لتغير حالة الحاج، لا نضع زر (Action) لأن البيانات تتحدث أمامه بالفعل
+    // أما إذا كان إعلاناً، نضع زر "عرض التفاصيل" للذهاب لصفحة الإعلان
+    // 3. بناء الـ SnackBar بشكل ديناميكي
+    SnackBarAction? snackBarAction;
+
+    if (status == 'new_announcement') {
+      snackBarAction = SnackBarAction(
+        label: locale.viewDetails,
+        textColor: AppColor.golden,
+        onPressed: () {
+          _handleMessage(message);
+        },
+      );
+    }
+    // 🔥 التعديل هنا: دمجنا الحالتين ليظهر لهما نفس زر "إغلاق"
+    else if (status == 'pilgrim_status_changed' ||
+        status == 'tracking_session_ended') {
+      snackBarAction = SnackBarAction(
+        label:
+            'إغلاق', // يمكنك تغييرها إلى locale.close إذا كانت متوفرة في الترجمة
+        textColor: AppColor.golden,
+        onPressed: () {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        },
+      );
+    }
+
+    // عرض الـ SnackBar الموحد الخاص بك
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Column(
@@ -285,17 +429,151 @@ class PushNotificationService {
         ),
         backgroundColor: AppColor.baseFontColor,
         duration: const Duration(seconds: 5),
-        action: SnackBarAction(
-          label: locale.viewDetails,
-          textColor: AppColor.golden,
-          onPressed: () {
-            _handleMessage(message);
-          },
-        ),
+        action: snackBarAction,
       ),
     );
+    // SnackBarAction? snackBarAction;
+    // if (status == 'new_announcement') {
+    //   snackBarAction = SnackBarAction(
+    //     label: locale.viewDetails,
+    //     textColor: AppColor.golden,
+    //     onPressed: () {
+    //       _handleMessage(message);
+    //     },
+    //   );
+    // } else if (status == 'pilgrim_status_changed') {
+    //   // إختياري: يمكن وضع زر يغلق الـ SnackBar فقط، أو لا نضع شيئاً
+    //   snackBarAction = SnackBarAction(
+    //     label: 'حسناً', // يمكنك إضافتها لملف الترجمة لاحقاً
+    //     textColor: AppColor.golden,
+    //     onPressed: () {
+    //       ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    //     },
+    //   );
+    // }
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   SnackBar(
+    //     content: Column(
+    //       mainAxisSize: MainAxisSize.min,
+    //       crossAxisAlignment: CrossAxisAlignment.start,
+    //       children: [
+    //         Text(
+    //           message.notification?.title ?? locale.newNotification,
+    //           maxLines: 1,
+    //           overflow: TextOverflow.ellipsis,
+    //           style: const TextStyle(fontWeight: FontWeight.bold),
+    //         ),
+    //         Text(
+    //           message.notification?.body ?? '',
+    //           maxLines: 1,
+    //           overflow: TextOverflow.ellipsis,
+    //         ),
+    //       ],
+    //     ),
+    //     backgroundColor: AppColor.baseFontColor,
+    //     duration: const Duration(seconds: 5),
+    //     action: snackBarAction, // تمرير الـ Action الذي حددناه بالأعلى
+    //   ),
+    // );
+
+    // 🌟 أما إذا كان إشعاراً عادياً، نظهره كشريط (SnackBar) كما كان سابقاً
+    // final locale = context.locale;
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   SnackBar(
+    //     content: Column(
+    //       mainAxisSize: MainAxisSize.min,
+    //       crossAxisAlignment: CrossAxisAlignment.start,
+    //       children: [
+    //         Text(
+    //           message.notification?.title ?? locale.newNotification,
+    //           maxLines: 1,
+    //           overflow: TextOverflow.ellipsis,
+    //           style: const TextStyle(fontWeight: FontWeight.bold),
+    //         ),
+    //         Text(
+    //           message.notification?.body ?? '',
+    //           maxLines: 1,
+    //           overflow: TextOverflow.ellipsis,
+    //         ),
+    //       ],
+    //     ),
+    //     backgroundColor: AppColor.baseFontColor,
+    //     duration: const Duration(seconds: 5),
+    //     action: SnackBarAction(
+    //       label: locale.viewDetails,
+    //       textColor: AppColor.golden,
+    //       onPressed: () {
+    //         _handleMessage(message);
+    //       },
+    //     ),
+    //   ),
+    // );
   }
 
+  // ==========================================
+  // دالة الدايلوج الخاصة بطلب التتبع
+  // ==========================================
+  // static void _showTrackingAcceptDialog(
+  //   BuildContext context,
+  //   int sessionId, // أصبح int
+  //   String notificationBody, // أصبحنا نمرر نص الإشعار
+  // ) {
+  //   showDialog(
+  //     context: context,
+  //     barrierDismissible: false, // لا يمكن إغلاقه بالضغط بالخارج
+  //     builder: (context) {
+  //       return AlertDialog(
+  //         shape: RoundedRectangleBorder(
+  //           borderRadius: BorderRadius.circular(16),
+  //         ),
+  //         title: const Row(
+  //           children: [
+  //             Icon(Icons.location_on, color: AppColor.golden),
+  //             SizedBox(width: 8),
+  //             Text('طلب مشاركة الموقع', style: TextStyle(fontSize: 16)),
+  //           ],
+  //         ),
+  //         content: Text(notificationBody),
+  //         actions: [
+  //           // زر الرفض
+  //           TextButton(
+  //             onPressed: () {
+  //               Navigator.pop(context);
+  //               // استدعاء دالة الرفض
+  //               ProviderScope.containerOf(context)
+  //                   .read(pilgrimTrackingControllerProvider.notifier)
+  //                   .rejectSession(sessionId: sessionId);
+  //             },
+  //             child: const Text('رفض', style: TextStyle(color: Colors.red)),
+  //           ),
+  //           // زر الموافقة
+  //           ElevatedButton(
+  //             style: ElevatedButton.styleFrom(backgroundColor: AppColor.golden),
+  //             onPressed: () {
+  //               Navigator.pop(context);
+
+  //               final userState = ProviderScope.containerOf(
+  //                 context,
+  //               ).read(userProfileProvider);
+  //               final profile = userState.value;
+
+  //               if (profile != null) {
+  //                 ProviderScope.containerOf(context)
+  //                     .read(pilgrimTrackingControllerProvider.notifier)
+  //                     .acceptAndStartTracking(
+  //                       sessionId: sessionId,
+  //                       pilgrimId: profile.userId.toString(),
+  //                       pilgrimName: profile.fullName,
+  //                     );
+  //               }
+  //             },
+  //             child: const Text('موافق', style: TextStyle(color: Colors.white)),
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
   // ==========================================
   // دالة الدايلوج الخاصة بطلب التتبع
   // ==========================================
@@ -335,8 +613,9 @@ class PushNotificationService {
             // زر الموافقة
             ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: AppColor.golden),
-              onPressed: () {
-                Navigator.pop(context);
+              // 🔥 التعديل هنا: تحويل الدالة إلى async
+              onPressed: () async {
+                Navigator.pop(context); // إغلاق الدايلوج أولاً
 
                 final userState = ProviderScope.containerOf(
                   context,
@@ -344,19 +623,28 @@ class PushNotificationService {
                 final profile = userState.value;
 
                 if (profile != null) {
-                  ProviderScope.containerOf(context)
-                      .read(pilgrimTrackingControllerProvider.notifier)
-                      .acceptAndStartTracking(
-                        sessionId: sessionId,
-                        pilgrimId: profile.userId.toString(),
-                        pilgrimName: profile.fullName,
-                      );
+                  try {
+                    // 🔥 التعديل هنا: انتظار نجاح دالة الموافقة وبدء التتبع
+                    await ProviderScope.containerOf(context)
+                        .read(pilgrimTrackingControllerProvider.notifier)
+                        .acceptAndStartTracking(
+                          sessionId: sessionId,
+                          pilgrimId: profile.userId.toString(),
+                          pilgrimName: profile.fullName,
+                        );
+
+                    // 🔥 التعديل هنا: التوجيه إلى شاشة التتبع بعد النجاح
+                    // تأكد أن AppRoute.pilgrimMapTrackingView معرف مسبقاً في ملف app_route.dart
+                    navigatorKey.currentState?.pushNamed(
+                      AppRoute.pilgrimMapTrackingView,
+                      arguments:
+                          sessionId, // تمرير الـ sessionId إذا كانت الشاشة تحتاجه
+                    );
+                  } catch (e) {
+                    // يمكنك هنا إضافة سناك بار لإظهار رسالة خطأ للمستخدم في حال فشل العملية
+                    print("حدث خطأ أثناء بدء التتبع: $e");
+                  }
                 }
-                // 🔥 2. نوجه الحاج لشاشة الخريطة الخاصة به ونمرر لها رقم الجلسة
-                // navigatorKey.currentState!.pushNamed(
-                //   AppRoute.pilgrimMapView, // تأكدي من إضافة هذا المسار في راوتر التطبيق
-                //   arguments: sessionId,
-                // );
               },
               child: const Text('موافق', style: TextStyle(color: Colors.white)),
             ),

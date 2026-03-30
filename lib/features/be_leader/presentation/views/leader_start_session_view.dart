@@ -6,6 +6,7 @@ import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/core/constants/app_size.dart';
 import 'package:yusr/core/extensions/async_value_ui.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
+import 'package:yusr/features/be_leader/providers/leader_tracking_controller.dart';
 import 'package:yusr/features/be_leader/providers/start_session_controller.dart';
 import 'package:yusr/core/common/widgets/big_circular_button.dart';
 
@@ -26,6 +27,10 @@ class LeaderStartSessionView extends ConsumerWidget {
       } else if (state.hasValue && state.value != null) {
         context.closeLoadingDialog();
         final sessionId = state.value!.data!.sessionId;
+        // 🚀 السطر السحري المفقود: تشغيل التتبع للمشرف فور إنشاء الجلسة!
+        ref
+            .read(leaderTrackingControllerProvider.notifier)
+            .startTracking(sessionId);
         context.showSuccessSnackBar(state.value!.message);
 
         Navigator.of(
