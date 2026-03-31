@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/features/auth/data/models/login_model.dart';
+import 'package:yusr/core/constants/app_route.dart';
 
 class BuildDrawerHeader extends StatelessWidget {
   const BuildDrawerHeader({super.key, required this.profile});
@@ -23,22 +24,27 @@ class BuildDrawerHeader extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Stack(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(3),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 2),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2), // لون الظل شفاف
-                      blurRadius: 10, // نعومة الظل
-                      spreadRadius: 1, // انتشار الظل
-                      offset: const Offset(0, 4), // اتجاه الظل للأسفل
-                    ),
-                  ],
-                ),
+          GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, AppRoute.profileView);
+            },
+            child: Stack(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(3),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(color: AppColor.withe, width: 2),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColor.black.withValues(alpha: 0.2), // لون الظل شفاف
+                        blurRadius: 10, // نعومة الظل
+                        spreadRadius: 1, // انتشار الظل
+                        offset: const Offset(0, 4), // اتجاه الظل للأسفل
+                      ),
+                    ],
+                  ),
                 child: CircleAvatar(
                   radius: 35,
                   backgroundColor: const Color(0xFF1A1A1A),
@@ -74,12 +80,13 @@ class BuildDrawerHeader extends StatelessWidget {
               ),
             ],
           ),
+          ),
 
           const SizedBox(height: 10),
           Text(
             profile.fullName,
             style: const TextStyle(
-              color: Color(0xFF1A1A1A),
+              color: AppColor.baseFontColor,
               fontWeight: FontWeight.bold,
               fontSize: 16,
             ),

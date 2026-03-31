@@ -131,6 +131,10 @@
   "strokes": "Strokes",
   "ofWord": "of",
   "tawafDescription": "Strokes are updated automatically based on your location from the Black Stone and your movement around the Kaaba.",
+  "done": "Done",
+  "congratulations": "🎉 Congratulations!",
+  "all_rounds_completed": "You have successfully completed all rounds",
+  "tawaf_saei_success_msg": "May Allah accept",
   "profileTitle": "Profile",
   "errorLoadingData": "An error occurred while loading data",
   "personalData": "Personal Data",
@@ -138,6 +142,7 @@
   "gender": "Gender",
   "male": "Male",
   "dateOfBirth": "Date of Birth",
+  "age": "Age",
   "healthStatus": "Health Status",
   "active": "Active",
   "inactive": "Inactive",
@@ -147,17 +152,9 @@
   "yemeniMobileNumber": "Yemeni Mobile Number",
   "whatsappNumber": "WhatsApp Number",
   "relativeContact": "Relative Contact",
-  "copiedSuccessfully": "Copied successfully: {text}",
-  "@copiedSuccessfully": {
-    "placeholders": {
-      "text": {
-        "type": "String"
-      }
-    }
-  },
+  "copiedSuccessfully": "Copied successfully",
   "sharing": "Sharing...",
   "userRole": "User",
-  "retry": "Retry",
   "notAdded": "Not Added",
   "addSaudiNumberAction": "Add Saudi Number",
   "copiedText": "Copied"

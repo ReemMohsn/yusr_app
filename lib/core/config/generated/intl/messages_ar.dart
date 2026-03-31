@@ -20,8 +20,6 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ar';
 
-  static String m0(text) => "تم النسخ: ${text}";
-
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "accepted": MessageLookupByLibrary.simpleMessage("موافق"),
@@ -35,6 +33,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "إضافة رقم سعودي",
     ),
     "administration": MessageLookupByLibrary.simpleMessage("الإدارة"),
+    "age": MessageLookupByLibrary.simpleMessage("العمر"),
+    "all_rounds_completed": MessageLookupByLibrary.simpleMessage(
+      "لقد أتممت جميع الأشواط بنجاح",
+    ),
     "announcementContent": MessageLookupByLibrary.simpleMessage(
       "محتوى الإعلان",
     ),
@@ -68,12 +70,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "confirmSendAnnouncementQuestion": MessageLookupByLibrary.simpleMessage(
       "هل أنت متأكد من إرسال هذا الإعلان؟",
     ),
+    "congratulations": MessageLookupByLibrary.simpleMessage("🎉 مبارك عليك!"),
     "connectionFailed": MessageLookupByLibrary.simpleMessage(
       "فشل الاتصال، يرجى التحقق من اتصالك بالإنترنت",
     ),
     "contactData": MessageLookupByLibrary.simpleMessage("بيانات التواصل"),
     "contentLabel": MessageLookupByLibrary.simpleMessage("المحتوى"),
-    "copiedSuccessfully": m0,
+    "copiedSuccessfully": MessageLookupByLibrary.simpleMessage(
+      "تم النسخ بنجاح",
+    ),
     "copiedText": MessageLookupByLibrary.simpleMessage("تم النسخ"),
     "currentLocation": MessageLookupByLibrary.simpleMessage("الموقع الحالي"),
     "currentStroke": MessageLookupByLibrary.simpleMessage("الشوط الحالي"),
@@ -84,6 +89,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "detiles": MessageLookupByLibrary.simpleMessage("التفاصيل"),
     "dhuhr": MessageLookupByLibrary.simpleMessage("الظهر"),
+    "done": MessageLookupByLibrary.simpleMessage("تم"),
     "edit": MessageLookupByLibrary.simpleMessage("تعديل"),
     "emailLabel": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
     "emailOrPassport": MessageLookupByLibrary.simpleMessage(
@@ -122,7 +128,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "forgotPasswordDescription": MessageLookupByLibrary.simpleMessage(
       "لا تقلق، يمكنك استعادة حسابك بسهولة. أدخل بريدك الإلكتروني وسنرسل لك رمز التحقق",
     ),
-    "fullName": MessageLookupByLibrary.simpleMessage("الاسم الكامل"),
+    "fullName": MessageLookupByLibrary.simpleMessage("الاسم الرباعي"),
     "gender": MessageLookupByLibrary.simpleMessage("الجنس"),
     "groupInfo": MessageLookupByLibrary.simpleMessage("معلومات الجروب"),
     "hajjActionsTitle": MessageLookupByLibrary.simpleMessage("أعمال حج"),
@@ -190,7 +196,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "لا يوجد حجاج مرتبطين بهذه الجلسة.",
     ),
     "notActive": MessageLookupByLibrary.simpleMessage("غير مفعل"),
-    "notAdded": MessageLookupByLibrary.simpleMessage("لم يتم الإضافة"),
+    "notAdded": MessageLookupByLibrary.simpleMessage("غير مضاف"),
     "notFound": MessageLookupByLibrary.simpleMessage("لا يوجد"),
     "notificationSearch": MessageLookupByLibrary.simpleMessage(
       "\'ابحث عن إشعارات...",
@@ -214,11 +220,13 @@ class MessageLookup extends MessageLookupByLibrary {
       "سيتم إرسال رابط الاستعادة إلى بريدك الإلكتروني",
     ),
     "rejected": MessageLookupByLibrary.simpleMessage("رافض"),
-    "relativeContact": MessageLookupByLibrary.simpleMessage("قريب للتواصل"),
+    "relativeContact": MessageLookupByLibrary.simpleMessage(
+      "رقم تواصل لأحد الأقارب",
+    ),
     "remaining": MessageLookupByLibrary.simpleMessage("المتبقي"),
     "reset": MessageLookupByLibrary.simpleMessage("إعادة التعيين"),
     "resetButton": MessageLookupByLibrary.simpleMessage("إعادة التعيين"),
-    "residentialLocation": MessageLookupByLibrary.simpleMessage("موقع الإقامة"),
+    "residentialLocation": MessageLookupByLibrary.simpleMessage("موقع السكن"),
     "retry": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
     "returnMe": MessageLookupByLibrary.simpleMessage("ارجعني"),
     "ritualsPreparation": MessageLookupByLibrary.simpleMessage(
@@ -267,6 +275,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "tawaf": MessageLookupByLibrary.simpleMessage("طواف"),
     "tawafDescription": MessageLookupByLibrary.simpleMessage(
       "يتم تحديث الأشواط تلقائياً بناءً على موقعك من الحجر الأسود وحركتك حول الكعبة المشرفة.",
+    ),
+    "tawaf_saei_success_msg": MessageLookupByLibrary.simpleMessage(
+      "تقبل الله !",
     ),
     "titleLabel": MessageLookupByLibrary.simpleMessage("العنوان"),
     "total": MessageLookupByLibrary.simpleMessage("الإجمالي"),

@@ -10,7 +10,7 @@ class ApiLink {
   static const String logout = '$server/Auth/Logout';
 
   // 3. Profile
-  static const String getProfile = '$server/Profile/GetUserDetails';
+  static const String getProfile = '$server/Profile/GetProfileMobile';
   static const String updateProfile = '$server/Profile/UpdateUserProfile';
 
   // 4. Announcements & Notifications

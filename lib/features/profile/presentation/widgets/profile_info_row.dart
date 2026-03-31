@@ -22,7 +22,7 @@ class _GoldIconBox extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Icon(icon, color: Colors.white, size: 18),
+      child: Icon(icon, color: AppColor.withe, size: 18),
     );
   }
 }
@@ -117,16 +117,16 @@ class ProfileHighlightedInfoRow extends StatelessWidget {
           begin: const Alignment(0.4, -1),
           end: const Alignment(-0.4, 1),
           colors: [
-            const Color(0xFFFFFBEB),
-            const Color(0xFFFEFCE8).withValues(alpha: 0.8),
-            const Color(0xFFFFF7ED).withValues(alpha: 0.6),
+            AppColor.highlightBackground1,
+            AppColor.highlightBackground2.withValues(alpha: 0.8),
+            AppColor.highlightBackground3.withValues(alpha: 0.6),
           ],
         ),
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: AppColor.golden.withValues(alpha: 0.4), width: 0.7),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
+            color: AppColor.black.withValues(alpha: 0.08),
             blurRadius: 3,
             offset: const Offset(0, 1),
           ),
@@ -160,11 +160,11 @@ class ProfileInfoRow extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColor.withe,
         borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.14),
+            color: AppColor.black.withValues(alpha: 0.14),
             blurRadius: 4,
             offset: const Offset(0, 1),
           ),

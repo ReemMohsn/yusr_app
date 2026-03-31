@@ -1169,6 +1169,41 @@ class AppLocalizations {
     );
   }
 
+  /// `Done`
+  String get done {
+    return Intl.message('Done', name: 'done', desc: '', args: []);
+  }
+
+  /// `🎉 Congratulations!`
+  String get congratulations {
+    return Intl.message(
+      '🎉 Congratulations!',
+      name: 'congratulations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You have successfully completed all rounds`
+  String get all_rounds_completed {
+    return Intl.message(
+      'You have successfully completed all rounds',
+      name: 'all_rounds_completed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `May Allah accept`
+  String get tawaf_saei_success_msg {
+    return Intl.message(
+      'May Allah accept',
+      name: 'tawaf_saei_success_msg',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Profile`
   String get profileTitle {
     return Intl.message('Profile', name: 'profileTitle', desc: '', args: []);
@@ -1217,6 +1252,11 @@ class AppLocalizations {
       desc: '',
       args: [],
     );
+  }
+
+  /// `Age`
+  String get age {
+    return Intl.message('Age', name: 'age', desc: '', args: []);
   }
 
   /// `Health Status`
@@ -1299,13 +1339,13 @@ class AppLocalizations {
     );
   }
 
-  /// `Copied successfully: {text}`
-  String copiedSuccessfully(String text) {
+  /// `Copied successfully`
+  String get copiedSuccessfully {
     return Intl.message(
-      'Copied successfully: $text',
+      'Copied successfully',
       name: 'copiedSuccessfully',
       desc: '',
-      args: [text],
+      args: [],
     );
   }
 

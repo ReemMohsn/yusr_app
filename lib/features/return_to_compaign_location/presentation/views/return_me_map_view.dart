@@ -25,7 +25,7 @@ class _ReturnMeMapViewState extends ConsumerState<ReturnMeMapView> {
 
     ref.listen(fetchCampLocationControllerProvider, (previous, next) {
       next.whenData((response) {
-        if (response.data != null) {
+        if (response != null && response.data != null) {
           ref
               .read(mapLogicControllerProvider.notifier)
               .initializeTracking(_mapController, response.data!);
@@ -47,7 +47,7 @@ class _ReturnMeMapViewState extends ConsumerState<ReturnMeMapView> {
           // مؤشر التحميل
           LoadingOverlay(
             isLoading:
-                campLocationAsync.isLoading,
+                campLocationAsync.isLoading || mapState.targetLocation == null,
           ),
 
           // زر التتبع

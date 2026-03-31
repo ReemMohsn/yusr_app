@@ -3,32 +3,37 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/common/providers/shared_preferences_service_provider.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
+import 'package:hijri/hijri_calendar.dart';
+
+// ─── Role helper (mirrors the one in profile_view.dart) ──────────────────────────────
+bool _isHajjRole(String rawRole) {
+  final lower = rawRole.toLowerCase();
+  return lower == 'user' || lower == 'hajj' ||
+      rawRole == 'مستخدم' || rawRole == 'حاج' || rawRole.isEmpty;
+}
 
 class ProfileHeaderCard extends ConsumerWidget {
   final String fullName;
-  final String identifier;
 
   const ProfileHeaderCard({
     super.key,
     required this.fullName,
-    required this.identifier,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Read local identifier and role from SharedPreferences via FutureBuilder since it's async
     final sharedPrefs = ref.watch(sharedPreferencesServiceProvider);
 
     return FutureBuilder(
       future: sharedPrefs.getProfile(),
       builder: (context, snapshot) {
         final localProfile = snapshot.data;
-        // The role string. Use fallback if not found.
         final identifier = localProfile?.identifier ?? '';
         final rawRole = localProfile?.userRole ?? context.locale.userRole;
-        final roleLower = rawRole.toLowerCase();
-        final isHajj = roleLower == 'user' || roleLower == 'hajj' || rawRole == 'مستخدم' || rawRole == 'حاج' || rawRole.isEmpty;
-        final userRole = isHajj ? 'حاج - حملة ١٤٤٦هـ' : rawRole;
+        final displayRole = _isHajjRole(rawRole) ? 'حاج' : rawRole;
+
+        final currentHijriYear = HijriCalendar.now().hYear;
+        final userRole = '$displayRole - حملة $currentHijriYearهـ';
         return Container(
           width: double.infinity,
           padding: const EdgeInsets.fromLTRB(16, 28, 16, 24),
@@ -43,7 +48,7 @@ class ProfileHeaderCard extends ConsumerWidget {
             border: Border.all(color: AppColor.golden.withValues(alpha: 0.3), width: 0.7),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.18),
+                color: AppColor.black.withValues(alpha: 0.18),
                 blurRadius: 25,
                 offset: const Offset(0, 12),
               ),
@@ -62,10 +67,10 @@ class ProfileHeaderCard extends ConsumerWidget {
                     end: Alignment.bottomCenter,
                     colors: [AppColor.golden, AppColor.darkGolden],
                   ),
-                  border: Border.all(color: Colors.white.withValues(alpha: 0.22), width: 3),
+                  border: Border.all(color: AppColor.withe.withValues(alpha: 0.22), width: 3),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.18),
+                      color: AppColor.black.withValues(alpha: 0.18),
                       blurRadius: 14,
                       offset: const Offset(0, 8),
                     ),
@@ -75,7 +80,7 @@ class ProfileHeaderCard extends ConsumerWidget {
                   child: Text(
                     fullName.isNotEmpty ? fullName.characters.first : 'م',
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: AppColor.withe,
                       fontSize: 44,
                       fontWeight: FontWeight.bold,
                       height: 1.1,
@@ -90,7 +95,7 @@ class ProfileHeaderCard extends ConsumerWidget {
               Text(
                 fullName,
                 style: const TextStyle(
-                  color: Colors.white,
+                  color: AppColor.withe,
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                 ),
@@ -103,7 +108,7 @@ class ProfileHeaderCard extends ConsumerWidget {
               Text(
                 identifier,
                 style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.6),
+                  color: AppColor.withe.withValues(alpha: 0.6),
                   fontSize: 13,
                 ),
                 textAlign: TextAlign.center,
@@ -116,13 +121,13 @@ class ProfileHeaderCard extends ConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
-                    colors: [Color(0xFFFFFBEB), Color(0xFFFEFCE8)],
+                    colors: [AppColor.highlightBackground1, AppColor.highlightBackground2],
                   ),
                   borderRadius: BorderRadius.circular(14),
                   border: Border.all(color: AppColor.golden.withValues(alpha: 0.4), width: 0.7),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.1),
+                      color: AppColor.black.withValues(alpha: 0.1),
                       blurRadius: 3,
                       offset: const Offset(0, 1),
                     ),

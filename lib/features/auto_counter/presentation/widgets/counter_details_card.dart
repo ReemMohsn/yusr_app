@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/features/auto_counter/presentation/widgets/counter_info_item.dart';
+import 'package:yusr/features/auto_counter/providers/auto_counter_controller.dart';
 
-class CounterDetailsCard extends StatelessWidget {
+class CounterDetailsCard extends ConsumerWidget {
   const CounterDetailsCard({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final locale = context.locale;
-
-    int current = 0;
-    int totalStrokes = 7;
+    final counterState = ref.watch(autoCounterControllerProvider);
+    final notifier = ref.read(autoCounterControllerProvider.notifier);
 
     return Container(
       padding: EdgeInsets.all(20.w),
@@ -34,13 +35,13 @@ class CounterDetailsCard extends StatelessWidget {
             children: [
               CounterInfoItem(
                 label: locale.remaining,
-                value: "${totalStrokes - current} ${locale.strokes}",
+                value: "${counterState.remainingLaps} ${locale.strokes}",
                 color: AppColor.golden,
                 align: CrossAxisAlignment.end,
               ),
               CounterInfoItem(
                 label: locale.total,
-                value: "$current ${locale.ofWord} $totalStrokes",
+                value: "${counterState.currentLap} ${locale.ofWord} ${counterState.totalLaps}",
                 color: AppColor.baseFontColor,
                 align: CrossAxisAlignment.start,
               ),
@@ -50,28 +51,40 @@ class CounterDetailsCard extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(10.r),
             child: LinearProgressIndicator(
-              value: current / totalStrokes,
+              value: counterState.currentLap / counterState.totalLaps,
               minHeight: 7.h,
               backgroundColor: AppColor.inputFieldBoundaries,
               valueColor: const AlwaysStoppedAnimation<Color>(AppColor.golden),
             ),
           ),
           SizedBox(height: 20.h),
+
+          // الزر (بدء / إعادة تعيين)
           ElevatedButton.icon(
             onPressed: () {
-              // منطق إعادة التعيين هنا
+              if (counterState.isRunning) {
+                notifier.reset(); // إذا كان يعمل، يقوم بإعادة التعيين
+              } else {
+                notifier.startTracking(); // إذا كان متوقفاً، يبدأ العمل
+              }
             },
             icon: Icon(
-              Icons.refresh,
-              color: AppColor.lightFontColor,
+              counterState.isRunning ? Icons.refresh : Icons.play_arrow,
+              color: counterState.isRunning ? AppColor.lightFontColor : AppColor.withe,
               size: 18.w,
             ),
             label: Text(
-              locale.reset,
-              style: TextStyle(color: AppColor.lightFontColor, fontSize: 14.sp),
+              counterState.isRunning ? locale.reset : locale.start,
+              style: TextStyle(
+                color: counterState.isRunning ? AppColor.lightFontColor : AppColor.withe, 
+                fontSize: 14.sp,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColor.inputFieldColor,
+              backgroundColor: counterState.isRunning 
+                  ? AppColor.inputFieldColor 
+                  : AppColor.golden,
               elevation: 0,
               minimumSize: Size(double.infinity, 50.h),
               shape: RoundedRectangleBorder(

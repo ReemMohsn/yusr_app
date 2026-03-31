@@ -46,11 +46,11 @@ class ProfileContactRow extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColor.withe,
         borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.14),
+            color: AppColor.black.withValues(alpha: 0.14),
             blurRadius: 4,
             offset: const Offset(0, 1),
           ),
@@ -101,6 +101,23 @@ class ProfileContactRow extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
+              // Optional edit icon
+              if (showEdit && onEdit != null) ...[
+                GestureDetector(
+                  onTap: onEdit,
+                  child: Container(
+                    width: 36,
+                    height: 36,
+                    decoration: BoxDecoration(
+                      color: AppColor.successBackground,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: AppColor.successBorder, width: 1),
+                    ),
+                    child: const Icon(Icons.edit_outlined, color: AppColor.successIcon, size: 16),
+                  ),
+                ),
+                const SizedBox(width: 6),
+              ],
               // Copy icon
               GestureDetector(
                 onTap: () => _copy(context, value),
@@ -108,30 +125,13 @@ class ProfileContactRow extends StatelessWidget {
                   width: 36,
                   height: 36,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF8F9FA),
+                    color: AppColor.inputFieldColor,
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: AppColor.golden, width: 1),
                   ),
                   child: const Icon(Icons.copy_outlined, color: AppColor.golden, size: 16),
                 ),
               ),
-              // Optional edit icon
-              if (showEdit && onEdit != null) ...[
-                const SizedBox(width: 6),
-                GestureDetector(
-                  onTap: onEdit,
-                  child: Container(
-                    width: 36,
-                    height: 36,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFF0FDF4),
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.green.shade200, width: 1),
-                    ),
-                    child: Icon(Icons.edit_outlined, color: Colors.green.shade400, size: 16),
-                  ),
-                ),
-              ],
               // Optional delete icon
               if (showDelete && onDelete != null) ...[
                 const SizedBox(width: 6),
@@ -141,11 +141,11 @@ class ProfileContactRow extends StatelessWidget {
                     width: 36,
                     height: 36,
                     decoration: BoxDecoration(
-                      color: const Color(0xFFFFF5F5),
+                      color: AppColor.dangerBackground,
                       borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.red.shade200, width: 1),
+                      border: Border.all(color: AppColor.dangerBorder, width: 1),
                     ),
-                    child: Icon(Icons.delete_outline, color: Colors.red.shade400, size: 16),
+                    child: const Icon(Icons.delete_outline, color: AppColor.dangerIcon, size: 16),
                   ),
                 ),
               ],
@@ -174,7 +174,7 @@ class AddSaudiNumberCard extends StatelessWidget {
         gradient: const LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [Color(0xFF2B2B2B), Color(0xFF1A1A1A)],
+          colors: [AppColor.lightBlack, AppColor.baseFontColor],
         ),
         borderRadius: BorderRadius.circular(24),
       ),
@@ -203,7 +203,7 @@ class AddSaudiNumberCard extends StatelessWidget {
                     Text(
                       context.locale.saudiMobileNumber,
                       style: const TextStyle(
-                        color: Colors.white,
+                        color: AppColor.withe,
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                       ),
@@ -239,7 +239,7 @@ class AddSaudiNumberCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(32),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.15),
+                    color: AppColor.black.withValues(alpha: 0.15),
                     blurRadius: 6,
                     offset: const Offset(0, 3),
                   ),

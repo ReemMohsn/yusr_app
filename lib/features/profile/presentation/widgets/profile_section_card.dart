@@ -1,30 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:yusr/core/constants/app_color.dart';
 
-/// Gold right-border section header
+/// Clean section title — thin gold pill accent beside the text, no box/fill.
 class _SectionHeader extends StatelessWidget {
   final String title;
   const _SectionHeader(this.title);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(right: 12, top: 6, bottom: 6),
-      decoration: const BoxDecoration(
-        border: Border(right: BorderSide(color: AppColor.golden, width: 3)),
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(2),
-          bottomRight: Radius.circular(2),
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // Thin gold vertical pill — purely decorative accent
+        Container(
+          width: 3,
+          height: 18,
+          decoration: BoxDecoration(
+            color: AppColor.golden,
+            borderRadius: BorderRadius.circular(2),
+          ),
         ),
-      ),
-      child: Text(
-        title,
-        style: const TextStyle(
-          color: AppColor.baseFontColor,
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
+        const SizedBox(width: 10),
+        Text(
+          title,
+          style: const TextStyle(
+            color: AppColor.baseFontColor,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-      ),
+      ],
     );
   }
 }
@@ -45,12 +50,12 @@ class ProfileSectionCard extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColor.withe,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFE5E7EB), width: 0.7),
+        border: Border.all(color: AppColor.inputFieldBoundaries, width: 0.7),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
+            color: AppColor.black.withValues(alpha: 0.08),
             blurRadius: 6,
             offset: const Offset(0, 4),
           ),
@@ -59,20 +64,18 @@ class ProfileSectionCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          // Header row
+          // ── Header ──
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+            padding: const EdgeInsets.fromLTRB(20, 14, 20, 6),
             child: Align(
               alignment: Alignment.centerRight,
               child: _SectionHeader(title),
             ),
           ),
-          const Divider(height: 1, thickness: 1, color: Color(0xFFF3F4F6)),
+          // ── Content ──
           Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: children,
-            ),
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+            child: Column(children: children),
           ),
         ],
       ),

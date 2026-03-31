@@ -15,6 +15,16 @@ class AppColor {
   static const Color lightBlack = Color(0xFF2B2B2B);
   static const Color danger = Color(0xFFDC3545);
   static const Color success = Color(0xFF28A745);
+  static const Color successBackground = Color(0xFFF0FDF4);
+  static const Color successBorder = Color(0xFFA7F3D0);
+  static const Color successIcon = Color(0xFF4ADE80);
+  static const Color dangerBackground = Color(0xFFFFF5F5);
+  static const Color dangerBorder = Color(0xFFFECACA);
+  static const Color dangerIcon = Color(0xFFF87171);
+  static const Color black = Color(0xFF000000);
+  static const Color highlightBackground1 = Color(0xFFFFFBEB);
+  static const Color highlightBackground2 = Color(0xFFFEFCE8);
+  static const Color highlightBackground3 = Color(0xFFFFF7ED);
   static const Color background = Color(0xFFF5F5F0);
   static const Color darkGolden = Color(0xFFB8941F);
   static const Color brownGolden = Color(0xFFC49A3A);

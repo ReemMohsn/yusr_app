@@ -59,7 +59,7 @@ class MapLogicController extends _$MapLogicController {
       _gpsSub = service.positionStream.listen((position) {
         if (!ref.mounted) return;
 
-        if (state.isTracking) {
+        if (state.isTracking && state.targetLocation != null) {
           final userPos = LatLng(position.latitude, position.longitude);
           _updateProgress(userPos);
         }
