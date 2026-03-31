@@ -6,6 +6,7 @@ import 'package:yusr/features/auto_counter/presentation/views/tawaf_counter_view
 import 'package:yusr/features/be_leader/presentation/views/leader_map_tracking_view.dart';
 import 'package:yusr/features/be_leader/presentation/views/leader_pilgrims_list_view.dart';
 import 'package:yusr/features/be_leader/presentation/views/leader_start_session_view.dart';
+import 'package:yusr/features/be_leader/presentation/views/pilgrim_map_tracking_view.dart';
 import 'package:yusr/features/campaign_location/data/models/campaign_location_item_model.dart';
 import 'package:yusr/features/announcements_notifications/data/models/notifications_model.dart'
     show NotificationModel;
@@ -90,12 +91,16 @@ class AppRouter {
           builder: (_) => LeaderPilgrimsListView(sessionId: sessionId),
         );
       case AppRoute.leaderMapTrackingView:
-        // استقبال المتغير كرقم
         final int sessionId = settings.arguments as int;
         return MaterialPageRoute(
           builder: (_) => LeaderMapTrackingView(
             sessionId: sessionId, // 🚨 تمرير الرقم للواجهة هنا
           ),
+        );
+      case AppRoute.pilgrimMapTrackingView:
+        final int sessionId = settings.arguments as int;
+        return MaterialPageRoute(
+          builder: (_) => PilgrimMapTrackingView(sessionId: sessionId),
         );
       case AppRoute.tawafCounterView:
         return MaterialPageRoute(builder: (_) => const TawafCounterView());
@@ -139,7 +144,7 @@ class AppRoute {
   static const String leaderPilgrimsListView = '/LeaderPilgrimsListView';
   static const String leaderMapTrackingView = '/LeaderMapTrackingView';
   static const String leaderStartSessionView = '/LeaderStartSessionView';
-
+  static const String pilgrimMapTrackingView = '/PilgrimMapTrackingView';
   static const String tawafCounterView = '/TawafCounterView';
   static const String instructionsView = '/InstructionsView';
   static const String hajjDetailsView = '/HajjDetailsView';

@@ -41,6 +41,7 @@ class ApiLink {
   static const String getPilgrims = '$server/Monitoring/GetSessionParticipants';
   static const String participantResponse =
       '$server/Monitoring/ParticipantResponse';
+  static const String endTrackingSession = '$server/Monitoring/EndSession';
 
   // 5. وظائف ديناميكية
   static String changeResidentialNeighborhoodManager({

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:vibration/vibration.dart';
-import 'state/auto_counter_state.dart'; 
+import 'state/auto_counter_state.dart';
 
 part 'auto_counter_controller.g.dart';
 
@@ -85,14 +85,14 @@ class AutoCounterController extends _$AutoCounterController {
     );
 
     // لتجربة الاهتزاز الآن: إذا وصل لزاوية قريبة من 360 (دورة كاملة)
-    if (state.accumulatedAngle >= 345 && state.stepsInCurrentLap >= 20) { 
+    if (state.accumulatedAngle >= 345 && state.stepsInCurrentLap >= 20) {
       _onLapCompleted();
     }
   }
 
   void _onLapCompleted() {
     _triggerVibration();
-    
+
     if (state.currentLap < state.totalLaps) {
       state = state.copyWith(
         currentLap: state.currentLap + 1,
@@ -105,12 +105,8 @@ class AutoCounterController extends _$AutoCounterController {
   }
 
   void _finishTawaf() {
-    state = state.copyWith(
-      isRunning: false, 
-      isCompleted: true,
-      currentLap: 7, 
-    );
-    _triggerVibration(); 
+    state = state.copyWith(isRunning: false, isCompleted: true, currentLap: 7);
+    _triggerVibration();
     ref.read(mockEngineProvider).stop();
     _subscription?.cancel();
   }
@@ -120,36 +116,38 @@ class AutoCounterController extends _$AutoCounterController {
     _subscription?.cancel();
     state = const AutoCounterState();
   }
-Future<void> _triggerVibration() async {
-  if (await Vibration.hasVibrator()) {
-    Vibration.vibrate(
-      pattern: [
-        0,   // ابدأ فوراً
-        300, // نبضة 1 (قوية جداً)
-        100, // فاصل قصير جداً لزيادة حدة الشعور بالنبضة التالية
-        300, // نبضة 2
-        100, // فاصل
-        300, // نبضة 3
-        100, // فاصل
-        300, // نبضة 4
-        100, // فاصل
-        400  // نبضة 5 (الأطول والختامية لضمان أقصى تنبيه)
-      ],
-    );
+
+  Future<void> _triggerVibration() async {
+    if (await Vibration.hasVibrator()) {
+      Vibration.vibrate(
+        pattern: [
+          0, // ابدأ فوراً
+          300, // نبضة 1 (قوية جداً)
+          100, // فاصل قصير جداً لزيادة حدة الشعور بالنبضة التالية
+          300, // نبضة 2
+          100, // فاصل
+          300, // نبضة 3
+          100, // فاصل
+          300, // نبضة 4
+          100, // فاصل
+          400, // نبضة 5 (الأطول والختامية لضمان أقصى تنبيه)
+        ],
+      );
+    }
   }
-}
-//   Future<void> _triggerVibration() async {
-//   if (await Vibration.hasVibrator()) {
-//     // التحقق مما إذا كان الجهاز يدعم التحكم في الشدة (Amplitude)
-//     if (await Vibration.hasAmplitudeControl()) {
-//       Vibration.vibrate(
-//         pattern: [0, 500, 200, 500], // اهتزاز نصف ثانية، توقف بسيط، ثم نصف ثانية أخرى
-//         intensities: [0, 255, 0, 255], // 255 هي أقصى قوة ممكنة للمحرك
-//       );
-//     } else {
-//       // إذا كان الجهاز لا يدعم التحكم بالشدة، نكتفي بنمط طويل وقوي
-//       Vibration.vibrate(pattern: [0, 1000]); // اهتزاز متواصل لمدة ثانية كاملة
-//     }
-//   }
-// }
+
+  //   Future<void> _triggerVibration() async {
+  //   if (await Vibration.hasVibrator()) {
+  //     // التحقق مما إذا كان الجهاز يدعم التحكم في الشدة (Amplitude)
+  //     if (await Vibration.hasAmplitudeControl()) {
+  //       Vibration.vibrate(
+  //         pattern: [0, 500, 200, 500], // اهتزاز نصف ثانية، توقف بسيط، ثم نصف ثانية أخرى
+  //         intensities: [0, 255, 0, 255], // 255 هي أقصى قوة ممكنة للمحرك
+  //       );
+  //     } else {
+  //       // إذا كان الجهاز لا يدعم التحكم بالشدة، نكتفي بنمط طويل وقوي
+  //       Vibration.vibrate(pattern: [0, 1000]); // اهتزاز متواصل لمدة ثانية كاملة
+  //     }
+  //   }
+  // }
 }
