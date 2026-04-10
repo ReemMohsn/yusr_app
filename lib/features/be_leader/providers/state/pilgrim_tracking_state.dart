@@ -9,16 +9,15 @@ class PilgrimTrackingState {
   final double distance;
   final bool isLoading;
   final String? errorMessage;
-
+  final String? gpsWarning; // 👈 أضفنا هذا المتغير للتنبيهات
   PilgrimTrackingState({
     this.pilgrimLocation,
     this.leaderLocation,
     this.distance = 0.0,
     this.isLoading = false,
     this.errorMessage,
+    this.gpsWarning,
   });
-
-  // دالة مساعدة لتحديد لون حالة الحاج بناءً على المسافة
   Color get statusColor {
     if (distance <= 75.0) return Colors.teal; // النطاق الأخضر
     if (distance <= 150.0) return Colors.amber; // النطاق الأصفر

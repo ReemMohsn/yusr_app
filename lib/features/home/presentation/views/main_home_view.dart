@@ -13,6 +13,7 @@ import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/core/services/notification_service.dart';
 import 'package:yusr/features/auth/data/models/login_model.dart';
 import 'package:yusr/features/auto_counter/presentation/views/tawaf_counter_view.dart';
+import 'package:yusr/features/be_leader/providers/pilgrim_tracking_controller.dart';
 import 'package:yusr/features/home/data/models/navigation_item_model.dart';
 import 'package:yusr/features/home/presentation/views/home_view.dart';
 import 'package:yusr/features/home/presentation/widgets/custom_drawer.dart';
@@ -257,6 +258,17 @@ class _MainHomeViewState extends ConsumerState<MainHomeView> {
                       size: 28,
                     ),
                     onPressed: () {
+                      // 🌟 التعديل هنا: استدعاء دالة بدء التتبع لتنشيط الـ Stream في حال تم إغلاق التطبيق مسبقاً
+                      ref
+                          .read(pilgrimTrackingControllerProvider.notifier)
+                          .acceptAndStartTracking(
+                            sessionId: activeSessionId,
+                            pilgrimId: profile.userId
+                                .toString(), // تأكد أن userId هو اسم المتغير الصحيح في موديل Profile
+                            pilgrimName: profile.fullName,
+                          );
+
+                      // ثم الانتقال إلى الخريطة
                       Navigator.of(context).pushNamed(
                         AppRoute.pilgrimMapTrackingView,
                         arguments: activeSessionId,
@@ -296,153 +308,6 @@ class _MainHomeViewState extends ConsumerState<MainHomeView> {
       ],
     );
   }
-
-  /// الواجهة في حالة المستخدم المسجل (صورة + خريطة التتبع + جرس)
-  // Widget _buildLoggedInLeading(BuildContext context, ProfileModel profile) {
-  //   final unreadCount = ref.watch(unreadNotificationsCountProvider);
-
-  //   // 1. قراءة التفضيلات المحلية لمعرفة إذا كان هناك جلسة نشطة
-  //   final sharedPrefs = ref.read(sharedPreferencesServiceProvider);
-  //   final activeSessionId = sharedPrefs.getInt(SharedPreferencesKeys.sessionId) ?? 0;
-
-  //   return Row(
-  //     children: [
-  //       const SizedBox(width: 10),
-  //       // أيقونة البروفايل
-  //       Container(
-  //         width: 35,
-  //         height: 35,
-  //         decoration: const BoxDecoration(
-  //           color: AppColor.golden,
-  //           shape: BoxShape.circle,
-  //         ),
-  //         child: Center(
-  //           child: Text(
-  //             profile.fullName.isNotEmpty
-  //                 ? profile.fullName[0].toUpperCase()
-  //                 : "P",
-  //             style: const TextStyle(
-  //               fontWeight: FontWeight.bold,
-  //               color: Colors.black,
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //       const SizedBox(width: 5), // تقليل المسافة قليلاً لتوفير المساحة
-
-  //       // 🌟 2. زر الوصول السريع لخريطة التتبع (يظهر فقط إذا كان هناك جلسة نشطة)
-  //       if (activeSessionId > 0 && profile.userRole == 'حاج')
-  //         IconButton(
-  //           padding: EdgeInsets.zero,
-  //           constraints: const BoxConstraints(), // لتقليل المساحة المحيطة بالزر
-  //           icon: const Icon(
-  //             Icons.location_on, // أيقونة الموقع أو الخريطة
-  //             color: Colors.greenAccent, // لون مميز يدل على أن التتبع نشط
-  //             size: 28,
-  //           ),
-  //           onPressed: () {
-  //             // توجيه الحاج مباشرة لشاشة الخريطة مع تمرير رقم الجلسة
-  //             Navigator.of(context).pushNamed(
-  //               AppRoute.pilgrimMapTrackingView,
-  //               arguments: activeSessionId,
-  //             );
-  //           },
-  //         ),
-
-  //       const SizedBox(width: 5),
-
-  //       // 🌟 3. الـ Badge حول أيقونة الجرس
-  //       Badge(
-  //         isLabelVisible: unreadCount > 0,
-  //         label: Text(
-  //           unreadCount > 99 ? '+99' : unreadCount.toString(),
-  //           style: const TextStyle(
-  //             color: Colors.white,
-  //             fontSize: 10,
-  //             fontWeight: FontWeight.bold,
-  //           ),
-  //         ),
-  //         backgroundColor: Colors.red,
-  //         alignment: const Alignment(0.4, -0.4),
-  //         child: IconButton(
-  //           padding: EdgeInsets.zero,
-  //           icon: const Icon(
-  //             Icons.notifications_none_outlined,
-  //             color: AppColor.golden,
-  //             size: 28,
-  //           ),
-  //           onPressed: () => _navigateToNotifications(context),
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
-
-  /// الواجهة في حالة المستخدم المسجل (صورة + جرس)
-  // Widget _buildLoggedInLeading(BuildContext context, ProfileModel profile) {
-  //   final unreadCount = ref.watch(unreadNotificationsCountProvider);
-  //   return Row(
-  //     children: [
-  //       const SizedBox(width: 10),
-  //       // أيقونة البروفايل
-  //       Container(
-  //         width: 35,
-  //         height: 35,
-  //         decoration: const BoxDecoration(
-  //           color: AppColor.golden,
-  //           shape: BoxShape.circle,
-  //         ),
-  //         child: Center(
-  //           child: Text(
-  //             profile.fullName.isNotEmpty
-  //                 ? profile.fullName[0].toUpperCase()
-  //                 : "P",
-  //             style: const TextStyle(
-  //               fontWeight: FontWeight.bold,
-  //               color: Colors.black,
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //       const SizedBox(width: 10),
-
-  //       // IconButton(
-  //       //   icon: const Icon(Icons.notifications_none_outlined, color: AppColor.golden),
-  //       //   onPressed: () => _navigateToNotifications(context)
-  //       //     // معالجة النقر على أيقونة الجرس
-  //       //   ,
-  //       // ),
-  //       // 🌟 2. إضافة الـ Badge حول أيقونة الجرس
-  //       Badge(
-  //         // إظهار البادج فقط إذا كان هناك إشعارات جديدة (أكبر من 0)
-  //         isLabelVisible: unreadCount > 0,
-  //         // عرض الرقم داخل البادج
-  //         label: Text(
-  //           unreadCount > 99
-  //               ? '+99'
-  //               : unreadCount.toString(), // للتعامل مع الأرقام الكبيرة
-  //           style: const TextStyle(
-  //             color: Colors.white,
-  //             fontSize: 10,
-  //             fontWeight: FontWeight.bold,
-  //           ),
-  //         ),
-  //         backgroundColor: Colors.red, // لون البادج أحمر ليدل على التنبيه
-  //         alignment: const Alignment(
-  //           0.4,
-  //           -0.4,
-  //         ), // ضبط موضع البادج أعلى يمين الجرس
-  //         child: IconButton(
-  //           icon: const Icon(
-  //             Icons.notifications_none_outlined,
-  //             color: AppColor.golden,
-  //           ),
-  //           onPressed: () => _navigateToNotifications(context),
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
 
   // دالة التنقل المنفصلة لزيادة وضوح الكود
   void _navigateToNotifications(BuildContext context) {

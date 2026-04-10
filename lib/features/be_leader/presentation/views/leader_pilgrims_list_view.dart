@@ -7,6 +7,7 @@ import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/features/be_leader/presentation/widgets/pilgrim_list_item_widget.dart';
 import 'package:yusr/features/be_leader/presentation/widgets/stat_card_widget.dart';
+import 'package:yusr/features/be_leader/providers/leader_tracking_controller.dart';
 import 'package:yusr/features/be_leader/providers/pilgrims_list_provider.dart';
 
 class LeaderPilgrimsListView extends ConsumerWidget {
@@ -17,9 +18,24 @@ class LeaderPilgrimsListView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = context.locale;
-
-    // مراقبة البروفايدر الذي يجلب قائمة الحجاج بناءً على رقم الجلسة
     final pilgrimsAsyncValue = ref.watch(pilgrimsListProvider(sessionId));
+    // 🌟 إضافة الاستماع للتحذير هنا في واجهة الحجاج
+    ref.listen<TrackingState>(leaderTrackingControllerProvider, (
+      previous,
+      next,
+    ) {
+      if (next.gpsWarning != null && next.gpsWarning != previous?.gpsWarning) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(next.gpsWarning!),
+            backgroundColor: Colors.orange,
+            duration: const Duration(seconds: 4),
+          ),
+        );
+      }
+    });
+    // مراقبة البروفايدر الذي يجلب قائمة الحجاج بناءً على رقم الجلسة
+    // final pilgrimsAsyncValue = ref.watch(pilgrimsListProvider(sessionId));
 
     return Scaffold(
       appBar: AppBar(

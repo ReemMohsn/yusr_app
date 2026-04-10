@@ -83,31 +83,29 @@ class CustomDrawer extends ConsumerWidget {
             title: locale.becomeALeader,
             icon: Icons.workspace_premium_outlined,
             onTap: () async {
-              Navigator.pop(context); // 1. إغلاق القائمة الجانبية
-
+              // 1. قراءة التفضيلات المحلية
               final sharedPrefs = ref.read(sharedPreferencesServiceProvider);
               final activeSessionId = await sharedPrefs.getInt(
                 SharedPreferencesKeys.currentSessionId,
               );
 
               if (activeSessionId != null && activeSessionId > 0) {
-                // 🚀 التحقق الأول: هل الوظيفة تعمل حالياً في الذاكرة (التطبيق لم يُغلق)؟
+                // 🚀 التحقق الأول: هل الوظيفة تعمل حالياً في الذاكرة؟
                 final isAlreadyRunning = ref
                     .read(leaderTrackingControllerProvider.notifier)
                     .isCurrentlyTracking;
 
                 if (isAlreadyRunning) {
-                  // المشرف كان فقط يتصفح واجهة أخرى، لا حاجة للاتصال بالفايربيس!
-                  // نوجهه مباشرة لقائمة الحجاج
+                  // Navigator.pop(context); // إغلاق القائمة الجانبية
                   Navigator.of(context).pushNamed(
                     AppRoute.leaderPilgrimsListView,
                     arguments: activeSessionId,
                   );
-                  return; // نخرج من الدالة فوراً
+                  return; // نخرج من الدالة
                 }
 
-                // 🛑 التحقق الثاني: وصلنا هنا يعني أن التطبيق أُغلق بالقوة (App Killed) والذاكرة فُرغت.
-                // يجب أن نسأل الفايربيس هل مر 30 دقيقة أم لا؟
+                // 🛑 التحقق الثاني (نسأل الفايربيس):
+                // نفتح التحميل (والقائمة الجانبية لا تزال مفتوحة لكي يبقى السياق context حياً)
                 context.showLoadingDialog();
 
                 final repo = ref.read(trackingRepositoryProvider);
@@ -127,15 +125,22 @@ class CustomDrawer extends ConsumerWidget {
                   }
                 }
 
-                context.closeLoadingDialog(); // إخفاء التحميل
+                // 🌟 حماية فلاتر القياسية (التأكد أن الشاشة لا زالت موجودة قبل استخدام context)
+                // if (!context.mounted) return;
+
+                context.closeLoadingDialog(); // إخفاء التحميل بأمان
+
+                // Navigator.pop(
+                //   context,
+                // ); // الآن فقط نقوم بإغلاق القائمة الجانبية!
 
                 if (isSessionExpired) {
-                  // 🔴 الجلسة ميتة (مر أكثر من 30 دقيقة)
-                  // تنظيف صامت وتوجيه لإنشاء جلسة جديدة
+                  // 🔴 الجلسة ميتة
                   await ref
                       .read(leaderTrackingControllerProvider.notifier)
                       .cleanUpGhostSession(activeSessionId);
 
+                  if (!context.mounted) return;
                   context.showErrorSnackBar(
                     'انتهت صلاحية جلستك السابقة لعدم نشاطك لأكثر من 30 دقيقة.',
                   );
@@ -143,11 +148,12 @@ class CustomDrawer extends ConsumerWidget {
                     context,
                   ).pushNamed(AppRoute.leaderStartSessionView);
                 } else {
-                  // 🟢 الجلسة صالحة (أقل من 30 دقيقة)
-                  // 🚀 بدون أي دايالوج خيارات، نقوم بتشغيل التتبع وتوجيهه فوراً!
+                  // 🟢 الجلسة صالحة
                   ref
                       .read(leaderTrackingControllerProvider.notifier)
                       .startTracking(activeSessionId);
+
+                  if (!context.mounted) return;
                   Navigator.of(context).pushNamed(
                     AppRoute.leaderPilgrimsListView,
                     arguments: activeSessionId,
@@ -155,12 +161,86 @@ class CustomDrawer extends ConsumerWidget {
                 }
               } else {
                 // لا توجد جلسة من الأساس
+                // Navigator.pop(context); // إغلاق القائمة
                 Navigator.of(
                   context,
                 ).pushNamed(AppRoute.leaderStartSessionView);
               }
             },
           ),
+          // BuildMenuItem(
+          //   context: context,
+          //   title: locale.becomeALeader,
+          //   icon: Icons.workspace_premium_outlined,
+          //   onTap: () async {
+          //     Navigator.pop(context); // 1. إغلاق القائمة الجانبية
+          //     final sharedPrefs = ref.read(sharedPreferencesServiceProvider);
+          //     final activeSessionId = await sharedPrefs.getInt(
+          //       SharedPreferencesKeys.currentSessionId,
+          //     );
+          //     if (activeSessionId != null && activeSessionId > 0) {
+          //       // 🚀 التحقق الأول: هل الوظيفة تعمل حالياً في الذاكرة (التطبيق لم يُغلق)؟
+          //       final isAlreadyRunning = ref
+          //           .read(leaderTrackingControllerProvider.notifier)
+          //           .isCurrentlyTracking;
+          //       if (isAlreadyRunning) {
+          //         // المشرف كان فقط يتصفح واجهة أخرى، لا حاجة للاتصال بالفايربيس!
+          //         // نوجهه مباشرة لقائمة الحجاج
+          //         Navigator.of(context).pushNamed(
+          //           AppRoute.leaderPilgrimsListView,
+          //           arguments: activeSessionId,
+          //         );
+          //         return; // نخرج من الدالة فوراً
+          //       }
+          //       // 🛑 التحقق الثاني: وصلنا هنا يعني أن التطبيق أُغلق بالقوة (App Killed) والذاكرة فُرغت.
+          //       // يجب أن نسأل الفايربيس هل مر 30 دقيقة أم لا؟
+          //       context.showLoadingDialog();
+          //       final repo = ref.read(trackingRepositoryProvider);
+          //       final lastUpdate = await repo.getLeaderLastUpdate(
+          //         activeSessionId.toString(),
+          //       );
+          //       bool isSessionExpired = true; // نفترض أنها منتهية كإجراء أمني
+          //       if (lastUpdate != null) {
+          //         final currentTime = DateTime.now().millisecondsSinceEpoch;
+          //         final differenceInMinutes =
+          //             (currentTime - lastUpdate) / (1000 * 60);
+          //         if (differenceInMinutes < 30) {
+          //           isSessionExpired = false; // الجلسة لا زالت صالحة
+          //         }
+          //       }
+          //       context.closeLoadingDialog(); // إخفاء التحميل
+          //       if (isSessionExpired) {
+          //         // 🔴 الجلسة ميتة (مر أكثر من 30 دقيقة)
+          //         // تنظيف صامت وتوجيه لإنشاء جلسة جديدة
+          //         await ref
+          //             .read(leaderTrackingControllerProvider.notifier)
+          //             .cleanUpGhostSession(activeSessionId);
+
+          //         context.showErrorSnackBar(
+          //           'انتهت صلاحية جلستك السابقة لعدم نشاطك لأكثر من 30 دقيقة.',
+          //         );
+          //         Navigator.of(
+          //           context,
+          //         ).pushNamed(AppRoute.leaderStartSessionView);
+          //       } else {
+          //         // 🟢 الجلسة صالحة (أقل من 30 دقيقة)
+          //         // 🚀 بدون أي دايالوج خيارات، نقوم بتشغيل التتبع وتوجيهه فوراً!
+          //         ref
+          //             .read(leaderTrackingControllerProvider.notifier)
+          //             .startTracking(activeSessionId);
+          //         Navigator.of(context).pushNamed(
+          //           AppRoute.leaderPilgrimsListView,
+          //           arguments: activeSessionId,
+          //         );
+          //       }
+          //     } else {
+          //       // لا توجد جلسة من الأساس
+          //       Navigator.of(
+          //         context,
+          //       ).pushNamed(AppRoute.leaderStartSessionView);
+          //     }
+          //   },
+          // ),
 
           // BuildMenuItem(
           //   context: context,

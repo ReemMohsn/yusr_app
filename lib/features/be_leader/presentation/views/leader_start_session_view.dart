@@ -33,9 +33,10 @@ class LeaderStartSessionView extends ConsumerWidget {
             .startTracking(sessionId);
         context.showSuccessSnackBar(state.value!.message);
 
-        Navigator.of(
-          context,
-        ).pushNamed(AppRoute.leaderPilgrimsListView, arguments: sessionId);
+        Navigator.of(context).pushReplacementNamed(
+          AppRoute.leaderPilgrimsListView,
+          arguments: sessionId,
+        );
       }
     });
 

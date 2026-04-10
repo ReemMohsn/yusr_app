@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -28,10 +29,25 @@ class TrackingRepository {
         'latitude': location.latitude,
         'longitude': location.longitude,
         'heading': heading,
+        'lastUpdate': ServerValue.timestamp,
       });
     } catch (e) {
       // هنا يمكنك تسجيل الخطأ أو إرساله لخدمة تتبع الأخطاء
       throw Exception("فشل في تحديث موقع المشرف: $e");
+    }
+  }
+
+  // 2. دالة جديدة صغيرة: لختم الجلسة فوراً عند البدء
+  // 2. دالة جديدة صغيرة: لختم الجلسة فوراً عند البدء
+  Future<void> initLeaderSession(String sessionId) async {
+    try {
+      // 🌟 التعديل هنا: استخدام المسار العميق من العقدة الأب مباشرة
+      await _db.ref('TrackingSessions/$sessionId').update({
+        'leaderLocation/lastUpdate': ServerValue.timestamp,
+      });
+      debugPrint("✅ تم ختم الجلسة بنجاح في الفايربيس!");
+    } catch (e) {
+      debugPrint("❌ فشل تهيئة الجلسة: $e");
     }
   }
 
