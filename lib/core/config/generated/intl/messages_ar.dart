@@ -42,6 +42,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "announcements": MessageLookupByLibrary.simpleMessage("الإعلانات"),
     "appName": MessageLookupByLibrary.simpleMessage("يسر"),
     "appSlogan": MessageLookupByLibrary.simpleMessage("مرافق الحاج الذكي"),
+    "askForFatwa": MessageLookupByLibrary.simpleMessage("اسأل عن فتوى"),
     "asr": MessageLookupByLibrary.simpleMessage("العصر"),
     "autoUpdate": MessageLookupByLibrary.simpleMessage("تحديث تلقائي"),
     "becomeALeader": MessageLookupByLibrary.simpleMessage("كن قائد"),
@@ -110,10 +111,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "fetchDataError": MessageLookupByLibrary.simpleMessage(
       "حدث خطأ في جلب البيانات",
     ),
+    "fieldRequired": MessageLookupByLibrary.simpleMessage(
+      "يرجى كتابة السؤال أولاً",
+    ),
     "forgotPassword": MessageLookupByLibrary.simpleMessage("نسيت كلمة المرور؟"),
     "forgotPasswordDescription": MessageLookupByLibrary.simpleMessage(
       "لا تقلق، يمكنك استعادة حسابك بسهولة. أدخل بريدك الإلكتروني وسنرسل لك رمز التحقق",
     ),
+    "getAnswer": MessageLookupByLibrary.simpleMessage("الحصول على الإجابة"),
     "groupInfo": MessageLookupByLibrary.simpleMessage("معلومات الجروب"),
     "hajjActionsTitle": MessageLookupByLibrary.simpleMessage("أعمال حج"),
     "hajjIfradData": MessageLookupByLibrary.simpleMessage(
@@ -139,6 +144,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "km": MessageLookupByLibrary.simpleMessage("كم"),
     "labbayk": MessageLookupByLibrary.simpleMessage("لبيك اللهم لبيك"),
+    "loading": MessageLookupByLibrary.simpleMessage("جاري التحميل..."),
     "locationDescription": MessageLookupByLibrary.simpleMessage("وصف الموقع"),
     "locationList": MessageLookupByLibrary.simpleMessage("قائمة المواقع"),
     "locationName": MessageLookupByLibrary.simpleMessage("اسم الموقع"),
@@ -194,6 +200,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "pilgrimsListTitle": MessageLookupByLibrary.simpleMessage("قائمة الحجاج"),
     "prayerTimes": MessageLookupByLibrary.simpleMessage("مواقيت الصلاة"),
     "publishAnnouncement": MessageLookupByLibrary.simpleMessage("نشر الإعلان"),
+    "questionExample": MessageLookupByLibrary.simpleMessage(
+      "مثال: ما حكم من نسي طواف الإفاضة؟",
+    ),
     "recoveryLinkNote": MessageLookupByLibrary.simpleMessage(
       "سيتم إرسال رابط الاستعادة إلى بريدك الإلكتروني",
     ),
@@ -221,6 +230,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "sendAnnouncementWarning": MessageLookupByLibrary.simpleMessage(
       "بعد الإرسال، سيصل الإعلان إلى جميع المستخدمين في الفئة المحددة ولن يمكن التراجع عن هذا الإجراء.",
     ),
+    "sendQuestion": MessageLookupByLibrary.simpleMessage("إرسال السؤال"),
     "sendVerificationCodeButton": MessageLookupByLibrary.simpleMessage(
       "إرسال رمز التحقق",
     ),
@@ -236,8 +246,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "setNewPassword": MessageLookupByLibrary.simpleMessage(
       "تعيين كلمة مرور جديدة",
     ),
+    "shariaAnswer": MessageLookupByLibrary.simpleMessage("الجواب الشرعي"),
+    "shariaAnswerPlaceholder": MessageLookupByLibrary.simpleMessage(
+      "سيظهر الرد التفصيلي هنا بعد كتابة سؤالك والضغط على زر البحث. المفتي الذكي مدعوم بقواعد بيانات فقهية معتمدة لتوفير أدلة شرعية ميسرة لمناسككم.",
+    ),
     "showMap": MessageLookupByLibrary.simpleMessage("عرض الخريطة"),
     "smartMufti": MessageLookupByLibrary.simpleMessage("المفتي الذكي"),
+    "smartMuftiHelper": MessageLookupByLibrary.simpleMessage(
+      "مساعدك الذكي للإجابة على تساؤلات الحج",
+    ),
     "start": MessageLookupByLibrary.simpleMessage("أبدأ"),
     "startSession": MessageLookupByLibrary.simpleMessage("بدء الجلسة"),
     "strokes": MessageLookupByLibrary.simpleMessage("أشواط"),
@@ -261,9 +278,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "verificationCodeLabel": MessageLookupByLibrary.simpleMessage("رمز التحقق"),
     "verifyCodeButton": MessageLookupByLibrary.simpleMessage("التحقق من الرمز"),
     "viewDetails": MessageLookupByLibrary.simpleMessage("عرض التفاصيل"),
+    "waitingForYourQuestion": MessageLookupByLibrary.simpleMessage(
+      "بانتظار سؤالك للإجابة عليه بالذكاء الاصطناعي..",
+    ),
     "writeAnnouncementContentHere": MessageLookupByLibrary.simpleMessage(
       "اكتب محتوى الإعلان هنا...",
     ),
+    "writeYourFatwaQuestion": MessageLookupByLibrary.simpleMessage(
+      "اكتب سؤالك الشرعي هنا...",
+    ),
     "youAreHere": MessageLookupByLibrary.simpleMessage("أنت هنا"),
+    "yourQuestion": MessageLookupByLibrary.simpleMessage("سؤالك"),
   };
 }
