@@ -6,16 +6,16 @@ part 'counter_provider.g.dart';
 class CounterTypeController extends _$CounterTypeController {
   @override
   bool build() {
-    // القيمة الابتدائية (true تعني طواف مثلاً)
+    // true = طواف (Tawaf) false = سعي (Sa'ee)
     return true;
   }
 
-  /// دالة لتغيير النوع (Toggle)
-  void toggle() {
+  // دالة للتحويل بين النوعين
+  void toggleType() {
     state = !state;
   }
 
-  /// دالة لضبط النوع بشكل مباشر
+  // دالة لتحديد النوع مباشرة
   void setType(bool isTawaf) {
     state = isTawaf;
   }
