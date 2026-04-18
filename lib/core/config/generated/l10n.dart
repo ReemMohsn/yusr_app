@@ -1203,6 +1203,116 @@ class AppLocalizations {
       args: [],
     );
   }
+
+  /// `Ask for a Fatwa`
+  String get askForFatwa {
+    return Intl.message(
+      'Ask for a Fatwa',
+      name: 'askForFatwa',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your smart assistant for Hajj questions`
+  String get smartMuftiHelper {
+    return Intl.message(
+      'Your smart assistant for Hajj questions',
+      name: 'smartMuftiHelper',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your Question`
+  String get yourQuestion {
+    return Intl.message(
+      'Your Question',
+      name: 'yourQuestion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Example: What is the ruling on forgetting Tawaf al-Ifadah?`
+  String get questionExample {
+    return Intl.message(
+      'Example: What is the ruling on forgetting Tawaf al-Ifadah?',
+      name: 'questionExample',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Get Answer`
+  String get getAnswer {
+    return Intl.message('Get Answer', name: 'getAnswer', desc: '', args: []);
+  }
+
+  /// `Sharia Answer`
+  String get shariaAnswer {
+    return Intl.message(
+      'Sharia Answer',
+      name: 'shariaAnswer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The detailed response will appear here after typing your question and clicking search...`
+  String get shariaAnswerPlaceholder {
+    return Intl.message(
+      'The detailed response will appear here after typing your question and clicking search...',
+      name: 'shariaAnswerPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Write your fatwa question here...`
+  String get writeYourFatwaQuestion {
+    return Intl.message(
+      'Write your fatwa question here...',
+      name: 'writeYourFatwaQuestion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send Question`
+  String get sendQuestion {
+    return Intl.message(
+      'Send Question',
+      name: 'sendQuestion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Waiting for your question to be answered by AI...`
+  String get waitingForYourQuestion {
+    return Intl.message(
+      'Waiting for your question to be answered by AI...',
+      name: 'waitingForYourQuestion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loading...`
+  String get loading {
+    return Intl.message('Loading...', name: 'loading', desc: '', args: []);
+  }
+
+  /// `Please enter your question first`
+  String get fieldRequired {
+    return Intl.message(
+      'Please enter your question first',
+      name: 'fieldRequired',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {

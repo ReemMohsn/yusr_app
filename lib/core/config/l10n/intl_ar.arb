@@ -135,5 +135,17 @@
   "done": "تم",
   "congratulations": "🎉 مبارك عليك!",
   "all_rounds_completed": "لقد أتممت جميع الأشواط بنجاح",
-  "tawaf_saei_success_msg": "تقبل الله !"
+  "tawaf_saei_success_msg": "تقبل الله !",
+  "askForFatwa": "اسأل عن فتوى",
+  "smartMuftiHelper": "مساعدك الذكي للإجابة على تساؤلات الحج",
+  "yourQuestion": "سؤالك",
+  "questionExample": "مثال: ما حكم من نسي طواف الإفاضة؟",
+  "getAnswer": "الحصول على الإجابة",
+  "shariaAnswer": "الجواب الشرعي",
+  "shariaAnswerPlaceholder": "سيظهر الرد التفصيلي هنا بعد كتابة سؤالك والضغط على زر البحث. المفتي الذكي مدعوم بقواعد بيانات فقهية معتمدة لتوفير أدلة شرعية ميسرة لمناسككم.",
+  "writeYourFatwaQuestion": "اكتب سؤالك الشرعي هنا...",
+  "sendQuestion": "إرسال السؤال",
+  "waitingForYourQuestion": "بانتظار سؤالك للإجابة عليه بالذكاء الاصطناعي..",
+  "loading": "جاري التحميل...",
+  "fieldRequired": "يرجى كتابة السؤال أولاً"
 }

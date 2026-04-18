@@ -46,6 +46,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "appSlogan": MessageLookupByLibrary.simpleMessage(
       "The Smart Pilgrim Companion",
     ),
+    "askForFatwa": MessageLookupByLibrary.simpleMessage("Ask for a Fatwa"),
     "asr": MessageLookupByLibrary.simpleMessage("Asr"),
     "autoUpdate": MessageLookupByLibrary.simpleMessage("Auto Update"),
     "becomeALeader": MessageLookupByLibrary.simpleMessage("Become a Leader"),
@@ -122,6 +123,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "fetchDataError": MessageLookupByLibrary.simpleMessage(
       "Error fetching data",
     ),
+    "fieldRequired": MessageLookupByLibrary.simpleMessage(
+      "Please enter your question first",
+    ),
     "forgotPassword": MessageLookupByLibrary.simpleMessage("Forgot Password?"),
     "forgotPasswordDescription": MessageLookupByLibrary.simpleMessage(
       "Don\'t worry, you can easily recover your account. Enter your email and we will send you a verification code.",
@@ -129,6 +133,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "forgotPasswordPrompt": MessageLookupByLibrary.simpleMessage(
       "Forgot password?",
     ),
+    "getAnswer": MessageLookupByLibrary.simpleMessage("Get Answer"),
     "groupInfo": MessageLookupByLibrary.simpleMessage("Group Information"),
     "hajjActionsTitle": MessageLookupByLibrary.simpleMessage("Hajj Rituals of"),
     "hajjIfradData": MessageLookupByLibrary.simpleMessage(
@@ -156,6 +161,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "labbayk": MessageLookupByLibrary.simpleMessage(
       "Labbayk Allahumma Labbayk",
     ),
+    "loading": MessageLookupByLibrary.simpleMessage("Loading..."),
     "locationDescription": MessageLookupByLibrary.simpleMessage(
       "Location Description",
     ),
@@ -211,6 +217,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "publishAnnouncement": MessageLookupByLibrary.simpleMessage(
       "Publish Announcement",
     ),
+    "questionExample": MessageLookupByLibrary.simpleMessage(
+      "Example: What is the ruling on forgetting Tawaf al-Ifadah?",
+    ),
     "recoveryLinkNote": MessageLookupByLibrary.simpleMessage(
       "A recovery link will be sent to your email.",
     ),
@@ -238,6 +247,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "sendAnnouncementWarning": MessageLookupByLibrary.simpleMessage(
       "Once sent, the announcement will reach all users in the selected category and this action cannot be undone.",
     ),
+    "sendQuestion": MessageLookupByLibrary.simpleMessage("Send Question"),
     "sendVerificationCodeButton": MessageLookupByLibrary.simpleMessage(
       "Send Verification Code",
     ),
@@ -253,8 +263,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "setNewPassword": MessageLookupByLibrary.simpleMessage(
       "Set a new password",
     ),
+    "shariaAnswer": MessageLookupByLibrary.simpleMessage("Sharia Answer"),
+    "shariaAnswerPlaceholder": MessageLookupByLibrary.simpleMessage(
+      "The detailed response will appear here after typing your question and clicking search...",
+    ),
     "showMap": MessageLookupByLibrary.simpleMessage("Show Map"),
     "smartMufti": MessageLookupByLibrary.simpleMessage("Smart Mufti"),
+    "smartMuftiHelper": MessageLookupByLibrary.simpleMessage(
+      "Your smart assistant for Hajj questions",
+    ),
     "start": MessageLookupByLibrary.simpleMessage("Start"),
     "startSession": MessageLookupByLibrary.simpleMessage("Start Session"),
     "strokes": MessageLookupByLibrary.simpleMessage("Strokes"),
@@ -282,9 +299,16 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "verifyCodeButton": MessageLookupByLibrary.simpleMessage("Verify Code"),
     "viewDetails": MessageLookupByLibrary.simpleMessage("View Details"),
+    "waitingForYourQuestion": MessageLookupByLibrary.simpleMessage(
+      "Waiting for your question to be answered by AI...",
+    ),
     "writeAnnouncementContentHere": MessageLookupByLibrary.simpleMessage(
       "Write announcement content here...",
     ),
+    "writeYourFatwaQuestion": MessageLookupByLibrary.simpleMessage(
+      "Write your fatwa question here...",
+    ),
     "youAreHere": MessageLookupByLibrary.simpleMessage("You are here"),
+    "yourQuestion": MessageLookupByLibrary.simpleMessage("Your Question"),
   };
 }
