@@ -9,15 +9,11 @@ import 'package:yusr/features/profile/presentation/widgets/profile_contact_row.d
 import 'package:yusr/features/profile/presentation/widgets/profile_header_card.dart';
 import 'package:yusr/features/profile/presentation/widgets/profile_info_row.dart';
 import 'package:yusr/features/profile/presentation/widgets/profile_section_card.dart';
+import 'package:yusr/features/profile/presentation/widgets/add_saudi_number_card.dart';
 import 'package:yusr/core/common/widgets/custom_golden_back_button.dart';
+import 'package:yusr/core/constants/app_route.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-// ─── Role helper (single source of truth — shared with ProfileHeaderCard) ────
-bool _isHajjRole(String rawRole) {
-  final lower = rawRole.toLowerCase();
-  return lower == 'user' || lower == 'hajj' ||
-      rawRole == 'مستخدم' || rawRole == 'حاج' || rawRole.isEmpty;
-}
 
 class ProfileView extends ConsumerStatefulWidget {
   const ProfileView({super.key});
@@ -72,7 +68,7 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
                 data: (user) {
                   // Derive Saudi number state from live data, not initState.
                   final hasActualSaudiNumber = user.saudiNumber.isNotEmpty && 
-                                               user.saudiNumber != 'غير متوفر';
+                                               user.saudiNumber != locale.notAvailable;
                   // Show the row if the API already has one, or if the user
                   // tapped "add" in this session.
                   final showSaudiRow = hasActualSaudiNumber || _saudiNumberAdded;
@@ -81,7 +77,9 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
                     future: ref.read(sharedPreferencesServiceProvider).getProfile(),
                     builder: (context, snapshot) {
                       final rawRole = snapshot.data?.userRole ?? '';
-                      final isHajj = _isHajjRole(rawRole);
+                      final lower = rawRole.toLowerCase();
+                      final isHajj = lower == 'user' || lower == 'hajj' ||
+                          rawRole == 'مستخدم' || rawRole == 'حاج' || rawRole.isEmpty;
 
                       return SingleChildScrollView(
                         physics: const BouncingScrollPhysics(),
@@ -163,14 +161,28 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
                                           icon: Icons.phone_outlined,
                                           showEdit: true,
                                           onEdit: () {
-                                            // Edit flow to be implemented
+                                            Navigator.pushNamed(
+                                              context,
+                                              AppRoute.addSaudiNumber,
+                                              arguments: {
+                                                'isEditMode': true,
+                                                'currentNumber': user.saudiNumber,
+                                              },
+                                            );
                                           },
                                         )
                                       : AddSaudiNumberCard(
                                           key: const ValueKey('saudi_add'),
-                                          onTap: () => setState(
-                                            () => _saudiNumberAdded = true,
-                                          ),
+                                          onTap: () {
+                                            Navigator.pushNamed(
+                                              context,
+                                              AppRoute.addSaudiNumber,
+                                              arguments: {
+                                                'isEditMode': false,
+                                                'currentNumber': null,
+                                              },
+                                            );
+                                          },
                                         ),
                                 ),
                                 const SizedBox(height: 12),

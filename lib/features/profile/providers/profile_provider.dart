@@ -9,9 +9,7 @@ Future<UserDetailsModel> userDetails(Ref ref) async {
   final repository = ref.watch(profileRepositoryProvider);
   final response = await repository.getUserDetails();
   
-  if (response.data != null) {
-    return response.data!;
-  } else {
-    throw Exception(response.message);
-  }
+  return response.data!;
 }
+
+

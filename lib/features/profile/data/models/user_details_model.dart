@@ -46,20 +46,24 @@ class UserDetailsModel {
 
   factory UserDetailsModel.fromJson(Map<String, dynamic> json) {
     return UserDetailsModel(
-      fullName: json['fullName'] ?? '',
-      jobTitle: json['jobTitle'] ?? '',
-      officialEmail: json['officialEmail'] ?? '',
-      gender: json['gender'] ?? '',
-      dateOfBirth: json['dateOfBirth'] ?? '',
-      healthStatus: json['healthStatus'] ?? '',
-      placeResidence: json['placeResidence'] ?? '',
-      healthDescription: json['healthDescription'] ?? '',
-      yemeniNumber: json['yemeniNumber'] ?? '',
-      saudiNumber: json['saudiNumber'] ?? '',
-      whatsappNumber: json['whatsappNumber'] ?? '',
-      relativeName: json['relativeName'] ?? '',
-      relationshipType: json['relationshipType'] ?? '',
-      relativePhoneNumber: json['relativePhoneNumber'] ?? '',
+      fullName: json['fullName'] as String? ?? 'غير متوفر',
+      jobTitle: json['jobTitle'] ?? 'غير متوفر',
+      officialEmail: json['officialEmail'] as String? ?? 'غير متوفر',
+      gender: json['gender'] as String? ?? 'غير متوفر',
+      dateOfBirth: json['dateOfBirth'] as String? ?? 'غير متوفر',
+      healthStatus: json['healthStatus'] as String? ?? 'غير متوفر',
+      placeResidence: json['placeResidence'] as String? ?? 'غير متوفر',
+      healthDescription: json['healthDescription'] ?? 'غير متوفر',
+      yemeniNumber: (json['yemeniNumber'] as String?)?.isNotEmpty == true
+          ? json['yemeniNumber'] as String
+          : 'غير متوفر',
+      saudiNumber: (json['saudiNumber'] as String?)?.isNotEmpty == true
+          ? json['saudiNumber'] as String
+          : 'غير متوفر',
+      whatsappNumber: json['whatsappNumber'] as String? ?? 'غير متوفر',
+      relativeName: json['relativeName'] ?? 'غير متوفر',
+      relationshipType: json['relationshipType'] ?? 'غير متوفر',
+      relativePhoneNumber: json['relativePhoneNumber'] as String? ?? 'غير متوفر',
     );
   }
 
@@ -79,6 +83,47 @@ class UserDetailsModel {
       'relativeName': relativeName,
       'relationshipType': relationshipType,
       'relativePhoneNumber': relativePhoneNumber,
+    };
+  }
+}
+
+class UpdateProfileDto {
+  final String firstName;
+  final String fatherName;
+  final String grandfatherName;
+  final String lastName;
+  final String email;
+  final String yemeniContactNumber;
+  final String saudiContactNumber;
+  final String whatsAppContactNumber;
+  final String familyContactNumber;
+  final bool isActive;
+
+  UpdateProfileDto({
+    required this.firstName,
+    required this.fatherName,
+    required this.grandfatherName,
+    required this.lastName,
+    required this.email,
+    required this.yemeniContactNumber,
+    required this.saudiContactNumber,
+    required this.whatsAppContactNumber,
+    required this.familyContactNumber,
+    required this.isActive,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'FirstName': firstName,
+      'FatherName': fatherName,
+      'GrandfatherName': grandfatherName,
+      'LastName': lastName,
+      'Email': email,
+      'YemeniContactNumber': yemeniContactNumber,
+      'SaudiContactNumber': saudiContactNumber,
+      'WhatsAppContactNumber': whatsAppContactNumber,
+      'FamilyContactNumber': familyContactNumber,
+      'IsActive': isActive,
     };
   }
 }

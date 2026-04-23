@@ -1,38 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yusr/core/constants/app_color.dart';
-
-/// Clean section title — thin gold pill accent beside the text, no box/fill.
-class _SectionHeader extends StatelessWidget {
-  final String title;
-  const _SectionHeader(this.title);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        // Thin gold vertical pill — purely decorative accent
-        Container(
-          width: 3,
-          height: 18,
-          decoration: BoxDecoration(
-            color: AppColor.golden,
-            borderRadius: BorderRadius.circular(2),
-          ),
-        ),
-        const SizedBox(width: 10),
-        Text(
-          title,
-          style: const TextStyle(
-            color: AppColor.baseFontColor,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
-    );
-  }
-}
+import 'profile_section_header.dart';
 
 /// White card wrapper with a section header
 class ProfileSectionCard extends StatelessWidget {
@@ -69,7 +37,7 @@ class ProfileSectionCard extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(20, 14, 20, 6),
             child: Align(
               alignment: Alignment.centerRight,
-              child: _SectionHeader(title),
+              child: ProfileSectionHeader(title),
             ),
           ),
           // ── Content ──
