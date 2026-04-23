@@ -32,4 +32,8 @@ class AppColor {
   static const Color dark2 = Color(0xFF2A2A2A);
   static const Color textDark = Color(0xFF101828);
   static const Color textGrey = Color(0xFF4A5565);
+  static const Color inputBg = Color(0xFFF9FAFB);
+  static const Color divider = Color(0xFFD1D5DC);
+  static const Color goldDark = Color(0xFFC49D2F);
+  static const Color warning = Color(0xFFF59E0B);
 }

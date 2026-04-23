@@ -12,7 +12,10 @@ class ApiLink {
   // 3. Profile
   static const String getProfile = '$server/Profile/GetProfileMobile';
   static const String updateProfile = '$server/Profile/UpdateUserProfile';
-
+  static String getGroupDetailsMobile(int groupId) => '$server/Groups/GetGroupDetailsMobile/$groupId';
+  static String getHajDetailsMobile(int userId) => '$server/Groups/GetHajDetailsMobile/$userId';
+  static String getGroupPilgrimsMobile(int groupId) => '$server/Groups/GetGroupPilgrimsMobile/$groupId';
+  static const String getMyGroupPilgrimsMobile = '$server/Groups/GetMyGroupPilgrims';
   // 4. Announcements & Notifications
   static const String syncData = '$server/Announcements/SyncData';
   static const String getNotifications =
