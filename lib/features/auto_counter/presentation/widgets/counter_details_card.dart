@@ -81,19 +81,4 @@ class CounterDetailsCard extends ConsumerWidget {
       ),
     );
   }
-
-  // Widget _buildInfoColumn(String label, String value) {
-  //   return Column(
-  //     children: [
-  //       Text(
-  //         label,
-  //         style: TextStyle(fontSize: 12.sp, color: AppColor.lightFontColor),
-  //       ),
-  //       Text(
-  //         value,
-  //         style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
-  //       ),
-  //     ],
-  //   );
-  // }
 }
