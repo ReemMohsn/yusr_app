@@ -14,7 +14,9 @@ class ApiService {
       BaseOptions(
         baseUrl: 'http://yusrapp.runasp.net/api',
         receiveDataWhenStatusError: true,
-        connectTimeout: const Duration(seconds: 20),
+        connectTimeout: const Duration(seconds: 30),
+        receiveTimeout: const Duration(seconds: 30), // أضيفي هذا السطر ضروري جداً
+        sendTimeout: const Duration(seconds: 30),
         headers: {'Content-Type': 'application/json'},
       ),
     );

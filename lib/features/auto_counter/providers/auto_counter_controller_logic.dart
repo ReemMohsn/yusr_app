@@ -1,167 +1,126 @@
 import 'dart:async';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:sensors_plus/sensors_plus.dart';
-import 'package:pedometer/pedometer.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
+import 'package:vibration/vibration.dart';
+import '../data/repositories/sensors_repository.dart';
 import 'state/auto_counter_state.dart';
+import 'counter_provider.dart'; 
 
-part 'auto_counter_controller_logic.g.dart';
+final autoCounterControllerLogicProvider =
+    StateNotifierProvider<AutoCounterControllerLogic, AutoCounterState>((ref) {
+  return AutoCounterControllerLogic(SensorsRepository(), ref);
+});
 
-@riverpod
-class AutoCounterControllerLogic extends _$AutoCounterControllerLogic {
-  StreamSubscription? _gyroSub;
-  StreamSubscription? _accelSub;
-  StreamSubscription? _stepSub;
+class AutoCounterControllerLogic extends StateNotifier<AutoCounterState> {
+  final SensorsRepository _repository;
+  final Ref _ref;
+  StreamSubscription? _accSub;
+  StreamSubscription? _magSub;
 
-  // إعدادات الدقة
-  static const double _moveThreshold = 0.15;
-  static const double _gyroDeadZone = 0.01;
-  // حد الأمان: لا نبحث عن الالتفاف إلا بعد 300 خطوة
-  static const int _minStepsToStartLookingForTurn = 300;
-  // زاوية الالتفاف المطلوبة لاعتبار الشوط منتهياً (140 درجة كافية لرصد الاستدارة عند الصفا والمروة)
-  static const double _turnThreshold = 140.0;
+  // إعدادات الفلترة
+  DateTime _lastStepTime = DateTime.now();
+  int _consecutiveSteps = 0;
+  double _lastAcc = 0.0;
+  double _lastHeading = 0.0;
 
-  // متغير داخلي لتتبع الدوران في السعي (لا يحتاج أن يكون في الـ State)
-  double _saeeTurnAngle = 0.0;
+  AutoCounterControllerLogic(this._repository, this._ref) : super(const AutoCounterState());
 
-  @override
-  AutoCounterState build() {
-    ref.onDispose(() => _stopAllSensors());
-    return const AutoCounterState();
-  }
-
-  void startTracking(TrackingType type) async {
-    state = state.copyWith(permissionError: null);
-
-    if (type == TrackingType.saee) {
-      var status = await Permission.activityRecognition.request();
-      if (!status.isGranted) {
-        state = state.copyWith(
-          isRunning: false,
-          permissionError:
-              "نحتاج لتفعيل إذن النشاط البدني لعد خطوات السعي تلقائياً.",
-        );
-        return;
-      }
-    }
-
-    _stopAllSensors();
-    _saeeTurnAngle = 0.0; // تصفير زاوية الالتفاف عند البدء الجديد
+  void startTracking() {
+    if (state.isRunning) return;
+    
+    // قراءة نوع النسك من الـ UI Provider (Tawaf or Saee)
+    final isTawaf = _ref.read(counterTypeControllerProvider); 
 
     state = state.copyWith(
-      isRunning: true,
-      isCompleted: false,
-      currentLap: 0,
-      accumulatedAngle: 0.0,
-      stepsInCurrentLap: 0,
-      startSteps: 0,
-      trackingType: type,
+      isRunning: true, 
+      isCompleted: false, 
+      currentLap: 1,
+      trackingType: isTawaf ? TrackingType.tawaf : TrackingType.saee,
     );
-    _initSensors();
+
+    _listenToSensors(isTawaf);
   }
 
-  void _initSensors() {
-    _accelSub = userAccelerometerEventStream().listen((
-      UserAccelerometerEvent event,
-    ) {
-      double totalMotion = event.x.abs() + event.y.abs() + event.z.abs();
-      bool moving = totalMotion > _moveThreshold;
-      if (state.isMoving != moving) {
-        state = state.copyWith(isMoving: moving);
-      }
+  void _listenToSensors(bool isTawaf) {
+    // مراقبة المشي (للطرفين)
+    _accSub = _repository.accelerationStream.listen((acc) {
+      _processWalking(acc, isTawaf);
     });
 
-    _gyroSub = gyroscopeEventStream().listen((GyroscopeEvent event) {
-      if (state.isRunning && state.isMoving) {
-        if (state.trackingType == TrackingType.tawaf) {
-          _processTawafLogic(event);
-        } else if (state.trackingType == TrackingType.saee) {
-          // استخدام الجيروسكوب في السعي لرصد الالتفاف عند الصفا والمروة
-          _processSaeeTurnLogic(event);
+    // مراقبة الدوران (للطواف فقط)
+    if (isTawaf) {
+      _magSub = _repository.headingStream.listen(_processRotation);
+    }
+  }
+
+  void _processWalking(double acc, bool isTawaf) {
+    if (_lastAcc > 2.5 && acc < _lastAcc) { // Peak Detection
+      final now = DateTime.now();
+      int diff = now.difference(_lastStepTime).inMilliseconds;
+
+      if (diff >= 450 && diff <= 1100) {
+        _consecutiveSteps++;
+        _lastStepTime = now;
+        if (_consecutiveSteps >= 2) state = state.copyWith(isMoving: true);
+        
+        if (!isTawaf && _consecutiveSteps >= 5) {
+          _updateSaeeProgress();
         }
+      } else if (diff > 1200) {
+        _consecutiveSteps = 0;
+        state = state.copyWith(isMoving: false);
       }
-    });
-
-    _stepSub = Pedometer.stepCountStream.listen((StepCount event) {
-      if (state.trackingType == TrackingType.saee && state.isRunning) {
-        _processSaeeStepsLogic(event.steps);
-      }
-    });
+    }
+    _lastAcc = acc;
   }
 
-  // منطق الطواف
-  void _processTawafLogic(GyroscopeEvent event) {
-    double deltaAngle = event.z * (180 / 3.14) * 0.02;
-    if (deltaAngle.abs() > _gyroDeadZone) {
-      double newAngle = state.accumulatedAngle + deltaAngle;
-      if (newAngle.abs() >= 360) {
-        _onLapCompleted();
-      } else {
-        state = state.copyWith(accumulatedAngle: newAngle);
-      }
+  void _processRotation(double heading) {
+    if (!state.isMoving) return;
+    if (_lastHeading == 0) { _lastHeading = heading; return; }
+
+    double delta = (heading - _lastHeading).abs();
+    if (delta > 180) delta = 360 - delta;
+    
+    if (delta > 1.2) {
+      double newAngle = state.accumulatedAngle + delta;
+      state = state.copyWith(accumulatedAngle: newAngle);
+      _lastHeading = heading;
+
+      if (state.accumulatedAngle >= 360) _nextLap();
     }
   }
 
-  // منطق خطوات السعي
-  void _processSaeeStepsLogic(int totalSteps) {
-    if (state.startSteps == 0) {
-      state = state.copyWith(startSteps: totalSteps);
-      return;
-    }
-    int stepsDiff = totalSteps - state.startSteps;
-    state = state.copyWith(stepsInCurrentLap: stepsDiff);
+  void _updateSaeeProgress() {
+    int steps = state.stepsInCurrentLap + 1;
+    state = state.copyWith(stepsInCurrentLap: steps);
+    if (steps >= 20) _nextLap(); // 20 خطوة للتجربة
   }
 
-  // منطق الالتفاف في السعي (هو المسؤول عن إنهاء الشوط)
-  void _processSaeeTurnLogic(GyroscopeEvent event) {
-    // نحسب الدوران حول المحور الرأسي للجهاز
-    double delta = event.z * (180 / 3.14) * 0.02;
-    _saeeTurnAngle += delta;
-
-    // الشرط الذكي:
-    // 1. يجب أن يكون المعتمر قد قطع عدداً معقولاً من الخطوات (صمام أمان المسافة)
-    // 2. يجب أن يرصد الجيروسكوب التفافاً حقيقياً (تغيير اتجاه)
-    if (state.stepsInCurrentLap >= _minStepsToStartLookingForTurn &&
-        _saeeTurnAngle.abs() >= _turnThreshold) {
-      _onLapCompleted();
-      _saeeTurnAngle = 0.0; // تصفير الزاوية للشوط القادم
-
-      // ملاحظة: إعادة تعيين startSteps ستحدث تلقائياً في Pedometer stream
-      // بمجرد أن يتم استدعاء _onLapCompleted وتصفير الـ state
-    }
-  }
-
-  void _onLapCompleted() {
-    int nextLap = state.currentLap + 1;
-    if (nextLap >= 7) {
+  void _nextLap() {
+    _triggerVibration();
+    if (state.currentLap < state.totalLaps) {
       state = state.copyWith(
-        currentLap: 7,
-        isCompleted: true,
-        isRunning: false,
-      );
-      _stopAllSensors();
-    } else {
-      state = state.copyWith(
-        currentLap: nextLap,
-        accumulatedAngle: 0.0,
+        currentLap: state.currentLap + 1,
+        accumulatedAngle: 0,
         stepsInCurrentLap: 0,
-        startSteps:
-            0, // تصفير البداية ليتم التقاط القيمة الجديدة في الخطوة القادمة
       );
+    } else {
+      stop();
     }
+  }
+
+  void stop() {
+    _accSub?.cancel();
+    _magSub?.cancel();
+    state = state.copyWith(isRunning: false, isCompleted: true);
   }
 
   void reset() {
-    _stopAllSensors();
+    stop();
     state = const AutoCounterState();
   }
 
-  void _stopAllSensors() {
-    _gyroSub?.cancel();
-    _accelSub?.cancel();
-    _stepSub?.cancel();
-    _gyroSub = null;
-    _accelSub = null;
-    _stepSub = null;
+  void _triggerVibration() async {
+    if (await Vibration.hasVibrator() ?? false) Vibration.vibrate(duration: 500);
   }
 }
