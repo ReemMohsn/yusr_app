@@ -45,7 +45,8 @@ class ApiLink {
   static const String participantResponse =
       '$server/Monitoring/ParticipantResponse';
   static const String endTrackingSession = '$server/Monitoring/EndSession';
-
+    // رابط خدمة المفتي الذكي (Hugging Face)
+  static const String geminiChat = 'https://manar13-yusr-hajj-api.hf.space/ask';
   // 5. وظائف ديناميكية
   static String changeResidentialNeighborhoodManager({
     required int neighborhoodId,

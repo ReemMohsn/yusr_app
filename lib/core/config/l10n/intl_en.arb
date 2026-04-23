@@ -199,4 +199,16 @@
   "errorLoadingPilgrimData": "Error loading pilgrim data",
   "passportNumber": "Passport Number",
   "healthStable": "Stable"
+  "askForFatwa": "Ask for a Fatwa",
+  "smartMuftiHelper": "Your smart assistant for Hajj questions",
+  "yourQuestion": "Your Question",
+  "questionExample": "Example: What is the ruling on forgetting Tawaf al-Ifadah?",
+  "getAnswer": "Get Answer",
+  "shariaAnswer": "Sharia Answer",
+  "shariaAnswerPlaceholder": "The detailed response will appear here after typing your question and clicking search...",
+  "writeYourFatwaQuestion": "Write your fatwa question here...",
+  "sendQuestion": "Send Question",
+  "waitingForYourQuestion": "Waiting for your question to be answered by AI...",
+  "loading": "Loading...",
+  "fieldRequired": "Please enter your question first"
 }

@@ -58,6 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "appName": MessageLookupByLibrary.simpleMessage("يسر"),
     "appSlogan": MessageLookupByLibrary.simpleMessage("مرافق الحاج الذكي"),
     "arrivalDate": MessageLookupByLibrary.simpleMessage("تاريخ الوصول"),
+    "askForFatwa": MessageLookupByLibrary.simpleMessage("اسأل عن فتوى"),
     "asr": MessageLookupByLibrary.simpleMessage("العصر"),
     "autoUpdate": MessageLookupByLibrary.simpleMessage("تحديث تلقائي"),
     "becomeALeader": MessageLookupByLibrary.simpleMessage("كن قائد"),
@@ -150,6 +151,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "fetchDataError": MessageLookupByLibrary.simpleMessage(
       "حدث خطأ في جلب البيانات",
     ),
+    "fieldRequired": MessageLookupByLibrary.simpleMessage(
+      "يرجى كتابة السؤال أولاً",
+    ),
     "forgotPassword": MessageLookupByLibrary.simpleMessage("نسيت كلمة المرور؟"),
     "forgotPasswordDescription": MessageLookupByLibrary.simpleMessage(
       "لا تقلق، يمكنك استعادة حسابك بسهولة. أدخل بريدك الإلكتروني وسنرسل لك رمز التحقق",
@@ -167,6 +171,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "groupNotAssignedTitle": MessageLookupByLibrary.simpleMessage(
       "لم يتم تعيينك في مجموعة بعد",
     ),
+    "getAnswer": MessageLookupByLibrary.simpleMessage("الحصول على الإجابة"),
+    "groupInfo": MessageLookupByLibrary.simpleMessage("معلومات الجروب"),
     "hajjActionsTitle": MessageLookupByLibrary.simpleMessage("أعمال حج"),
     "hajjIfradData": MessageLookupByLibrary.simpleMessage(
       "[{\"title\":\"ما قبل اليوم الثامن\",\"subtitle\":\"أعمال الوصول ومكة\",\"actions\":[{\"name\":\"آداب وتوجيهات\",\"emoji\":\"📖\",\"sections\":[{\"title\":\"النية والعهد\",\"items\":[\"ينبغي لمن نوى الحج أو العمرة أن يستحضر نية التقرب إلى الله عز وجل، وأن يخلص النية في أداء هذه الفريضة العظيمة.\",\"الحج فرصة للتوبة الصادقة وتجديد العهد مع الله تعالى، والإقلاع عن كل الذنوب والخطايا.\",\"كما يجب عليه أن يحرص على أن تكون نفقته في الحج من مال حلال طيب.\"],\"type\":\"text\"}]},{\"name\":\"الإحرام من الميقات\",\"emoji\":\"🤲\",\"sections\":[{\"title\":\"الشرح والخطوات\",\"items\":[\"عند الميقات – أو قبله - تنظف واغتسل كما تغتسل من الجنابة وتطيب في بدنك (للرجال)، ولا بأس إذا بقي أثر الطيب بعد الإحرام.\",\"يلبس الرجل إزاراً ورداءً نظيفين أبيضين. أما المرأة فتلبس صويحباتها العاديات مما ليس فيه تبرج أو زينة، بدون نقاب ولا قفازين.\",\"ينوي وتلبي بقول: \\\"لبيك اللهم حجاً\\\".\",\"ويشرع التلبية الدائمة من الميقات: \\\"لبيك اللهم لبيك، لبيك لا شريك لك لبيك، إن الحمد والنعمة لك والملك، لا شريك لك\\\" ويستمر فيها.\"],\"type\":\"text\"},{\"title\":\"محظورات الإحرام\",\"items\":[\"أخذ شيء من الشعر أو الأظافر.\",\"استعمال الطيب في البدن أو الثوب.\",\"تغطية الرأس بملاصق (للرجال)، ولبس المخيط (للرجال).\",\"الجماع ومقدماته.\",\"قتل الصيد.\"],\"type\":\"warning\"}]},{\"name\":\"طواف القدوم\",\"emoji\":\"🕋\",\"sections\":[{\"title\":\"آداب الطواف\",\"items\":[\"يستحب للمفرد والقارن إذا قدم مكة أن يطوف طواف القدوم وهو سنة.\",\"يقطع التلبية عند بدء الطواف، ويضطبع الرجل (إخراج الكتف الأيمن) في هذا الطواف فقط.\",\"يرمل (يسرع المشي بخطى متقاربة) في الأشواط الثلاثة الأولى (للرجال).\",\"يبدأ بالطواف من الحجر الأسود جاعلاً الكعبة عن يساره، ويطوف ٧ أشواط.\"],\"type\":\"text\"},{\"title\":\"أدعية الطواف\",\"items\":[\"يقول بين الركن اليماني والحجر الأسود: {رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ}.\"],\"type\":\"dua\"}]},{\"name\":\"مقام إبراهيم\",\"emoji\":\"🕌\",\"sections\":[{\"title\":\"ركعتي الطواف\",\"items\":[\"بعد الانتهاء من الطواف، توجه إلى مقام إبراهيم واقرأ: {وَاتَّخِذُوا مِنْ مَقَامِ إِبْرَاهِيمَ مُصَلّىً}.\",\"صَلِّ ركعتين خلف المقام إن تيسر، وإلا في أي مكان بالمسجد الحرام.\",\"يقرأ في الركعة الأولى سورة (الكافرون) وفي الثانية سورة (الإخلاص).\"],\"type\":\"text\"}]},{\"name\":\"زمزم\",\"emoji\":\"💧\",\"sections\":[{\"title\":\"الشرب من ماء زمزم\",\"items\":[\"يستحب لك أن تذهب لتشرب من ماء زمزم وتتضلع منه وتصب على رأسك.\",\"ماء زمزم لما شُرب له، فادعُ الله بما شئت من خيري الدنيا والآخرة.\"],\"type\":\"text\"}]},{\"name\":\"السعي\",\"emoji\":\"🚶\",\"sections\":[{\"title\":\"السعي للحج\",\"items\":[\"للمفرد والقارن أن يقدم سعي الحج بعد طواف القدوم (وبذلك لا يسعى مرة أخرى يوم العيد).\",\"يصعد على الصفا ويقرأ: {إِنَّ الصَّفَا وَالْمَرْوَةَ مِن شَعَآئِرِ اللّهِ فَمَنْ حَجَّ الْبَيْتَ أَوِ اعْتَمَرَ فَلاَ جُنَاحَ عَلَيْهِ أَن يَطَّوَّفَ بِهِمَا وَمَن تَطَوَّعَ خَيْرًا فَإِنَّ اللّهَ شَاكِرٌ للعليم}.\",\"يستقبل القبلة ويكبر ثلاثاً ويدعو، ثم ينزل للسعي نحو المروة.\",\"يسعى ٧ أشواط، الذهاب شوط، والعودة شوط.\"],\"type\":\"text\"},{\"title\":\"أدعية الصفا والمروة\",\"items\":[\"الله أكبر، الله أكبر، الله أكبر، لا إله إلا الله وحده لا شريك له، له الملك وله الحمد، وهو على كل شيء قدير، لا إله إلا الله وحده، أنجز وعده، ونصر عبده، وهزم الأحزاب وحده.\"],\"type\":\"dua\"}]},{\"name\":\"البقاء بمكة\",\"emoji\":\"🏨\",\"sections\":[{\"title\":\"الانتظار بهدوء\",\"items\":[\"يمكث المفرد والقارن بمكة على إحرامهما.\",\"ينبغي استغلال هذا الوقت في كثرة الصلاة في المسجد الحرام، وقراءة القرآن، والذكر، استعداداً لمناسك الحج الأساسية.\"],\"type\":\"text\"}]}]},{\"title\":\"اليوم الثامن\",\"subtitle\":\"يوم التروية - ٨ ذو الحجة\",\"actions\":[{\"name\":\"المبيت بمنى\",\"emoji\":\"🏕️\",\"sections\":[{\"title\":\"أعمال يوم التروية\",\"items\":[\"يتوجه الحاج (المفرد والقارن على إحرامهما، والمتمتع يُحرم من مكانه) إلى منى ضحى.\",\"الخروج إلى منى يوم التروية سنة وليس واجباً.\",\"يصلي فيها الظهر والعصر والمغرب والعشاء وفجر التاسع.\",\"تصلى الصلاة الرباعية ركعتين (قصراً) كل صلاة في وقتها (بدون جمع).\",\"يُكثر من التلبية والذكر والدعاء واستحضار عظمة الزمان.\"],\"type\":\"text\"}]}]},{\"title\":\"اليوم التاسع\",\"subtitle\":\"يوم عرفة - ٩ ذو الحجة\",\"actions\":[{\"name\":\"الوقوف بعرفة\",\"emoji\":\"⛰️\",\"sections\":[{\"title\":\"الركن الأعظم\",\"items\":[\"يتوجه الحاج من منى إلى عرفة بعد طلوع الشمس بهدوء وتلبية.\",\"يصلي الظهر والعصر ومعهما الإمام بمسجد نمرة أو في مخيمه (جمع تقديم وقصراً بأذان وإقامتين).\",\"يتفرغ الحاج تماماً للدعاء والذكر والتضرع، مستقبلاً القبلة، رافعاً يديه، ملحاً على الله حاجته، حتى غروب الشمس.\",\"لا يجوز الخروج من حدود عرفة قبل غروب الشمس.\"],\"type\":\"text\"},{\"title\":\"خير الدعاء دعاء عرفة\",\"items\":[\"خير ما قلت أنا والنبيون من قبلي: لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير.\"],\"type\":\"dua\"}]},{\"name\":\"المبيت بمزدلفة\",\"emoji\":\"🌙\",\"sections\":[{\"title\":\"النفور إلى مزدلفة\",\"items\":[\"بعد غروب الشمس ينفر الحاج إلى مزدلفة بسكينة ووقار ملبياً.\",\"يصلي في مزدلفة المغرب ثلاثاً والعشاء ركعتين (جمع تأخير) فور وصوله ولو في منتصف الليل.\",\"يبيت في مزدلفة حتى يصلي الفجر، ثم يقف عند المشعر الحرام (أو في مكانه) يدعو الله حتى يُسفر جداً.\",\"رخص النبي صلى الله عليه وسلم للضعفاء والنساء بالدفع من مزدلفة إلى منى بعد منتصف الليل.\"],\"type\":\"text\"}]}]},{\"title\":\"اليوم العاشر\",\"subtitle\":\"يوم النحر - العيد\",\"actions\":[{\"name\":\"رمي جمرة العقبة\",\"emoji\":\"🎯\",\"sections\":[{\"title\":\"الرمي\",\"items\":[\"يصل الحاج إلى منى يوم العيد، فيرمي جمرة العقبة الكبرى بـ ٧ حصيات متعاقبات.\",\"يكبر مع كل حصاة: (الله أكبر).\",\"يُقطع التلبية عند رمي أول حصاة من جمرة العقبة.\",\"يُفضل أن تكون الحصى بحجم حبة الحمص وتُجمع من مزدلفة أو منى.\"],\"type\":\"text\"}]},{\"name\":\"ذبح الهدي\",\"emoji\":\"🐑\",\"sections\":[{\"title\":\"أحكام الهدي\",\"items\":[\"المفرد: ليس عليه هدي.\",\"القارن والمتمتع: يجب عليهما ذبح الهدي (شاة، أو سبع بدنة، أو سبع بقرة).\",\"يجوز توكيل الجهات الرسمية (بنوك التنمية الإسلامية) بذبح الهدي عن الحاج.\"],\"type\":\"text\"}]},{\"name\":\"الحلق أو التقصير\",\"emoji\":\"✂️\",\"sections\":[{\"title\":\"التحلل الأول\",\"items\":[\"يحلق الرجل جميع شعر رأسه أو يقصره، والحلق أفضل لقوله ﷺ: (اللهم ارحم المحلقين).\",\"المرأة تجمع شعرها وتقص من أطرافه قدر أنملة.\",\"بذلك يحل للحاج التحلل الأول (يحل له كل شيء من محظورات الإحرام إلا النساء والجماع).\"],\"type\":\"text\"}]},{\"name\":\"طواف الإفاضة\",\"emoji\":\"🕋\",\"sections\":[{\"title\":\"الركن الثاني\",\"items\":[\"ينزل مكة ليطوف طواف الإفاضة (ركن لا يتم الحج إلا به).\",\"يطوف ٧ أشواط، وليس فيه رمل ولا اضطباع.\",\"بعد الطواف (والسعي لمن عليه سعي) يحل للحاج التحلل الأكبر الشامل لكل شيء بما فيه النساء.\"],\"type\":\"text\"}]},{\"name\":\"السعي لمن لم يسع\",\"emoji\":\"🚶\",\"sections\":[{\"title\":\"سعي الحج\",\"items\":[\"المفرد والقارن: إذا كانا قد سعيا بعد طواف القدوم، فلا سعي عليهما الآن.\",\"المتمتع: يجب عليه السعي (لأن سعيه الأول كان للعمرة وهذا للحج).\"],\"type\":\"text\"}]}]},{\"title\":\"أيام التشريق\",\"subtitle\":\"١١، ١٢، ١٣ ذو الحجة\",\"actions\":[{\"name\":\"رمي الجمرات الثلاث\",\"emoji\":\"🎯\",\"sections\":[{\"title\":\"أحكام الرمي في التشريق\",\"items\":[\"يرمي الحاج الجمرات الثلاث كل يوم بعد زوال الشمس (دخول وقت الظهر).\",\"يبدأ بالجمرة الصغرى (٧ حصيات)، ثم يتقدم ويدعو طويلاً.\",\"ثم الجمرة الوسطى (٧ حصيات)، ثم يتقدم ويدعو طويلاً.\",\"ثم جمرة العقبة الكبرى (٧ حصيات) وينصرف ولا يدعو بعدها.\"],\"type\":\"text\"}]},{\"name\":\"المبيت بمنى\",\"emoji\":\"🏕️\",\"sections\":[{\"title\":\"واجب المبيت\",\"items\":[\"المبيت بمنى ليالي أيام التشريق واجب.\",\"يجب على الحاج أن يقضي معظم الليل في منى.\",\"يجوز للحاج أن يتعجل فيغادر منى يوم ١٢ ذي الحجة شريطة أن ينفر قبل غروب الشمس.\"],\"type\":\"text\"}]}]},{\"title\":\"ختام المناسك\",\"subtitle\":\"المغادرة وطواف الوداع\",\"actions\":[{\"name\":\"طواف الوداع\",\"emoji\":\"🕋\",\"sections\":[{\"title\":\"آخر العهد بالبيت\",\"items\":[\"طواف الوداع واجب على كل حاج أراد مغادرة مكة عائداً لبلده.\",\"يكون طواف الوداع آخر شيء يفعله الحاج قبل سفره مباشرة.\",\"يطوف ٧ أشواط، بدون سعي، ولا رمل.\",\"يسقط طواف الوداع عن المرأة الحائض والنفساء.\"],\"type\":\"text\"}]}]}]",
@@ -198,6 +204,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "localSADialTitle": MessageLookupByLibrary.simpleMessage(
       "رقم محلي للتواصل داخل السعودية 🇸🇦",
     ),
+    "loading": MessageLookupByLibrary.simpleMessage("جاري التحميل..."),
     "locationDescription": MessageLookupByLibrary.simpleMessage("وصف الموقع"),
     "locationList": MessageLookupByLibrary.simpleMessage("قائمة المواقع"),
     "locationName": MessageLookupByLibrary.simpleMessage("اسم الموقع"),
@@ -273,6 +280,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "prayerTimes": MessageLookupByLibrary.simpleMessage("مواقيت الصلاة"),
     "profileTitle": MessageLookupByLibrary.simpleMessage("الملف الشخصي"),
     "publishAnnouncement": MessageLookupByLibrary.simpleMessage("نشر الإعلان"),
+    "questionExample": MessageLookupByLibrary.simpleMessage(
+      "مثال: ما حكم من نسي طواف الإفاضة؟",
+    ),
     "recoveryLinkNote": MessageLookupByLibrary.simpleMessage(
       "سيتم إرسال رابط الاستعادة إلى بريدك الإلكتروني",
     ),
@@ -326,6 +336,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "sendAnnouncementWarning": MessageLookupByLibrary.simpleMessage(
       "بعد الإرسال، سيصل الإعلان إلى جميع المستخدمين في الفئة المحددة ولن يمكن التراجع عن هذا الإجراء.",
     ),
+    "sendQuestion": MessageLookupByLibrary.simpleMessage("إرسال السؤال"),
     "sendVerificationCodeButton": MessageLookupByLibrary.simpleMessage(
       "إرسال رمز التحقق",
     ),
@@ -342,8 +353,15 @@ class MessageLookup extends MessageLookupByLibrary {
       "تعيين كلمة مرور جديدة",
     ),
     "sharing": MessageLookupByLibrary.simpleMessage("جاري المشاركة..."),
+    "shariaAnswer": MessageLookupByLibrary.simpleMessage("الجواب الشرعي"),
+    "shariaAnswerPlaceholder": MessageLookupByLibrary.simpleMessage(
+      "سيظهر الرد التفصيلي هنا بعد كتابة سؤالك والضغط على زر البحث. المفتي الذكي مدعوم بقواعد بيانات فقهية معتمدة لتوفير أدلة شرعية ميسرة لمناسككم.",
+    ),
     "showMap": MessageLookupByLibrary.simpleMessage("عرض الخريطة"),
     "smartMufti": MessageLookupByLibrary.simpleMessage("المفتي الذكي"),
+    "smartMuftiHelper": MessageLookupByLibrary.simpleMessage(
+      "مساعدك الذكي للإجابة على تساؤلات الحج",
+    ),
     "start": MessageLookupByLibrary.simpleMessage("أبدأ"),
     "startSession": MessageLookupByLibrary.simpleMessage("بدء الجلسة"),
     "strokes": MessageLookupByLibrary.simpleMessage("أشواط"),
@@ -379,7 +397,16 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "yemeniMobileNumber": MessageLookupByLibrary.simpleMessage(
       "رقم الجوال اليمني",
+    "waitingForYourQuestion": MessageLookupByLibrary.simpleMessage(
+      "بانتظار سؤالك للإجابة عليه بالذكاء الاصطناعي..",
+    ),
+    "writeAnnouncementContentHere": MessageLookupByLibrary.simpleMessage(
+      "اكتب محتوى الإعلان هنا...",
+    ),
+    "writeYourFatwaQuestion": MessageLookupByLibrary.simpleMessage(
+      "اكتب سؤالك الشرعي هنا...",
     ),
     "youAreHere": MessageLookupByLibrary.simpleMessage("أنت هنا"),
+    "yourQuestion": MessageLookupByLibrary.simpleMessage("سؤالك"),
   };
 }

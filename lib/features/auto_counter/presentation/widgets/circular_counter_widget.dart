@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/features/auto_counter/providers/auto_counter_controller.dart';
+import 'package:yusr/features/auto_counter/providers/state/auto_counter_state.dart';
 
 class CircularCounterWidget extends ConsumerWidget {
   const CircularCounterWidget({super.key});
@@ -11,70 +12,102 @@ class CircularCounterWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = context.locale;
-
-    // 1. مراقبة حالة العداد بالكامل (للحصول على isRunning و currentLap)
-    final counterState = ref.watch(autoCounterControllerProvider);
-
-    // 2. مراقبة الزاوية التراكمية فقط لتحديث "تقدم الشريط" بسلاسة
-    final angle = ref.watch(
-      autoCounterControllerProvider.select((s) => s.accumulatedAngle),
-    );
-    // إذا كان العداد يعمل، نقسم الزاوية على 360، وإلا تكون صفر
-    double progressValue = counterState.isRunning ? (angle / 360) : 0.0;
-
-    // لضمان أن القيمة لا تتخطى 1.0 ولا تقل عن 0.0 برمجياً
-    progressValue = progressValue.clamp(0.0, 1.0);
+    final state = ref.watch(autoCounterControllerProvider);
+    double lapProgress = 0.0;
+    if (state.trackingType == TrackingType.tawaf) {
+      lapProgress = state.accumulatedAngle / 360;
+    } else {
+      lapProgress = state.stepsInCurrentLap / 350;
+    }
 
     return Stack(
       alignment: Alignment.center,
       children: [
-        // شريط التقدم الدائري 
-        SizedBox(
+        // الدائرة الخلفية الكبيرة
+        Container(
+          width: 300.w,
+          height: 300.w,
+          decoration: const BoxDecoration(shape: BoxShape.circle),
+        ),
+
+        //  إطار الدائرة الرمادي  
+        Container(
           width: 250.w,
           height: 250.w,
-          child: CircularProgressIndicator(
-            value: progressValue,
-            strokeWidth: 12.w,
-            backgroundColor: AppColor.inputFieldBoundaries.withOpacity(0.4),
-            valueColor: const AlwaysStoppedAnimation<Color>(AppColor.golden),
-            strokeCap: StrokeCap.round, 
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: AppColor.inputFieldBoundaries.withOpacity(0.4), // اللون الرمادي الفاتح للإطار
+              width: 12.w,
+            ),
           ),
         ),
+
+        // مؤشر التقدم 
+        if (state.isRunning)
+          SizedBox(
+            width: 250.w,
+            height: 250.w,
+            child: CircularProgressIndicator(
+              value: lapProgress.clamp(0.0, 1.0),
+              strokeWidth: 12.w,
+              color: AppColor.golden, // اللون الذهبي للتقدم
+              // backgroundColor: Colors.transparent,
+              strokeCap: StrokeCap.round,
+            ),
+          ),
 
         // النصوص المركزية
         Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              counterState.isRunning
-                  ? "${counterState.currentLap}" // عرض رقم الشوط الحالي
-                  : locale.start,
-              style: TextStyle(
-                fontSize: 60.sp,
-                fontWeight: FontWeight.bold,
-                color: AppColor.baseFontColor,
+            if (!state.isRunning || state.currentLap == 0) ...[
+              Text(
+                locale.start,
+                style: TextStyle(
+                  fontSize: 60.sp,
+                  fontWeight: FontWeight.w900,
+                  color: AppColor.baseFontColor,
+                  height: 1.1,
+                ),
               ),
-            ),
-            Text(
-              counterState.isRunning 
-                  ? locale.currentStroke 
-                  : locale.clickToStart,
-              style: TextStyle(
-                color: AppColor.lightFontColor, 
-                fontSize: 14.sp
+              SizedBox(height: 8.h),
+              Text(
+                locale.clickToStart,
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: AppColor.iconColors,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            SizedBox(height: 5.h),
-            
-            // نص تدل على أن التحديث تلقائي بالحساسات
-            Text(
-              locale.autoUpdate,
-              style: TextStyle(
-                color: AppColor.golden,
-                fontSize: 11.sp,
-                fontWeight: FontWeight.w600,
+              SizedBox(height: 4.h),
+              Text(
+                locale.autoUpdate,
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  color: AppColor.golden,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-            ),
+            ] else ...[
+              Text(
+                locale.currentStroke,
+                style: TextStyle(
+                  fontSize: 18.sp,
+                  color: AppColor.iconColors,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                "${state.currentLap}",
+                style: TextStyle(
+                  fontSize: 80.sp,
+                  fontWeight: FontWeight.w900,
+                  color: AppColor.baseFontColor,
+                  height: 1.1,
+                ),
+              ),
+            ],
           ],
         ),
       ],
