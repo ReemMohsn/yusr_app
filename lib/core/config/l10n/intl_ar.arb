@@ -147,5 +147,10 @@
   "sendQuestion": "إرسال السؤال",
   "waitingForYourQuestion": "بانتظار سؤالك للإجابة عليه بالذكاء الاصطناعي..",
   "loading": "جاري التحميل...",
-  "fieldRequired": "يرجى كتابة السؤال أولاً"
+  "fieldRequired": "يرجى كتابة السؤال أولاً",
+  "steps": "الخطوات",
+  "status": "الحالة",
+  "walking": "مشي",
+  "stopped": "توقف",
+  "stopAndReset": "إيقاف وتصفير"
 }

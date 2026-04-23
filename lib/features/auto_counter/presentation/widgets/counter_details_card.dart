@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
-import 'package:yusr/features/auto_counter/presentation/widgets/counter_info_item.dart';
-import 'package:yusr/features/auto_counter/providers/auto_counter_controller.dart';
+import 'package:yusr/features/auto_counter/presentation/widgets/custom_info_display.dart';
+import '../../providers/auto_counter_controller.dart';
 
 class CounterDetailsCard extends ConsumerWidget {
   const CounterDetailsCard({super.key});
@@ -12,88 +12,88 @@ class CounterDetailsCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = context.locale;
-    final counterState = ref.watch(autoCounterControllerProvider);
+    final state = ref.watch(autoCounterControllerProvider);
     final notifier = ref.read(autoCounterControllerProvider.notifier);
 
-    return Container(
-      padding: EdgeInsets.all(20.w),
-      decoration: BoxDecoration(
-        color: AppColor.withe,
+    return Card(
+      elevation: 0,
+      color: AppColor.inputFieldColor,
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.02),
-            blurRadius: 10.r,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        side: BorderSide(color: AppColor.inputFieldBoundaries),
       ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CounterInfoItem(
-                label: locale.remaining,
-                value: "${counterState.remainingLaps} ${locale.strokes}",
-                color: AppColor.golden,
-                align: CrossAxisAlignment.end,
-              ),
-              CounterInfoItem(
-                label: locale.total,
-                value: "${counterState.currentLap} ${locale.ofWord} ${counterState.totalLaps}",
-                color: AppColor.baseFontColor,
-                align: CrossAxisAlignment.start,
-              ),
-            ],
-          ),
-          SizedBox(height: 12.h),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10.r),
-            child: LinearProgressIndicator(
-              value: counterState.currentLap / counterState.totalLaps,
-              minHeight: 7.h,
-              backgroundColor: AppColor.inputFieldBoundaries,
-              valueColor: const AlwaysStoppedAnimation<Color>(AppColor.golden),
+      child: Padding(
+        padding: EdgeInsets.all(20.w),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                CustomInfoDisplay(
+                  label: locale.steps,
+                  value: "${state.stepsInCurrentLap}",
+                ),
+                Container(width: 1, height: 30, color: AppColor.iconColors),
+                CustomInfoDisplay(
+                  label: locale.status,
+                  value: state.isMoving ? locale.walking : locale.stopped,
+                ),
+              ],
             ),
-          ),
-          SizedBox(height: 20.h),
-
-          // الزر (بدء / إعادة تعيين)
-          ElevatedButton.icon(
-            onPressed: () {
-              if (counterState.isRunning) {
-                notifier.reset(); // إذا كان يعمل، يقوم بإعادة التعيين
-              } else {
-                notifier.startTracking(); // إذا كان متوقفاً، يبدأ العمل
-              }
-            },
-            icon: Icon(
-              counterState.isRunning ? Icons.refresh : Icons.play_arrow,
-              color: counterState.isRunning ? AppColor.lightFontColor : AppColor.withe,
-              size: 18.w,
-            ),
-            label: Text(
-              counterState.isRunning ? locale.reset : locale.start,
-              style: TextStyle(
-                color: counterState.isRunning ? AppColor.lightFontColor : AppColor.withe, 
-                fontSize: 14.sp,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: counterState.isRunning 
-                  ? AppColor.inputFieldColor 
-                  : AppColor.golden,
-              elevation: 0,
-              minimumSize: Size(double.infinity, 50.h),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.r),
+            SizedBox(height: 20.h),
+            SizedBox(
+              width: double.infinity,
+              height: 50.h,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  if (state.isRunning) {
+                    notifier.reset();
+                  } else {
+                    notifier.startTracking();
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: state.isRunning
+                      ? AppColor.lightdanger
+                      : AppColor.golden,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.r),
+                  ),
+                ),
+                icon: Icon(
+                  state.isRunning ? Icons.refresh : Icons.play_arrow,
+                  color: state.isRunning ? AppColor.danger : AppColor.withe,
+                  size: 22.sp,
+                ),
+                label: Text(
+                  state.isRunning ? locale.reset : locale.start,
+                  style: TextStyle(
+                    color: state.isRunning ? AppColor.danger : AppColor.withe,
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
+
+  // Widget _buildInfoColumn(String label, String value) {
+  //   return Column(
+  //     children: [
+  //       Text(
+  //         label,
+  //         style: TextStyle(fontSize: 12.sp, color: AppColor.lightFontColor),
+  //       ),
+  //       Text(
+  //         value,
+  //         style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+  //       ),
+  //     ],
+  //   );
+  // }
 }
