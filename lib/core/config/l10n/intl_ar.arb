@@ -212,4 +212,9 @@
   "errorLoadingPilgrimData": "حدث خطأ في تحميل البيانات",
   "passportNumber": "رقم الجواز",
   "healthStable": "مستقرة"
+  "steps": "الخطوات",
+  "status": "الحالة",
+  "walking": "مشي",
+  "stopped": "توقف",
+  "stopAndReset": "إيقاف وتصفير"
 }

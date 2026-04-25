@@ -36,4 +36,5 @@ class AppColor {
   static const Color divider = Color(0xFFD1D5DC);
   static const Color goldDark = Color(0xFFC49D2F);
   static const Color warning = Color(0xFFF59E0B);
+  static const Color lightdanger = Color(0xFFFFEBEE);
 }

@@ -211,4 +211,8 @@
   "errorLoadingPilgrimData": "Error loading pilgrim data",
   "passportNumber": "Passport Number",
   "healthStable": "Stable"
+  "steps": "Steps",
+  "status": "Status",
+  "walking": "Walking",
+  "stopped": "Stopped"
 }
