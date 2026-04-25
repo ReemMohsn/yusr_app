@@ -26,9 +26,27 @@ class MessageLookup extends MessageLookupByLibrary {
     "accountVerification": MessageLookupByLibrary.simpleMessage(
       "Account Verification",
     ),
+    "active": MessageLookupByLibrary.simpleMessage("Active"),
     "addAnnouncement": MessageLookupByLibrary.simpleMessage("Add Announcement"),
     "addLocation": MessageLookupByLibrary.simpleMessage("Add Location"),
+    "addNumberBtn": MessageLookupByLibrary.simpleMessage("Add Number"),
+    "addNumberTitle": MessageLookupByLibrary.simpleMessage(
+      "Add Saudi Phone Number",
+    ),
+    "addSaudiNumber": MessageLookupByLibrary.simpleMessage(
+      "Add Saudi Phone Number",
+    ),
+    "addSaudiNumberAction": MessageLookupByLibrary.simpleMessage(
+      "Add Saudi Number",
+    ),
+    "addedSaudiNumberSuccess": MessageLookupByLibrary.simpleMessage(
+      "Number added successfully",
+    ),
     "administration": MessageLookupByLibrary.simpleMessage("Administration"),
+    "age": MessageLookupByLibrary.simpleMessage("Age"),
+    "all_rounds_completed": MessageLookupByLibrary.simpleMessage(
+      "You have successfully completed all rounds",
+    ),
     "announcementContent": MessageLookupByLibrary.simpleMessage(
       "Announcement Content",
     ),
@@ -43,6 +61,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "appSlogan": MessageLookupByLibrary.simpleMessage(
       "The Smart Pilgrim Companion",
     ),
+    "arrivalDate": MessageLookupByLibrary.simpleMessage("Arrival Date"),
+    "askForFatwa": MessageLookupByLibrary.simpleMessage("Ask for a Fatwa"),
     "asr": MessageLookupByLibrary.simpleMessage("Asr"),
     "autoUpdate": MessageLookupByLibrary.simpleMessage("Auto Update"),
     "becomeALeader": MessageLookupByLibrary.simpleMessage("Become a Leader"),
@@ -70,19 +90,41 @@ class MessageLookup extends MessageLookupByLibrary {
     "confirmSendAnnouncementQuestion": MessageLookupByLibrary.simpleMessage(
       "Are you sure you want to send this announcement?",
     ),
+    "congratulations": MessageLookupByLibrary.simpleMessage(
+      "🎉 Congratulations!",
+    ),
     "connectionFailed": MessageLookupByLibrary.simpleMessage(
       "Connection failed, please check your internet connection.",
     ),
+    "contactData": MessageLookupByLibrary.simpleMessage("Contact Data"),
     "contentLabel": MessageLookupByLibrary.simpleMessage("Content"),
+    "copiedSuccessfully": MessageLookupByLibrary.simpleMessage(
+      "Copied successfully",
+    ),
+    "copiedText": MessageLookupByLibrary.simpleMessage("Copied"),
     "currentLocation": MessageLookupByLibrary.simpleMessage("Current Location"),
     "currentStroke": MessageLookupByLibrary.simpleMessage("Current Stroke"),
+    "dateOfBirth": MessageLookupByLibrary.simpleMessage("Date of Birth"),
     "delete": MessageLookupByLibrary.simpleMessage("Delete"),
     "deleteSuccess": MessageLookupByLibrary.simpleMessage(
       "Location deleted successfully",
     ),
+    "departureDate": MessageLookupByLibrary.simpleMessage("Departure Date"),
     "detiles": MessageLookupByLibrary.simpleMessage("Details"),
     "dhuhr": MessageLookupByLibrary.simpleMessage("Dhuhr"),
+    "done": MessageLookupByLibrary.simpleMessage("Done"),
     "edit": MessageLookupByLibrary.simpleMessage("Edit"),
+    "editNumber": MessageLookupByLibrary.simpleMessage("Edit Number"),
+    "editNumberTitle": MessageLookupByLibrary.simpleMessage(
+      "Edit Saudi Phone Number",
+    ),
+    "editSaudiNumber": MessageLookupByLibrary.simpleMessage(
+      "Edit Saudi Phone Number",
+    ),
+    "editedSaudiNumberSuccess": MessageLookupByLibrary.simpleMessage(
+      "Number updated successfully",
+    ),
+    "email": MessageLookupByLibrary.simpleMessage("Email"),
     "emailLabel": MessageLookupByLibrary.simpleMessage("Email"),
     "emailOrPassport": MessageLookupByLibrary.simpleMessage(
       "Email or Passport Number",
@@ -108,12 +150,21 @@ class MessageLookup extends MessageLookupByLibrary {
     "errorFetchingNotifications": MessageLookupByLibrary.simpleMessage(
       "An error occurred while fetching notifications:",
     ),
+    "errorLoadingData": MessageLookupByLibrary.simpleMessage(
+      "An error occurred while loading data",
+    ),
+    "errorLoadingPilgrimData": MessageLookupByLibrary.simpleMessage(
+      "Error loading pilgrim data",
+    ),
     "errorOccurred": MessageLookupByLibrary.simpleMessage(
       "An error occurred: ",
     ),
     "fajr": MessageLookupByLibrary.simpleMessage("Fajr"),
     "fetchDataError": MessageLookupByLibrary.simpleMessage(
       "Error fetching data",
+    ),
+    "fieldRequired": MessageLookupByLibrary.simpleMessage(
+      "Please enter your question first",
     ),
     "forgotPassword": MessageLookupByLibrary.simpleMessage("Forgot Password?"),
     "forgotPasswordDescription": MessageLookupByLibrary.simpleMessage(
@@ -122,7 +173,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "forgotPasswordPrompt": MessageLookupByLibrary.simpleMessage(
       "Forgot password?",
     ),
+    "fullName": MessageLookupByLibrary.simpleMessage("Full Name"),
+    "gender": MessageLookupByLibrary.simpleMessage("Gender"),
+    "getAnswer": MessageLookupByLibrary.simpleMessage("Get Answer"),
     "groupInfo": MessageLookupByLibrary.simpleMessage("Group Information"),
+    "groupInfoSectionTitle": MessageLookupByLibrary.simpleMessage(
+      "Group Information",
+    ),
+    "groupName": MessageLookupByLibrary.simpleMessage("Group Name"),
+    "groupNotAssignedBody": MessageLookupByLibrary.simpleMessage(
+      "You haven\'t been assigned to a group yet. Please contact the campaign manager.",
+    ),
+    "groupNotAssignedTitle": MessageLookupByLibrary.simpleMessage(
+      "No Group Assigned Yet",
+    ),
     "hajjActionsTitle": MessageLookupByLibrary.simpleMessage("Hajj Rituals of"),
     "hajjIfradData": MessageLookupByLibrary.simpleMessage(
       "[{\"title\":\"Before the 8th of Thul-Hijjah\",\"subtitle\":\"Arrival and Makkah Activities\",\"actions\":[{\"name\":\"Etiquette and Guidelines\",\"emoji\":\"📖\",\"sections\":[{\"title\":\"Intention and Covenant\",\"items\":[\"Anyone intending Hajj or Umrah should consciously seek closeness to Allah Almighty and purify their intention for this great obligation.\",\"Hajj is an opportunity for sincere repentance, renewing one\'s covenant with Allah, and abandoning all sins.\",\"Ensure all your wealth funding the Hajj is pure and Halal.\"],\"type\":\"text\"}]}]}]",
@@ -134,11 +198,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "hajjTamattuData": MessageLookupByLibrary.simpleMessage(
       "[{\"title\":\"Before the 8th of Thul-Hijjah\",\"subtitle\":\"Performing Umrah for Tamattu\",\"actions\":[{\"name\":\"Etiquette and Guidelines\",\"emoji\":\"📖\",\"sections\":[{\"title\":\"Intention for Tamattu\",\"items\":[\"At the Miqat, the pilgrim intends only Umrah.\"],\"type\":\"text\"}]}]}]",
     ),
+    "healthStable": MessageLookupByLibrary.simpleMessage("Stable"),
+    "healthStatus": MessageLookupByLibrary.simpleMessage("Health Status"),
     "hijriDate": MessageLookupByLibrary.simpleMessage("Hijri Date"),
     "home": MessageLookupByLibrary.simpleMessage("Home"),
     "importantAnnouncement": MessageLookupByLibrary.simpleMessage(
       "Important Announcement",
     ),
+    "importantNotesTitle": MessageLookupByLibrary.simpleMessage(
+      "Important Notes",
+    ),
+    "inactive": MessageLookupByLibrary.simpleMessage("Inactive"),
     "instructions": MessageLookupByLibrary.simpleMessage("Hajj Types"),
     "instructionsListData": MessageLookupByLibrary.simpleMessage(
       "[{\"title\":\"Ifrad\",\"subtitle\":\"Ihram for Hajj only\",\"description\":\"Entering Ihram for Hajj alone from the Miqat, saying: Labbayk Hajjan\"},{\"title\":\"Qiran\",\"subtitle\":\"Ihram for Hajj and Umrah together\",\"description\":\"Entering Ihram for both Umrah and Hajj together, saying: Labbayk Umratan wa Hajjan\"},{\"title\":\"Tamattu\",\"subtitle\":\"Umrah then Hajj in the months of Hajj\",\"description\":\"Entering Ihram for Umrah, exiting it fully, then entering Ihram again for Hajj\"}]",
@@ -148,6 +218,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "km": MessageLookupByLibrary.simpleMessage("km"),
     "labbayk": MessageLookupByLibrary.simpleMessage(
       "Labbayk Allahumma Labbayk",
+    ),
+    "loading": MessageLookupByLibrary.simpleMessage("Loading..."),
+    "localSADialTitle": MessageLookupByLibrary.simpleMessage(
+      "Local number for contact in Saudi Arabia 🇸🇦",
     ),
     "locationDescription": MessageLookupByLibrary.simpleMessage(
       "Location Description",
@@ -164,7 +238,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Logged out and token revoked successfully",
     ),
     "maghrib": MessageLookupByLibrary.simpleMessage("Maghrib"),
+    "male": MessageLookupByLibrary.simpleMessage("Male"),
     "manasekCounter": MessageLookupByLibrary.simpleMessage("Manasek Counter"),
+    "members": MessageLookupByLibrary.simpleMessage("members"),
     "messageContent": MessageLookupByLibrary.simpleMessage("Message Content"),
     "messageFetchingCampLocationmessage": MessageLookupByLibrary.simpleMessage(
       "Fetching campaign location...",
@@ -183,34 +259,63 @@ class MessageLookup extends MessageLookupByLibrary {
     "noNotificationsCurrently": MessageLookupByLibrary.simpleMessage(
       "There are currently no notifications",
     ),
+    "noPilgrimsFound": MessageLookupByLibrary.simpleMessage(
+      "No pilgrims found",
+    ),
     "noPilgrimsInSession": MessageLookupByLibrary.simpleMessage(
       "No pilgrims associated with this session.",
     ),
     "notActive": MessageLookupByLibrary.simpleMessage("Not Active"),
+    "notAdded": MessageLookupByLibrary.simpleMessage("Not Added"),
+    "notAvailable": MessageLookupByLibrary.simpleMessage("Not Available"),
     "notFound": MessageLookupByLibrary.simpleMessage("Not found"),
+    "note1": MessageLookupByLibrary.simpleMessage(
+      "Ensure the number starts with 5",
+    ),
+    "note2": MessageLookupByLibrary.simpleMessage(
+      "The number must consist of 9 digits",
+    ),
+    "note3": MessageLookupByLibrary.simpleMessage(
+      "Verify the number as it will be used to contact you",
+    ),
+    "note4": MessageLookupByLibrary.simpleMessage(
+      "You can modify the number at any time",
+    ),
     "notificationSearch": MessageLookupByLibrary.simpleMessage(
       "Search for notifications...",
     ),
     "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
     "ofWord": MessageLookupByLibrary.simpleMessage("of"),
     "otherLocations": MessageLookupByLibrary.simpleMessage("Other Locations"),
+    "passportNumber": MessageLookupByLibrary.simpleMessage("Passport Number"),
     "password": MessageLookupByLibrary.simpleMessage("Password"),
     "passwordsDoNotMatchError": MessageLookupByLibrary.simpleMessage(
       "Passwords do not match",
     ),
     "pending": MessageLookupByLibrary.simpleMessage("Pending"),
+    "personalData": MessageLookupByLibrary.simpleMessage("Personal Data"),
+    "pilgrimDetails": MessageLookupByLibrary.simpleMessage("Pilgrim Details"),
+    "pilgrimsCount": MessageLookupByLibrary.simpleMessage("Pilgrims Count"),
     "pilgrimsListTitle": MessageLookupByLibrary.simpleMessage("Pilgrims List"),
     "prayerTimes": MessageLookupByLibrary.simpleMessage("Prayer Times"),
+    "profileTitle": MessageLookupByLibrary.simpleMessage("Profile"),
     "publishAnnouncement": MessageLookupByLibrary.simpleMessage(
       "Publish Announcement",
+    ),
+    "questionExample": MessageLookupByLibrary.simpleMessage(
+      "Example: What is the ruling on forgetting Tawaf al-Ifadah?",
     ),
     "recoveryLinkNote": MessageLookupByLibrary.simpleMessage(
       "A recovery link will be sent to your email.",
     ),
     "rejected": MessageLookupByLibrary.simpleMessage("Rejected"),
+    "relativeContact": MessageLookupByLibrary.simpleMessage("Relative Contact"),
     "remaining": MessageLookupByLibrary.simpleMessage("Remaining"),
     "reset": MessageLookupByLibrary.simpleMessage("Reset"),
     "resetButton": MessageLookupByLibrary.simpleMessage("Reset"),
+    "residentialLocation": MessageLookupByLibrary.simpleMessage(
+      "Residential Location",
+    ),
     "retry": MessageLookupByLibrary.simpleMessage("Retry"),
     "returnMe": MessageLookupByLibrary.simpleMessage("Take me back"),
     "ritualsPreparation": MessageLookupByLibrary.simpleMessage(
@@ -220,8 +325,32 @@ class MessageLookup extends MessageLookupByLibrary {
       "Start your journey to the destinations, and learn the correct steps of Hajj and Umrah with amazing details.",
     ),
     "saei": MessageLookupByLibrary.simpleMessage("Saei"),
+    "saudiMobileNumber": MessageLookupByLibrary.simpleMessage(
+      "Saudi Mobile Number",
+    ),
+    "saudiPhoneHint": MessageLookupByLibrary.simpleMessage(
+      "Example: 501234567",
+    ),
+    "saudiPhoneImportance": MessageLookupByLibrary.simpleMessage(
+      "Importance of Saudi Number",
+    ),
+    "saudiPhoneImportanceDesc": MessageLookupByLibrary.simpleMessage(
+      "A local Saudi phone number is necessary to contact you inside the Kingdom during your Hajj journey. Please ensure the number is correct.",
+    ),
+    "saudiPhoneMustBe9Digits": MessageLookupByLibrary.simpleMessage(
+      "Number must be exactly 9 digits",
+    ),
+    "saudiPhoneMustStartWith5": MessageLookupByLibrary.simpleMessage(
+      "Number must start with 5",
+    ),
+    "saudiPhoneRequired": MessageLookupByLibrary.simpleMessage(
+      "Please enter phone number",
+    ),
     "saveChanges": MessageLookupByLibrary.simpleMessage("Save Changes"),
     "saveLocation": MessageLookupByLibrary.simpleMessage("Save Location"),
+    "saveNumber": MessageLookupByLibrary.simpleMessage("Save Number"),
+    "saveNumberBtn": MessageLookupByLibrary.simpleMessage("Save Number"),
+    "searchPilgrim": MessageLookupByLibrary.simpleMessage("Search pilgrim..."),
     "secureArrivalMessage": MessageLookupByLibrary.simpleMessage(
       "To ensure a safe journey and arrive peacefully, please login first",
     ),
@@ -231,6 +360,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "sendAnnouncementWarning": MessageLookupByLibrary.simpleMessage(
       "Once sent, the announcement will reach all users in the selected category and this action cannot be undone.",
     ),
+    "sendQuestion": MessageLookupByLibrary.simpleMessage("Send Question"),
     "sendVerificationCodeButton": MessageLookupByLibrary.simpleMessage(
       "Send Verification Code",
     ),
@@ -246,15 +376,33 @@ class MessageLookup extends MessageLookupByLibrary {
     "setNewPassword": MessageLookupByLibrary.simpleMessage(
       "Set a new password",
     ),
+    "shariaAnswer": MessageLookupByLibrary.simpleMessage("Sharia Answer"),
+    "shariaAnswerPlaceholder": MessageLookupByLibrary.simpleMessage(
+      "The detailed response will appear here after typing your question and clicking search...",
+    ),
+    "sharing": MessageLookupByLibrary.simpleMessage("Sharing..."),
     "showMap": MessageLookupByLibrary.simpleMessage("Show Map"),
     "smartMufti": MessageLookupByLibrary.simpleMessage("Smart Mufti"),
+    "smartMuftiHelper": MessageLookupByLibrary.simpleMessage(
+      "Your smart assistant for Hajj questions",
+    ),
     "start": MessageLookupByLibrary.simpleMessage("Start"),
     "startSession": MessageLookupByLibrary.simpleMessage("Start Session"),
     "strokes": MessageLookupByLibrary.simpleMessage("Strokes"),
+    "supervisorGroupDetails": MessageLookupByLibrary.simpleMessage(
+      "Group Details",
+    ),
+    "supervisorInfo": MessageLookupByLibrary.simpleMessage(
+      "Supervisor Information",
+    ),
+    "supervisorName": MessageLookupByLibrary.simpleMessage("Supervisor Name"),
     "targetAudience": MessageLookupByLibrary.simpleMessage("Target Audience"),
     "tawaf": MessageLookupByLibrary.simpleMessage("Tawaf"),
     "tawafDescription": MessageLookupByLibrary.simpleMessage(
       "Strokes are updated automatically based on your location from the Black Stone and your movement around the Kaaba.",
+    ),
+    "tawaf_saei_success_msg": MessageLookupByLibrary.simpleMessage(
+      "May Allah accept",
     ),
     "titleLabel": MessageLookupByLibrary.simpleMessage("Title"),
     "total": MessageLookupByLibrary.simpleMessage("Total"),
@@ -267,14 +415,26 @@ class MessageLookup extends MessageLookupByLibrary {
     "updateSuccess": MessageLookupByLibrary.simpleMessage(
       "Location updated successfully",
     ),
+    "userRole": MessageLookupByLibrary.simpleMessage("User"),
     "verificationCodeLabel": MessageLookupByLibrary.simpleMessage(
       "Verification Code",
     ),
     "verifyCodeButton": MessageLookupByLibrary.simpleMessage("Verify Code"),
     "viewDetails": MessageLookupByLibrary.simpleMessage("View Details"),
+    "waitingForYourQuestion": MessageLookupByLibrary.simpleMessage(
+      "Waiting for your question to be answered by AI...",
+    ),
+    "whatsappNumber": MessageLookupByLibrary.simpleMessage("WhatsApp Number"),
     "writeAnnouncementContentHere": MessageLookupByLibrary.simpleMessage(
       "Write announcement content here...",
     ),
+    "writeYourFatwaQuestion": MessageLookupByLibrary.simpleMessage(
+      "Write your fatwa question here...",
+    ),
+    "yemeniMobileNumber": MessageLookupByLibrary.simpleMessage(
+      "Yemeni Mobile Number",
+    ),
     "youAreHere": MessageLookupByLibrary.simpleMessage("You are here"),
+    "yourQuestion": MessageLookupByLibrary.simpleMessage("Your Question"),
   };
 }

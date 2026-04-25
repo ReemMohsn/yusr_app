@@ -169,7 +169,10 @@ class CustomDrawer extends ConsumerWidget {
             context: context,
             title: locale.groupInfo,
             icon: Icons.info_outline,
-            onTap: () {},
+            onTap: () {
+              Navigator.pop(context); // close drawer
+              Navigator.of(context).pushNamed(AppRoute.supervisorGroupView);
+            },
           ),
           BuildMenuItem(
             context: context,
@@ -215,7 +218,10 @@ class CustomDrawer extends ConsumerWidget {
             context: context,
             title: locale.groupInfo,
             icon: Icons.info_outline,
-            onTap: () {},
+            onTap: () {
+              Navigator.pop(context); // close drawer
+              Navigator.of(context).pushNamed(AppRoute.groupInfoView);
+            },
           ),
           BuildMenuItem(
             context: context,

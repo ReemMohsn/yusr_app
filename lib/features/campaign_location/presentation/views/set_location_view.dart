@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yusr/core/common/widgets/custom_golden_back_button.dart';
@@ -72,10 +71,11 @@ class _SetLocationViewState extends ConsumerState<SetLocationView> {
             Expanded(
               child: locationsAsync.when(
                 data: (data) {
-                  if (data == null)
+                  if (data == null) {
                     return Center(
                       child: Text(locale.notFound, style: theme.bodyMedium),
                     );
+                  }
 
                   final allLocations = [
                     if (data.currentLocation != null) data.currentLocation!,

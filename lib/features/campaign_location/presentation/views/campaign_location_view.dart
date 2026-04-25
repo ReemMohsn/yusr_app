@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yusr/core/common/widgets/custom_golden_back_button.dart';
-import 'package:yusr/core/common/widgets/widget.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/core/constants/app_size.dart'; // استيراد ملف المقاسات
@@ -12,8 +11,6 @@ import 'package:yusr/features/campaign_location/providers/campaign_location_cont
 import 'package:yusr/features/campaign_location/providers/get_locations_provider.dart';
 import '../widgets/current_location_card.dart';
 import '../widgets/other_location_item.dart';
-import 'package:yusr/features/campaign_location/data/models/campaign_location_item_model.dart';
-import 'package:yusr/features/campaign_location/data/models/campaign_locations_view_model.dart';
 
 class CampaignLocationView extends ConsumerWidget {
   const CampaignLocationView({super.key});
@@ -57,10 +54,11 @@ class CampaignLocationView extends ConsumerWidget {
         padding: const EdgeInsets.all(AppSize.paddingOfPage),
         child: locationsAsync.when(
           data: (data) {
-            if (data == null)
+            if (data == null) {
               return Center(
                 child: Text(locale.notFound, style: theme.bodyMedium),
               );
+            }
 
             return RefreshIndicator(
               onRefresh: () async =>

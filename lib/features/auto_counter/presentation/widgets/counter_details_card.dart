@@ -1,85 +1,83 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
-import 'package:yusr/features/auto_counter/presentation/widgets/counter_info_item.dart';
+import 'package:yusr/features/auto_counter/presentation/widgets/custom_info_display.dart';
+import '../../providers/auto_counter_controller.dart';
 
-class CounterDetailsCard extends StatelessWidget {
+class CounterDetailsCard extends ConsumerWidget {
   const CounterDetailsCard({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final locale = context.locale;
+    final state = ref.watch(autoCounterControllerProvider);
+    final notifier = ref.read(autoCounterControllerProvider.notifier);
 
-    int current = 0;
-    int totalStrokes = 7;
-
-    return Container(
-      padding: EdgeInsets.all(20.w),
-      decoration: BoxDecoration(
-        color: AppColor.withe,
+    return Card(
+      elevation: 0,
+      color: AppColor.inputFieldColor,
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.02),
-            blurRadius: 10.r,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        side: BorderSide(color: AppColor.inputFieldBoundaries),
       ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CounterInfoItem(
-                label: locale.remaining,
-                value: "${totalStrokes - current} ${locale.strokes}",
-                color: AppColor.golden,
-                align: CrossAxisAlignment.end,
+      child: Padding(
+        padding: EdgeInsets.all(20.w),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                CustomInfoDisplay(
+                  label: locale.steps,
+                  value: "${state.stepsInCurrentLap}",
+                ),
+                Container(width: 1, height: 30, color: AppColor.iconColors),
+                CustomInfoDisplay(
+                  label: locale.status,
+                  value: state.isMoving ? locale.walking : locale.stopped,
+                ),
+              ],
+            ),
+            SizedBox(height: 20.h),
+            SizedBox(
+              width: double.infinity,
+              height: 50.h,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  if (state.isRunning) {
+                    notifier.reset();
+                  } else {
+                    notifier.startTracking();
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: state.isRunning
+                      ? AppColor.lightdanger
+                      : AppColor.golden,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.r),
+                  ),
+                ),
+                icon: Icon(
+                  state.isRunning ? Icons.refresh : Icons.play_arrow,
+                  color: state.isRunning ? AppColor.danger : AppColor.withe,
+                  size: 22.sp,
+                ),
+                label: Text(
+                  state.isRunning ? locale.reset : locale.start,
+                  style: TextStyle(
+                    color: state.isRunning ? AppColor.danger : AppColor.withe,
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-              CounterInfoItem(
-                label: locale.total,
-                value: "$current ${locale.ofWord} $totalStrokes",
-                color: AppColor.baseFontColor,
-                align: CrossAxisAlignment.start,
-              ),
-            ],
-          ),
-          SizedBox(height: 12.h),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10.r),
-            child: LinearProgressIndicator(
-              value: current / totalStrokes,
-              minHeight: 7.h,
-              backgroundColor: AppColor.inputFieldBoundaries,
-              valueColor: const AlwaysStoppedAnimation<Color>(AppColor.golden),
             ),
-          ),
-          SizedBox(height: 20.h),
-          ElevatedButton.icon(
-            onPressed: () {
-              // منطق إعادة التعيين هنا
-            },
-            icon: Icon(
-              Icons.refresh,
-              color: AppColor.lightFontColor,
-              size: 18.w,
-            ),
-            label: Text(
-              locale.reset,
-              style: TextStyle(color: AppColor.lightFontColor, fontSize: 14.sp),
-            ),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColor.inputFieldColor,
-              elevation: 0,
-              minimumSize: Size(double.infinity, 50.h),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.r),
-              ),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

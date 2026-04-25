@@ -118,6 +118,8 @@ dependencies:
   audioplayers: ^5.2.1   # لتشغيل صوت الإنذار
   vibration: ^3.1.3     # للاهتزاز
   flutter_local_notifications: ^17.0.0 # للإشعارات المحلية
+  flutter_markdown: ^0.7.7+1
+  shimmer: ^3.0.0
   
   # --- تم توحيد مكتبات البلوتوث هنا ---
   flutter_blue_plus: ^1.34.0 # الرادار: استماع وبحث (للمشرف)

@@ -45,5 +45,9 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+
+	//الاذن
+	<key>NSMotionUsageDescription</key>
+    <string>يستخدم التطبيق حساسات الحركة لحساب عدد أشواط الطواف وخطوات السعي بدقة تلقائية.</string>
 </dict>
 </plist>

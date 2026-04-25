@@ -6,7 +6,7 @@
 //   final apiService = ref.read(apiServiceProvider);
 //   return CampaignLocationRepository(apiService, ref);
 // });
-import 'package:flutter_riverpod/flutter_riverpod.dart'; // إضافة هذا السطر ضرورية لتعريف Ref
+// إضافة هذا السطر ضرورية لتعريف Ref
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:yusr/core/common/providers/api_service_provider.dart';
 import '../data/repositories/campaign_location_repository.dart';

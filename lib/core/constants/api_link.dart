@@ -8,6 +8,15 @@ class ApiLink {
   static const String sendCode = '$server/Auth/SendCode';
   static const String resetPassword = '$server/Auth/ResetPassword';
   static const String logout = '$server/Auth/Logout';
+
+  // 3. Profile
+  static const String getProfile = '$server/Profile/GetProfileMobile';
+  static const String updateProfile = '$server/Profile/UpdateUserProfile';
+  static String getGroupDetailsMobile(int groupId) => '$server/Groups/GetGroupDetailsMobile/$groupId';
+  static String getHajDetailsMobile(int userId) => '$server/Groups/GetHajDetailsMobile/$userId';
+  static String getGroupPilgrimsMobile(int groupId) => '$server/Groups/GetGroupPilgrimsMobile/$groupId';
+  static const String getMyGroupPilgrimsMobile = '$server/Groups/GetMyGroupPilgrims';
+  // 4. Announcements & Notifications
   static const String syncData = '$server/Announcements/SyncData';
   static const String getNotifications =
       '$server/Announcements/GetNotifications';
@@ -36,7 +45,8 @@ class ApiLink {
   static const String participantResponse =
       '$server/Monitoring/ParticipantResponse';
   static const String endTrackingSession = '$server/Monitoring/EndSession';
-
+    // رابط خدمة المفتي الذكي (Hugging Face)
+  static const String geminiChat = 'https://manar13-yusr-hajj-api.hf.space/ask';
   // 5. وظائف ديناميكية
   static String changeResidentialNeighborhoodManager({
     required int neighborhoodId,
