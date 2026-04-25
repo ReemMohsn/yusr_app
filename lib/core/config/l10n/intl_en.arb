@@ -146,5 +146,9 @@
   "sendQuestion": "Send Question",
   "waitingForYourQuestion": "Waiting for your question to be answered by AI...",
   "loading": "Loading...",
-  "fieldRequired": "Please enter your question first"
+  "fieldRequired": "Please enter your question first",
+  "steps": "Steps",
+  "status": "Status",
+  "walking": "Walking",
+  "stopped": "Stopped"
 }

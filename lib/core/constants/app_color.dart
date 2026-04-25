@@ -19,4 +19,5 @@ class AppColor {
   static const Color darkGolden = Color(0xFFB8941F);
   static const Color brownGolden = Color(0xFFC49A3A);
   static const Color lightGolden = Color(0xFFE5C158);
+  static const Color lightdanger = Color(0xFFFFEBEE);
 }
