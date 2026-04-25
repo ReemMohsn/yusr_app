@@ -388,6 +388,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "start": MessageLookupByLibrary.simpleMessage("Start"),
     "startSession": MessageLookupByLibrary.simpleMessage("Start Session"),
+    "status": MessageLookupByLibrary.simpleMessage("Status"),
+    "steps": MessageLookupByLibrary.simpleMessage("Steps"),
+    "stopped": MessageLookupByLibrary.simpleMessage("Stopped"),
     "strokes": MessageLookupByLibrary.simpleMessage("Strokes"),
     "supervisorGroupDetails": MessageLookupByLibrary.simpleMessage(
       "Group Details",
@@ -424,6 +427,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "waitingForYourQuestion": MessageLookupByLibrary.simpleMessage(
       "Waiting for your question to be answered by AI...",
     ),
+    "walking": MessageLookupByLibrary.simpleMessage("Walking"),
     "whatsappNumber": MessageLookupByLibrary.simpleMessage("WhatsApp Number"),
     "writeAnnouncementContentHere": MessageLookupByLibrary.simpleMessage(
       "Write announcement content here...",
