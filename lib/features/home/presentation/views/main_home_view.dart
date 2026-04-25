@@ -106,11 +106,6 @@ class _MainHomeViewState extends ConsumerState<MainHomeView> {
                   },
                   child: Text(
                     locale.login,
-                    // style: TextStyle(
-                    //   color: AppColor.golden,
-                    //   fontWeight: FontWeight.bold,
-                    //   fontSize: 14,
-                    // ),
                   ),
                 ),
               ),

@@ -194,11 +194,6 @@ import 'package:yusr/features/be_leader/providers/state/pilgrim_tracking_state.d
 //     extends ConsumerState<PilgrimMapTrackingView> {
 //   final MapController _mapController = MapController();
 
-import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:latlong2/latlong.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 // تأكد من بقاء الاستيرادات الخاصة بمشروعك هنا مثل AppColor وغيرها
 
 class PilgrimMapTrackingView extends ConsumerStatefulWidget {
@@ -335,7 +330,7 @@ class _PilgrimMapTrackingViewState
                       color: Colors.red.withOpacity(0.15),
                       borderColor: Colors.red,
                       borderStrokeWidth: 2,
-                      radius: 20, // نطاق الخطر (الأقرب)
+                      radius: 25, // نطاق الخطر (الأقرب)
                       useRadiusInMeter: true,
                     ),
                   ],

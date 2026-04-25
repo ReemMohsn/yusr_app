@@ -23,7 +23,6 @@ class LeaderStartSessionView extends ConsumerWidget {
       } else if (state.hasError) {
         context.closeLoadingDialog();
         context.showErrorSnackBar(state.errorMessage);
-        print(state.errorMessage);
       } else if (state.hasValue && state.value != null) {
         context.closeLoadingDialog();
         final sessionId = state.value!.data!.sessionId;

@@ -1,0 +1,386 @@
+<style>
+    /* التنسيقات الأساسية المتجاوبة */
+    .faculty-card-final {
+        background-color: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 16px !important;
+        padding: 24px !important;
+        direction: rtl !important;
+        font-family: 'Cairo', sans-serif !important;
+        width: 100% !important;
+        /* ليتناسب مع أعمدة وردبرس */
+        max-width: 440px;
+        margin: 15px auto !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02) !important;
+        box-sizing: border-box;
+        overflow: hidden;
+        /* يضمن بقاء كل شيء بالداخل */
+    }
+
+    .faculty-card-final:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08) !important;
+    }
+
+    /* الهيدر: حل مشكلة التداخل */
+    .fc-v3-header {
+        display: flex !important;
+        gap: 15px !important;
+        margin-bottom: 12px !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+        /* أهم تعديل للتجاوب */
+    }
+
+    .fc-v3-avatar {
+        width: 90px !important;
+        height: 100px !important;
+        background-color: #f1f5f9 !important;
+        border-radius: 12px !important;
+        object-fit: cover !important;
+        flex-shrink: 0 !important;
+    }
+
+    .fc-v3-info {
+        flex: 1 !important;
+        min-width: 200px;
+        /* يضمن مساحة كافية قبل الانتقال للسطر التالي */
+        text-align: right !important;
+    }
+
+    .fc-v3-info h3 {
+        margin: 0 !important;
+        font-size: clamp(16px, 1.8vw, 18px) !important;
+        color: #1a202c !important;
+        font-weight: 800 !important;
+        word-break: break-word !important;
+        /* يمنع خروج الأسماء الطويلة */
+    }
+
+    .fc-v3-info .subtitle {
+        color: #64748b !important;
+        font-size: 14px !important;
+        margin-top: clamp(8px, 1vw, 10px) !important;
+        margin-bottom: 8px !important;
+        display: block;
+    }
+
+    .contact-item {
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        margin-bottom: 6px !important;
+        color: #475569 !important;
+        font-size: clamp(13px, 1.5vw, 14px) !important;
+    }
+
+    .contact-item span {
+        direction: ltr !important;
+        word-break: break-all !important;
+    }
+
+    .contact-item svg {
+        color: #1e3a8a !important;
+        flex-shrink: 0;
+    }
+
+    /* التحكم في المحتوى القابل للطي */
+    .fc-v3-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s cubic-bezier(0, 1, 0, 1) !important;
+    }
+
+    .fc-v3-content.is-open {
+        max-height: 3000px;
+        transition: max-height 1s ease-in !important;
+    }
+
+    .section-divider {
+        border: 0;
+        border-top: 1px solid #f1f5f9 !important;
+        margin: 18px 0 12px 0 !important
+    }
+
+    .section-title-v3 {
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        font-weight: 800 !important;
+        color: #1e3a8a !important;
+        margin-bottom: 12px !important;
+        font-size: clamp(14px, 1.6vw, 16px) !important;
+        text-align: right !important;
+    }
+
+    .tags-flex {
+        display: flex !important;
+        gap: 6px !important;
+        flex-wrap: wrap !important;
+    }
+
+    .tag-blue {
+        background-color: #f0f9ff !important;
+        color: #0369a1 !important;
+        padding: 4px 12px !important;
+        border-radius: 20px !important;
+        font-size: clamp(12px, 1.4vw, 14px) !important;
+        border: 1px solid #e0f2fe !important;
+    }
+
+    .proj-timeline {
+        border-right: 1px dashed #e2e8f0;
+        margin-right: 10px;
+        padding-right: 15px;
+    }
+
+    .proj-entry {
+        position: relative;
+        margin-bottom: 12px;
+    }
+
+    .proj-entry::before {
+        content: "";
+        position: absolute;
+        right: -20px;
+        top: 6px;
+        width: 8px;
+        height: 8px;
+        background: #1e3a8a;
+        border-radius: 50%;
+        border: 2px solid #fff;
+    }
+
+    .proj-entry-title {
+        font-size: clamp(12px, 1.4vw, 14px) !important;
+        font-weight: 700 !important;
+        color: #1e293b !important;
+    }
+
+    .proj-entry-desc {
+        font-size: clamp(10px, 1.2vw, 12px) !important;
+        color: #64748b !important;
+        margin: 2px 0 0 0 !important;
+    }
+
+    .files-row {
+        display: flex !important;
+        gap: 10px !important;
+        flex-wrap: wrap !important;
+        margin-bottom: 8px !important;
+    }
+
+    .file-link {
+        display: flex !important;
+        align-items: center !important;
+        gap: 4px !important;
+        text-decoration: none !important;
+        color: #1e3a8a !important;
+        font-size: clamp(12px, 1.4vw, 14px) !important;
+        font-weight: 600;
+    }
+
+    .scopus-text {
+        font-size: 12px !important;
+        color: #94a3b8 !important;
+        text-align: right !important;
+        display: block !important;
+        margin-top: 5px !important;
+    }
+
+    .stats-row-v3 {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 8px !important;
+    }
+
+    .stat-box {
+        background-color: #f8fafc !important;
+        padding: 12px 4px !important;
+        border-radius: 10px !important;
+        text-align: center !important;
+        border: 1px solid #f1f5f9 !important;
+    }
+
+    .stat-box .number {
+        display: block !important;
+        font-size: 18px !important;
+        font-weight: 800 !important;
+        color: #1e40af !important;
+    }
+
+    .stat-box .text {
+        font-size: 12px !important;
+        font-weight: 600 !important;
+        color: #64748b !important;
+    }
+
+    .award-card {
+        background-color: #f8fafc !important;
+        border: 1px solid #f1f5f9 !important;
+        padding: 10px 12px !important;
+        border-radius: 10px !important;
+        font-size: 14px !important;
+        color: #475569 !important;
+        margin-bottom: 8px !important;
+    }
+
+    .btn-toggle-v3 {
+        background-color: #1e3a8a !important;
+        color: #ffffff !important;
+        border: none !important;
+        padding: 8px 24px !important;
+        border-radius: 10px !important;
+        font-size: 13px !important;
+        cursor: pointer !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+        margin-top: 15px !important;
+        margin-right: auto !important;
+        /* يدفع الزر لليسار */
+        margin-left: 0 !important;
+        font-family: 'Cairo' !important;
+    }
+
+    /* ميديا كويري للهواتف والشاشات الصغيرة */
+    @media (max-width: 768px) {
+        .fc-v3-header {
+            justify-content: center !important;
+            text-align: center !important;
+        }
+
+        .fc-v3-info {
+            text-align: center !important;
+        }
+
+        .contact-item {
+            justify-content: center !important;
+        }
+
+        .faculty-card-final {
+            padding: 16px !important;
+        }
+    }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<div class="faculty-card-final faculty-card-searchable" style="font-family: 'Cairo'">
+    <div class="fc-v3-header">
+        <img src="https://hu.edu.ye/lawfac/wp-content/uploads/2022/03/الحرمة.jpg" class="fc-v3-avatar">
+        <div class="fc-v3-info">
+            <h3>د. محمد عبدالرحمن الدوسري</h3>
+            <span class="subtitle">أستاذ دكتور | علوم الحاسوب</span>
+            <div class="contact-item">
+                <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                </svg>
+                <span>ali.aldosari@university.edu.sa</span>
+            </div>
+            <div class="contact-item">
+                <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+                </svg>
+                <span>+966 55 456 7890</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="fc-v3-content">
+        <hr class="section-divider">
+        <span class="section-title-v3">الاهتمامات البحثية</span>
+        <div class="tags-flex">
+            <span class="tag-blue">تحليل البيانات</span>
+            <span class="tag-blue">الذكاء الاصطناعي</span>
+            <span class="tag-blue">الأمن السيبراني</span>
+        </div>
+
+        <hr class="section-divider">
+        <span class="section-title-v3">أبرز المؤلفات</span>
+        <div class="proj-timeline">
+            <div class="proj-entry">
+                <div class="proj-entry-title">أساسيات البرمجة بلغة دارت وفلاتر</div>
+                <p class="proj-entry-desc">اصدار عام 2024</p>
+            </div>
+            <div class="proj-entry">
+                <div class="proj-entry-title">نظم إدارة قواعد البيانات المتقدمة T-SQL</div>
+                <p class="proj-entry-desc">اصدار عام 2023</p>
+            </div>
+        </div>
+
+        <hr class="section-divider">
+        <span class="section-title-v3">الملفات البحثية</span>
+        <div class="files-row">
+            <a href="#" class="file-link">ResearchGate <svg width="12" height="12" fill="none" stroke="currentColor"
+                    stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"></path>
+                </svg></a>
+            <a href="#" class="file-link">Google Scholar <svg width="12" height="12" fill="none" stroke="currentColor"
+                    stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"></path>
+                </svg></a>
+        </div>
+        <span class="scopus-text">Scopus ID : 123456784500</span>
+
+        <hr class="section-divider">
+        <span class="section-title-v3">المشاريع التقنية</span>
+        <div class="proj-timeline">
+            <div class="proj-entry">
+                <div class="proj-entry-title">نظام يسر (Yusr API)</div>
+                <p class="proj-entry-desc">تطوير البنية التحتية لمنصة إدارة الخدمات الجامعية.</p>
+            </div>
+            <div class="proj-entry">
+                <div class="proj-entry-title">تطبيق Hadhramout Mobile</div>
+                <p class="proj-entry-desc">إعادة تصميم تجربة المستخدم وتحسين الأداء.</p>
+            </div>
+        </div>
+
+        <hr class="section-divider">
+        <span class="section-title-v3">الإحصائيات البحثية</span>
+        <div class="stats-row-v3">
+            <div class="stat-box"><span class="number">52</span><span class="text">الأبحاث</span></div>
+            <div class="stat-box"><span class="number">1580</span><span class="text">استشهاد</span></div>
+            <div class="stat-box"><span class="number">21</span><span class="text">H-Index</span></div>
+        </div>
+
+        <hr class="section-divider">
+        <span class="section-title-v3">الجوائز و التكريمات</span>
+        <div class="award-card">جائزة التميز الأكاديمي لعام 2025</div>
+        <div class="award-card">أفضل بحث علمي - مؤتمر تقنية المعلومات</div>
+    </div>
+
+    <button class="btn-toggle-v3" onclick="smartToggle(this)">
+        <span class="btn-text">عرض أكثر</span>
+        <svg class="icon-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3"
+            viewBox="0 0 24 24" style="transition: 0.3s;">
+            <path d="M19 9l-7 7-7-7"></path>
+        </svg>
+    </button>
+</div>
+
+<script>
+    if (typeof smartToggle !== 'function') {
+        function smartToggle(btn) {
+            const card = btn.closest('.faculty-card-final');
+            const content = card.querySelector('.fc-v3-content');
+            const text = btn.querySelector('.btn-text');
+            const icon = btn.querySelector('.icon-arrow');
+            content.classList.toggle('is-open');
+            if (content.classList.contains('is-open')) {
+                text.innerText = "عرض أقل";
+                icon.style.transform = "rotate(180deg)";
+            } else {
+                text.innerText = "عرض أكثر";
+                icon.style.transform = "rotate(0deg)";
+            }
+        }
+    }
+</script>
+
+
+
+
+
+<!-- ظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظ -->

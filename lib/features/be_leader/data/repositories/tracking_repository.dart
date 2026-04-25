@@ -70,6 +70,21 @@ class TrackingRepository {
     }
   }
 
+  /// تحديث "صك الأمان" للحاج (يُستدعى بواسطة المشرف عندما يلتقط الحاج عبر البلوتوث)
+  Future<void> updatePilgrimSafeFlag(
+    String sessionId,
+    String pilgrimId,
+    bool isSafe,
+  ) async {
+    try {
+      await _db.ref('TrackingSessions/$sessionId/pilgrims/$pilgrimId').update({
+        'isSafeByBle': isSafe,
+      });
+    } catch (e) {
+      debugPrint("❌ فشل في تحديث حالة الأمان للحاج: $e");
+    }
+  }
+
   /// 3. إغلاق الجلسة وحذفها من فايربيس
   Future<void> deleteSession(String sessionId) async {
     try {
@@ -86,6 +101,11 @@ class TrackingRepository {
   /// 4. الاستماع اللحظي لمواقع جميع الحجاج داخل الجلسة
   Stream<DatabaseEvent> pilgrimsStream(String sessionId) {
     return _db.ref('TrackingSessions/$sessionId/pilgrims').onValue;
+  }
+
+  /// الاستماع اللحظي لبيانات حاج واحد معين (يُستدعى بواسطة الحاج نفسه لقراءة صك الأمان)
+  Stream<DatabaseEvent> pilgrimStream(String sessionId, String pilgrimId) {
+    return _db.ref('TrackingSessions/$sessionId/pilgrims/$pilgrimId').onValue;
   }
 
   /// 5. الاستماع اللحظي لموقع المشرف

@@ -6,6 +6,8 @@ import 'package:latlong2/latlong.dart';
 import 'package:yusr/core/constants/app_color.dart'; // تأكدي من استيراد المكونات التي أنشأتيهاi
 import 'package:yusr/features/be_leader/providers/leader_tracking_controller.dart';
 import 'package:yusr/features/be_leader/providers/state/pilgrim_marker_data.dart';
+import 'package:yusr/features/be_leader/providers/state/tracking_state.dart'
+    hide TrackingState;
 import 'package:yusr/features/return_to_compaign_location/presentation/widgets/loading_overlay_widget.dart';
 import 'package:yusr/features/return_to_compaign_location/presentation/widgets/tracking_fab_widget.dart';
 
@@ -24,9 +26,7 @@ class _LeaderMapTrackingViewState extends ConsumerState<LeaderMapTrackingView> {
 
   @override
   Widget build(BuildContext context) {
-    // final mapState = ref.watch(leaderMapControllerProvider(widget.sessionId));
     final mapState = ref.watch(leaderTrackingControllerProvider);
-    // 2. الاستماع السحري للتحذيرات وعرض السناك بار
     ref.listen<TrackingState>(leaderTrackingControllerProvider, (
       previous,
       next,
@@ -92,7 +92,7 @@ class _LeaderMapTrackingViewState extends ConsumerState<LeaderMapTrackingView> {
               initialCenter:
                   mapState.leaderLocation ??
                   const LatLng(21.422487, 39.826206), // إحداثيات مكة كبديل
-              initialZoom: 16.0,
+              initialZoom: 17.0,
             ),
             children: [
               TileLayer(
@@ -109,7 +109,7 @@ class _LeaderMapTrackingViewState extends ConsumerState<LeaderMapTrackingView> {
                       color: Colors.blue.withOpacity(0.1),
                       borderColor: Colors.blue.withOpacity(0.3),
                       borderStrokeWidth: 1,
-                      radius: 150, // الدائرة الحمراء
+                      radius: 40, // الدائرة الحمراء
                       useRadiusInMeter: true,
                     ),
                     CircleMarker(
@@ -117,7 +117,7 @@ class _LeaderMapTrackingViewState extends ConsumerState<LeaderMapTrackingView> {
                       color: Colors.transparent,
                       borderColor: Colors.blue.withOpacity(0.5),
                       borderStrokeWidth: 1,
-                      radius: 75, // الدائرة الصفراء
+                      radius: 25, // الدائرة الصفراء
                       useRadiusInMeter: true,
                     ),
                   ],
