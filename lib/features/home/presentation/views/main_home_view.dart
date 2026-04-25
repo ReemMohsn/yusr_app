@@ -212,21 +212,26 @@ class _MainHomeViewState extends ConsumerState<MainHomeView> {
       children: [
         const SizedBox(width: 10),
         // أيقونة البروفايل
-        Container(
-          width: 35,
-          height: 35,
-          decoration: const BoxDecoration(
-            color: AppColor.golden,
-            shape: BoxShape.circle,
-          ),
-          child: Center(
-            child: Text(
-              profile.fullName.isNotEmpty
-                  ? profile.fullName[0].toUpperCase()
-                  : "P",
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+        GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, AppRoute.profileView);
+          },
+          child: Container(
+            width: 35,
+            height: 35,
+            decoration: const BoxDecoration(
+              color: AppColor.golden,
+              shape: BoxShape.circle,
+            ),
+            child: Center(
+              child: Text(
+                profile.fullName.isNotEmpty
+                    ? profile.fullName[0].toUpperCase()
+                    : "P",
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
               ),
             ),
           ),

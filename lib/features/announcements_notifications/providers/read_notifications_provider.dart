@@ -1,4 +1,4 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart'; // 🌟 السطر السحري الذي سيخفي الأخطاء
+// 🌟 السطر السحري الذي سيخفي الأخطاء
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:yusr/core/common/providers/shared_preferences_service_provider.dart';
 import 'dart:async';

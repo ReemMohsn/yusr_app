@@ -6,15 +6,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:yusr/core/common/widgets/custom_golden_back_button.dart';
-import 'package:yusr/core/common/widgets/widget.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/constants/app_size.dart';
 import 'package:yusr/core/common/widgets/custom_text_field.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/features/campaign_location/presentation/widgets/location_input_card.dart';
 import 'package:yusr/features/campaign_location/providers/add_location_controller_provider.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:yusr/features/campaign_location/providers/campaign_location_controller_provider.dart';
 
 final nameControllerProvider = Provider.autoDispose((ref) {
   final controller = TextEditingController();

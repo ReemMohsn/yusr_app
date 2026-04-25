@@ -33,6 +33,11 @@ import 'package:yusr/features/instructions/presentation/views/instructions_view.
 
 import 'package:yusr/features/return_to_compaign_location/presentation/views/return_me_map_view.dart';
 import 'package:yusr/features/return_to_compaign_location/presentation/views/return_me_view.dart';
+import 'package:yusr/features/profile/presentation/views/profile_view.dart';
+import 'package:yusr/features/profile/presentation/views/saudi_phone_view.dart';
+import 'package:yusr/features/group/presentation/views/group_info_view.dart';
+import 'package:yusr/features/group/presentation/views/supervisor_group_view.dart';
+import 'package:yusr/features/group/presentation/views/pilgrim_details_view.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -49,6 +54,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const OtpVerificationView());
       case AppRoute.resetPasswordView:
         return MaterialPageRoute(builder: (_) => const ResetPasswordView());
+      case AppRoute.profileView:
+        return MaterialPageRoute(builder: (_) => const ProfileView());
       case AppRoute.announcementsView:
         return MaterialPageRoute(builder: (_) => const AnnouncementsView());
       case AppRoute.addAnnouncementView:
@@ -113,6 +120,22 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => ActionDetailsView(action: action),
         );
+      case AppRoute.addSaudiNumber:
+        final Map<String, dynamic> args = settings.arguments as Map<String, dynamic>? ?? {};
+        final bool isEditMode = args['isEditMode'] as bool? ?? false;
+        final String? currentNumber = args['currentNumber'] as String?;
+        return MaterialPageRoute(
+          builder: (_) => SaudiPhoneView(isEditMode: isEditMode, currentNumber: currentNumber),
+        );
+      case AppRoute.groupInfoView:
+        return MaterialPageRoute(builder: (_) => const GroupInfoView());
+      case AppRoute.supervisorGroupView:
+        return MaterialPageRoute(builder: (_) => const SupervisorGroupView());
+      case AppRoute.pilgrimDetailsView:
+        final userId = settings.arguments as int;
+        return MaterialPageRoute(
+          builder: (_) => PilgrimDetailsView(userId: userId),
+        );
       default:
         return null;
     }
@@ -146,4 +169,9 @@ class AppRoute {
   static const String instructionsView = '/InstructionsView';
   static const String hajjDetailsView = '/HajjDetailsView';
   static const String actionDetailsView = '/ActionDetailsView';
+  static const String profileView = '/ProfileView';
+  static const String addSaudiNumber = '/AddSaudiNumber';
+  static const String groupInfoView = '/GroupInfoView';
+  static const String supervisorGroupView = '/SupervisorGroupView';
+  static const String pilgrimDetailsView = '/PilgrimDetailsView';
 }

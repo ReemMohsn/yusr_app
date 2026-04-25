@@ -1313,6 +1313,556 @@ class AppLocalizations {
       args: [],
     );
   }
+
+  /// `Profile`
+  String get profileTitle {
+    return Intl.message('Profile', name: 'profileTitle', desc: '', args: []);
+  }
+
+  /// `An error occurred while loading data`
+  String get errorLoadingData {
+    return Intl.message(
+      'An error occurred while loading data',
+      name: 'errorLoadingData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Personal Data`
+  String get personalData {
+    return Intl.message(
+      'Personal Data',
+      name: 'personalData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Full Name`
+  String get fullName {
+    return Intl.message('Full Name', name: 'fullName', desc: '', args: []);
+  }
+
+  /// `Gender`
+  String get gender {
+    return Intl.message('Gender', name: 'gender', desc: '', args: []);
+  }
+
+  /// `Male`
+  String get male {
+    return Intl.message('Male', name: 'male', desc: '', args: []);
+  }
+
+  /// `Date of Birth`
+  String get dateOfBirth {
+    return Intl.message(
+      'Date of Birth',
+      name: 'dateOfBirth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Age`
+  String get age {
+    return Intl.message('Age', name: 'age', desc: '', args: []);
+  }
+
+  /// `Health Status`
+  String get healthStatus {
+    return Intl.message(
+      'Health Status',
+      name: 'healthStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Active`
+  String get active {
+    return Intl.message('Active', name: 'active', desc: '', args: []);
+  }
+
+  /// `Inactive`
+  String get inactive {
+    return Intl.message('Inactive', name: 'inactive', desc: '', args: []);
+  }
+
+  /// `Residential Location`
+  String get residentialLocation {
+    return Intl.message(
+      'Residential Location',
+      name: 'residentialLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact Data`
+  String get contactData {
+    return Intl.message(
+      'Contact Data',
+      name: 'contactData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Saudi Mobile Number`
+  String get saudiMobileNumber {
+    return Intl.message(
+      'Saudi Mobile Number',
+      name: 'saudiMobileNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yemeni Mobile Number`
+  String get yemeniMobileNumber {
+    return Intl.message(
+      'Yemeni Mobile Number',
+      name: 'yemeniMobileNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `WhatsApp Number`
+  String get whatsappNumber {
+    return Intl.message(
+      'WhatsApp Number',
+      name: 'whatsappNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Relative Contact`
+  String get relativeContact {
+    return Intl.message(
+      'Relative Contact',
+      name: 'relativeContact',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Copied successfully`
+  String get copiedSuccessfully {
+    return Intl.message(
+      'Copied successfully',
+      name: 'copiedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sharing...`
+  String get sharing {
+    return Intl.message('Sharing...', name: 'sharing', desc: '', args: []);
+  }
+
+  /// `User`
+  String get userRole {
+    return Intl.message('User', name: 'userRole', desc: '', args: []);
+  }
+
+  /// `Not Added`
+  String get notAdded {
+    return Intl.message('Not Added', name: 'notAdded', desc: '', args: []);
+  }
+
+  /// `Add Saudi Number`
+  String get addSaudiNumberAction {
+    return Intl.message(
+      'Add Saudi Number',
+      name: 'addSaudiNumberAction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Copied`
+  String get copiedText {
+    return Intl.message('Copied', name: 'copiedText', desc: '', args: []);
+  }
+
+  /// `Add Saudi Phone Number`
+  String get addSaudiNumber {
+    return Intl.message(
+      'Add Saudi Phone Number',
+      name: 'addSaudiNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Saudi Phone Number`
+  String get editSaudiNumber {
+    return Intl.message(
+      'Edit Saudi Phone Number',
+      name: 'editSaudiNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter phone number`
+  String get saudiPhoneRequired {
+    return Intl.message(
+      'Please enter phone number',
+      name: 'saudiPhoneRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Number must start with 5`
+  String get saudiPhoneMustStartWith5 {
+    return Intl.message(
+      'Number must start with 5',
+      name: 'saudiPhoneMustStartWith5',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Number must be exactly 9 digits`
+  String get saudiPhoneMustBe9Digits {
+    return Intl.message(
+      'Number must be exactly 9 digits',
+      name: 'saudiPhoneMustBe9Digits',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Importance of Saudi Number`
+  String get saudiPhoneImportance {
+    return Intl.message(
+      'Importance of Saudi Number',
+      name: 'saudiPhoneImportance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A local Saudi phone number is necessary to contact you inside the Kingdom during your Hajj journey. Please ensure the number is correct.`
+  String get saudiPhoneImportanceDesc {
+    return Intl.message(
+      'A local Saudi phone number is necessary to contact you inside the Kingdom during your Hajj journey. Please ensure the number is correct.',
+      name: 'saudiPhoneImportanceDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Local number for contact in Saudi Arabia 🇸🇦`
+  String get localSADialTitle {
+    return Intl.message(
+      'Local number for contact in Saudi Arabia 🇸🇦',
+      name: 'localSADialTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save Number`
+  String get saveNumber {
+    return Intl.message('Save Number', name: 'saveNumber', desc: '', args: []);
+  }
+
+  /// `Important Notes`
+  String get importantNotesTitle {
+    return Intl.message(
+      'Important Notes',
+      name: 'importantNotesTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Example: 501234567`
+  String get saudiPhoneHint {
+    return Intl.message(
+      'Example: 501234567',
+      name: 'saudiPhoneHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ensure the number starts with 5`
+  String get note1 {
+    return Intl.message(
+      'Ensure the number starts with 5',
+      name: 'note1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The number must consist of 9 digits`
+  String get note2 {
+    return Intl.message(
+      'The number must consist of 9 digits',
+      name: 'note2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verify the number as it will be used to contact you`
+  String get note3 {
+    return Intl.message(
+      'Verify the number as it will be used to contact you',
+      name: 'note3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can modify the number at any time`
+  String get note4 {
+    return Intl.message(
+      'You can modify the number at any time',
+      name: 'note4',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Saudi Phone Number`
+  String get addNumberTitle {
+    return Intl.message(
+      'Add Saudi Phone Number',
+      name: 'addNumberTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Saudi Phone Number`
+  String get editNumberTitle {
+    return Intl.message(
+      'Edit Saudi Phone Number',
+      name: 'editNumberTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Number`
+  String get addNumberBtn {
+    return Intl.message('Add Number', name: 'addNumberBtn', desc: '', args: []);
+  }
+
+  /// `Save Number`
+  String get saveNumberBtn {
+    return Intl.message(
+      'Save Number',
+      name: 'saveNumberBtn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Number`
+  String get editNumber {
+    return Intl.message('Edit Number', name: 'editNumber', desc: '', args: []);
+  }
+
+  /// `Number added successfully`
+  String get addedSaudiNumberSuccess {
+    return Intl.message(
+      'Number added successfully',
+      name: 'addedSaudiNumberSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Number updated successfully`
+  String get editedSaudiNumberSuccess {
+    return Intl.message(
+      'Number updated successfully',
+      name: 'editedSaudiNumberSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Group Information`
+  String get groupInfoSectionTitle {
+    return Intl.message(
+      'Group Information',
+      name: 'groupInfoSectionTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Group Name`
+  String get groupName {
+    return Intl.message('Group Name', name: 'groupName', desc: '', args: []);
+  }
+
+  /// `Pilgrims Count`
+  String get pilgrimsCount {
+    return Intl.message(
+      'Pilgrims Count',
+      name: 'pilgrimsCount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Arrival Date`
+  String get arrivalDate {
+    return Intl.message(
+      'Arrival Date',
+      name: 'arrivalDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Departure Date`
+  String get departureDate {
+    return Intl.message(
+      'Departure Date',
+      name: 'departureDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Supervisor Information`
+  String get supervisorInfo {
+    return Intl.message(
+      'Supervisor Information',
+      name: 'supervisorInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Supervisor Name`
+  String get supervisorName {
+    return Intl.message(
+      'Supervisor Name',
+      name: 'supervisorName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email`
+  String get email {
+    return Intl.message('Email', name: 'email', desc: '', args: []);
+  }
+
+  /// `No Group Assigned Yet`
+  String get groupNotAssignedTitle {
+    return Intl.message(
+      'No Group Assigned Yet',
+      name: 'groupNotAssignedTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You haven't been assigned to a group yet. Please contact the campaign manager.`
+  String get groupNotAssignedBody {
+    return Intl.message(
+      'You haven\'t been assigned to a group yet. Please contact the campaign manager.',
+      name: 'groupNotAssignedBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Group Details`
+  String get supervisorGroupDetails {
+    return Intl.message(
+      'Group Details',
+      name: 'supervisorGroupDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `members`
+  String get members {
+    return Intl.message('members', name: 'members', desc: '', args: []);
+  }
+
+  /// `Search pilgrim...`
+  String get searchPilgrim {
+    return Intl.message(
+      'Search pilgrim...',
+      name: 'searchPilgrim',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No pilgrims found`
+  String get noPilgrimsFound {
+    return Intl.message(
+      'No pilgrims found',
+      name: 'noPilgrimsFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not Available`
+  String get notAvailable {
+    return Intl.message(
+      'Not Available',
+      name: 'notAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pilgrim Details`
+  String get pilgrimDetails {
+    return Intl.message(
+      'Pilgrim Details',
+      name: 'pilgrimDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error loading pilgrim data`
+  String get errorLoadingPilgrimData {
+    return Intl.message(
+      'Error loading pilgrim data',
+      name: 'errorLoadingPilgrimData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Passport Number`
+  String get passportNumber {
+    return Intl.message(
+      'Passport Number',
+      name: 'passportNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stable`
+  String get healthStable {
+    return Intl.message('Stable', name: 'healthStable', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {
