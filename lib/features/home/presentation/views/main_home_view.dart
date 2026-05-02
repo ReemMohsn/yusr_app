@@ -20,6 +20,7 @@ import 'package:yusr/features/home/providers/current_index_controller.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:yusr/features/home/providers/user_provider.dart';
 import 'package:yusr/features/return_to_compaign_location/presentation/views/return_me_view.dart';
+import 'package:yusr/features/smart_mufti/presentation/views/smart_mufti_view.dart';
 
 class MainHomeView extends ConsumerStatefulWidget {
   const MainHomeView({super.key});
@@ -74,7 +75,7 @@ class _MainHomeViewState extends ConsumerState<MainHomeView> {
       ),
       NavigationItemModel(
         label: locale.smartMufti,
-        page: const Placeholder(),
+        page: SmartMuftiView(),
         activeIconPath: AppImage.smartMoftiIcon,
       ),
       NavigationItemModel(
