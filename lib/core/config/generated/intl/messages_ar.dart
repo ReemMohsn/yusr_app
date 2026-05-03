@@ -361,8 +361,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "smartMuftiHelper": MessageLookupByLibrary.simpleMessage(
       "مساعدك الذكي للإجابة على تساؤلات الحج",
     ),
-    "start": MessageLookupByLibrary.simpleMessage("أبدأ"),
+    "start": MessageLookupByLibrary.simpleMessage("ابدأ"),
     "startSession": MessageLookupByLibrary.simpleMessage("بدء الجلسة"),
+    "status": MessageLookupByLibrary.simpleMessage("الحالة"),
+    "steps": MessageLookupByLibrary.simpleMessage("الخطوات"),
+    "stopped": MessageLookupByLibrary.simpleMessage("توقف"),
     "strokes": MessageLookupByLibrary.simpleMessage("أشواط"),
     "supervisorGroupDetails": MessageLookupByLibrary.simpleMessage(
       "تفاصيل المجموعة",
@@ -393,6 +396,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "waitingForYourQuestion": MessageLookupByLibrary.simpleMessage(
       "بانتظار سؤالك للإجابة عليه بالذكاء الاصطناعي..",
     ),
+    "walking": MessageLookupByLibrary.simpleMessage("مشي"),
     "whatsappNumber": MessageLookupByLibrary.simpleMessage("رقم الواتساب"),
     "writeAnnouncementContentHere": MessageLookupByLibrary.simpleMessage(
       "اكتب محتوى الإعلان هنا...",
