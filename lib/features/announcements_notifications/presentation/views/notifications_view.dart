@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:riverpod/src/framework.dart';
 import 'package:yusr/core/common/widgets/custom_golden_back_button.dart';
 import 'package:yusr/core/common/widgets/custom_text_field.dart';
 import 'package:yusr/core/constants/app_route.dart';
@@ -26,6 +25,17 @@ class NotificationsView extends ConsumerStatefulWidget {
 
 class _NotificationsViewState extends ConsumerState<NotificationsView> {
   final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    // ✅ إعادة جلب الإشعارات من السيرفر في كل مرة تُفتح الشاشة
+    // هذا يضمن ظهور أي إشعار جديد وصل عبر FCM
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.invalidate(notificationsProvider);
+    });
+  }
+
   @override
   void dispose() {
     _searchController.dispose();
@@ -37,13 +47,9 @@ class _NotificationsViewState extends ConsumerState<NotificationsView> {
     final locale = context.locale;
 
     // 🌟 مراقبة حالة الإعلانات (تحميل، خطأ، أو داتا)
-    final notificationsState = ref.watch(notificationsProvider);
     final filteredState = ref.watch(filteredNotificationsProvider);
     // 🌟 يجب أن يكون هذا السطر موجوداً هنا لكي يتعرف على readIds
-    final readNotificationsState = ref.watch(
-      readNotificationsProvider as ProviderListenable<dynamic>,
-    );
-    final List<String> readIds = readNotificationsState.value ?? [];
+    final readIds = ref.watch(readNotificationsProvider).value ?? [];
 
     return Scaffold(
       appBar: AppBar(
