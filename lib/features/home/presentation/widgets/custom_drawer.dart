@@ -48,7 +48,6 @@ class CustomDrawer extends ConsumerWidget {
             children: [
               // 1. رأس القائمة (Header)
               BuildDrawerHeader(profile: profile!),
-
               // 2. خيارات القائمة بناءً على الدور
               Expanded(
                 child: SingleChildScrollView(

@@ -210,7 +210,7 @@
   "pilgrimDetails": "Pilgrim Details",
   "errorLoadingPilgrimData": "Error loading pilgrim data",
   "passportNumber": "Passport Number",
-  "healthStable": "Stable"
+  "healthStable": "Stable",
   "steps": "Steps",
   "status": "Status",
   "walking": "Walking",

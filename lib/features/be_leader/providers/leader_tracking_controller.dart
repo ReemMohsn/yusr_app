@@ -639,8 +639,8 @@ class LeaderTrackingController extends _$LeaderTrackingController {
   final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  final double _yellowZone = 25; // التحذير الصامت
-  final double _redZone = 40; // الخطر المؤكد (الإنذار)
+  final double _yellowZone = 20; // التحذير الصامت
+  final double _redZone = 30; // الخطر المؤكد (الإنذار)
 
   final Set<String> _alertedPilgrims = {};
   final Map<String, DateTime> _redZoneEntryTimes = {};

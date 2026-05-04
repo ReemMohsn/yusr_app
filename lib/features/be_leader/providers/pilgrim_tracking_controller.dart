@@ -441,8 +441,8 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
   final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  final double _yellowZone = 25;
-  final double _redZone = 50;
+  final double _yellowZone = 20;
+  final double _redZone = 30;
 
   bool _isAlarmActive = false;
   Position? _lastValidPosition;
