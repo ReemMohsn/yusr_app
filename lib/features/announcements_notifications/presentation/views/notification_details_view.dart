@@ -1,20 +1,42 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/common/widgets/custom_golden_back_button.dart';
 import 'package:yusr/core/constants/app_size.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/features/announcements_notifications/data/models/notifications_model.dart';
+import 'package:yusr/features/announcements_notifications/providers/read_notifications_provider.dart';
 
-class NotificationDetailsView extends StatelessWidget {
+class NotificationDetailsView extends ConsumerStatefulWidget {
   final NotificationModel notification;
 
   const NotificationDetailsView({super.key, required this.notification});
 
   @override
+  ConsumerState<NotificationDetailsView> createState() =>
+      _NotificationDetailsViewState();
+}
+
+class _NotificationDetailsViewState
+    extends ConsumerState<NotificationDetailsView> {
+  @override
+  void initState() {
+    super.initState();
+    // ✅ تسجيل الإشعار كمقروء فور فتح الصفحة (سواء من القائمة أو من FCM مباشرة)
+    // هذا يُقلل عداد الجرس تلقائياً بغض النظر عن طريقة الفتح
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref
+          .read(readNotificationsProvider.notifier)
+          .markAsRead(widget.notification.notificationId.toString());
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final locale = context.locale;
+    final notification = widget.notification;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
