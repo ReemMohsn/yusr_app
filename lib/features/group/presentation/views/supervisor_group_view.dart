@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:yusr/core/common/widgets/custom_text_field.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/constants/app_size.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/core/common/widgets/custom_golden_back_button.dart';
 import 'package:yusr/features/group/providers/group_provider.dart';
-
 import 'package:yusr/features/group/presentation/widgets/group_filter_pill.dart';
 import 'package:yusr/features/group/presentation/widgets/pilgrim_list_card.dart';
 
@@ -171,44 +171,19 @@ class _SupervisorGroupViewState extends ConsumerState<SupervisorGroupView> {
                       const SizedBox(height: 20),
 
                       // Search bar
-                      Container(
-                        height: 48,
-                        decoration: BoxDecoration(
-                          color: AppColor.withe,
-                          borderRadius: BorderRadius.circular(14),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColor.black.withValues(alpha: 0.06),
-                              blurRadius: 8,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Row(
-                          children: [
-                            const Icon(Icons.search,
-                                color: AppColor.golden, size: 20),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: TextField(
-                                controller: _searchController,
-                                decoration: InputDecoration(
-                                  hintText: locale.searchPilgrim,
-                                  hintStyle: const TextStyle(
-                                    color: AppColor.lightFontColor,
-                                    fontSize: 15,
-                                  ),
-                                  border: InputBorder.none,
-                                  isDense: true,
-                                ),
-                                style: const TextStyle(
-                                  color: AppColor.textDark,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ),
-                          ],
+                      CustomTextField(
+                        controller: _searchController,
+                        hintText: locale.searchPilgrim,
+                        prefixIcon: Icons.search,
+                        textInputAction: TextInputAction.search,
+                        onChanged: (value) => setState(() {}),
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.clear, color: Colors.grey, size: 20.sp),
+                          onPressed: () {
+                            _searchController.clear();
+                            FocusScope.of(context).unfocus();
+                            setState(() {});
+                          },
                         ),
                       ),
 

@@ -155,6 +155,7 @@ import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/core/constants/shared_preferences_keys.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/features/announcements_notifications/data/models/notifications_model.dart';
+import 'package:yusr/features/announcements_notifications/providers/notifications_provider.dart';
 import 'package:yusr/features/be_leader/providers/leader_tracking_controller.dart';
 import 'package:yusr/features/be_leader/providers/pilgrim_tracking_controller.dart';
 import 'package:yusr/features/be_leader/providers/pilgrims_list_provider.dart';
@@ -250,6 +251,9 @@ class PushNotificationService {
 
     // 🔥 1. معالجة إعلانات الحملة
     if (message.data['status'] == 'new_announcement') {
+      // ✅ إجبار قائمة الإشعارات على إعادة الجلب من السيرفر لتحديث العداد والقائمة
+      ProviderScope.containerOf(context).invalidate(notificationsProvider);
+
       final notificationModel = NotificationModel(
         notificationId:
             int.tryParse(message.data['notificationId'] ?? '0') ?? 0,
@@ -355,9 +359,11 @@ class PushNotificationService {
         ).invalidate(pilgrimsListProvider(sessionId));
       }
     }
-    // 3. بناء الـ SnackBar بشكل ديناميكي
-    // إذا كان الإشعار لتغير حالة الحاج، لا نضع زر (Action) لأن البيانات تتحدث أمامه بالفعل
-    // أما إذا كان إعلاناً، نضع زر "عرض التفاصيل" للذهاب لصفحة الإعلان
+    // ✅ تحديث قائمة الإشعارات عند وصول إعلان جديد وهو مفتوح
+    if (status == 'new_announcement') {
+      ProviderScope.containerOf(context).invalidate(notificationsProvider);
+    }
+
     // 3. بناء الـ SnackBar بشكل ديناميكي
     SnackBarAction? snackBarAction;
 

@@ -361,7 +361,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "smartMuftiHelper": MessageLookupByLibrary.simpleMessage(
       "مساعدك الذكي للإجابة على تساؤلات الحج",
     ),
-    "start": MessageLookupByLibrary.simpleMessage("أبدأ"),
+    "start": MessageLookupByLibrary.simpleMessage("ابدأ"),
     "startSession": MessageLookupByLibrary.simpleMessage("بدء الجلسة"),
     "status": MessageLookupByLibrary.simpleMessage("الحالة"),
     "steps": MessageLookupByLibrary.simpleMessage("الخطوات"),

@@ -52,7 +52,6 @@ class CircularCounterWidget extends ConsumerWidget {
               value: lapProgress.clamp(0.0, 1.0),
               strokeWidth: 12.w,
               color: AppColor.golden, // اللون الذهبي للتقدم
-              // backgroundColor: Colors.transparent,
               strokeCap: StrokeCap.round,
             ),
           ),
@@ -65,8 +64,8 @@ class CircularCounterWidget extends ConsumerWidget {
               Text(
                 locale.start,
                 style: TextStyle(
-                  fontSize: 60.sp,
-                  fontWeight: FontWeight.w900,
+                  fontSize: 55.sp,
+                  fontWeight: FontWeight.w700,
                   color: AppColor.baseFontColor,
                   height: 1.1,
                 ),
@@ -75,7 +74,7 @@ class CircularCounterWidget extends ConsumerWidget {
               Text(
                 locale.clickToStart,
                 style: TextStyle(
-                  fontSize: 14.sp,
+                  fontSize: 12.sp,
                   color: AppColor.iconColors,
                   fontWeight: FontWeight.bold,
                 ),
