@@ -9,8 +9,7 @@ import 'package:yusr/features/be_leader/presentation/widgets/pilgrim_list_item_w
 import 'package:yusr/features/be_leader/presentation/widgets/stat_card_widget.dart';
 import 'package:yusr/features/be_leader/providers/leader_tracking_controller.dart';
 import 'package:yusr/features/be_leader/providers/pilgrims_list_provider.dart';
-import 'package:yusr/features/be_leader/providers/state/tracking_state.dart'
-    hide TrackingState;
+import 'package:yusr/features/be_leader/providers/state/tracking_state.dart';
 
 class LeaderPilgrimsListView extends ConsumerWidget {
   final int sessionId;

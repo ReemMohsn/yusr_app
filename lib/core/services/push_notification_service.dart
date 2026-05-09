@@ -1,150 +1,4 @@
-// import 'package:firebase_messaging/firebase_messaging.dart';
-// import 'package:flutter/material.dart';
-// import 'package:yusr/core/constants/app_color.dart';
-// import 'package:yusr/core/constants/app_route.dart';
-// import 'package:yusr/core/extensions/context_extension.dart';
-// import 'package:yusr/features/announcements_notifications/data/models/notifications_model.dart';
-
-// @pragma('vm:entry-point')
-// Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-//   print("تم استلام إشعار في الخلفية: ${message.messageId}");
-// }
-
-// class PushNotificationService {
-//   static Future<void> init() async {
-//     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-
-//     // 1. حالة التطبيق مغلق تماماً
-//     RemoteMessage? initialMessage = await FirebaseMessaging.instance
-//         .getInitialMessage();
-//     print(
-//       "🔎 فحص الإشعارات والتطبيق مغلق: ${initialMessage != null ? 'يوجد إشعار!' : 'لا يوجد'}",
-//     );
-
-//     if (initialMessage != null) {
-//       print("🌟 تم التقاط الإشعار من حالة الإغلاق التام (Terminated) 🌟");
-//       Future.delayed(const Duration(seconds: 1), () {
-//         _handleMessage(initialMessage);
-//       });
-//     }
-
-//     // 2. حالة التطبيق في الخلفية
-//     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-//       print("🔥🔥 تم التقاط الضغطة بنجاح من الخلفية (Background) 🔥🔥");
-//       Future.delayed(const Duration(milliseconds: 500), () {
-//         _handleMessage(message);
-//       });
-//     });
-
-//     // 3. حالة التطبيق مفتوح
-//     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-//       if (message.notification != null) {
-//         _showInAppNotification(message);
-//       }
-//     });
-//   }
-
-//   // ==========================================
-//   // دالة التوجيه
-//   // ==========================================
-//   static void _handleMessage(RemoteMessage message) {
-//     print("==================================================");
-//     print("تم الضغط على الإشعار! البيانات المستلمة هي:");
-//     print(message.data);
-//     print("==================================================");
-
-//     // 🔥 جلب الـ context من الـ navigatorKey لاستخدام الترجمة
-//     final context = navigatorKey.currentContext;
-
-//     // قيم افتراضية في حال كان التطبيق في الخلفية والـ context لم يجهز بعد
-//     String defaultTitle = 'إعلان هام';
-//     String defaultSender = 'الإدارة';
-
-//     // إذا كان الـ context متاحاً، نستخدم الترجمة
-//     if (context != null) {
-//       defaultTitle = context.locale.importantAnnouncement;
-//       defaultSender = context.locale.administration;
-//     }
-
-//     // التحقق من الشرط
-//     if (message.data['status'] == 'new_announcement') {
-//       final notificationModel = NotificationModel(
-//         notificationId:
-//             int.tryParse(message.data['notificationId'] ?? '0') ?? 0,
-//         title:
-//             message.notification?.title ?? defaultTitle, // استخدام الترجمة هنا
-//         body: message.notification?.body ?? '',
-//         sentAtDate: message.data['sentAtDate'] ?? '',
-//         sentAtTime: message.data['sentAtTime'] ?? '',
-//         senderName:
-//             message.data['senderName'] ?? defaultSender, // استخدام الترجمة هنا
-//       );
-
-//       if (navigatorKey.currentState != null) {
-//         navigatorKey.currentState!.pushNamed(
-//           AppRoute.notificationDetailsView,
-//           arguments: notificationModel,
-//         );
-//       } else {
-//         print("⚠️ خطأ: navigatorKey غير جاهز للتوجيه!");
-//       }
-//     }else if (message.data['status'] == 'start_tracking_session') {
-//       final sessionId = message.data['sessionId'] ?? '';
-//       final leaderName = message.data['leaderName'] ?? 'مشرف المجموعة';
-
-//       if (sessionId.isNotEmpty) {
-//         // استدعاء دالة إظهار الدايلوج
-//         _showTrackingAcceptDialog(context, sessionId, leaderName);
-//       }
-//     } else {
-//       print("⚠️ التوجيه لم يحدث! نوع الإشعار غير معروف.");
-//     }
-//   }
-
-//   // ==========================================
-//   // دالة إظهار تنبيه إذا كان التطبيق مفتوحاً
-//   // ==========================================
-//   static void _showInAppNotification(RemoteMessage message) {
-//     final context = navigatorKey.currentContext;
-
-//     if (context != null) {
-//       // 🔥 بما أن الـ context متاح هنا دائماً، يمكننا استخدام الترجمة مباشرة
-//       final locale = context.locale;
-
-//       ScaffoldMessenger.of(context).showSnackBar(
-//         SnackBar(
-//           content: Column(
-//             mainAxisSize: MainAxisSize.min,
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               Text(
-//                 message.notification?.title ??
-//                     locale.newNotification, // استخدام الترجمة
-//                 maxLines: 1,
-//                 overflow: TextOverflow.ellipsis,
-//                 style: const TextStyle(fontWeight: FontWeight.bold),
-//               ),
-//               Text(
-//                 message.notification?.body ?? '',
-//                 maxLines: 1,
-//                 overflow: TextOverflow.ellipsis,
-//               ),
-//             ],
-//           ),
-//           backgroundColor: AppColor.baseFontColor,
-//           duration: const Duration(seconds: 5),
-//           action: SnackBarAction(
-//             label: locale.viewDetails, // استخدام الترجمة
-//             textColor: AppColor.golden,
-//             onPressed: () {
-//               _handleMessage(message);
-//             },
-//           ),
-//         ),
-//       );
-//     }
-//   }
-// }
+import 'dart:async';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -161,10 +15,6 @@ import 'package:yusr/features/be_leader/providers/pilgrim_tracking_controller.da
 import 'package:yusr/features/be_leader/providers/pilgrims_list_provider.dart';
 import 'package:yusr/features/home/providers/user_provider.dart';
 
-// @pragma('vm:entry-point')
-// Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-//   print("تم استلام إشعار في الخلفية: ${message.messageId}");
-// }
 // خارج الكلاس، دالة الخلفية الرئيسية
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -198,13 +48,13 @@ class PushNotificationService {
       initializationSettings,
       onDidReceiveNotificationResponse: (NotificationResponse response) {
         // 🔥 هنا نستمع للضغطات على الإشعارات المحلية 🔥
-        if (response.payload == 'emergency_alarm') {
-          // إذا كان الإشعار هو إشعار طوارئ المشرف، نوقف الصوت
+        if (response.payload == 'emergency_notification') {
+          // إذا ضغط المشرف على إشعار الطوارئ، نوقف الصوت ونفعل خاصية الكتم اليدوي
           final context = navigatorKey.currentContext;
           if (context != null) {
-            ProviderScope.containerOf(
-              context,
-            ).read(leaderTrackingControllerProvider.notifier).stopAlarmManual();
+            ProviderScope.containerOf(context)
+                .read(leaderTrackingControllerProvider.notifier)
+                .stopAlarmManual(isUserAction: true);
           }
         }
       },
@@ -236,14 +86,14 @@ class PushNotificationService {
   // دالة التوجيه (عند الضغط على الإشعار من الخلفية أو الإغلاق)
   // ==========================================
   static void _handleMessage(RemoteMessage message) {
-    print("==================================================");
-    print("تم الضغط على الإشعار! البيانات المستلمة هي:");
-    print(message.data);
-    print("==================================================");
+    debugPrint("==================================================");
+    debugPrint("تم الضغط على الإشعار! البيانات المستلمة هي:");
+    debugPrint("${message.data}");
+    debugPrint("==================================================");
 
     final context = navigatorKey.currentContext;
     if (context == null) {
-      print("⚠️ خطأ: navigatorKey غير جاهز للتوجيه!");
+      debugPrint("⚠️ خطأ: navigatorKey غير جاهز للتوجيه!");
       return;
     }
 
@@ -300,12 +150,16 @@ class PushNotificationService {
       }
     } // 🌟🌟 4. معالجة إشعار إنهاء الجلسة من المشرف (للحاج) 🌟🌟
     else if (message.data['status'] == 'tracking_session_ended') {
-      // فقط نقوم بإيقاف التتبع محلياً في الخلفية
+      // إيقاف التتبع محلياً (يُصفِّر activeSessionIdProvider تلقائياً)
       ProviderScope.containerOf(
         context,
       ).read(pilgrimTrackingControllerProvider.notifier).stopTracking();
+      // إغلاق خريطة الحاج إن كانت مفتوحة والعودة للرئيسية
+      navigatorKey.currentState?.popUntil((route) {
+        return route.settings.name == AppRoute.mainHomeView || route.isFirst;
+      });
     } else {
-      print("⚠️ التوجيه لم يحدث! نوع الإشعار غير معروف.");
+      debugPrint("⚠️ التوجيه لم يحدث! نوع الإشعار غير معروف.");
     }
   }
 
@@ -347,73 +201,154 @@ class PushNotificationService {
         return route.settings.name == AppRoute.mainHomeView || route.isFirst;
       });
     }
-    // 🔥 إضافة الكود الجديد هنا: معالجة إشعار تغير حالة الحاج 🔥
+    // 🌟 معالجة إشعار تغيّر حالة الحاج: SnackBar ذكي + تحديث البيانات
     if (message.data['status'] == 'pilgrim_status_changed') {
       final sessionId =
           int.tryParse(message.data['sessionId']?.toString() ?? '0') ?? 0;
+      final pilgrimStatus = message.data['pilgrimStatus']?.toString() ?? '';
+      final pilgrimName =
+          message.data['pilgrimName']?.toString() ?? 'أحد الحجاج';
 
+      // تحديث بيانات قائمة الحجاج تلقائياً (بدون انتقال قسري للصفحة)
       if (sessionId > 0) {
-        // 1. أمرنا Riverpod بمسح البيانات القديمة وجلب الجديدة من الداتا بيس فوراً
         ProviderScope.containerOf(
           context,
         ).invalidate(pilgrimsListProvider(sessionId));
       }
+
+      // تحديد رسالة الـ SnackBar بناءً على حالة الحاج
+      String snackMessage;
+      Color snackColor;
+      IconData snackIcon;
+
+      if (pilgrimStatus == '2') {
+        // انضم للجلسة وبدأ التتبع
+        snackMessage = '✅ "$pilgrimName" انضم إلى الجلسة وبدأ التتبع';
+        snackColor = Colors.green.shade700;
+        snackIcon = Icons.person_add;
+      } else if (pilgrimStatus == '3') {
+        // رفض الانضمام
+        snackMessage = '❌ "$pilgrimName" رفض الانضمام إلى الجلسة';
+        snackColor = Colors.red.shade700;
+        snackIcon = Icons.person_remove;
+      } else if (pilgrimStatus == '5') {
+        // أوقف التتبع بنفسه
+        snackMessage = '⚠️ "$pilgrimName" أوقف مشاركة موقعه';
+        snackColor = Colors.orange.shade700;
+        snackIcon = Icons.location_off;
+      } else {
+        snackMessage =
+            '🔔 ${message.notification?.body ?? 'تغيّرت حالة أحد الحجاج'}';
+        snackColor = Colors.blueGrey.shade700;
+        snackIcon = Icons.info_outline;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Row(
+            children: [
+              Icon(snackIcon, color: Colors.white, size: 20),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  snackMessage,
+                  style: const TextStyle(fontWeight: FontWeight.w600),
+                ),
+              ),
+            ],
+          ),
+          backgroundColor: snackColor,
+          duration: const Duration(seconds: 5),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+      return; // نخرج لكي لا يظهر SnackBar عام أيضاً
     }
     // ✅ تحديث قائمة الإشعارات عند وصول إعلان جديد وهو مفتوح
     if (status == 'new_announcement') {
       ProviderScope.containerOf(context).invalidate(notificationsProvider);
     }
 
-    // 3. بناء الـ SnackBar بشكل ديناميكي
-    SnackBarAction? snackBarAction;
+    // 3. بناء الـ SnackBar content بشكل ديناميكي حسب نوع الإشعار
+    Widget snackBarContent;
 
     if (status == 'new_announcement') {
-      snackBarAction = SnackBarAction(
-        label: locale.viewDetails,
-        textColor: AppColor.golden,
-        onPressed: () {
-          _handleMessage(message);
-        },
+      // إشعار إعلان جديد: نضع زري "رؤية التفاصيل" و"إغلاق" داخل الـ content
+      // لأن SnackBar يدعم زراً واحداً فقط في الـ action
+      snackBarContent = Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            message.notification?.title ?? locale.newNotification,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          Text(
+            message.notification?.body ?? '',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          const SizedBox(height: 6),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton(
+                style: TextButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  minimumSize: Size.zero,
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                ),
+                onPressed: () {
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                  _handleMessage(message);
+                },
+                child: Text(
+                  locale.viewDetails,
+                  style: const TextStyle(color: AppColor.golden),
+                ),
+              ),
+            ],
+          ),
+        ],
       );
-    }
-    // 🔥 التعديل هنا: دمجنا الحالتين ليظهر لهما نفس زر "إغلاق"
-    else if (status == 'pilgrim_status_changed' ||
-        status == 'tracking_session_ended') {
-      snackBarAction = SnackBarAction(
-        label:
-            'إغلاق', // يمكنك تغييرها إلى locale.close إذا كانت متوفرة في الترجمة
-        textColor: AppColor.golden,
-        onPressed: () {
-          ScaffoldMessenger.of(context).hideCurrentSnackBar();
-        },
+    } else {
+      // باقي الإشعارات: عرض عادي بدون أزرار
+      snackBarContent = Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            message.notification?.title ?? locale.newNotification,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          Text(
+            message.notification?.body ?? '',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
       );
     }
 
-    // عرض الـ SnackBar الموحد الخاص بك
-    ScaffoldMessenger.of(context).showSnackBar(
+    // مسح أي SnackBar قديم لمنع التراكم في الـ queue
+    ScaffoldMessenger.of(context).clearSnackBars();
+
+    final controller = ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              message.notification?.title ?? locale.newNotification,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Text(
-              message.notification?.body ?? '',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ],
-        ),
+        content: snackBarContent,
         backgroundColor: AppColor.baseFontColor,
         duration: const Duration(seconds: 5),
-        action: snackBarAction,
       ),
     );
+
+    // إغلاق إجباري بعد 5 ثوانٍ — يضمن الاختفاء حتى مع وجود أزرار داخل الـ content
+    Timer(const Duration(seconds: 5), () {
+      controller.close();
+    });
   }
 
   // ==========================================

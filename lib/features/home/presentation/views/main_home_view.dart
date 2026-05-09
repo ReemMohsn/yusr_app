@@ -13,7 +13,9 @@ import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/core/services/notification_service.dart';
 import 'package:yusr/features/auth/data/models/login_model.dart';
 import 'package:yusr/features/auto_counter/presentation/views/tawaf_counter_view.dart';
+import 'package:yusr/features/be_leader/providers/active_session_id_provider.dart';
 import 'package:yusr/features/be_leader/providers/pilgrim_tracking_controller.dart';
+import 'package:yusr/features/be_leader/providers/pilgrims_list_provider.dart';
 import 'package:yusr/features/home/data/models/navigation_item_model.dart';
 import 'package:yusr/features/home/presentation/views/home_view.dart';
 import 'package:yusr/features/home/presentation/widgets/custom_drawer.dart';
@@ -30,12 +32,42 @@ class MainHomeView extends ConsumerStatefulWidget {
   ConsumerState<MainHomeView> createState() => _MainHomeViewState();
 }
 
-class _MainHomeViewState extends ConsumerState<MainHomeView> {
+class _MainHomeViewState extends ConsumerState<MainHomeView>
+    with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    // استدعاء التزامن مرة واحدة عند فتح التطبيق
+    WidgetsBinding.instance.addObserver(this);
     _syncNotifications();
+    _initActiveSession(); // قراءة الجلسة المحفوظة لتهيئة الزر
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  /// عند عودة التطبيق للمقدمة: أعِد قراءة الجلسة وحدِّث قائمة الحجاج إن وُجدت
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState appState) {
+    if (appState == AppLifecycleState.resumed) {
+      _initActiveSession();
+    }
+  }
+
+  /// تهيئة [activeSessionIdProvider] من SharedPreferences
+  Future<void> _initActiveSession() async {
+    final prefs = ref.read(sharedPreferencesServiceProvider);
+    final sessionId =
+        await prefs.getInt(SharedPreferencesKeys.currentSessionId) ?? 0;
+    if (mounted) {
+      ref.read(activeSessionIdProvider.notifier).updateSessionId(sessionId);
+      // تحديث قائمة الحجاج إن كانت جلسة المشرف نشطة
+      if (sessionId > 0) {
+        ref.invalidate(pilgrimsListProvider(sessionId));
+      }
+    }
   }
 
   Future<void> _syncNotifications() async {
@@ -95,7 +127,7 @@ class _MainHomeViewState extends ConsumerState<MainHomeView> {
     return Scaffold(
       endDrawer: isLoggedIn ? const CustomDrawer() : null,
       appBar: AppBar(
-        leadingWidth: isLoggedIn ? 150 : 140,
+        leadingWidth: isLoggedIn ? 160 : 140,
         leading: isLoggedIn
             ? _buildLoggedInLeading(context, profile) // عرض البروفايل + الجرس
             : Padding(
@@ -130,39 +162,6 @@ class _MainHomeViewState extends ConsumerState<MainHomeView> {
               ]
             : [], // إخفاء القائمة للزوار
       ),
-      // leading: isLoggedIn
-      //     ? Builder(
-      //         builder: (context) => IconButton(
-      //           icon: const Icon(
-      //             Icons.menu,
-      //             color: AppColor.golden,
-      //             size: 30,
-      //           ),
-      //           onPressed: () {
-      //             Scaffold.of(context).openEndDrawer();
-      //           },
-      //         ),
-      //       )
-      //     : null,
-      // actions: isLoggedIn
-      //     ? [_buildLoggedInLeading(profile), const SizedBox(width: 10)]
-      //     : [
-      //         TextButton(
-      //           child: const Text(
-      //             "تسجيل الدخول",
-      //             style: TextStyle(
-      //               color: AppColor.golden,
-      //               fontWeight: FontWeight.bold,
-      //             ),
-      //           ),
-      //           onPressed: () {
-      //             Navigator.pushNamed(context, AppRoute.loginView);
-      //           },
-      //         ),
-      //         const SizedBox(width: 10),
-      //       ],
-
-      // ),
       body: Padding(
         padding: EdgeInsets.all(AppSize.paddingOfPage),
         child: IndexedStack(
@@ -232,78 +231,65 @@ class _MainHomeViewState extends ConsumerState<MainHomeView> {
           ),
         ),
         const SizedBox(width: 5),
-        // 🌟 2. استخدام FutureBuilder للتعامل مع Future<int?> القادم من SharedPreferences
         if (profile.userRole == 'حاج')
-          FutureBuilder<int?>(
-            // نمرر الـ Future هنا
-            future: ref
-                .read(sharedPreferencesServiceProvider)
-                .getInt(SharedPreferencesKeys.currentSessionId),
-            builder: (context, snapshot) {
-              // نستخرج القيمة، وإذا كانت null نعتبرها 0
-              final activeSessionId = snapshot.data ?? 0;
+          Builder(
+            builder: (context) {
+              // 🌟 مزود تفاعلي: يختفي فور انتهاء الجلسة دون الحاجة لإعادة البناء
+              final activeSessionId = ref.watch(activeSessionIdProvider);
+              if (activeSessionId <= 0) return const SizedBox.shrink();
 
-              // إذا كان هناك جلسة نشطة، نظهر الزر الأخضر
-              if (activeSessionId > 0) {
-                return Padding(
-                  padding: const EdgeInsets.only(right: 5),
-                  child: IconButton(
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
-                    icon: const Icon(
-                      Icons.location_on,
-                      color:
-                          Colors.greenAccent, // لون مميز يدل على أن التتبع نشط
-                      size: 28,
-                    ),
-                    onPressed: () {
-                      // 🌟 التعديل هنا: استدعاء دالة بدء التتبع لتنشيط الـ Stream في حال تم إغلاق التطبيق مسبقاً
-                      ref
-                          .read(pilgrimTrackingControllerProvider.notifier)
-                          .acceptAndStartTracking(
-                            sessionId: activeSessionId,
-                            pilgrimId: profile.userId
-                                .toString(), // تأكد أن userId هو اسم المتغير الصحيح في موديل Profile
-                            pilgrimName: profile.fullName,
-                          );
-
-                      // ثم الانتقال إلى الخريطة
-                      Navigator.of(context).pushNamed(
-                        AppRoute.pilgrimMapTrackingView,
-                        arguments: activeSessionId,
-                      );
-                    },
+              return Padding(
+                padding: const EdgeInsets.only(right: 5),
+                child: IconButton(
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                  icon: const Icon(
+                    Icons.location_on,
+                    color: Colors.greenAccent,
+                    size: 28,
                   ),
-                );
-              }
-              // إذا لم تكن هناك جلسة نشطة، لا نعرض شيئاً
-              return const SizedBox.shrink();
+                  onPressed: () {
+                    ref
+                        .read(pilgrimTrackingControllerProvider.notifier)
+                        .acceptAndStartTracking(
+                          sessionId: activeSessionId,
+                          pilgrimId: profile.userId.toString(),
+                          pilgrimName: profile.fullName,
+                        );
+                    Navigator.of(context).pushNamed(
+                      AppRoute.pilgrimMapTrackingView,
+                      arguments: activeSessionId,
+                    );
+                  },
+                ),
+              );
             },
           ),
 
         // 🌟 3. الـ Badge حول أيقونة الجرس
-        Badge(
-          isLabelVisible: unreadCount > 0,
-          label: Text(
-            unreadCount > 99 ? '+99' : unreadCount.toString(),
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 10,
-              fontWeight: FontWeight.bold,
+        if (profile.userRole != "مدير الحملة")
+          Badge(
+            isLabelVisible: unreadCount > 0,
+            label: Text(
+              unreadCount > 99 ? '+99' : unreadCount.toString(),
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            backgroundColor: Colors.red,
+            alignment: const Alignment(0.4, -0.4),
+            child: IconButton(
+              padding: EdgeInsets.zero,
+              icon: const Icon(
+                Icons.notifications_none_outlined,
+                color: AppColor.golden,
+                size: 28,
+              ),
+              onPressed: () => _navigateToNotifications(context),
             ),
           ),
-          backgroundColor: Colors.red,
-          alignment: const Alignment(0.4, -0.4),
-          child: IconButton(
-            padding: EdgeInsets.zero,
-            icon: const Icon(
-              Icons.notifications_none_outlined,
-              color: AppColor.golden,
-              size: 28,
-            ),
-            onPressed: () => _navigateToNotifications(context),
-          ),
-        ),
       ],
     );
   }

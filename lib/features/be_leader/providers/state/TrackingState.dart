@@ -8,7 +8,7 @@ class TrackingState {
   final List<PilgrimMarkerData> redPilgrims;
   final bool isLoading;
   final String? gpsWarning;
-  final String? bleWarning; // 🌟 إضافة لتنبيهات البلوتوث
+  final String? bleWarning; // 🌟 أضفنا هذا لتنبيهات البلوتوث
 
   TrackingState({
     this.leaderLocation,

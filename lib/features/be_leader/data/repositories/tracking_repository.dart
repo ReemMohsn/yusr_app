@@ -38,50 +38,70 @@ class TrackingRepository {
   }
 
   // 2. دالة جديدة صغيرة: لختم الجلسة فوراً عند البدء
-  // 2. دالة جديدة صغيرة: لختم الجلسة فوراً عند البدء
   Future<void> initLeaderSession(String sessionId) async {
     try {
       // 🌟 التعديل هنا: استخدام المسار العميق من العقدة الأب مباشرة
       await _db.ref('TrackingSessions/$sessionId').update({
         'leaderLocation/lastUpdate': ServerValue.timestamp,
       });
-      debugPrint("✅ تم ختم الجلسة بنجاح في الفايربيس!");
+
+      debugPrint(
+        "✅ تم إرسال وقت المشرف  الأولي قبل البدأ في إرسال موقعه بنجاح للفايربيس!",
+      );
     } catch (e) {
-      debugPrint("❌ فشل تهيئة الجلسة: $e");
+      debugPrint(" ❌ فشل إرسال وقت المشرف للفايربيس: $e");
     }
   }
 
-  /// 2. تحديث موقع الحاج
+  /// 2. تحديث موقع الحاج.
+  /// [isRealMove] — إذا true: موقع جديد فعلي → يُحدِّث lastPositionUpdate.
+  ///                إذا false: نبضة حياة بالموقع القديم → يُحدِّث lastUpdate فقط (heartbeat).
   Future<void> updatePilgrimLocation({
     required int sessionId,
     required String pilgrimId,
     required String pilgrimName,
     required LatLng location,
+    bool isRealMove = false,
   }) async {
     try {
-      await _db.ref('TrackingSessions/$sessionId/pilgrims/$pilgrimId').update({
+      final Map<String, dynamic> data = {
         'name': pilgrimName,
         'latitude': location.latitude,
         'longitude': location.longitude,
-        'lastUpdate': ServerValue.timestamp,
-      });
+        'lastUpdate': ServerValue.timestamp, // ← heartbeat: هاتف الحاج متصل
+      };
+      if (isRealMove) {
+        // موقع جديد فعلي → أخبر المشرف بآخر حركة حقيقية
+        data['lastPositionUpdate'] = ServerValue.timestamp;
+      }
+      await _db.ref('TrackingSessions/$sessionId/pilgrims/$pilgrimId').update(
+        data,
+      );
     } catch (e) {
-      throw Exception("فشل في تحديث موقع الحاج: $e");
+      throw Exception('فشل في تحديث موقع الحاج: $e');
     }
   }
 
-  /// تحديث "صك الأمان" للحاج (يُستدعى بواسطة المشرف عندما يلتقط الحاج عبر البلوتوث)
+  /// تحديث "صك الأمان" للحاج + مسافة BLE (يُستدعى بواسطة المشرف عندما يلتقط الحاج عبر البلوتوث).
+  /// [bleDistance] — المسافة المقدَّرة بالمتر من البلوتوث، تُعرض في واجهة الحاج بدلاً من GPS.
   Future<void> updatePilgrimSafeFlag(
     String sessionId,
     String pilgrimId,
-    bool isSafe,
-  ) async {
+    bool isSafe, {
+    double? bleDistance,
+  }) async {
     try {
-      await _db.ref('TrackingSessions/$sessionId/pilgrims/$pilgrimId').update({
-        'isSafeByBle': isSafe,
-      });
+      final Map<String, dynamic> data = {'isSafeByBle': isSafe};
+      if (isSafe && bleDistance != null) {
+        data['bleDistance'] = double.parse(bleDistance.toStringAsFixed(1));
+      } else if (!isSafe) {
+        data['bleDistance'] = null; // يُزيل الحقل عندما يبتعد الحاج
+      }
+      await _db.ref('TrackingSessions/$sessionId/pilgrims/$pilgrimId').update(
+        data,
+      );
     } catch (e) {
-      debugPrint("❌ فشل في تحديث حالة الأمان للحاج: $e");
+      debugPrint('❌ فشل في تحديث حالة الأمان للحاج: $e');
     }
   }
 

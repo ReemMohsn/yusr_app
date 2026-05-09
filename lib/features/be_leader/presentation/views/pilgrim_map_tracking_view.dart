@@ -1,200 +1,13 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter_map/flutter_map.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:yusr/features/be_leader/providers/pilgrim_tracking_controller.dart';
-// import 'package:yusr/features/be_leader/providers/state/pilgrim_tracking_state.dart';
-
-// class PilgrimMapTrackingView extends ConsumerStatefulWidget {
-//   final int sessionId;
-//   const PilgrimMapTrackingView({super.key, required this.sessionId});
-
-//   @override
-//   ConsumerState<PilgrimMapTrackingView> createState() =>
-//       _PilgrimMapTrackingViewState();
-// }
-
-// class _PilgrimMapTrackingViewState
-//     extends ConsumerState<PilgrimMapTrackingView> {
-//   final MapController _mapController = MapController();
-//   bool _isTracking = true;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final mapState = ref.watch(pilgrimTrackingControllerProvider);
-
-//     // إذا كان هناك خطأ، يمكنك عرض رسالة
-//     if (mapState.errorMessage != null) {
-//       return Scaffold(body: Center(child: Text(mapState.errorMessage!)));
-//     }
-
-//     return Scaffold(
-//       floatingActionButton: FloatingActionButton.extended(
-//         backgroundColor: Colors.grey,
-//         icon: const Icon(Icons.exit_to_app),
-//         label: const Text('إيقاف التتبع'),
-//         onPressed: () async {
-//           // يمكنك هنا إضافة منبه تأكيد قبل إيقاف التتبع محلياً
-//           ref.read(pilgrimTrackingControllerProvider.notifier).stopTracking();
-//           Navigator.pop(context);
-//         },
-//       ),
-//       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-//       body: Stack(
-//         children: [
-//           // تأكد من وجود موقع الحاج كحد أدنى لعرض الخريطة
-//           if (mapState.pilgrimLocation != null)
-//             FlutterMap(
-//               mapController: _mapController,
-//               options: MapOptions(
-//                 // يمكنك جعل الخريطة تتمركز على المشرف إذا كان موجوداً، أو الحاج
-//                 initialCenter:
-//                     mapState.leaderLocation ?? mapState.pilgrimLocation!,
-//                 initialZoom: 17.0,
-//               ),
-//               children: [
-//                 TileLayer(
-//                   urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-//                   userAgentPackageName: 'com.yusr.app',
-//                 ),
-
-//                 // رسم دوائر النطاق حول موقع "المشرف" (إذا كان موقعه معروفاً)
-//                 if (mapState.leaderLocation != null)
-//                   CircleLayer(
-//                     circles: [
-//                       CircleMarker(
-//                         point: mapState.leaderLocation!,
-//                         color: Colors.blue.withOpacity(0.1),
-//                         borderColor: Colors.blue.withOpacity(0.3),
-//                         borderStrokeWidth: 1,
-//                         radius: 150, // الدائرة الحمراء (خارج هذا النطاق)
-//                         useRadiusInMeter: true,
-//                       ),
-//                       CircleMarker(
-//                         point: mapState.leaderLocation!,
-//                         color: Colors.transparent,
-//                         borderColor: Colors.blue.withOpacity(0.5),
-//                         borderStrokeWidth: 1,
-//                         radius: 75, // الدائرة الصفراء
-//                         useRadiusInMeter: true,
-//                       ),
-//                     ],
-//                   ),
-
-//                 MarkerLayer(
-//                   markers: [
-//                     // علامة المشرف
-//                     if (mapState.leaderLocation != null)
-//                       Marker(
-//                         point: mapState.leaderLocation!,
-//                         width: 80,
-//                         height: 80,
-//                         child: const Column(
-//                           children: [
-//                             Icon(Icons.flag, color: Colors.blue, size: 35),
-//                             Text(
-//                               'المشرف',
-//                               style: TextStyle(fontWeight: FontWeight.bold),
-//                             ),
-//                           ],
-//                         ),
-//                       ),
-
-//                     // علامة الحاج (موقعك)
-//                     Marker(
-//                       point: mapState.pilgrimLocation!,
-//                       width: 60,
-//                       height: 60,
-//                       child: Icon(
-//                         Icons.person_pin_circle,
-//                         color: mapState.statusColor, // يتغير اللون حسب بعدك
-//                         size: 40,
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//               ],
-//             ),
-
-//           if (!mapState.isLoading)
-//             Positioned(
-//               top: 55,
-//               left: 20,
-//               right: 20,
-//               child: _buildDistanceCard(context, mapState),
-//             ),
-
-//           // Loading Overlay إذا كانت الحالة جاري التحميل (مثل جلب الموقع الأولي)
-//           // LoadingOverlay(isLoading: mapState.isLoading),
-//         ],
-//       ),
-//     );
-//   }
-
-//   Widget _buildDistanceCard(BuildContext context, PilgrimTrackingState state) {
-//     return Container(
-//       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-//       decoration: BoxDecoration(
-//         color: Colors.white,
-//         borderRadius: BorderRadius.circular(30.r),
-//         boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 5)],
-//       ),
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: [
-//           Row(
-//             children: [
-//               Icon(Icons.circle, color: state.statusColor, size: 12),
-//               SizedBox(width: 6.w),
-//               Text(
-//                 state.statusText,
-//                 style: TextStyle(
-//                   color: state.statusColor,
-//                   fontWeight: FontWeight.bold,
-//                   fontSize: 14.sp,
-//                 ),
-//               ),
-//             ],
-//           ),
-//           Text(
-//             'البعد: ${state.distance.toStringAsFixed(1)} متر',
-//             style: TextStyle(
-//               color: Colors.black87,
-//               fontWeight: FontWeight.bold,
-//               fontSize: 14.sp,
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:yusr/core/common/providers/shared_preferences_service_provider.dart';
-import 'package:yusr/core/constants/app_color.dart'; // تأكد من المسار
-import 'package:yusr/core/services/shared_preferences_service.dart'; // لجلب بيانات البروفايل
+import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/features/be_leader/providers/pilgrim_tracking_controller.dart';
 import 'package:yusr/features/be_leader/providers/state/pilgrim_tracking_state.dart';
-
-// class PilgrimMapTrackingView extends ConsumerStatefulWidget {
-//   final int sessionId;
-//   const PilgrimMapTrackingView({super.key, required this.sessionId});
-
-//   @override
-//   ConsumerState<PilgrimMapTrackingView> createState() =>
-//       _PilgrimMapTrackingViewState();
-// }
-
-// class _PilgrimMapTrackingViewState
-//     extends ConsumerState<PilgrimMapTrackingView> {
-//   final MapController _mapController = MapController();
-
-// تأكد من بقاء الاستيرادات الخاصة بمشروعك هنا مثل AppColor وغيرها
+import 'package:yusr/features/return_to_compaign_location/presentation/widgets/tracking_fab_widget.dart';
 
 class PilgrimMapTrackingView extends ConsumerStatefulWidget {
   final int sessionId;
@@ -208,166 +21,236 @@ class PilgrimMapTrackingView extends ConsumerStatefulWidget {
 class _PilgrimMapTrackingViewState
     extends ConsumerState<PilgrimMapTrackingView> {
   final MapController _mapController = MapController();
+  bool _isTracking = true;
 
-  // دالة لإظهار دايالوج التأكيد
+  // ── دايالوج تأكيد إيقاف التتبع ──────────────────────────────
   Future<void> _showStopTrackingDialog(
     BuildContext context,
     String pilgrimId,
   ) async {
-    showDialog(
+    final confirm = await showDialog<bool>(
       context: context,
-      builder: (BuildContext dialogContext) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.r),
-          ),
-          title: const Text(
-            'إيقاف التتبع',
-            style: TextStyle(color: Colors.red),
-          ),
-          content: const Text(
-            'هل أنت متأكد أنك تريد إيقاف التتبع والخروج من الجلسة؟ سيتم إشعار المشرف بذلك.',
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(dialogContext), // إغلاق الدايالوج
-              child: const Text('تراجع', style: TextStyle(color: Colors.grey)),
+      builder:
+          (ctx) => AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.r),
             ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-              onPressed: () async {
-                // إغلاق الدايالوج أولاً
-                Navigator.pop(dialogContext);
-
-                // استدعاء دالة الإيقاف الشاملة
-                await ref
-                    .read(pilgrimTrackingControllerProvider.notifier)
-                    .leaveAndStopTracking(
-                      sessionId: widget.sessionId,
-                      pilgrimId: pilgrimId,
-                    );
-
-                // العودة للواجهة الرئيسية
-                if (context.mounted) {
-                  Navigator.pop(context);
-                }
-              },
-              child: const Text(
-                'نعم، إيقاف',
-                style: TextStyle(color: Colors.white),
+            title: const Text(
+              'إيقاف التتبع',
+              style: TextStyle(color: Colors.red),
+            ),
+            content: const Text(
+              'هل أنت متأكد أنك تريد إيقاف التتبع والخروج من الجلسة؟ سيتم إشعار المشرف بذلك.',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(ctx, false),
+                child: const Text(
+                  'تراجع',
+                  style: TextStyle(color: Colors.grey),
+                ),
               ),
-            ),
-          ],
-        );
-      },
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                onPressed: () => Navigator.pop(ctx, true),
+                child: const Text(
+                  'نعم، إيقاف',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
     );
+
+    if (confirm == true && context.mounted) {
+      await ref
+          .read(pilgrimTrackingControllerProvider.notifier)
+          .leaveAndStopTracking(
+            sessionId: widget.sessionId,
+            pilgrimId: pilgrimId,
+          );
+      if (context.mounted) Navigator.pop(context);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final mapState = ref.watch(pilgrimTrackingControllerProvider);
 
-    // 👈 1. الاستماع للتحذيرات وعرض السناك بار باللون الأحمر ليكون واضحاً كخطأ أو تنبيه
+    // ── SnackBar للتحذيرات ────────────────────────────────────
     ref.listen<PilgrimTrackingState>(pilgrimTrackingControllerProvider, (
       previous,
       next,
     ) {
-      if (next.gpsWarning != null && next.gpsWarning != previous?.gpsWarning) {
+      if (next.gpsWarning != null &&
+          next.gpsWarning != previous?.gpsWarning) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(next.gpsWarning!),
-            backgroundColor: Colors.red,
+            backgroundColor: Colors.orange,
             duration: const Duration(seconds: 4),
+          ),
+        );
+      }
+      if (next.bleWarning != null &&
+          next.bleWarning != previous?.bleWarning) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Row(
+              children: [
+                const Icon(
+                  Icons.bluetooth_disabled,
+                  color: Colors.white,
+                ),
+                const SizedBox(width: 8),
+                Expanded(child: Text(next.bleWarning!)),
+              ],
+            ),
+            backgroundColor: Colors.blueGrey,
+            duration: const Duration(seconds: 5),
           ),
         );
       }
     });
 
     if (mapState.errorMessage != null) {
-      return Scaffold(body: Center(child: Text(mapState.errorMessage!)));
+      return Scaffold(
+        body: Center(child: Text(mapState.errorMessage!)),
+      );
     }
 
-    // تحديد لون ونص الشريط العلوي بناءً على وجود الموقع
-    // (إذا الـ GPS مغلق أو انقطع سيصبح pilgrimLocation يساوي null تلقائياً)
     final bool isConnected = mapState.pilgrimLocation != null;
-    final Color topBarColor = isConnected ? Colors.green : Colors.orange;
-    final String topBarText = isConnected ? 'متصل' : 'جاري جلب الموقع...';
+    // الإنذار نشط إذا تجاوزت المسافة 30م (الحد الأحمر)
+    final bool isAlarmZone = mapState.distance > 30;
 
     return Scaffold(
       body: Stack(
         children: [
-          // 👈 2. الخريطة تظهر دائماً حتى أثناء جلب الموقع
+          // ── الخريطة (قمر صناعي) ─────────────────────────────
           FlutterMap(
             mapController: _mapController,
             options: MapOptions(
-              // إذا لم يتوفر موقع المشرف ولا الحاج، نعرض إحداثيات مكة الافتراضية
               initialCenter:
-                  mapState.leaderLocation ??
                   mapState.pilgrimLocation ??
+                  mapState.leaderLocation ??
                   const LatLng(21.422487, 39.826206),
               initialZoom: 17.0,
             ),
             children: [
+              // 🛰️ طبقة القمر الصناعي
               TileLayer(
                 urlTemplate:
                     'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
                 userAgentPackageName: 'com.yusr.app',
               ),
+
+              // ── دوائر نطاق المشرف ──────────────────────────
               if (mapState.leaderLocation != null)
                 CircleLayer(
                   circles: [
-                    // 👈 3. النطاق التحذيري (البرتقالي) والنطاق الخطر (الأحمر) حول المشرف
+                    // 🔴 دائرة الخطر (30م)
                     CircleMarker(
                       point: mapState.leaderLocation!,
-                      color: Colors.orange.withOpacity(0.2),
-                      borderColor: Colors.orange,
+                      color: Colors.red.withOpacity(0.08),
+                      borderColor: Colors.red.withOpacity(0.6),
                       borderStrokeWidth: 2,
-                      radius: 40, // نطاق التحذير (الأبعد)
+                      radius: 30,
                       useRadiusInMeter: true,
                     ),
+                    // 🟠 دائرة التحذير (20م)
                     CircleMarker(
                       point: mapState.leaderLocation!,
-                      color: Colors.red.withOpacity(0.15),
-                      borderColor: Colors.red,
+                      color: Colors.orange.withOpacity(0.1),
+                      borderColor: Colors.orange.withOpacity(0.7),
                       borderStrokeWidth: 2,
-                      radius: 25, // نطاق الخطر (الأقرب)
+                      radius: 20,
                       useRadiusInMeter: true,
                     ),
                   ],
                 ),
+
+              // ── الماركرات ───────────────────────────────────
               MarkerLayer(
                 markers: [
+                  // ماركر المشرف
                   if (mapState.leaderLocation != null)
                     Marker(
                       point: mapState.leaderLocation!,
-                      width: 80,
+                      width: 90,
                       height: 80,
-                      child: const Column(
+                      child: Column(
                         children: [
-                          Icon(Icons.flag, color: Colors.blue, size: 35),
-                          Text(
-                            'المشرف',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              shadows: [
-                                Shadow(blurRadius: 2, color: Colors.black),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 8.w,
+                              vertical: 3.h,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.blue.shade800,
+                              borderRadius: BorderRadius.circular(10.r),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 4,
+                                ),
                               ],
                             ),
+                            child: Text(
+                              'المشرف',
+                              style: TextStyle(
+                                fontSize: 10.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Icon(
+                            Icons.person_pin_circle,
+                            color: Colors.blue.shade700,
+                            size: 28,
                           ),
                         ],
                       ),
                     ),
-                  // 👈 إظهار ماركر الحاج فقط إذا كان موقعه معروفاً
+
+                  // ماركر الحاج (أنت)
                   if (mapState.pilgrimLocation != null)
                     Marker(
                       point: mapState.pilgrimLocation!,
-                      width: 60,
-                      height: 60,
-                      child: Icon(
-                        Icons.person_pin_circle,
-                        color: mapState.statusColor,
-                        size: 40,
+                      width: 90,
+                      height: 80,
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 8.w,
+                              vertical: 3.h,
+                            ),
+                            decoration: BoxDecoration(
+                              color: mapState.statusColor,
+                              borderRadius: BorderRadius.circular(10.r),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 4,
+                                ),
+                              ],
+                            ),
+                            child: Text(
+                              'أنت هنا',
+                              style: TextStyle(
+                                fontSize: 10.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Icon(
+                            Icons.person_pin_circle,
+                            color: mapState.statusColor,
+                            size: 28,
+                          ),
+                        ],
                       ),
                     ),
                 ],
@@ -375,140 +258,108 @@ class _PilgrimMapTrackingViewState
             ],
           ),
 
-          // 👈 4. الشريط العلوي (يتغير بين: جاري جلب الموقع / متصل)
+          // ── الشريط العلوي ─────────────────────────────────────
           Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              color: topBarColor,
-              padding: EdgeInsets.only(
-                top: MediaQuery.of(context).padding.top + 5, // احترام النوتش
-                bottom: 10,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (!isConnected)
-                    const Padding(
-                      padding: EdgeInsets.only(left: 8.0),
-                      child: SizedBox(
-                        width: 15,
-                        height: 15,
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
-                          strokeWidth: 2,
-                        ),
-                      ),
-                    ),
-                  Text(
-                    topBarText,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            top: 55,
+            left: 20,
+            right: 20,
+            child: _buildTopCard(context, mapState, isConnected),
           ),
 
-          // زر العودة
-          Positioned.directional(
-            textDirection: Directionality.of(context),
-            top: 65.h,
-            start: 20.w,
-            child: GestureDetector(
-              onTap: () => Navigator.pop(context),
-              child: Container(
-                height: 45.h,
-                width: 45.h,
-                decoration: const BoxDecoration(
-                  color: Colors.white, // تم تغييرها للأبيض (أو AppColor.withe)
-                  shape: BoxShape.circle,
-                  boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
-                ),
-                child: const Icon(
-                  Icons.arrow_back_ios_new,
-                  color: Colors.amber, // تم تغييرها للذهبي (أو AppColor.golden)
-                  size: 18,
-                ),
-              ),
-            ),
-          ),
-
-          // بطاقة المسافة والحالة (تظهر فقط عند الاتصال)
-          if (!mapState.isLoading && mapState.pilgrimLocation != null)
+          // ── زر كتم الإنذار (عند الخطر) ───────────────────────
+          if (isAlarmZone)
             Positioned(
-              top: 55.h,
-              left: 80.w, // إزاحة لتجنب التداخل مع زر العودة
-              right: 20.w,
-              child: _buildDistanceCard(context, mapState),
-            ),
-
-          // 👈 5. زر تحديد الموقع (التركيز على موقع الحاج)
-          Positioned(
-            bottom: 100.h, // تم رفعه قليلاً ليكون فوق زر الإيقاف
-            right: 20.w,
-            child: FloatingActionButton(
-              heroTag: 'locate_pilgrim_btn',
-              backgroundColor: Colors.white,
-              onPressed: () {
-                if (mapState.pilgrimLocation != null) {
-                  _mapController.move(mapState.pilgrimLocation!, 17.0);
-                } else {
-                  // تنبيه في حال تم الضغط ولم يتم جلب الموقع بعد
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("جاري جلب موقعك، يرجى الانتظار..."),
-                      backgroundColor: Colors.orange,
-                    ),
-                  );
-                }
-              },
-              child: const Icon(Icons.my_location, color: Colors.blue),
-            ),
-          ),
-
-          // 6. زر إيقاف التتبع (في الأسفل)
-          Positioned(
-            bottom: 40.h,
-            left: 30.w,
-            right: 30.w,
-            child: FutureBuilder(
-              future: ref.read(sharedPreferencesServiceProvider).getProfile(),
-              builder: (context, snapshot) {
-                final profile = snapshot.data;
-                return ElevatedButton.icon(
+              bottom: 160,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.red,
-                    padding: EdgeInsets.symmetric(vertical: 14.h),
+                    backgroundColor: Colors.red.shade800,
+                    foregroundColor: Colors.white,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 24.w,
+                      vertical: 12.h,
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.r),
-                      side: const BorderSide(color: Colors.red, width: 1.5),
                     ),
-                    elevation: 5,
+                    elevation: 6,
                   ),
-                  icon: const Icon(Icons.power_settings_new),
+                  icon: const Icon(Icons.volume_off),
                   label: Text(
-                    'إيقاف التتبع',
+                    'كتم الإنذار مؤقتاً',
                     style: TextStyle(
-                      fontSize: 16.sp,
                       fontWeight: FontWeight.bold,
+                      fontSize: 14.sp,
                     ),
                   ),
                   onPressed: () {
-                    if (profile?.userId != null) {
-                      _showStopTrackingDialog(
-                        context,
-                        profile!.userId.toString(),
-                      );
-                    }
+                    ref
+                        .read(pilgrimTrackingControllerProvider.notifier)
+                        .stopAlarmManual(isUserAction: true);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          '🔇 تم كتم الصوت. سيعود تلقائياً عند عودتك للأمان.',
+                        ),
+                        backgroundColor: Colors.black87,
+                        duration: Duration(seconds: 3),
+                      ),
+                    );
                   },
+                ),
+              ),
+            ),
+
+          // ── وسيلة الإيضاح ─────────────────────────────────────
+          Positioned(bottom: 110, right: 16, child: _buildLegend()),
+
+          // ── زر تتبع الكاميرا ──────────────────────────────────
+          TrackingFAB(
+            isTracking: _isTracking,
+            onPressed: () {
+              setState(() => _isTracking = !_isTracking);
+              if (mapState.pilgrimLocation != null) {
+                _mapController.move(mapState.pilgrimLocation!, 17.0);
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('جاري تحديد موقعك، يرجى الانتظار...'),
+                  ),
                 );
-              },
+              }
+            },
+          ),
+
+          // ── زر إيقاف التتبع ────────────────────────────────────
+          Positioned(
+            bottom: 28,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: FutureBuilder(
+                future: ref
+                    .read(sharedPreferencesServiceProvider)
+                    .getProfile(),
+                builder: (context, snapshot) {
+                  final profile = snapshot.data;
+                  return FloatingActionButton.extended(
+                    heroTag: 'stop_tracking_pilgrim',
+                    backgroundColor: Colors.red,
+                    icon: const Icon(Icons.stop),
+                    label: const Text('إيقاف التتبع'),
+                    onPressed: () {
+                      if (profile?.userId != null) {
+                        _showStopTrackingDialog(
+                          context,
+                          profile!.userId.toString(),
+                        );
+                      }
+                    },
+                  );
+                },
+              ),
             ),
           ),
         ],
@@ -516,482 +367,172 @@ class _PilgrimMapTrackingViewState
     );
   }
 
-  Widget _buildDistanceCard(BuildContext context, PilgrimTrackingState state) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.9),
-        borderRadius: BorderRadius.circular(30.r),
-        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 5)],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Icon(Icons.circle, color: state.statusColor, size: 12),
-              SizedBox(width: 6.w),
-              Text(
-                state.statusText,
-                style: TextStyle(
-                  color: state.statusColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12.sp,
-                ),
-              ),
-            ],
-          ),
-          Text(
-            'البعد: ${state.distance.toStringAsFixed(0)} م',
-            style: TextStyle(
-              color: Colors.black87,
-              fontWeight: FontWeight.bold,
-              fontSize: 12.sp,
+  // ── الشريط العلوي (حالة الاتصال + المسافة) ──────────────────
+  Widget _buildTopCard(
+    BuildContext context,
+    PilgrimTrackingState state,
+    bool isConnected,
+  ) {
+    final distanceText = state.distance < 1000
+        ? '${state.distance.toStringAsFixed(0)} م'
+        : '${(state.distance / 1000).toStringAsFixed(2)} كم';
+
+    return Row(
+      children: [
+        // زر الرجوع
+        GestureDetector(
+          onTap: () => Navigator.pop(context),
+          child: Container(
+            height: 45.h,
+            width: 45.h,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.arrow_back_ios_new,
+              color: AppColor.golden,
+              size: 18,
             ),
           ),
+        ),
+        SizedBox(width: 10.w),
+        Expanded(
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: 16.w,
+              vertical: 12.h,
+            ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(30.r),
+              boxShadow: const [
+                BoxShadow(color: Colors.black12, blurRadius: 5),
+              ],
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // حالة الاتصال
+                Row(
+                  children: [
+                    Icon(
+                      Icons.circle,
+                      color: isConnected ? Colors.green : Colors.orange,
+                      size: 12,
+                    ),
+                    SizedBox(width: 6.w),
+                    Text(
+                      isConnected ? 'متصل' : 'جاري جلب الموقع...',
+                      style: TextStyle(
+                        color: isConnected
+                            ? Colors.green
+                            : Colors.orange,
+                        fontWeight: FontWeight.bold,
+                        fontSize: isConnected ? 13.sp : 11.sp,
+                      ),
+                    ),
+                  ],
+                ),
+                // المسافة + الحالة
+                if (isConnected)
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.social_distance,
+                        size: 14.sp,
+                        color: state.statusColor,
+                      ),
+                      SizedBox(width: 4.w),
+                      Text(
+                        distanceText,
+                        style: TextStyle(
+                          color: state.statusColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13.sp,
+                        ),
+                      ),
+                      SizedBox(width: 6.w),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8.w,
+                          vertical: 2.h,
+                        ),
+                        decoration: BoxDecoration(
+                          color: state.statusColor.withOpacity(0.12),
+                          borderRadius: BorderRadius.circular(20.r),
+                          border: Border.all(
+                            color: state.statusColor.withOpacity(0.4),
+                          ),
+                        ),
+                        child: Text(
+                          state.statusText,
+                          style: TextStyle(
+                            color: state.statusColor,
+                            fontSize: 10.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                if (!isConnected)
+                  SizedBox(
+                    width: 16,
+                    height: 16,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: Colors.orange,
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // ── وسيلة الإيضاح ─────────────────────────────────────────────
+  Widget _buildLegend() {
+    return Container(
+      padding: EdgeInsets.all(10.w),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.9),
+        borderRadius: BorderRadius.circular(12.r),
+        boxShadow: const [
+          BoxShadow(color: Colors.black12, blurRadius: 5),
         ],
       ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _legendItem(Icons.person_pin_circle, 'أنت', Colors.teal),
+          SizedBox(height: 6.h),
+          _legendItem(
+            Icons.person_pin_circle,
+            'المشرف',
+            Colors.blue.shade700,
+          ),
+          SizedBox(height: 6.h),
+          _legendItem(Icons.circle, 'نطاق التحذير (20م)', Colors.orange),
+          SizedBox(height: 6.h),
+          _legendItem(Icons.circle, 'نطاق الخطر (30م)', Colors.red),
+        ],
+      ),
+    );
+  }
+
+  Widget _legendItem(IconData icon, String text, Color color) {
+    return Row(
+      children: [
+        Icon(icon, color: color, size: 16),
+        SizedBox(width: 6.w),
+        Text(
+          text,
+          style: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w600),
+        ),
+      ],
     );
   }
 }
-// class PilgrimMapTrackingView extends ConsumerStatefulWidget {
-//   final int sessionId;
-//   const PilgrimMapTrackingView({super.key, required this.sessionId});
-//   @override
-//   ConsumerState<PilgrimMapTrackingView> createState() =>
-//       _PilgrimMapTrackingViewState();
-// }
-
-// class _PilgrimMapTrackingViewState
-//     extends ConsumerState<PilgrimMapTrackingView> {
-//   final MapController _mapController = MapController();
-
-//   // دالة لإظهار دايالوج التأكيد
-//   Future<void> _showStopTrackingDialog(
-//     BuildContext context,
-//     String pilgrimId,
-//   ) async {
-//     showDialog(
-//       context: context,
-//       builder: (BuildContext dialogContext) {
-//         return AlertDialog(
-//           shape: RoundedRectangleBorder(
-//             borderRadius: BorderRadius.circular(15.r),
-//           ),
-//           title: const Text(
-//             'إيقاف التتبع',
-//             style: TextStyle(color: Colors.red),
-//           ),
-//           content: const Text(
-//             'هل أنت متأكد أنك تريد إيقاف التتبع والخروج من الجلسة؟ سيتم إشعار المشرف بذلك.',
-//           ),
-//           actions: [
-//             TextButton(
-//               onPressed: () => Navigator.pop(dialogContext), // إغلاق الدايالوج
-//               child: const Text('تراجع', style: TextStyle(color: Colors.grey)),
-//             ),
-//             ElevatedButton(
-//               style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-//               onPressed: () async {
-//                 // إغلاق الدايالوج أولاً
-//                 Navigator.pop(dialogContext);
-
-//                 // استدعاء دالة الإيقاف الشاملة
-//                 await ref
-//                     .read(pilgrimTrackingControllerProvider.notifier)
-//                     .leaveAndStopTracking(
-//                       sessionId: widget.sessionId,
-//                       pilgrimId: pilgrimId,
-//                     );
-
-//                 // العودة للواجهة الرئيسية
-//                 if (context.mounted) {
-//                   Navigator.pop(context);
-//                 }
-//               },
-//               child: const Text(
-//                 'نعم، إيقاف',
-//                 style: TextStyle(color: Colors.white),
-//               ),
-//             ),
-//           ],
-//         );
-//       },
-//     );
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final mapState = ref.watch(pilgrimTrackingControllerProvider);
-
-//     // 👈 1. الاستماع للتحذيرات وعرض السناك بار
-//     ref.listen<PilgrimTrackingState>(pilgrimTrackingControllerProvider, (
-//       previous,
-//       next,
-//     ) {
-//       if (next.gpsWarning != null && next.gpsWarning != previous?.gpsWarning) {
-//         ScaffoldMessenger.of(context).showSnackBar(
-//           SnackBar(
-//             content: Text(next.gpsWarning!),
-//             backgroundColor: Colors.orange,
-//             duration: const Duration(seconds: 4),
-//           ),
-//         );
-//       }
-//     });
-
-//     if (mapState.errorMessage != null) {
-//       return Scaffold(body: Center(child: Text(mapState.errorMessage!)));
-//     }
-
-//     // تحديد لون ونص الشريط العلوي
-//     final bool isConnected = mapState.pilgrimLocation != null;
-//     final Color topBarColor = isConnected ? Colors.green : Colors.orange;
-//     final String topBarText = isConnected ? 'متصل' : 'جاري جلب الموقع...';
-
-//     return Scaffold(
-//       body: Stack(
-//         children: [
-//           // 👈 2. الخريطة تظهر دائماً (أزلنا شرط if (mapState.pilgrimLocation != null))
-//           FlutterMap(
-//             mapController: _mapController,
-//             options: MapOptions(
-//               // إذا لم يتوفر موقع المشرف ولا الحاج، نعرض إحداثيات مكة الافتراضية
-//               initialCenter:
-//                   mapState.leaderLocation ??
-//                   mapState.pilgrimLocation ??
-//                   const LatLng(21.422487, 39.826206),
-//               initialZoom: 17.0,
-//             ),
-//             children: [
-//               TileLayer(
-//                 urlTemplate:
-//                     'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-//                 userAgentPackageName: 'com.yusr.app',
-//               ),
-//               if (mapState.leaderLocation != null)
-//                 CircleLayer(
-//                   circles: [
-//                     CircleMarker(
-//                       point: mapState.leaderLocation!,
-//                       color: Colors.blue.withOpacity(0.1),
-//                       borderColor: Colors.blue.withOpacity(0.3),
-//                       borderStrokeWidth: 1,
-//                       radius: 150,
-//                       useRadiusInMeter: true,
-//                     ),
-//                     CircleMarker(
-//                       point: mapState.leaderLocation!,
-//                       color: Colors.transparent,
-//                       borderColor: Colors.blue.withOpacity(0.5),
-//                       borderStrokeWidth: 1,
-//                       radius: 75,
-//                       useRadiusInMeter: true,
-//                     ),
-//                   ],
-//                 ),
-//               MarkerLayer(
-//                 markers: [
-//                   if (mapState.leaderLocation != null)
-//                     Marker(
-//                       point: mapState.leaderLocation!,
-//                       width: 80,
-//                       height: 80,
-//                       child: const Column(
-//                         children: [
-//                           Icon(Icons.flag, color: Colors.blue, size: 35),
-//                           Text(
-//                             'المشرف',
-//                             style: TextStyle(
-//                               fontWeight: FontWeight.bold,
-//                               color: Colors.white,
-//                               shadows: [
-//                                 Shadow(blurRadius: 2, color: Colors.black),
-//                               ],
-//                             ),
-//                           ),
-//                         ],
-//                       ),
-//                     ),
-//                   // 👈 إظهار ماركر الحاج فقط إذا كان موقعه معروفاً
-//                   if (mapState.pilgrimLocation != null)
-//                     Marker(
-//                       point: mapState.pilgrimLocation!,
-//                       width: 60,
-//                       height: 60,
-//                       child: Icon(
-//                         Icons.person_pin_circle,
-//                         color: mapState.statusColor,
-//                         size: 40,
-//                       ),
-//                     ),
-//                 ],
-//               ),
-//             ],
-//           ),
-
-//           // 👈 3. الشريط العلوي (جاري جلب الموقع / متصل)
-//           Positioned(
-//             top: 0,
-//             left: 0,
-//             right: 0,
-//             child: Container(
-//               color: topBarColor,
-//               padding: EdgeInsets.only(
-//                 top: MediaQuery.of(context).padding.top + 5, // احترام النوتش
-//                 bottom: 10,
-//               ),
-//               child: Row(
-//                 mainAxisAlignment: MainAxisAlignment.center,
-//                 children: [
-//                   if (!isConnected)
-//                     const Padding(
-//                       padding: EdgeInsets.only(left: 8.0),
-//                       child: SizedBox(
-//                         width: 15,
-//                         height: 15,
-//                         child: CircularProgressIndicator(
-//                           color: Colors.white,
-//                           strokeWidth: 2,
-//                         ),
-//                       ),
-//                     ),
-//                   Text(
-//                     topBarText,
-//                     style: const TextStyle(
-//                       color: Colors.white,
-//                       fontWeight: FontWeight.bold,
-//                       fontSize: 16,
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ),
-
-//           // زر العودة
-//           Positioned.directional(
-//             textDirection: Directionality.of(context),
-//             top: 65.h, // نزلناه قليلاً لكي لا يتداخل مع الشريط العلوي
-//             start: 20.w,
-//             child: GestureDetector(
-//               onTap: () => Navigator.pop(context),
-//               child: Container(
-//                 height: 45.h,
-//                 width: 45.h,
-//                 decoration: const BoxDecoration(
-//                   color: AppColor.withe,
-//                   shape: BoxShape.circle,
-//                   boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
-//                 ),
-//                 child: const Icon(
-//                   Icons.arrow_back_ios_new,
-//                   color: AppColor.golden,
-//                   size: 18,
-//                 ),
-//               ),
-//             ),
-//           ),
-//           // @override
-//           // Widget build(BuildContext context) {
-//           //   final mapState = ref.watch(pilgrimTrackingControllerProvider);
-
-//           //   if (mapState.errorMessage != null) {
-//           //     return Scaffold(body: Center(child: Text(mapState.errorMessage!)));
-//           //   }
-
-//           //   return Scaffold(
-//           //     body: Stack(
-//           //       children: [
-//           //         // 1. الخريطة بملء الشاشة
-//           //         if (mapState.pilgrimLocation != null)
-//           //           FlutterMap(
-//           //             mapController: _mapController,
-//           //             options: MapOptions(
-//           //               initialCenter:
-//           //                   mapState.leaderLocation ?? mapState.pilgrimLocation!,
-//           //               initialZoom: 17.0,
-//           //             ),
-//           //             children: [
-//           //               TileLayer(
-//           //                 urlTemplate:
-//           //                     'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', // استخدمت خريطة الـ Satellite كما في الكود الآخر
-//           //                 userAgentPackageName: 'com.yusr.app',
-//           //               ),
-//           //               if (mapState.leaderLocation != null)
-//           //                 CircleLayer(
-//           //                   circles: [
-//           //                     CircleMarker(
-//           //                       point: mapState.leaderLocation!,
-//           //                       color: Colors.blue.withOpacity(0.1),
-//           //                       borderColor: Colors.blue.withOpacity(0.3),
-//           //                       borderStrokeWidth: 1,
-//           //                       radius: 150,
-//           //                       useRadiusInMeter: true,
-//           //                     ),
-//           //                     CircleMarker(
-//           //                       point: mapState.leaderLocation!,
-//           //                       color: Colors.transparent,
-//           //                       borderColor: Colors.blue.withOpacity(0.5),
-//           //                       borderStrokeWidth: 1,
-//           //                       radius: 75,
-//           //                       useRadiusInMeter: true,
-//           //                     ),
-//           //                   ],
-//           //                 ),
-//           //               MarkerLayer(
-//           //                 markers: [
-//           //                   if (mapState.leaderLocation != null)
-//           //                     Marker(
-//           //                       point: mapState.leaderLocation!,
-//           //                       width: 80,
-//           //                       height: 80,
-//           //                       child: const Column(
-//           //                         children: [
-//           //                           Icon(Icons.flag, color: Colors.blue, size: 35),
-//           //                           Text(
-//           //                             'المشرف',
-//           //                             style: TextStyle(
-//           //                               fontWeight: FontWeight.bold,
-//           //                               color: Colors.white,
-//           //                               shadows: [
-//           //                                 Shadow(blurRadius: 2, color: Colors.black),
-//           //                               ],
-//           //                             ),
-//           //                           ),
-//           //                         ],
-//           //                       ),
-//           //                     ),
-//           //                   Marker(
-//           //                     point: mapState.pilgrimLocation!,
-//           //                     width: 60,
-//           //                     height: 60,
-//           //                     child: Icon(
-//           //                       Icons.person_pin_circle,
-//           //                       color: mapState.statusColor,
-//           //                       size: 40,
-//           //                     ),
-//           //                   ),
-//           //                 ],
-//           //               ),
-//           //             ],
-//           //           ),
-
-//           //         // 2. زر العودة المخصص (في الأعلى)
-//           //         Positioned.directional(
-//           //           textDirection: Directionality.of(context),
-//           //           top: 55.h,
-//           //           start: 20.w,
-//           //           child: GestureDetector(
-//           //             onTap: () =>
-//           //                 Navigator.pop(context), // يعود للخلف دون إيقاف التتبع
-//           //             child: Container(
-//           //               height: 45.h,
-//           //               width: 45.h,
-//           //               decoration: const BoxDecoration(
-//           //                 color: AppColor.withe,
-//           //                 shape: BoxShape.circle,
-//           //                 boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
-//           //               ),
-//           //               child: const Icon(
-//           //                 Icons.arrow_back_ios_new,
-//           //                 color: AppColor.golden,
-//           //                 size: 18,
-//           //               ),
-//           //             ),
-//           //           ),
-//           //         ),
-
-//           // 3. بطاقة المسافة والحالة (في الأعلى بالمنتصف)
-//           if (!mapState.isLoading && mapState.pilgrimLocation != null)
-//             Positioned(
-//               top: 55.h,
-//               left: 80.w, // إزاحة لتجنب زر العودة
-//               right: 20.w,
-//               child: _buildDistanceCard(context, mapState),
-//             ),
-
-//           // 4. زر إيقاف التتبع (في الأسفل)
-//           Positioned(
-//             bottom: 40.h,
-//             left: 30.w,
-//             right: 30.w,
-//             child: FutureBuilder(
-//               // نجلب بيانات الحاج (Pilgrim Id) لكي نرسلها في دالة الحذف
-//               future: ref.read(sharedPreferencesServiceProvider).getProfile(),
-//               builder: (context, snapshot) {
-//                 final profile = snapshot.data;
-//                 return ElevatedButton.icon(
-//                   style: ElevatedButton.styleFrom(
-//                     backgroundColor: Colors.white,
-//                     foregroundColor: Colors.red,
-//                     padding: EdgeInsets.symmetric(vertical: 14.h),
-//                     shape: RoundedRectangleBorder(
-//                       borderRadius: BorderRadius.circular(30.r),
-//                       side: const BorderSide(color: Colors.red, width: 1.5),
-//                     ),
-//                     elevation: 5,
-//                   ),
-//                   icon: const Icon(Icons.power_settings_new),
-//                   label: Text(
-//                     'إيقاف التتبع',
-//                     style: TextStyle(
-//                       fontSize: 16.sp,
-//                       fontWeight: FontWeight.bold,
-//                     ),
-//                   ),
-//                   onPressed: () {
-//                     if (profile?.userId != null) {
-//                       _showStopTrackingDialog(
-//                         context,
-//                         profile!.userId.toString(),
-//                       );
-//                     }
-//                   },
-//                 );
-//               },
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-
-//   Widget _buildDistanceCard(BuildContext context, PilgrimTrackingState state) {
-//     return Container(
-//       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-//       decoration: BoxDecoration(
-//         color: Colors.white.withOpacity(0.9),
-//         borderRadius: BorderRadius.circular(30.r),
-//         boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 5)],
-//       ),
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: [
-//           Row(
-//             children: [
-//               Icon(Icons.circle, color: state.statusColor, size: 12),
-//               SizedBox(width: 6.w),
-//               Text(
-//                 state.statusText,
-//                 style: TextStyle(
-//                   color: state.statusColor,
-//                   fontWeight: FontWeight.bold,
-//                   fontSize: 12.sp,
-//                 ),
-//               ),
-//             ],
-//           ),
-//           Text(
-//             'البعد: ${state.distance.toStringAsFixed(0)} م',
-//             style: TextStyle(
-//               color: Colors.black87,
-//               fontWeight: FontWeight.bold,
-//               fontSize: 12.sp,
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
