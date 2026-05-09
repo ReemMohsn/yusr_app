@@ -23,7 +23,6 @@ class LeaderStartSessionView extends ConsumerWidget {
       } else if (state.hasError) {
         context.closeLoadingDialog();
         context.showErrorSnackBar(state.errorMessage);
-        print(state.errorMessage);
       } else if (state.hasValue && state.value != null) {
         context.closeLoadingDialog();
         final sessionId = state.value!.data!.sessionId;
@@ -33,9 +32,10 @@ class LeaderStartSessionView extends ConsumerWidget {
             .startTracking(sessionId);
         context.showSuccessSnackBar(state.value!.message);
 
-        Navigator.of(
-          context,
-        ).pushNamed(AppRoute.leaderPilgrimsListView, arguments: sessionId);
+        Navigator.of(context).pushReplacementNamed(
+          AppRoute.leaderPilgrimsListView,
+          arguments: sessionId,
+        );
       }
     });
 

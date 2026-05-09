@@ -26,6 +26,8 @@ class ApiLink {
       '$server/Announcements/CreateAndPublishAnnouncement';
   static const String deleteAnnouncement =
       '$server/Announcements/DeleteAnnouncement';
+  static const String getTargetAudiences =
+      '$server/Announcements/GetTargetAudiences';
   // Location
   static const String getActiveLocation = '$server/Location/GetActiveLocation';
   static const String getCampaignLocations =

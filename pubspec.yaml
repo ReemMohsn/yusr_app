@@ -27,6 +27,53 @@ environment:
 # dependencies can be manually updated by changing the version numbers below to
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
+# dependencies:
+#   flutter:
+#     sdk: flutter
+
+#   # المكتبات المعلقة (إبقاء للذكرى أو الرجوع إليها)
+#   # dio: ^5.8.0+1
+#   # intl: any
+#   # shared_preferences: ^2.2.2
+#   # flutter_localization: ^0.3.3
+#   # flutter_svg: ^2.2.0
+#   # device_preview: ^1.3.1
+#   # flutter_riverpod: ^3.0.0
+#   # riverpod_annotation: ^3.0.0
+#   # build_runner: ^2.7.1
+#   # riverpod_generator: ^3.0.0
+#   # flutter_screenutil: ^5.9.3
+#   # hijri: ^3.0.0
+#   # adhan: ^2.0.0
+#   dio: any
+#   intl: any
+#   shared_preferences: any
+#   flutter_localization: any
+#   flutter_svg: any
+#   device_preview: any
+#   flutter_riverpod: any
+#   riverpod_annotation: any
+#   flutter_screenutil: any
+#   hijri: any
+#   adhan: any
+#   firebase_core: any
+#   firebase_messaging: any
+#   flutter_compass: any
+#   flutter_map: any
+#   latlong2: ^0.9.1
+#   geolocator: ^13.0.1  
+#   cupertino_icons: ^1.0.8
+#   http: ^1.2.0
+#   firebase_database: any
+#   sensors_plus: any
+#   pedometer: any
+#   permission_handler: any
+#   audioplayers: ^5.2.1   # لتشغيل صوت الإنذار
+#   vibration: ^3.1.3     # للاهتزاز
+#   flutter_local_notifications: ^17.0.0 # للإشعارات المحلية
+#   flutter_blue_plus: ^1.31.18 # الرادار: استماع وبحث (للمشرف)
+#   flutter_ble_peripheral: ^0.3.0 # المنارة: بث إشارة (للحاج)
+#   # beacon_broadcast: ^0.3.0 # المنارة: بث إشارة (للحاج)
 dependencies:
   flutter:
     sdk: flutter
@@ -65,7 +112,6 @@ dependencies:
   cupertino_icons: ^1.0.8
   http: ^1.2.0
   firebase_database: any
-  
   sensors_plus: any
   pedometer: any
   permission_handler: any
@@ -75,6 +121,10 @@ dependencies:
   flutter_markdown: ^0.7.7+1
   shimmer: ^3.0.0
   
+  # --- تم توحيد مكتبات البلوتوث هنا ---
+  flutter_blue_plus: ^1.34.0 # الرادار: استماع وبحث (للمشرف)
+  # flutter_ble_peripheral: ^2.1.0
+  beacon_broadcast: ^0.3.0 # تم إيقافها واستبدالها بالتي فوقها
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -106,7 +156,7 @@ flutter:
     - asset/icons/
     - asset/images/
     - asset/fonts/
-    - assets/sounds/
+    - asset/sounds/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
