@@ -11,6 +11,7 @@ import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/core/constants/app_size.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/core/services/notification_service.dart';
+import 'package:yusr/features/be_leader/providers/tracking_notifications_store.dart';
 import 'package:yusr/features/auth/data/models/login_model.dart';
 import 'package:yusr/features/auto_counter/presentation/views/tawaf_counter_view.dart';
 import 'package:yusr/features/be_leader/providers/active_session_id_provider.dart';
@@ -40,6 +41,12 @@ class _MainHomeViewState extends ConsumerState<MainHomeView>
     WidgetsBinding.instance.addObserver(this);
     _syncNotifications();
     _initActiveSession(); // قراءة الجلسة المحفوظة لتهيئة الزر
+    // استعادة بطاقة دعوة الجلسة المحفوظة في SharedPreferences (إن وجدت)
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref
+          .read(trackingNotificationsStoreProvider.notifier)
+          .loadPersistedInvite();
+    });
   }
 
   @override
@@ -53,6 +60,10 @@ class _MainHomeViewState extends ConsumerState<MainHomeView>
   void didChangeAppLifecycleState(AppLifecycleState appState) {
     if (appState == AppLifecycleState.resumed) {
       _initActiveSession();
+      // إعادة تحميل الدعوة المعلقة عند العودة للمقدمة (احتياطي)
+      ref
+          .read(trackingNotificationsStoreProvider.notifier)
+          .loadPersistedInvite();
     }
   }
 
@@ -248,18 +259,29 @@ class _MainHomeViewState extends ConsumerState<MainHomeView>
                     color: Colors.greenAccent,
                     size: 28,
                   ),
-                  onPressed: () {
-                    ref
-                        .read(pilgrimTrackingControllerProvider.notifier)
-                        .acceptAndStartTracking(
-                          sessionId: activeSessionId,
-                          pilgrimId: profile.userId.toString(),
-                          pilgrimName: profile.fullName,
-                        );
-                    Navigator.of(context).pushNamed(
-                      AppRoute.pilgrimMapTrackingView,
-                      arguments: activeSessionId,
+                  onPressed: () async {
+                    final controller = ref.read(
+                      pilgrimTrackingControllerProvider.notifier,
                     );
+
+                    // ✅ إذا كانت الـ streams مغلقة (أي أُعيد فتح التطبيق بعد إغلاقه)
+                    // → أعد التتبع بدون إرسال طلب للـ API
+                    // ✅ إذا كانت الـ streams مفتوحة بالفعل
+                    // → تجاهل الاستدعاء (resumeTrackingStreams تتحقق داخلياً)
+                    if (!controller.isActivelyTracking) {
+                      await controller.resumeTrackingStreams(
+                        sessionId: activeSessionId,
+                        pilgrimId: profile.userId.toString(),
+                        pilgrimName: profile.fullName,
+                      );
+                    }
+
+                    if (context.mounted) {
+                      Navigator.of(context).pushNamed(
+                        AppRoute.pilgrimMapTrackingView,
+                        arguments: activeSessionId,
+                      );
+                    }
                   },
                 ),
               );

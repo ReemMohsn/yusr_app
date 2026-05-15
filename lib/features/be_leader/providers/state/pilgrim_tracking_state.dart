@@ -11,6 +11,7 @@ class PilgrimTrackingState {
   final String? errorMessage;
   final String? gpsWarning;
   final String? bleWarning; // 🌟 تحذير حالة البلوتوث
+  final bool isNetworkConnected; // 🌐 إضافة لحالة الإنترنت
 
   PilgrimTrackingState({
     this.pilgrimLocation,
@@ -20,6 +21,7 @@ class PilgrimTrackingState {
     this.errorMessage,
     this.gpsWarning,
     this.bleWarning,
+    this.isNetworkConnected = true,
   });
 
   /// نسخة محدَّثة من الحالة مع تغيير حقول بعينها فقط
@@ -32,6 +34,7 @@ class PilgrimTrackingState {
     // استخدم Object() كـ sentinel لتمييز null المقصودة من الحقل غير الممرَّر
     Object? gpsWarning = _sentinel,
     Object? bleWarning = _sentinel,
+    bool? isNetworkConnected,
   }) {
     return PilgrimTrackingState(
       pilgrimLocation: pilgrimLocation ?? this.pilgrimLocation,
@@ -41,6 +44,7 @@ class PilgrimTrackingState {
       errorMessage: errorMessage ?? this.errorMessage,
       gpsWarning: gpsWarning == _sentinel ? this.gpsWarning : gpsWarning as String?,
       bleWarning: bleWarning == _sentinel ? this.bleWarning : bleWarning as String?,
+      isNetworkConnected: isNetworkConnected ?? this.isNetworkConnected,
     );
   }
 

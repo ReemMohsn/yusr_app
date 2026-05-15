@@ -5,11 +5,10 @@ import 'package:yusr/core/services/API/api_service.dart';
 import 'package:yusr/core/services/API/repository_request_handler.dart';
 import 'package:yusr/features/profile/data/models/user_details_model.dart';
 
-
 class ProfileRepository {
   final ApiService apiService;
   final Ref ref;
-  
+
   ProfileRepository(this.apiService, this.ref);
 
   Future<ApiResponse<UserDetailsModel>> getUserDetails() async {
@@ -19,8 +18,6 @@ class ProfileRepository {
     );
     return response;
   }
-
-
 
   Future<ApiResponse<bool>> updateProfile(UpdateProfileDto dto) async {
     final response = await repositoryRequestHandler<bool>(
@@ -41,9 +38,12 @@ class ProfileRepository {
     return response;
   }
 
-  Future<ApiResponse<bool>> updateProfileRaw(Map<String, dynamic> data) async {
+  Future<ApiResponse<bool>> updateProfileRaw(String number) async {
     final response = await repositoryRequestHandler<bool>(
-      () => apiService.post(ApiLink.updateProfile, data: data),
+      () => apiService.post(
+        ApiLink.updateProfile,
+        data: {"saudiContactNumber": number},
+      ),
       fromJson: (data) => true,
     );
     return response;

@@ -20,6 +20,11 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static String m0(name) => "Pilgrim \"${name}\" has exceeded the safe zone!";
+
+  static String m1(name) =>
+      "Pilgrim \"${name}\" has started drifting from the group.";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "accepted": MessageLookupByLibrary.simpleMessage("Accepted"),
@@ -44,6 +49,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "administration": MessageLookupByLibrary.simpleMessage("Administration"),
     "age": MessageLookupByLibrary.simpleMessage("Age"),
+    "alarmMutedPilgrimMsg": MessageLookupByLibrary.simpleMessage(
+      "🔇 Sound muted. It will return automatically when you return to safety.",
+    ),
+    "alarmMutedTemporarilyMsg": MessageLookupByLibrary.simpleMessage(
+      "🔇 Sound muted. It will return automatically when pilgrims are safe.",
+    ),
     "all_rounds_completed": MessageLookupByLibrary.simpleMessage(
       "You have successfully completed all rounds",
     ),
@@ -83,6 +94,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "confirmDeleteAnnouncementMessage": MessageLookupByLibrary.simpleMessage(
       "Are you sure you want to delete this announcement? This action cannot be undone.",
     ),
+    "confirmEnd": MessageLookupByLibrary.simpleMessage("Confirm End"),
+    "confirmEndSessionMsg": MessageLookupByLibrary.simpleMessage(
+      "Are you sure you want to end tracking? The session will be stopped for all pilgrims.",
+    ),
     "confirmPasswordLabel": MessageLookupByLibrary.simpleMessage(
       "Confirm Password",
     ),
@@ -93,6 +108,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "congratulations": MessageLookupByLibrary.simpleMessage(
       "🎉 Congratulations!",
     ),
+    "connectedMap": MessageLookupByLibrary.simpleMessage("Connected"),
     "connectionFailed": MessageLookupByLibrary.simpleMessage(
       "Connection failed, please check your internet connection.",
     ),
@@ -104,6 +120,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "copiedText": MessageLookupByLibrary.simpleMessage("Copied"),
     "currentLocation": MessageLookupByLibrary.simpleMessage("Current Location"),
     "currentStroke": MessageLookupByLibrary.simpleMessage("Current Stroke"),
+    "dangerZone30m": MessageLookupByLibrary.simpleMessage("Danger zone (30m)"),
     "dateOfBirth": MessageLookupByLibrary.simpleMessage("Date of Birth"),
     "delete": MessageLookupByLibrary.simpleMessage("Delete"),
     "deleteSuccess": MessageLookupByLibrary.simpleMessage(
@@ -112,6 +129,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "departureDate": MessageLookupByLibrary.simpleMessage("Departure Date"),
     "detiles": MessageLookupByLibrary.simpleMessage("Details"),
     "dhuhr": MessageLookupByLibrary.simpleMessage("Dhuhr"),
+    "dialogAccept": MessageLookupByLibrary.simpleMessage("Accept"),
+    "dialogReject": MessageLookupByLibrary.simpleMessage("Reject"),
+    "disconnectedMap": MessageLookupByLibrary.simpleMessage("Disconnected"),
+    "distanceFromLeader": MessageLookupByLibrary.simpleMessage(
+      "Distance from leader",
+    ),
     "done": MessageLookupByLibrary.simpleMessage("Done"),
     "edit": MessageLookupByLibrary.simpleMessage("Edit"),
     "editNumber": MessageLookupByLibrary.simpleMessage("Edit Number"),
@@ -128,6 +151,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "emailLabel": MessageLookupByLibrary.simpleMessage("Email"),
     "emailOrPassport": MessageLookupByLibrary.simpleMessage(
       "Email or Passport Number",
+    ),
+    "endSession": MessageLookupByLibrary.simpleMessage("End Session"),
+    "endSessionError": MessageLookupByLibrary.simpleMessage(
+      "An error occurred while ending the session, please try again.",
+    ),
+    "endSessionOfficially": MessageLookupByLibrary.simpleMessage(
+      "End session officially",
     ),
     "enterAnnouncementTitle": MessageLookupByLibrary.simpleMessage(
       "Enter announcement title...",
@@ -176,6 +206,24 @@ class MessageLookup extends MessageLookupByLibrary {
     "fullName": MessageLookupByLibrary.simpleMessage("Full Name"),
     "gender": MessageLookupByLibrary.simpleMessage("Gender"),
     "getAnswer": MessageLookupByLibrary.simpleMessage("Get Answer"),
+    "gpsDisabledWarning": MessageLookupByLibrary.simpleMessage(
+      "Location service (GPS) has been turned off. Please enable it.",
+    ),
+    "gpsPermissionDeniedWarning": MessageLookupByLibrary.simpleMessage(
+      "Cannot start tracking without location permissions. Please enable them from Settings.",
+    ),
+    "gpsReenabledLeaderWarning": MessageLookupByLibrary.simpleMessage(
+      "GPS is active, updating location (may be indoors)...",
+    ),
+    "gpsReenabledWarning": MessageLookupByLibrary.simpleMessage(
+      "GPS has been enabled, acquiring signal...",
+    ),
+    "gpsServiceDisabledWarning": MessageLookupByLibrary.simpleMessage(
+      "Please enable the GPS (Location) service on your device.",
+    ),
+    "gpsSystemError": MessageLookupByLibrary.simpleMessage(
+      "A system error occurred. Please check your permissions.",
+    ),
     "groupInfo": MessageLookupByLibrary.simpleMessage("Group Information"),
     "groupInfoSectionTitle": MessageLookupByLibrary.simpleMessage(
       "Group Information",
@@ -208,26 +256,65 @@ class MessageLookup extends MessageLookupByLibrary {
     "importantNotesTitle": MessageLookupByLibrary.simpleMessage(
       "Important Notes",
     ),
+    "inSafeZone": MessageLookupByLibrary.simpleMessage("Inside safe zone 🟢"),
     "inactive": MessageLookupByLibrary.simpleMessage("Inactive"),
+    "insideZone": MessageLookupByLibrary.simpleMessage("Inside zone"),
     "instructions": MessageLookupByLibrary.simpleMessage("Hajj Types"),
     "instructionsListData": MessageLookupByLibrary.simpleMessage(
       "[{\"title\":\"Ifrad\",\"subtitle\":\"Ihram for Hajj only\",\"description\":\"Entering Ihram for Hajj alone from the Miqat, saying: Labbayk Hajjan\"},{\"title\":\"Qiran\",\"subtitle\":\"Ihram for Hajj and Umrah together\",\"description\":\"Entering Ihram for both Umrah and Hajj together, saying: Labbayk Umratan wa Hajjan\"},{\"title\":\"Tamattu\",\"subtitle\":\"Umrah then Hajj in the months of Hajj\",\"description\":\"Entering Ihram for Umrah, exiting it fully, then entering Ihram again for Hajj\"}]",
     ),
+    "inviteAcceptedMsg": MessageLookupByLibrary.simpleMessage(
+      "Invite accepted, starting tracking...",
+    ),
+    "inviteRejectedMsg": MessageLookupByLibrary.simpleMessage(
+      "Invite rejected successfully",
+    ),
     "isha": MessageLookupByLibrary.simpleMessage("Isha"),
+    "join": MessageLookupByLibrary.simpleMessage("Join"),
     "journeyOfFaith": MessageLookupByLibrary.simpleMessage("Journey of Faith"),
     "km": MessageLookupByLibrary.simpleMessage("km"),
     "labbayk": MessageLookupByLibrary.simpleMessage(
       "Labbayk Allahumma Labbayk",
     ),
+    "lastActualMove": MessageLookupByLibrary.simpleMessage("Last actual move"),
+    "lastPhoneSignal": MessageLookupByLibrary.simpleMessage(
+      "Last phone signal",
+    ),
+    "leaderEmergencyChannelName": MessageLookupByLibrary.simpleMessage(
+      "Pilgrim Emergency",
+    ),
+    "leaderPilgrimEmergencyBody": m0,
+    "leaderPilgrimEmergencyTitle": MessageLookupByLibrary.simpleMessage(
+      "🚨 Danger: Pilgrim Missing!",
+    ),
+    "leaderPilgrimWarningBody": m1,
+    "leaderPilgrimWarningTitle": MessageLookupByLibrary.simpleMessage(
+      "🟡 Pilgrim Lagging Alert",
+    ),
+    "leaderTimeoutError": MessageLookupByLibrary.simpleMessage(
+      "Tracking stopped because the supervisor lost connection for more than 30 minutes.",
+    ),
+    "leaderWarningChannelName": MessageLookupByLibrary.simpleMessage(
+      "Late Pilgrims Warnings",
+    ),
     "loading": MessageLookupByLibrary.simpleMessage("Loading..."),
     "localSADialTitle": MessageLookupByLibrary.simpleMessage(
       "Local number for contact in Saudi Arabia 🇸🇦",
+    ),
+    "locatingPleaseWait": MessageLookupByLibrary.simpleMessage(
+      "Locating, please wait...",
     ),
     "locationDescription": MessageLookupByLibrary.simpleMessage(
       "Location Description",
     ),
     "locationList": MessageLookupByLibrary.simpleMessage("Location List"),
     "locationName": MessageLookupByLibrary.simpleMessage("Location Name"),
+    "locationRequestDialogTitle": MessageLookupByLibrary.simpleMessage(
+      "Location Sharing Request",
+    ),
+    "locationRequestTitle": MessageLookupByLibrary.simpleMessage(
+      "📍 Location Sharing Request",
+    ),
     "login": MessageLookupByLibrary.simpleMessage("Login"),
     "loginButton": MessageLookupByLibrary.simpleMessage("Login"),
     "loginToViewCampaignLocation": MessageLookupByLibrary.simpleMessage(
@@ -245,6 +332,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "messageFetchingCampLocationmessage": MessageLookupByLibrary.simpleMessage(
       "Fetching campaign location...",
     ),
+    "meterWord": MessageLookupByLibrary.simpleMessage("meter"),
+    "muteAlarmTemporarily": MessageLookupByLibrary.simpleMessage(
+      "Mute alarm temporarily",
+    ),
     "newNotification": MessageLookupByLibrary.simpleMessage("New Notification"),
     "newPasswordDescription": MessageLookupByLibrary.simpleMessage(
       "The new password must be different from previous passwords",
@@ -253,12 +344,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "noAnnouncementsCurrently": MessageLookupByLibrary.simpleMessage(
       "There are currently no announcements",
     ),
+    "noInternet": MessageLookupByLibrary.simpleMessage("No Internet"),
     "noMatchingSearchResults": MessageLookupByLibrary.simpleMessage(
       "No matching search results found",
     ),
     "noNotificationsCurrently": MessageLookupByLibrary.simpleMessage(
       "There are currently no notifications",
     ),
+    "noPilgrims": MessageLookupByLibrary.simpleMessage("No pilgrims"),
     "noPilgrimsFound": MessageLookupByLibrary.simpleMessage(
       "No pilgrims found",
     ),
@@ -286,7 +379,13 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
     "ofWord": MessageLookupByLibrary.simpleMessage("of"),
+    "onBorders": MessageLookupByLibrary.simpleMessage("On the borders 🟠"),
+    "onBordersOnly": MessageLookupByLibrary.simpleMessage("On borders"),
     "otherLocations": MessageLookupByLibrary.simpleMessage("Other Locations"),
+    "outOfZone": MessageLookupByLibrary.simpleMessage("Out of zone"),
+    "outOfZoneDanger": MessageLookupByLibrary.simpleMessage(
+      "Out of zone ⚠️ Danger",
+    ),
     "passportNumber": MessageLookupByLibrary.simpleMessage("Passport Number"),
     "password": MessageLookupByLibrary.simpleMessage("Password"),
     "passwordsDoNotMatchError": MessageLookupByLibrary.simpleMessage(
@@ -295,6 +394,24 @@ class MessageLookup extends MessageLookupByLibrary {
     "pending": MessageLookupByLibrary.simpleMessage("Pending"),
     "personalData": MessageLookupByLibrary.simpleMessage("Personal Data"),
     "pilgrimDetails": MessageLookupByLibrary.simpleMessage("Pilgrim Details"),
+    "pilgrimEmergencyBody": MessageLookupByLibrary.simpleMessage(
+      "You have moved beyond the allowed distance from the supervisor!",
+    ),
+    "pilgrimEmergencyChannelName": MessageLookupByLibrary.simpleMessage(
+      "Distancing Alert",
+    ),
+    "pilgrimEmergencyTitle": MessageLookupByLibrary.simpleMessage(
+      "🚨 Danger Alert!",
+    ),
+    "pilgrimWarningBody": MessageLookupByLibrary.simpleMessage(
+      "You are moving away from your group. Hurry back to the supervisor.",
+    ),
+    "pilgrimWarningChannelName": MessageLookupByLibrary.simpleMessage(
+      "Distancing Warning",
+    ),
+    "pilgrimWarningTitle": MessageLookupByLibrary.simpleMessage(
+      "🟡 Warning: You are drifting away!",
+    ),
     "pilgrimsCount": MessageLookupByLibrary.simpleMessage("Pilgrims Count"),
     "pilgrimsListTitle": MessageLookupByLibrary.simpleMessage("Pilgrims List"),
     "prayerTimes": MessageLookupByLibrary.simpleMessage("Prayer Times"),
@@ -351,6 +468,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "saveNumber": MessageLookupByLibrary.simpleMessage("Save Number"),
     "saveNumberBtn": MessageLookupByLibrary.simpleMessage("Save Number"),
     "searchPilgrim": MessageLookupByLibrary.simpleMessage("Search pilgrim..."),
+    "searchingForLocation": MessageLookupByLibrary.simpleMessage(
+      "Searching for your location...",
+    ),
     "secureArrivalMessage": MessageLookupByLibrary.simpleMessage(
       "To ensure a safe journey and arrive peacefully, please login first",
     ),
@@ -369,6 +489,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "serverNotResponding": MessageLookupByLibrary.simpleMessage(
       "The server is currently not responding, please try again later.",
+    ),
+    "sessionEndedSuccessfully": MessageLookupByLibrary.simpleMessage(
+      "Session ended successfully",
     ),
     "sessionExpiredGuest": MessageLookupByLibrary.simpleMessage(
       "Session expired or your data was modified. You are now browsing as a guest.",
@@ -390,8 +513,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "startSession": MessageLookupByLibrary.simpleMessage("Start Session"),
     "status": MessageLookupByLibrary.simpleMessage("Status"),
     "steps": MessageLookupByLibrary.simpleMessage("Steps"),
+    "stopTracking": MessageLookupByLibrary.simpleMessage("Stop Tracking"),
+    "stopTrackingConfirmMsg": MessageLookupByLibrary.simpleMessage(
+      "Are you sure you want to stop tracking and leave the session? The supervisor will be notified.",
+    ),
     "stopped": MessageLookupByLibrary.simpleMessage("Stopped"),
+    "stoppedTracking": MessageLookupByLibrary.simpleMessage("Stopped Tracking"),
     "strokes": MessageLookupByLibrary.simpleMessage("Strokes"),
+    "supervisor": MessageLookupByLibrary.simpleMessage("Supervisor"),
     "supervisorGroupDetails": MessageLookupByLibrary.simpleMessage(
       "Group Details",
     ),
@@ -409,9 +538,13 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "titleLabel": MessageLookupByLibrary.simpleMessage("Title"),
     "total": MessageLookupByLibrary.simpleMessage("Total"),
+    "trackingInProgress": MessageLookupByLibrary.simpleMessage(
+      "Tracking in Progress",
+    ),
     "unexpectedError": MessageLookupByLibrary.simpleMessage(
       "An unexpected error occurred, please try again.",
     ),
+    "unknownPilgrim": MessageLookupByLibrary.simpleMessage("A pilgrim"),
     "updateLocationTitle": MessageLookupByLibrary.simpleMessage(
       "Update Location",
     ),
@@ -428,6 +561,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Waiting for your question to be answered by AI...",
     ),
     "walking": MessageLookupByLibrary.simpleMessage("Walking"),
+    "warningZone20m": MessageLookupByLibrary.simpleMessage(
+      "Warning zone (20m)",
+    ),
     "whatsappNumber": MessageLookupByLibrary.simpleMessage("WhatsApp Number"),
     "writeAnnouncementContentHere": MessageLookupByLibrary.simpleMessage(
       "Write announcement content here...",
@@ -438,7 +574,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "yemeniMobileNumber": MessageLookupByLibrary.simpleMessage(
       "Yemeni Mobile Number",
     ),
+    "yesStop": MessageLookupByLibrary.simpleMessage("Yes, Stop"),
     "youAreHere": MessageLookupByLibrary.simpleMessage("You are here"),
+    "youWord": MessageLookupByLibrary.simpleMessage("You"),
     "yourQuestion": MessageLookupByLibrary.simpleMessage("Your Question"),
   };
 }

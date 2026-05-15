@@ -9,6 +9,7 @@ class TrackingState {
   final bool isLoading;
   final String? gpsWarning;
   final String? bleWarning; // 🌟 إضافة لتنبيهات البلوتوث
+  final bool isNetworkConnected; // 🌐 إضافة لحالة الإنترنت
 
   TrackingState({
     this.leaderLocation,
@@ -18,6 +19,7 @@ class TrackingState {
     this.isLoading = true,
     this.gpsWarning,
     this.bleWarning,
+    this.isNetworkConnected = true,
   });
 
   int get totalPilgrims =>

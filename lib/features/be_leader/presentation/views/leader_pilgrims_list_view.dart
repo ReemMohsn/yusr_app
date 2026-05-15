@@ -95,6 +95,9 @@ class LeaderPilgrimsListView extends ConsumerWidget {
                   final notActiveCount = pilgrimsList
                       .where((p) => p.statusId == 4)
                       .length;
+                  final stoppedCount = pilgrimsList
+                      .where((p) => p.statusId == 5)
+                      .length;
 
                   // 🌟 التعديل الأساسي هنا: استخدام RefreshIndicator 🌟
                   return RefreshIndicator(
@@ -143,6 +146,13 @@ class LeaderPilgrimsListView extends ConsumerWidget {
                                 count: notActiveCount.toString(),
                                 color: Colors.grey,
                                 icon: Icons.do_not_disturb_on_outlined,
+                              ),
+                              SizedBox(width: 12.w),
+                              StatCardWidget(
+                                title: locale.stoppedTracking,
+                                count: stoppedCount.toString(),
+                                color: Colors.purple,
+                                icon: Icons.location_off_outlined,
                               ),
                             ],
                           ),
