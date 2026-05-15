@@ -69,22 +69,29 @@ class NotificationService {
             await FirebaseMessaging.instance.subscribeToTopic(
               'campaign_${campaignId}_all',
             );
+            // await FirebaseMessaging.instance.subscribeToTopic(
+            //   'campaign_${campaignId}_supervisors',
+            // );
           }
 
-          // معالجة قناة المجموعة
-          if (role == 'حاج') {
+          // معالجة قناة المجموعة للحاج والمشرف
+          if (role == 'حاج' || role == 'مشرف') {
             int? savedGroupId = await prefsService.getInt('saved_group_id');
 
             if (currentGroupId != savedGroupId) {
+              // 1. إلغاء الاشتراك من المجموعة القديمة (إن وجدت)
               if (savedGroupId != null) {
-                await FirebaseMessaging.instance.unsubscribeFromTopic(
-                  'campaign_${campaignId}_group_$savedGroupId',
-                );
+                String oldTopic = role == 'حاج'
+                    ? 'campaign_${campaignId}_group_$savedGroupId'
+                    : 'campaign_${campaignId}_supervisor_group_$savedGroupId';
+                await FirebaseMessaging.instance.unsubscribeFromTopic(oldTopic);
               }
+              // 2. الاشتراك في المجموعة الجديدة
               if (currentGroupId != null) {
-                await FirebaseMessaging.instance.subscribeToTopic(
-                  'campaign_${campaignId}_group_$currentGroupId',
-                );
+                String newTopic = role == 'حاج'
+                    ? 'campaign_${campaignId}_group_$currentGroupId'
+                    : 'campaign_${campaignId}_supervisor_group_$currentGroupId';
+                await FirebaseMessaging.instance.subscribeToTopic(newTopic);
                 await prefsService.setInt('saved_group_id', currentGroupId);
               } else {
                 await prefsService.removeInt('saved_group_id');

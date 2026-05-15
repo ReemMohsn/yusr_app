@@ -22,9 +22,9 @@ void main() async {
   await messaging.requestPermission(alert: true, badge: true, sound: true);
   try {
     String? token = await FirebaseMessaging.instance.getToken();
-    print("FCM Token: $token");
+    debugPrint("FCM Token: $token");
   } catch (e) {
-    print("Failed to get token: $e");
+    debugPrint("Failed to get token: $e");
   }
 
   // 2. تفعيل خدمة التقاط الضغطات والإشعارات التي برمجناها

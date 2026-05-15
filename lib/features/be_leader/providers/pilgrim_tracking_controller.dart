@@ -11,11 +11,14 @@ import 'package:vibration/vibration.dart';
 import 'package:yusr/core/common/providers/location_service.dart';
 import 'package:yusr/core/common/providers/shared_preferences_service_provider.dart';
 import 'package:yusr/core/constants/shared_preferences_keys.dart';
+import 'package:yusr/features/be_leader/data/models/tracking_notification_model.dart';
 import 'package:yusr/features/be_leader/presentation/services/smart_location_filter_service.dart';
+import 'package:yusr/features/be_leader/presentation/services/tracking_strings.dart';
 import 'package:yusr/features/be_leader/providers/active_session_id_provider.dart';
 import 'package:yusr/features/be_leader/providers/be_leader_repository_provider.dart';
 import 'package:yusr/features/be_leader/providers/ble_radar_service_provider.dart';
 import 'package:yusr/features/be_leader/providers/state/pilgrim_tracking_state.dart';
+import 'package:yusr/features/be_leader/providers/tracking_notifications_store.dart';
 import 'package:yusr/features/be_leader/providers/tracking_repository_provider.dart';
 import 'package:permission_handler/permission_handler.dart' hide ServiceStatus;
 
@@ -28,6 +31,8 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
   StreamSubscription<DatabaseEvent>? _leaderStreamSub;
   StreamSubscription<ServiceStatus>? _serviceStatusSub;
   StreamSubscription<DatabaseEvent>? _myFirebaseDataSub;
+  StreamSubscription<DatabaseEvent>? _networkSub; // 🌐 مراقبة الإنترنت
+
   Timer? _leaderTimeoutTimer;
 
   // ─── حالة الجلسة الحالية ──────────────────────────────────────────────────
@@ -68,9 +73,21 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // دالة البدء الرئيسية
+  // فحص حالة التتبع النشط
   // ═══════════════════════════════════════════════════════════════════════════
 
+  /// هل التتبع شغّال فعلياً الآن؟ (أي أن الـ streams مفتوحة وبيانات الجلسة موجودة)
+  bool get isActivelyTracking =>
+      _currentSessionId != null &&
+      _positionStreamSub != null &&
+      _leaderStreamSub != null;
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // دوال البدء
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  /// يُرسل طلب الموافقة للـ API ثم يبدأ التتبع الكامل.
+  /// يُستدعى مرة واحدة فقط عند قبول الدعوة لأول مرة.
   Future<void> acceptAndStartTracking({
     required int sessionId,
     required String pilgrimId,
@@ -92,73 +109,113 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
       final sharedPrefs = ref.read(sharedPreferencesServiceProvider);
       await sharedPrefs.setInt(SharedPreferencesKeys.sessionId, sessionId);
 
-      final locationService = ref.read(locationServiceProvider);
-
-      // 1️⃣ فحص خدمة GPS
-      final serviceEnabled = await locationService.isServiceEnabled();
-      if (!serviceEnabled) {
-        debugPrint('⚠️ [GPS] الخدمة مطفأة عند بدء التتبع.');
-        state = PilgrimTrackingState(
-          leaderLocation: state.leaderLocation,
-          gpsWarning: 'يرجى تفعيل خدمة الـ GPS (الموقع) في هاتفك.',
-        );
-      }
-
-      // 2️⃣ فحص وطلب صلاحيات الموقع
-      final permissionsGranted = await locationService
-          .ensurePermissionsGranted();
-      if (!permissionsGranted) {
-        state = PilgrimTrackingState(
-          leaderLocation: state.leaderLocation,
-          gpsWarning:
-              'لا يمكن بدء التتبع بدون صلاحيات الموقع. يرجى تفعيلها من الإعدادات.',
-        );
-        return;
-      }
-
-      // 3️⃣ طلب صلاحيات البلوتوث (أندرويد 12+)
-      await [
-        Permission.bluetooth,
-        Permission.bluetoothAdvertise,
-        Permission.bluetoothConnect,
-        Permission.bluetoothScan,
-      ].request();
-
-      // 4️⃣ تشغيل عدّاد الخطوات الذكي
-      _locationFilter.startSmartStepCounting(tag: ' [الحاج]');
-
-      // 5️⃣ تشغيل بث البلوتوث عبر BleRadarService الموحَّد
-      await ref
-          .read(bleRadarServiceProvider)
-          .initBroadcasting(
-            pilgrimId: pilgrimId,
-            onWarning: (warningMsg) {
-              state = state.copyWith(bleWarning: warningMsg);
-            },
-          );
-
-      // 6️⃣ مراقبة تشغيل/إيقاف GPS (دالة منفصلة)
-      _listenToGpsStatusChanges();
-
-      // 7️⃣ جلب الموقع الأولي
-      if (serviceEnabled) {
-        final initialPos = await locationService.tryGetCurrentPosition();
-        if (initialPos != null) _applyValidPosition(initialPos);
-      }
-
-      // 8️⃣ تشغيل Stream الموقع المستمر (دالة منفصلة)
-      _startLocationUpdates();
-
-      // 9️⃣ استماع موقع المشرف من Firebase (دالة منفصلة)
-      _listenToLeaderStream();
-
-      // 🔟 استماع "صك الأمان" الخاص بي من Firebase (دالة منفصلة)
-      _listenToMyPilgrimData();
+      await _startAllStreams(pilgrimId: pilgrimId, pilgrimName: pilgrimName);
     } catch (e) {
       state = PilgrimTrackingState(errorMessage: e.toString());
       final sharedPrefs = ref.read(sharedPreferencesServiceProvider);
       await sharedPrefs.removeInt(SharedPreferencesKeys.sessionId);
+      rethrow;
     }
+  }
+
+  /// يُعيد فتح الـ streams فقط بعد إعادة فتح التطبيق — بدون إرسال أي طلب للـ API.
+  /// يُستدعى فقط إذا كان التتبع متوقفاً (streams مغلقة) وبيانات الجلسة موجودة.
+  Future<void> resumeTrackingStreams({
+    required int sessionId,
+    required String pilgrimId,
+    required String pilgrimName,
+  }) async {
+    // تجاهل الطلب إذا كانت الـ streams مفتوحة بالفعل
+    if (isActivelyTracking) {
+      debugPrint('ℹ️ [الحاج] الـ streams مفتوحة بالفعل — لا حاجة للاستئناف.');
+      return;
+    }
+
+    debugPrint('🔄 [الحاج] استئناف التتبع بعد إعادة فتح التطبيق (بدون API)...');
+    state = PilgrimTrackingState(isLoading: true);
+
+    _currentSessionId = sessionId;
+    _currentPilgrimId = pilgrimId;
+    _currentPilgrimName = pilgrimName;
+
+    ref.read(activeSessionIdProvider.notifier).updateSessionId(sessionId);
+
+    try {
+      await _startAllStreams(pilgrimId: pilgrimId, pilgrimName: pilgrimName);
+    } catch (e) {
+      state = PilgrimTrackingState(errorMessage: e.toString());
+    }
+  }
+
+  /// الدالة الداخلية المشتركة: تُشغِّل جميع الـ streams والخدمات.
+  /// تُستدعى من [acceptAndStartTracking] و[resumeTrackingStreams].
+  Future<void> _startAllStreams({
+    required String pilgrimId,
+    required String pilgrimName,
+  }) async {
+    final locationService = ref.read(locationServiceProvider);
+
+    // 1️⃣ فحص خدمة GPS
+    final serviceEnabled = await locationService.isServiceEnabled();
+    if (!serviceEnabled) {
+      debugPrint('⚠️ [GPS] الخدمة مطفأة عند بدء التتبع.');
+      state = PilgrimTrackingState(
+        leaderLocation: state.leaderLocation,
+        gpsWarning: TrackingStrings.gpsServiceDisabled,
+      );
+    }
+
+    // 2️⃣ فحص وطلب صلاحيات الموقع
+    final permissionsGranted = await locationService.ensurePermissionsGranted();
+    if (!permissionsGranted) {
+      state = PilgrimTrackingState(
+        leaderLocation: state.leaderLocation,
+        gpsWarning: TrackingStrings.gpsPermissionDenied,
+      );
+      return;
+    }
+
+    // 3️⃣ طلب صلاحيات البلوتوث (أندرويد 12+)
+    await [
+      Permission.bluetooth,
+      Permission.bluetoothAdvertise,
+      Permission.bluetoothConnect,
+      Permission.bluetoothScan,
+    ].request();
+
+    // 4️⃣ تشغيل عدّاد الخطوات الذكي
+    _locationFilter.startSmartStepCounting(tag: ' [الحاج]');
+
+    // 5️⃣ تشغيل بث البلوتوث عبر BleRadarService الموحَّد
+    await ref
+        .read(bleRadarServiceProvider)
+        .initBroadcasting(
+          pilgrimId: pilgrimId,
+          onWarning: (warningMsg) {
+            state = state.copyWith(bleWarning: warningMsg);
+          },
+        );
+
+    // 6️⃣ مراقبة تشغيل/إيقاف GPS (دالة منفصلة)
+    _listenToGpsStatusChanges();
+
+    // 7️⃣ جلب الموقع الأولي
+    if (serviceEnabled) {
+      final initialPos = await locationService.tryGetCurrentPosition();
+      if (initialPos != null) _applyValidPosition(initialPos);
+    }
+
+    // 8️⃣ تشغيل Stream الموقع المستمر (دالة منفصلة)
+    _startLocationUpdates();
+
+    // 9️⃣ استماع موقع المشرف من Firebase (دالة منفصلة)
+    _listenToLeaderStream();
+
+    // 🔟 استماع "صك الأمان" الخاص بي من Firebase (دالة منفصلة)
+    _listenToMyPilgrimData();
+
+    // 1️⃣1️⃣ مراقبة الاتصال بالإنترنت
+    _listenToNetworkStatus();
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -323,7 +380,7 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
           pilgrimLocation: state.pilgrimLocation,
           leaderLocation: state.leaderLocation,
           distance: state.distance,
-          gpsWarning: 'تم إغلاق خدمة الموقع (GPS) في الهاتف. يرجى تفعيلها.',
+          gpsWarning: TrackingStrings.gpsDisabled,
           bleWarning: state.bleWarning,
         );
       } else {
@@ -332,13 +389,21 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
           pilgrimLocation: state.pilgrimLocation,
           leaderLocation: state.leaderLocation,
           distance: state.distance,
-          gpsWarning: 'تم تفعيل الـ GPS، جاري التقاط الإشارة...',
+          gpsWarning: TrackingStrings.gpsReenabled,
           bleWarning: state.bleWarning,
         );
         _startLocationUpdates();
         final quickPos = await locationService.tryGetCurrentPosition();
         if (quickPos != null) _applyValidPosition(quickPos);
       }
+    });
+  }
+
+  void _listenToNetworkStatus() {
+    _networkSub?.cancel();
+    _networkSub = FirebaseDatabase.instance.ref('.info/connected').onValue.listen((event) {
+      final isConnected = event.snapshot.value as bool? ?? false;
+      state = state.copyWith(isNetworkConnected: isConnected);
     });
   }
 
@@ -410,17 +475,23 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
       }
       _redZoneEntryTime = null;
       _hasWarnedYellow = false;
-      _isMutedManually = false; // إعادة تفعيل الصوت للجولة القادمة
+      _isMutedManually = false;
       stopAlarmManual();
-      // إلغاء الإشعارات كما يفعل المشرف عند عودة الحاج للأمان
-      _notificationsPlugin.cancel(1); // إشعار التحذير
-      _notificationsPlugin.cancel(1001); // إشعار الطوارئ
+      // إلغاء من الشريط
+      _notificationsPlugin.cancel(1);
+      _notificationsPlugin.cancel(1001);
+      // إزالة من واجهة الإشعارات أيضاً ← متزامنة مع cancel()
+      final store = ref.read(trackingNotificationsStoreProvider.notifier);
+      store.removeNotification('local_1');
+      store.removeNotification('local_1001');
     } else if (distance > _yellowZone && distance <= _redZone) {
       debugPrint('🟡 [الحاج] أنا في النطاق الأصفر (تحذير صامت)');
       _redZoneEntryTime = null;
-      _notificationsPlugin.cancel(
-        1001,
-      ); // إلغاء إشعار الطوارئ عند التحسُّن للأصفر
+      _notificationsPlugin.cancel(1001);
+      // إزالة إشعار الطوارئ من الواجهة عند التحسّن للأصفر
+      ref
+          .read(trackingNotificationsStoreProvider.notifier)
+          .removeNotification('local_1001');
       stopAlarmManual();
       if (!_hasWarnedYellow) {
         _hasWarnedYellow = true;
@@ -452,11 +523,15 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
 
   void _resetLeaderTimeoutTimer() {
     _leaderTimeoutTimer?.cancel();
-    _leaderTimeoutTimer = Timer(const Duration(minutes: 30), () {
+    _leaderTimeoutTimer = Timer(const Duration(minutes: 30), () async {
+      // حذف بطاقة الدعوة من الذاكرة وSharedPreferences معاً
+      // المشرف فقد الاتصال نهائياً — لا فائدة من الانضمام
+      await ref
+          .read(trackingNotificationsStoreProvider.notifier)
+          .clearSessionInvite();
       stopTracking();
       state = PilgrimTrackingState(
-        errorMessage:
-            'تم إيقاف التتبع لأن المشرف فقد الاتصال لأكثر من 30 دقيقة.',
+        errorMessage: TrackingStrings.leaderTimeout,
       );
     });
   }
@@ -469,11 +544,10 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
     if (await Vibration.hasVibrator() == true) {
       Vibration.vibrate(pattern: [0, 200, 100, 200, 100, 200, 100, 200]);
     }
-    // إشعار تحذير صامت (مثل المشرف)
-    const AndroidNotificationDetails warningDetails =
+    final AndroidNotificationDetails warningDetails =
         AndroidNotificationDetails(
           'warning_channel_pilgrim',
-          'تحذير الابتعاد',
+          TrackingStrings.pilgrimWarningChannelName,
           importance: Importance.defaultImportance,
           priority: Priority.defaultPriority,
           playSound: false,
@@ -481,9 +555,20 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
         );
     await _notificationsPlugin.show(
       1,
-      '🟡 تحذير: أنت تبتعد!',
-      'بدأت تبتعد عن مجموعتك. إسرع الخطى للمشرف.',
-      const NotificationDetails(android: warningDetails),
+      TrackingStrings.pilgrimWarningTitle,
+      TrackingStrings.pilgrimWarningBody,
+      NotificationDetails(android: warningDetails),
+    );
+    // حفظ في الواجهة ← متزامن مع show()
+    ref.read(trackingNotificationsStoreProvider.notifier).addNotification(
+      TrackingNotificationModel(
+        id: 'local_1',
+        title: TrackingStrings.pilgrimWarningTitle,
+        body: TrackingStrings.pilgrimWarningBody,
+        timestamp: DateTime.now().toIso8601String(),
+        type: TrackingNotificationType.pilgrimWarning,
+        sessionId: _currentSessionId,
+      ),
     );
   }
 
@@ -491,24 +576,34 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
     if (_isAlarmActive) return;
     _isAlarmActive = true;
 
-    const AndroidNotificationDetails androidDetails =
+    final AndroidNotificationDetails androidDetails =
         AndroidNotificationDetails(
           'emergency_channel_pilgrim',
-          'تنبيه الابتعاد',
+          TrackingStrings.pilgrimEmergencyChannelName,
           importance: Importance.max,
           priority: Priority.high,
         );
     await _notificationsPlugin.show(
-      1001, // نفس نمط المشرف: ID مختلف للطوارئ
-      '🚨 إنذار خطر!',
-      'لقد ابتعدت عن المشرف خارج النطاق المسموح!',
-      const NotificationDetails(android: androidDetails),
+      1001,
+      TrackingStrings.pilgrimEmergencyTitle,
+      TrackingStrings.pilgrimEmergencyBody,
+      NotificationDetails(android: androidDetails),
+    );
+    // حفظ في الواجهة ← متزامن مع show()
+    ref.read(trackingNotificationsStoreProvider.notifier).addNotification(
+      TrackingNotificationModel(
+        id: 'local_1001',
+        title: TrackingStrings.pilgrimEmergencyTitle,
+        body: TrackingStrings.pilgrimEmergencyBody,
+        timestamp: DateTime.now().toIso8601String(),
+        type: TrackingNotificationType.pilgrimEmergency,
+        sessionId: _currentSessionId,
+      ),
     );
 
     if (await Vibration.hasVibrator() == true) {
       Vibration.vibrate(pattern: [500, 1000, 500, 1000]);
     }
-    // لا نشغّل الصوت إذا كان الحاج قد كتمه يدوياً
     if (!_isMutedManually) {
       await _audioPlayer.setReleaseMode(ReleaseMode.loop);
       await _audioPlayer.play(AssetSource('sounds/alarm.mp3'));
@@ -538,6 +633,7 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
       state = PilgrimTrackingState();
     } catch (e) {
       state = PilgrimTrackingState(errorMessage: e.toString());
+      rethrow;
     }
   }
 
@@ -546,6 +642,7 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
     _leaderStreamSub?.cancel();
     _serviceStatusSub?.cancel();
     _myFirebaseDataSub?.cancel();
+    _networkSub?.cancel();
     _leaderTimeoutTimer?.cancel();
 
     _positionStreamSub = null;
@@ -592,5 +689,39 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
     } catch (e) {
       state = PilgrimTrackingState(errorMessage: e.toString());
     }
+  }
+}
+
+@riverpod
+class RespondToTrackingSessionController extends _$RespondToTrackingSessionController {
+  @override
+  FutureOr<String> build() => '';
+
+  Future<void> acceptSession({
+    required int sessionId,
+    required String pilgrimId,
+    required String pilgrimName,
+  }) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      await ref
+          .read(pilgrimTrackingControllerProvider.notifier)
+          .acceptAndStartTracking(
+            sessionId: sessionId,
+            pilgrimId: pilgrimId,
+            pilgrimName: pilgrimName,
+          );
+      return 'accepted';
+    });
+  }
+
+  Future<void> rejectSession({required int sessionId}) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      await ref
+          .read(pilgrimTrackingControllerProvider.notifier)
+          .rejectSession(sessionId: sessionId);
+      return 'rejected';
+    });
   }
 }

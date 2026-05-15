@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yusr/core/common/widgets/custom_golden_back_button.dart';
 import 'package:yusr/core/constants/app_color.dart';
+import 'package:yusr/core/extensions/async_value_ui.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:yusr/features/profile/presentation/widgets/importance_info_card.dart';
@@ -41,7 +42,9 @@ class _SaudiPhoneViewState extends ConsumerState<SaudiPhoneView> {
       }
       _phoneController.text = num;
     }
-    _focusNode.addListener(() => setState(() => _isFocused = _focusNode.hasFocus));
+    _focusNode.addListener(
+      () => setState(() => _isFocused = _focusNode.hasFocus),
+    );
   }
 
   @override
@@ -74,44 +77,26 @@ class _SaudiPhoneViewState extends ConsumerState<SaudiPhoneView> {
     final locale = context.locale;
     if (_validate()) {
       _focusNode.unfocus();
-      
-      final number = _phoneController.text.trim();
-      await ref.read(saudiPhoneControllerProvider.notifier).updateSaudiNumber(number);
-      
-      final state = ref.read(saudiPhoneControllerProvider);
-      
-      if (!mounted) return;
 
+      final number = _phoneController.text.trim();
+      await ref
+          .read(saudiPhoneControllerProvider.notifier)
+          .updateSaudiPhone(number);
+
+      final state = ref.read(saudiPhoneControllerProvider);
+
+      if (!mounted) return;
       if (state is AsyncData) {
-        // Show success snackbar
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              widget.isEditMode
-                  ? locale.editedSaudiNumberSuccess
-                  : locale.addedSaudiNumberSuccess,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            backgroundColor: AppColor.golden,
-            behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            margin: const EdgeInsets.all(16),
-            duration: const Duration(seconds: 2),
-          ),
+        context.showSuccessSnackBar(
+          widget.isEditMode
+              ? locale.editedSaudiNumberSuccess
+              : locale.addedSaudiNumberSuccess,
         );
-        
-        // Refresh profile data instantly and pop
+
         ref.invalidate(userDetailsProvider);
         Navigator.pop(context);
-        
       } else if (state is AsyncError) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(state.error.toString()),
-            backgroundColor: AppColor.danger,
-            behavior: SnackBarBehavior.floating,
-          ),
-        );
+        context.showErrorSnackBar(state.errorMessage);
       }
     }
   }

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
+import 'package:yusr/features/be_leader/data/models/tracking_notification_model.dart';
 import 'package:yusr/features/be_leader/presentation/services/smart_location_filter_service.dart';
 import 'package:yusr/features/be_leader/providers/ble_radar_service_provider.dart';
 import 'package:geolocator/geolocator.dart';
@@ -13,9 +14,11 @@ import 'package:yusr/core/common/providers/location_service.dart';
 import 'package:yusr/core/common/providers/shared_preferences_service_provider.dart';
 import 'package:yusr/core/constants/shared_preferences_keys.dart';
 import 'package:yusr/features/be_leader/data/repositories/tracking_repository.dart';
+import 'package:yusr/features/be_leader/presentation/services/tracking_strings.dart';
 import 'package:yusr/features/be_leader/providers/be_leader_repository_provider.dart';
 import 'package:yusr/features/be_leader/providers/state/pilgrim_marker_data.dart';
 import 'package:yusr/features/be_leader/providers/state/tracking_state.dart';
+import 'package:yusr/features/be_leader/providers/tracking_notifications_store.dart';
 import 'package:yusr/features/be_leader/providers/tracking_repository_provider.dart';
 import 'package:permission_handler/permission_handler.dart' hide ServiceStatus;
 part 'leader_tracking_controller.g.dart';
@@ -25,6 +28,7 @@ class LeaderTrackingController extends _$LeaderTrackingController {
   StreamSubscription<Position>? _leaderLocationSub;
   StreamSubscription<DatabaseEvent>? _pilgrimsSub;
   StreamSubscription<ServiceStatus>? _serviceStatusSub;
+  StreamSubscription<DatabaseEvent>? _networkSub;
 
   int? _currentSessionId;
   Position? _currentLeaderPosition;
@@ -46,7 +50,8 @@ class LeaderTrackingController extends _$LeaderTrackingController {
   bool _isMutedManually = false; // 🔇 هل قام المشرف بكتم الصوت يدوياً؟
 
   // 🌟 خدمة فلترة الموقع المشتركة (عدّاد خطوات + حماية GPS)
-  final SmartLocationFilterService _locationFilter = SmartLocationFilterService();
+  final SmartLocationFilterService _locationFilter =
+      SmartLocationFilterService();
   @override
   TrackingState build() {
     return TrackingState();
@@ -63,6 +68,7 @@ class LeaderTrackingController extends _$LeaderTrackingController {
     await _leaderLocationSub?.cancel();
     await _pilgrimsSub?.cancel();
     await _serviceStatusSub?.cancel();
+    await _networkSub?.cancel();
     ref.read(bleRadarServiceProvider).stop();
     _locationFilter.stop(); // إيقاف مستشعر الحركة القديم إن وجد
 
@@ -81,7 +87,7 @@ class LeaderTrackingController extends _$LeaderTrackingController {
         debugPrint("⚠️ [GPS] الخدمة مطفأة عند بدء التتبع.");
         state = TrackingState(
           isLoading: false,
-          gpsWarning: "يرجى تفعيل خدمة الـ GPS (الموقع) في هاتفك.",
+          gpsWarning: TrackingStrings.gpsServiceDisabled,
         );
       }
 
@@ -91,8 +97,7 @@ class LeaderTrackingController extends _$LeaderTrackingController {
       if (!permissionsGranted) {
         state = TrackingState(
           isLoading: false,
-          gpsWarning:
-              "لا يمكن بدء التتبع بدون صلاحيات الموقع. يرجى تفعيلها من الإعدادات.",
+          gpsWarning: TrackingStrings.gpsPermissionDenied,
         );
         return;
       }
@@ -121,7 +126,9 @@ class LeaderTrackingController extends _$LeaderTrackingController {
               );
             },
           );
-      _locationFilter.startSmartStepCounting(tag: ' [المشرف]'); // 🌟 تشغيل فلتر المشي المشترك
+      _locationFilter.startSmartStepCounting(
+        tag: ' [المشرف]',
+      ); // 🌟 تشغيل فلتر المشي المشترك
       // 5️⃣ مراقبة تشغيل/إيقاف GPS (عبر الدالة المنفصلة لتخفيف الكود)
       _listenToGpsStatusChanges();
 
@@ -134,10 +141,12 @@ class LeaderTrackingController extends _$LeaderTrackingController {
       _startLocationUpdates();
       // 8️⃣ استماع تحديثات مواقع الحجاج (دالة منفصلة)
       _listenToPilgrimsStream();
+      // 9️⃣ مراقبة الاتصال بالإنترنت
+      _listenToNetworkStatus();
     } catch (e) {
       state = TrackingState(
         isLoading: false,
-        gpsWarning: "حدث خطأ في النظام. يرجى التأكد من الصلاحيات.",
+        gpsWarning: TrackingStrings.gpsSystemError,
       );
     }
   }
@@ -196,7 +205,6 @@ class LeaderTrackingController extends _$LeaderTrackingController {
     );
   }
 
-
   void _startLocationUpdates() {
     final repo = ref.read(trackingRepositoryProvider);
     final locationService = ref.read(locationServiceProvider);
@@ -238,8 +246,9 @@ class LeaderTrackingController extends _$LeaderTrackingController {
           position.latitude,
           position.longitude,
         );
-        final timeDiffSeconds =
-            DateTime.now().difference(_lastLeaderUpdateTime!).inSeconds;
+        final timeDiffSeconds = DateTime.now()
+            .difference(_lastLeaderUpdateTime!)
+            .inSeconds;
 
         // فلتر 2: السرعة
         if (_locationFilter.isSpeedJumpValid(
@@ -247,7 +256,8 @@ class LeaderTrackingController extends _$LeaderTrackingController {
               timeDiffSeconds: timeDiffSeconds,
               tag: ' [المشرف]',
             ) ==
-            false) return;
+            false)
+          return;
 
         // فلتر 3: الخطوات
         if (!_locationFilter.isMovementReal(distanceJump, tag: ' [المشرف]')) {
@@ -278,7 +288,7 @@ class LeaderTrackingController extends _$LeaderTrackingController {
           yellowPilgrims: state.yellowPilgrims,
           redPilgrims: state.redPilgrims,
           isLoading: false,
-          gpsWarning: "تم إغلاق خدمة الموقع (GPS) في الهاتف. يرجى تفعيلها.",
+          gpsWarning: TrackingStrings.gpsDisabled,
           bleWarning: state.bleWarning,
         );
       } else {
@@ -289,7 +299,7 @@ class LeaderTrackingController extends _$LeaderTrackingController {
           yellowPilgrims: state.yellowPilgrims,
           redPilgrims: state.redPilgrims,
           isLoading: false,
-          gpsWarning: "تم تفعيل الـ GPS، جاري التقاط الإشارة...",
+          gpsWarning: TrackingStrings.gpsReenabledLeader,
           bleWarning: state.bleWarning,
         );
         _startLocationUpdates();
@@ -298,6 +308,26 @@ class LeaderTrackingController extends _$LeaderTrackingController {
         if (quickPos != null) _applyValidPosition(quickPos, repo);
       }
     });
+  }
+
+  void _listenToNetworkStatus() {
+    _networkSub?.cancel();
+    _networkSub = FirebaseDatabase.instance
+        .ref('.info/connected')
+        .onValue
+        .listen((event) {
+          final isConnected = event.snapshot.value as bool? ?? false;
+          state = TrackingState(
+            leaderLocation: state.leaderLocation,
+            greenPilgrims: state.greenPilgrims,
+            yellowPilgrims: state.yellowPilgrims,
+            redPilgrims: state.redPilgrims,
+            isLoading: state.isLoading,
+            gpsWarning: state.gpsWarning,
+            bleWarning: state.bleWarning,
+            isNetworkConnected: isConnected,
+          );
+        });
   }
 
   void _processPilgrimsAndAlert(DataSnapshot snapshot) {
@@ -313,7 +343,7 @@ class LeaderTrackingController extends _$LeaderTrackingController {
     pilgrimsData.forEach((key, value) {
       final lat = value['latitude'];
       final lng = value['longitude'];
-      final name = value['name'] ?? 'أحد الحجاج';
+      final name = value['name'] ?? TrackingStrings.unknownPilgrim;
       // lastPositionUpdate: آخر تحرك فعلي للحاج (يتجاهل نبضات الحياة)
       // lastUpdate: heartbeat — هاتف الحاج متصل (يتحدث مع كل إرسال)
       final rawPositionUpdate = value['lastPositionUpdate'];
@@ -347,7 +377,8 @@ class LeaderTrackingController extends _$LeaderTrackingController {
 
       final bleService = ref.read(bleRadarServiceProvider);
 
-      double? activeBleDistance; // مسافة BLE النشطة — تُرسَل للحاج ليعرضها بدلاً من GPS
+      double?
+      activeBleDistance; // مسافة BLE النشطة — تُرسَل للحاج ليعرضها بدلاً من GPS
 
       if (bleService.bleDistances.containsKey(pilgrimMinorId) &&
           bleService.lastBleUpdates.containsKey(pilgrimMinorId)) {
@@ -369,8 +400,10 @@ class LeaderTrackingController extends _$LeaderTrackingController {
             );
             double ratio = bleDistance / (gpsDistance > 0 ? gpsDistance : 1);
             displayLocation = LatLng(
-              _currentLeaderPosition!.latitude + (lat - _currentLeaderPosition!.latitude) * ratio,
-              _currentLeaderPosition!.longitude + (lng - _currentLeaderPosition!.longitude) * ratio,
+              _currentLeaderPosition!.latitude +
+                  (lat - _currentLeaderPosition!.latitude) * ratio,
+              _currentLeaderPosition!.longitude +
+                  (lng - _currentLeaderPosition!.longitude) * ratio,
             );
           }
         }
@@ -396,15 +429,22 @@ class LeaderTrackingController extends _$LeaderTrackingController {
         _alertedPilgrims.remove(key);
         _redZoneEntryTimes.remove(key);
         _yellowWarnedPilgrims.remove(key);
-        // 🌟 حذف إشعارات التحذير والطوارئ فور عودة الحاج للمنطقة الآمنة
+        // إلغاء من الشريط
         _notificationsPlugin.cancel(key.hashCode);
-        _notificationsPlugin.cancel(key.hashCode + 1000); // حذف إشعار الطوارئ إن وجد
+        _notificationsPlugin.cancel(key.hashCode + 1000);
+        // إزالة من واجهة الإشعارات ← متزامنة مع cancel()
+        final store = ref.read(trackingNotificationsStoreProvider.notifier);
+        store.removeNotification('leader_warn_$key');
+        store.removeNotification('leader_emrg_$key');
       } else if (finalDistance > _yellowZone && finalDistance <= _redZone) {
         yellow.add(pilgrim);
         _alertedPilgrims.remove(key);
         _redZoneEntryTimes.remove(key);
-        // 🌟 حذف إشعار الطوارئ فور عودة الحاج للمنطقة الصفراء (تحويله لتحذير فقط)
-        _notificationsPlugin.cancel(key.hashCode + 1000); 
+        // إلغاء إشعار الطوارئ من الشريط والواجهة عند التحسّن للأصفر
+        _notificationsPlugin.cancel(key.hashCode + 1000);
+        ref
+            .read(trackingNotificationsStoreProvider.notifier)
+            .removeNotification('leader_emrg_$key');
         _triggerWarningVibration(key, name);
       } else {
         red.add(pilgrim);
@@ -429,7 +469,8 @@ class LeaderTrackingController extends _$LeaderTrackingController {
 
     if (!hasRedPilgrims) {
       stopAlarmManual();
-      _isMutedManually = false; // 🌟 إعادة تفعيل الصوت آلياً للجولة القادمة لأن الجميع بأمان الآن
+      _isMutedManually =
+          false; // 🌟 إعادة تفعيل الصوت آلياً للجولة القادمة لأن الجميع بأمان الآن
     }
     state = TrackingState(
       leaderLocation: state.leaderLocation,
@@ -447,13 +488,12 @@ class LeaderTrackingController extends _$LeaderTrackingController {
     if (_yellowWarnedPilgrims.contains(pilgrimId)) return;
     _yellowWarnedPilgrims.add(pilgrimId);
     if (await Vibration.hasVibrator() ?? false) {
-      // نمط أطول: 4 هزات متتالية لتنبيه أقوى
       Vibration.vibrate(pattern: [0, 200, 100, 200, 100, 200, 100, 200]);
     }
-    const AndroidNotificationDetails warningDetails =
+    final AndroidNotificationDetails warningDetails =
         AndroidNotificationDetails(
           'warning_channel',
-          'تحذيرات الحجاج المتأخرين',
+          TrackingStrings.leaderWarningChannelName,
           importance: Importance.defaultImportance,
           priority: Priority.defaultPriority,
           playSound: false,
@@ -461,34 +501,61 @@ class LeaderTrackingController extends _$LeaderTrackingController {
         );
     await _notificationsPlugin.show(
       pilgrimId.hashCode,
-      '🟡 تنبيه تأخر حاج',
-      'الحاج "$pilgrimName" بدأ يبتعد عن المجموعة.',
-      const NotificationDetails(android: warningDetails),
+      TrackingStrings.leaderPilgrimWarningTitle,
+      TrackingStrings.leaderPilgrimWarningBody(pilgrimName),
+      NotificationDetails(android: warningDetails),
       payload: 'warning_notification',
     );
+    // حفظ في الواجهة ← متزامن مع show()
+    ref
+        .read(trackingNotificationsStoreProvider.notifier)
+        .addNotification(
+          TrackingNotificationModel(
+            id: 'leader_warn_$pilgrimId',
+            title: TrackingStrings.leaderPilgrimWarningTitle,
+            body: TrackingStrings.leaderPilgrimWarningBody(pilgrimName),
+            timestamp: DateTime.now().toIso8601String(),
+            type: TrackingNotificationType.leaderWarning,
+            sessionId: _currentSessionId,
+            pilgrimName: pilgrimName,
+          ),
+        );
   }
 
   Future<void> _triggerEmergency(String pilgrimId, String pilgrimName) async {
     if (_alertedPilgrims.contains(pilgrimId)) return;
     _alertedPilgrims.add(pilgrimId);
-    const AndroidNotificationDetails androidDetails =
+    final AndroidNotificationDetails androidDetails =
         AndroidNotificationDetails(
           'emergency_channel',
-          'طوارئ الحجاج',
+          TrackingStrings.leaderEmergencyChannelName,
           importance: Importance.max,
           priority: Priority.high,
         );
     await _notificationsPlugin.show(
-      pilgrimId.hashCode + 1000, // ID مميز للطوارئ ليتطابق مع كود الحذف
-      '🚨 خطر: حاج مفقود!',
-      'الحاج "$pilgrimName" تجاوز منطقة الأمان!',
-      const NotificationDetails(android: androidDetails),
+      pilgrimId.hashCode + 1000,
+      TrackingStrings.leaderPilgrimEmergencyTitle,
+      TrackingStrings.leaderPilgrimEmergencyBody(pilgrimName),
+      NotificationDetails(android: androidDetails),
       payload: 'emergency_notification',
     );
+    // حفظ في الواجهة ← متزامن مع show()
+    ref
+        .read(trackingNotificationsStoreProvider.notifier)
+        .addNotification(
+          TrackingNotificationModel(
+            id: 'leader_emrg_$pilgrimId',
+            title: TrackingStrings.leaderPilgrimEmergencyTitle,
+            body: TrackingStrings.leaderPilgrimEmergencyBody(pilgrimName),
+            timestamp: DateTime.now().toIso8601String(),
+            type: TrackingNotificationType.leaderEmergency,
+            sessionId: _currentSessionId,
+            pilgrimName: pilgrimName,
+          ),
+        );
     if (await Vibration.hasVibrator() ?? false) {
       Vibration.vibrate(pattern: [500, 1000, 500, 1000]);
     }
-    // 🌟 لا نشغل الصوت إذا كان المشرف قد كتمه يدوياً لهذه المجموعة
     if (!_isMutedManually) {
       await _audioPlayer.setReleaseMode(ReleaseMode.loop);
       await _audioPlayer.play(AssetSource('sounds/alarm.mp3'));
@@ -510,6 +577,8 @@ class LeaderTrackingController extends _$LeaderTrackingController {
 
       await _leaderLocationSub?.cancel();
       await _pilgrimsSub?.cancel();
+      await _serviceStatusSub?.cancel();
+      await _networkSub?.cancel();
       ref.read(bleRadarServiceProvider).stop(); // 🌟 إيقاف الرادار
       _locationFilter.stop(); // 🌟 إيقاف مستشعر الحركة وتصفير العدادات
       stopAlarmManual();
@@ -522,13 +591,12 @@ class LeaderTrackingController extends _$LeaderTrackingController {
 
       final sharedPrefs = ref.read(sharedPreferencesServiceProvider);
       await sharedPrefs.removeInt(SharedPreferencesKeys.currentSessionId);
-      await _serviceStatusSub?.cancel();
       _currentSessionId = null;
       _currentLeaderPosition = null;
       _lastValidLeaderPosition = null;
-      _lastLeaderUpdateTime = null;
     } catch (e) {
       debugPrint("خطأ أثناء إغلاق الجلسة: $e");
+      throw Exception(TrackingStrings.endSessionError);
     }
   }
 
@@ -547,5 +615,20 @@ class LeaderTrackingController extends _$LeaderTrackingController {
     } catch (e) {
       debugPrint("⚠️ خطأ أثناء تنظيف الجلسة القديمة: $e");
     }
+  }
+}
+
+@riverpod
+class StopLeaderSessionController extends _$StopLeaderSessionController {
+  @override
+  FutureOr<void> build() {}
+
+  Future<void> stopSession() async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      await ref
+          .read(leaderTrackingControllerProvider.notifier)
+          .stopSessionOfficially();
+    });
   }
 }

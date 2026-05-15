@@ -10,21 +10,37 @@ import 'package:yusr/core/constants/shared_preferences_keys.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/features/announcements_notifications/data/models/notifications_model.dart';
 import 'package:yusr/features/announcements_notifications/providers/notifications_provider.dart';
+import 'package:yusr/features/be_leader/data/models/tracking_notification_model.dart';
+import 'package:yusr/features/be_leader/presentation/widgets/tracking_session_dialog.dart';
 import 'package:yusr/features/be_leader/providers/leader_tracking_controller.dart';
 import 'package:yusr/features/be_leader/providers/pilgrim_tracking_controller.dart';
 import 'package:yusr/features/be_leader/providers/pilgrims_list_provider.dart';
-import 'package:yusr/features/home/providers/user_provider.dart';
+import 'package:yusr/features/be_leader/providers/tracking_notifications_store.dart';
 
 // خارج الكلاس، دالة الخلفية الرئيسية
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("تم استلام إشعار في الخلفية: ${message.messageId}");
 
+  final prefs = SharedPreferencesAsync();
+
   if (message.data['status'] == 'tracking_session_ended') {
-    // تهيئة SharedPreferencesAsync المستقلة وحذف الـ sessionId
-    final prefs = SharedPreferencesAsync();
+    // حذف الجلسة النشطة + بطاقة الدعوة المعلقة من الجهاز
     await prefs.remove(SharedPreferencesKeys.sessionId);
-    print("تم مسح الجلسة من الهاتف في الخلفية بسبب إيقافها من المشرف");
+    await prefs.remove(SharedPreferencesKeys.pendingTrackingSessionId);
+    await prefs.remove(SharedPreferencesKeys.pendingTrackingBody);
+    print("[الخلفية] ✅ تم مسح الجلسة وبطاقة الدعوة من الجهاز");
+  }
+
+  if (message.data['status'] == 'start_tracking_session') {
+    // حفظ الدعوة لتنجو من إغلاق التطبيق
+    final sessionId = message.data['sessionId']?.toString() ?? '';
+    final body = message.notification?.body ?? 'هل توافق على مشاركة موقعك الجغرافي؟';
+    if (sessionId.isNotEmpty && sessionId != '0') {
+      await prefs.setString(SharedPreferencesKeys.pendingTrackingSessionId, sessionId);
+      await prefs.setString(SharedPreferencesKeys.pendingTrackingBody, body);
+      print("[الخلفية] ✅ تم حفظ دعوة الجلسة ($sessionId) في الجهاز");
+    }
   }
 }
 
@@ -85,7 +101,7 @@ class PushNotificationService {
   // ==========================================
   // دالة التوجيه (عند الضغط على الإشعار من الخلفية أو الإغلاق)
   // ==========================================
-  static void _handleMessage(RemoteMessage message) {
+  static Future<void> _handleMessage(RemoteMessage message) async {
     debugPrint("==================================================");
     debugPrint("تم الضغط على الإشعار! البيانات المستلمة هي:");
     debugPrint("${message.data}");
@@ -119,17 +135,39 @@ class PushNotificationService {
         arguments: notificationModel,
       );
     }
-    // 🔥 2. معالجة إشعار طلب بدء المراقبة
+    // 🔥 2. معال جة إشعار طلب بدء المراقبة
     else if (message.data['status'] == 'start_tracking_session') {
-      // تحويل الـ id إلى int
       final sessionId =
           int.tryParse(message.data['sessionId']?.toString() ?? '0') ?? 0;
-
-      // أخذ النص الفعلي للإشعار (البدي)
       final notificationBody =
           message.notification?.body ?? 'هل توافق على مشاركة موقعك الجغرافي؟';
 
       if (sessionId > 0) {
+        // ─── حفظ الدعوة في SharedPreferences لتنجو من إغلاق التطبيق ───
+        final prefs = SharedPreferencesAsync();
+        // نحفظ الـ container قبل الـ await لتجنب مشكلة BuildContext عبر الـ async
+        final container = ProviderScope.containerOf(context);
+        await prefs.setString(
+          SharedPreferencesKeys.pendingTrackingSessionId,
+          sessionId.toString(),
+        );
+        await prefs.setString(
+          SharedPreferencesKeys.pendingTrackingBody,
+          notificationBody,
+        );
+        // ─── حفظ الدعوة في المخزن (RAM) لتظهر في واجهة الإشعارات فوراً ───
+        container
+            .read(trackingNotificationsStoreProvider.notifier)
+            .addNotification(
+              TrackingNotificationModel(
+                id: 'session_invite_$sessionId',
+                title: '📍 طلب مشاركة الموقع',
+                body: notificationBody,
+                timestamp: DateTime.now().toIso8601String(),
+                type: TrackingNotificationType.sessionInvite,
+                sessionId: sessionId,
+              ),
+            );
         _showTrackingAcceptDialog(context, sessionId, notificationBody);
       }
     } else if (message.data['status'] == 'pilgrim_status_changed') {
@@ -148,13 +186,26 @@ class PushNotificationService {
           arguments: sessionId,
         );
       }
-    } // 🌟🌟 4. معالجة إشعار إنهاء الجلسة من المشرف (للحاج) 🌟🌟
+    }
     else if (message.data['status'] == 'tracking_session_ended') {
-      // إيقاف التتبع محلياً (يُصفِّر activeSessionIdProvider تلقائياً)
-      ProviderScope.containerOf(
-        context,
-      ).read(pilgrimTrackingControllerProvider.notifier).stopTracking();
-      // إغلاق خريطة الحاج إن كانت مفتوحة والعودة للرئيسية
+      final sessionId =
+          int.tryParse(message.data['sessionId']?.toString() ?? '0') ?? 0;
+      // نحفظ الـ container قبل الـ await لتجنب مشكلة BuildContext عبر الـ async
+      final container = ProviderScope.containerOf(context);
+      // إيقاف التتبع (يُصفِّر activeSessionIdProvider تلقائياً)
+      container.read(pilgrimTrackingControllerProvider.notifier).stopTracking();
+      // حذف بطاقة الدعوة من SharedPreferences
+      final prefs = SharedPreferencesAsync();
+      await prefs.remove(SharedPreferencesKeys.pendingTrackingSessionId);
+      await prefs.remove(SharedPreferencesKeys.pendingTrackingBody);
+      // حذف إشعارات الجلسة من المخزن (RAM)
+      final store = container.read(trackingNotificationsStoreProvider.notifier);
+      if (sessionId > 0) {
+        store.clearBySessionId(sessionId);
+      } else {
+        store.clearSessionInvite();
+      }
+      // إغلاق خريطة الحاج والعودة للرئيسية
       navigatorKey.currentState?.popUntil((route) {
         return route.settings.name == AppRoute.mainHomeView || route.isFirst;
       });
@@ -166,7 +217,7 @@ class PushNotificationService {
   // ==========================================
   // دالة إظهار التنبيه إذا كان التطبيق مفتوحاً
   // ==========================================
-  static void _showInAppNotification(RemoteMessage message) {
+  static Future<void> _showInAppNotification(RemoteMessage message) async {
     final context = navigatorKey.currentContext;
     if (context == null) return;
     final status = message.data['status'];
@@ -174,34 +225,63 @@ class PushNotificationService {
     // 🌟 إذا كان الإشعار لطلب المراقبة والتطبيق مفتوح، نظهر الدايلوج فوراً!
     // 🔥 2. معالجة إشعار طلب بدء المراقبة
     if (message.data['status'] == 'start_tracking_session') {
-      // تحويل الـ id إلى int
       final sessionId =
           int.tryParse(message.data['sessionId']?.toString() ?? '0') ?? 0;
-
-      // أخذ النص الفعلي للإشعار (البدي)
       final notificationBody =
           message.notification?.body ?? 'هل توافق على مشاركة موقعك الجغرافي؟';
-
       if (sessionId > 0) {
+        // حفظ الدعوة في SharedPreferences لتنجو من إغلاق التطبيق
+        final prefs = SharedPreferencesAsync();
+        // نحفظ الـ container قبل الـ await لتجنب مشكلة BuildContext عبر الـ async
+        final container = ProviderScope.containerOf(context);
+        await prefs.setString(
+          SharedPreferencesKeys.pendingTrackingSessionId,
+          sessionId.toString(),
+        );
+        await prefs.setString(
+          SharedPreferencesKeys.pendingTrackingBody,
+          notificationBody,
+        );
+        // حفظ الدعوة في المخزن (RAM) لتظهر في واجهة الإشعارات فوراً
+        container
+            .read(trackingNotificationsStoreProvider.notifier)
+            .addNotification(
+              TrackingNotificationModel(
+                id: 'session_invite_$sessionId',
+                title: '📍 طلب مشاركة الموقع',
+                body: notificationBody,
+                timestamp: DateTime.now().toIso8601String(),
+                type: TrackingNotificationType.sessionInvite,
+                sessionId: sessionId,
+              ),
+            );
         _showTrackingAcceptDialog(context, sessionId, notificationBody);
       }
-      return; // نخرج من الدالة حتى لا يظهر SnackBar لهذا النوع من الإشعارات
+      return;
     }
     if (status == 'tracking_session_ended') {
-      // 1. نوقف التتبع محلياً
-      ProviderScope.containerOf(
-        context,
-      ).read(pilgrimTrackingControllerProvider.notifier).stopTracking();
-      // 2. نتحقق مما إذا كانت واجهة خريطة الحاج مفتوحة لإغلاقها
-      // يمكننا معرفة ذلك عبر محاولة إغلاقها، لكن الأفضل التأكد من نوع الـ Widget الحالية
-      // طريقة آمنة للرجوع للخلف إذا كنا في شاشة التتبع:
+      final sessionId =
+          int.tryParse(message.data['sessionId']?.toString() ?? '0') ?? 0;
+      // نحفظ الـ container قبل الـ await لتجنب مشكلة BuildContext عبر الـ async
+      final container = ProviderScope.containerOf(context);
+      // إيقاف التتبع
+      container.read(pilgrimTrackingControllerProvider.notifier).stopTracking();
+      // حذف بطاقة الدعوة من SharedPreferences
+      final prefs = SharedPreferencesAsync();
+      await prefs.remove(SharedPreferencesKeys.pendingTrackingSessionId);
+      await prefs.remove(SharedPreferencesKeys.pendingTrackingBody);
+      // حذف إشعارات الجلسة من المخزن (RAM)
+      final store = container.read(trackingNotificationsStoreProvider.notifier);
+      if (sessionId > 0) {
+        store.clearBySessionId(sessionId);
+      } else {
+        store.clearSessionInvite();
+      }
       Navigator.popUntil(context, (route) {
-        // نفترض أن مسار الشاشة الرئيسية هو '/' أو اسم مسارك الرئيسي
-        // سيقوم بعمل pop للواجهات حتى يصل للرئيسية، وبالتالي يغلق شاشة الخريطة إن وجدت
         return route.settings.name == AppRoute.mainHomeView || route.isFirst;
       });
     }
-    // 🌟 معالجة إشعار تغيّر حالة الحاج: SnackBar ذكي + تحديث البيانات
+    // 🌟 معالجة إشعار تغيّر حالة الحاج: SnackBar ذكي + تحديث البيانات + حفظ في الواجهة
     if (message.data['status'] == 'pilgrim_status_changed') {
       final sessionId =
           int.tryParse(message.data['sessionId']?.toString() ?? '0') ?? 0;
@@ -209,30 +289,25 @@ class PushNotificationService {
       final pilgrimName =
           message.data['pilgrimName']?.toString() ?? 'أحد الحجاج';
 
-      // تحديث بيانات قائمة الحجاج تلقائياً (بدون انتقال قسري للصفحة)
       if (sessionId > 0) {
         ProviderScope.containerOf(
           context,
         ).invalidate(pilgrimsListProvider(sessionId));
       }
 
-      // تحديد رسالة الـ SnackBar بناءً على حالة الحاج
       String snackMessage;
       Color snackColor;
       IconData snackIcon;
 
       if (pilgrimStatus == '2') {
-        // انضم للجلسة وبدأ التتبع
         snackMessage = '✅ "$pilgrimName" انضم إلى الجلسة وبدأ التتبع';
         snackColor = Colors.green.shade700;
         snackIcon = Icons.person_add;
       } else if (pilgrimStatus == '3') {
-        // رفض الانضمام
         snackMessage = '❌ "$pilgrimName" رفض الانضمام إلى الجلسة';
         snackColor = Colors.red.shade700;
         snackIcon = Icons.person_remove;
       } else if (pilgrimStatus == '5') {
-        // أوقف التتبع بنفسه
         snackMessage = '⚠️ "$pilgrimName" أوقف مشاركة موقعه';
         snackColor = Colors.orange.shade700;
         snackIcon = Icons.location_off;
@@ -242,6 +317,21 @@ class PushNotificationService {
         snackColor = Colors.blueGrey.shade700;
         snackIcon = Icons.info_outline;
       }
+
+      // حفظ في المخزن لتظهر في واجهة الإشعارات
+      ProviderScope.containerOf(context)
+          .read(trackingNotificationsStoreProvider.notifier)
+          .addNotification(
+            TrackingNotificationModel(
+              id: 'status_${pilgrimName}_${DateTime.now().millisecondsSinceEpoch}',
+              title: '👥 تغيّر حالة حاج',
+              body: snackMessage,
+              timestamp: DateTime.now().toIso8601String(),
+              type: TrackingNotificationType.statusChange,
+              sessionId: sessionId,
+              pilgrimName: pilgrimName,
+            ),
+          );
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -262,7 +352,7 @@ class PushNotificationService {
           behavior: SnackBarBehavior.floating,
         ),
       );
-      return; // نخرج لكي لا يظهر SnackBar عام أيضاً
+      return;
     }
     // ✅ تحديث قائمة الإشعارات عند وصول إعلان جديد وهو مفتوح
     if (status == 'new_announcement') {
@@ -352,82 +442,17 @@ class PushNotificationService {
   }
 
   // ==========================================
-  // دالة الدايلوج الخاصة بطلب التتبع
+  // دالة الدايلوج — مُوحَّدة في TrackingSessionDialog
   // ==========================================
   static void _showTrackingAcceptDialog(
     BuildContext context,
-    int sessionId, // أصبح int
-    String notificationBody, // أصبحنا نمرر نص الإشعار
+    int sessionId,
+    String notificationBody,
   ) {
-    showDialog(
-      context: context,
-      barrierDismissible: false, // لا يمكن إغلاقه بالضغط بالخارج
-      builder: (context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          title: const Row(
-            children: [
-              Icon(Icons.location_on, color: AppColor.golden),
-              SizedBox(width: 8),
-              Text('طلب مشاركة الموقع', style: TextStyle(fontSize: 16)),
-            ],
-          ),
-          content: Text(notificationBody),
-          actions: [
-            // زر الرفض
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-                // استدعاء دالة الرفض
-                ProviderScope.containerOf(context)
-                    .read(pilgrimTrackingControllerProvider.notifier)
-                    .rejectSession(sessionId: sessionId);
-              },
-              child: const Text('رفض', style: TextStyle(color: Colors.red)),
-            ),
-            // زر الموافقة
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: AppColor.golden),
-              // 🔥 التعديل هنا: تحويل الدالة إلى async
-              onPressed: () async {
-                Navigator.pop(context); // إغلاق الدايلوج أولاً
-
-                final userState = ProviderScope.containerOf(
-                  context,
-                ).read(userProfileProvider);
-                final profile = userState.value;
-
-                if (profile != null) {
-                  try {
-                    // 🔥 التعديل هنا: انتظار نجاح دالة الموافقة وبدء التتبع
-                    await ProviderScope.containerOf(context)
-                        .read(pilgrimTrackingControllerProvider.notifier)
-                        .acceptAndStartTracking(
-                          sessionId: sessionId,
-                          pilgrimId: profile.userId.toString(),
-                          pilgrimName: profile.fullName,
-                        );
-
-                    // 🔥 التعديل هنا: التوجيه إلى شاشة التتبع بعد النجاح
-                    // تأكد أن AppRoute.pilgrimMapTrackingView معرف مسبقاً في ملف app_route.dart
-                    navigatorKey.currentState?.pushNamed(
-                      AppRoute.pilgrimMapTrackingView,
-                      arguments:
-                          sessionId, // تمرير الـ sessionId إذا كانت الشاشة تحتاجه
-                    );
-                  } catch (e) {
-                    // يمكنك هنا إضافة سناك بار لإظهار رسالة خطأ للمستخدم في حال فشل العملية
-                    print("حدث خطأ أثناء بدء التتبع: $e");
-                  }
-                }
-              },
-              child: const Text('موافق', style: TextStyle(color: Colors.white)),
-            ),
-          ],
-        );
-      },
+    TrackingSessionDialog.show(
+      context,
+      sessionId: sessionId,
+      notificationBody: notificationBody,
     );
   }
 }
