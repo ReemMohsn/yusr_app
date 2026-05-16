@@ -1863,6 +1863,26 @@ class AppLocalizations {
   String get healthStable {
     return Intl.message('Stable', name: 'healthStable', desc: '', args: []);
   }
+
+  /// `Steps`
+  String get steps {
+    return Intl.message('Steps', name: 'steps', desc: '', args: []);
+  }
+
+  /// `Status`
+  String get status {
+    return Intl.message('Status', name: 'status', desc: '', args: []);
+  }
+
+  /// `Walking`
+  String get walking {
+    return Intl.message('Walking', name: 'walking', desc: '', args: []);
+  }
+
+  /// `Stopped`
+  String get stopped {
+    return Intl.message('Stopped', name: 'stopped', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {

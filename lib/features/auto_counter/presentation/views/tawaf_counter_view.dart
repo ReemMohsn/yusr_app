@@ -9,7 +9,8 @@ import 'package:yusr/features/auto_counter/presentation/widgets/counter_details_
 import 'package:yusr/features/auto_counter/presentation/widgets/success_greeting_card_widget.dart';
 import 'package:yusr/features/auto_counter/presentation/widgets/tawaf_saei_toggle.dart';
 import 'package:yusr/features/auto_counter/presentation/widgets/success_bottom_sheet_widget.dart';
-import 'package:yusr/features/auto_counter/providers/auto_counter_controller_logic.dart';
+
+import 'package:yusr/features/auto_counter/providers/auto_counter_controller.dart';
 
 class TawafCounterView extends ConsumerWidget {
   const TawafCounterView({super.key});
@@ -18,27 +19,23 @@ class TawafCounterView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = context.locale;
 
-    //الاستماع للحالة العامة لتحديث الواجهة
-    final counterState = ref.watch(autoCounterControllerLogicProvider);
+    final counterState = ref.watch(autoCounterControllerProvider);
 
     // الاستماع لتغير الأشواط لتنفيذ الاهتزاز
-    ref.listen<int>(
-      autoCounterControllerLogicProvider.select((s) => s.currentLap),
-      (previous, next) {
-        // نتحقق أن العداد يعمل حالياً وأن الشوط قد زاد فعلياً
-        final isRunning = ref
-            .read(autoCounterControllerLogicProvider)
-            .isRunning;
+    ref.listen<int>(autoCounterControllerProvider.select((s) => s.currentLap), (
+      previous,
+      next,
+    ) {
+      final isRunning = ref.read(autoCounterControllerProvider).isRunning;
 
-        if (isRunning && previous != null && next > previous && next <= 7) {
-          HapticFeedback.heavyImpact(); 
-        }
-      },
-    );
+      if (isRunning && previous != null && next > previous && next <= 7) {
+        HapticFeedback.heavyImpact();
+      }
+    });
 
-    // الاستماع لحالة الانتهاء 
+    // الاستماع لحالة الانتهاء
     ref.listen<bool>(
-      autoCounterControllerLogicProvider.select((s) => s.isCompleted),
+      autoCounterControllerProvider.select((s) => s.isCompleted),
       (previous, next) {
         if (next == true) {
           SuccessBottomSheet.show(context, locale.tawaf_saei_success_msg);
@@ -57,13 +54,13 @@ class TawafCounterView extends ConsumerWidget {
               Container(
                 width: double.infinity,
                 padding: EdgeInsets.fromLTRB(30.w, 30.h, 30.w, 20.h),
-                child: const TawafSaeiToggle(), 
+                child: const TawafSaeiToggle(),
               ),
 
               // العداد الدائري
               const CircularCounterWidget(),
 
-              // عرض نص الخطأ في حال عدم وجود تصاريح 
+              // عرض رسالة خطأ الحساس إن وُجدت
               if (counterState.permissionError != null)
                 Padding(
                   padding: EdgeInsets.symmetric(
@@ -80,18 +77,17 @@ class TawafCounterView extends ConsumerWidget {
                     ),
                   ),
                 ),
-                
+
               // بطاقة التفاصيل
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: const CounterDetailsCard(),
               ),
 
-              // بطاقة التهنئة 
-              if (counterState.isCompleted) 
-                const SuccessGreetingCard(),
-                
-              // النص السفلي
+              // بطاقة التهنئة عند الانتهاء
+              if (counterState.isCompleted) const SuccessGreetingCard(),
+
+              // النص التوضيحي السفلي
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 25.h),
                 child: Text(
