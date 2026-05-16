@@ -16,6 +16,7 @@ class ApiLink {
   static String getHajDetailsMobile(int userId) => '$server/Groups/GetHajDetailsMobile/$userId';
   static String getGroupPilgrimsMobile(int groupId) => '$server/Groups/GetGroupPilgrimsMobile/$groupId';
   static const String getMyGroupPilgrimsMobile = '$server/Groups/GetMyGroupPilgrims';
+  
   // 4. Announcements & Notifications
   static const String syncData = '$server/Announcements/SyncData';
   static const String getNotifications =
@@ -26,6 +27,7 @@ class ApiLink {
       '$server/Announcements/CreateAndPublishAnnouncement';
   static const String deleteAnnouncement =
       '$server/Announcements/DeleteAnnouncement';
+      
   // Location
   static const String getActiveLocation = '$server/Location/GetActiveLocation';
   static const String getCampaignLocations =
@@ -39,14 +41,27 @@ class ApiLink {
   static const String deleteLocation =
       '$server/CampaignLocation/DeleteLocation';
 
+  // Campaign Management (مدير الحملة)
+  static const String getCampaignInfoMobile = '$server/AboutCampaign/GetCampaignInfoMobile';
+  static const String getCampaignGroupsMobile = '$server/AboutCampaign/GetCampaignGroupsMobile';
+  static String getCampaignGroupDetailsMobile(int groupId) => '$server/AboutCampaign/GetCampaignGroupDetailsMobile/$groupId';
+  
+  // static const String getCampaignPilgrimsMobile = '$server/AboutCampaign/GetCampaignPilgrimsMobile';
+  static String getCampaignPilgrimDetailsMobile(int userId) => '$server/AboutCampaign/GetCampaignPilgrimDetailsMobile/$userId';
+  
+  // static const String getCampaignSupervisorsMobile = '$server/AboutCampaign/GetCampaignSupervisorsMobile';
+  // static String getCampaignSupervisorDetailsMobile(int userId) => '$server/AboutCampaign/GetCampaignSupervisorDetailsMobile/$userId';
+
   // be a leader
   static const String startTrackingSession = '$server/Monitoring/StartSession';
   static const String getPilgrims = '$server/Monitoring/GetSessionParticipants';
   static const String participantResponse =
       '$server/Monitoring/ParticipantResponse';
   static const String endTrackingSession = '$server/Monitoring/EndSession';
-    // رابط خدمة المفتي الذكي (Hugging Face)
+  
+  // رابط خدمة المفتي الذكي (Hugging Face)
   static const String geminiChat = 'https://manar13-yusr-hajj-api.hf.space/ask';
+  
   // 5. وظائف ديناميكية
   static String changeResidentialNeighborhoodManager({
     required int neighborhoodId,

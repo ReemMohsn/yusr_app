@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 // 1. استيراد موديلات البيانات (Models)
 import 'package:yusr/features/announcements_notifications/data/models/announcement_model.dart';
-import 'package:yusr/features/auto_counter/presentation/views/tawaf_counter_view.dart';
 import 'package:yusr/features/be_leader/presentation/views/leader_map_tracking_view.dart';
 import 'package:yusr/features/be_leader/presentation/views/leader_pilgrims_list_view.dart';
 import 'package:yusr/features/be_leader/presentation/views/leader_start_session_view.dart';
@@ -38,6 +37,10 @@ import 'package:yusr/features/profile/presentation/views/saudi_phone_view.dart';
 import 'package:yusr/features/group/presentation/views/group_info_view.dart';
 import 'package:yusr/features/group/presentation/views/supervisor_group_view.dart';
 import 'package:yusr/features/group/presentation/views/pilgrim_details_view.dart';
+import 'package:yusr/features/campaign_management/presentation/views/campaign_info_view.dart';
+import 'package:yusr/features/campaign_management/presentation/views/campaign_groups_view.dart';
+import 'package:yusr/features/campaign_management/presentation/views/campaign_group_details_view.dart';
+import 'package:yusr/features/campaign_management/presentation/views/campaign_pilgrim_details_view.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -106,9 +109,9 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => PilgrimMapTrackingView(sessionId: sessionId),
         );
-      case AppRoute.tawafCounterView:
-        return MaterialPageRoute(builder: (_) => const TawafCounterView());
-      case AppRoute.instructionsView:
+      // case AppRoute.tawafCounterView:
+      //   return MaterialPageRoute(builder: (_) => const TawafCounterView());
+       case AppRoute.instructionsView:
         return MaterialPageRoute(builder: (_) => const InstructionsView());
       case AppRoute.hajjDetailsView:
         final hajjType = settings.arguments as String;
@@ -136,6 +139,29 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => PilgrimDetailsView(userId: userId),
         );
+      case AppRoute.campaignInfoView:
+        return MaterialPageRoute(builder: (_) => const CampaignInfoView());
+      case AppRoute.campaignGroupsView:
+        return MaterialPageRoute(builder: (_) => const CampaignGroupsView());
+      case AppRoute.campaignGroupDetailsView:
+        final groupId = settings.arguments as int;
+        return MaterialPageRoute(
+          builder: (_) => CampaignGroupDetailsView(groupId: groupId),
+        );
+      // case AppRoute.campaignPilgrimsView:
+      //   return MaterialPageRoute(builder: (_) => const CampaignPilgrimsView());
+      case AppRoute.campaignPilgrimDetailsView:
+        final userId = settings.arguments as int;
+        return MaterialPageRoute(
+          builder: (_) => CampaignPilgrimDetailsView(userId: userId),
+        );
+      // case AppRoute.campaignSupervisorsView:
+      //   return MaterialPageRoute(builder: (_) => const CampaignSupervisorsView());
+      // case AppRoute.campaignSupervisorDetailsView:
+      //   final userId = settings.arguments as int;
+      //   return MaterialPageRoute(
+      //     builder: (_) => CampaignSupervisorDetailsView(userId: userId),
+      //   );
       default:
         return null;
     }
@@ -174,4 +200,13 @@ class AppRoute {
   static const String groupInfoView = '/GroupInfoView';
   static const String supervisorGroupView = '/SupervisorGroupView';
   static const String pilgrimDetailsView = '/PilgrimDetailsView';
+  
+  // Campaign Management (مدير الحملة)
+  static const String campaignInfoView = '/CampaignInfoView';
+  static const String campaignGroupsView = '/CampaignGroupsView';
+  static const String campaignGroupDetailsView = '/CampaignGroupDetailsView';
+  // static const String campaignPilgrimsView = '/CampaignPilgrimsView';
+  static const String campaignPilgrimDetailsView = '/CampaignPilgrimDetailsView';
+  // static const String campaignSupervisorsView = '/CampaignSupervisorsView';
+  // static const String campaignSupervisorDetailsView = '/CampaignSupervisorDetailsView';
 }

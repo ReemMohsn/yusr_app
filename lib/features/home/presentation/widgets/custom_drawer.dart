@@ -236,6 +236,15 @@ class CustomDrawer extends ConsumerWidget {
         return [
           BuildMenuItem(
             context: context,
+            title: 'عن الحملة',
+            icon: Icons.info_outline,
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.of(context).pushNamed(AppRoute.campaignInfoView);
+            },
+          ),
+          BuildMenuItem(
+            context: context,
             title: locale.announcements,
             icon: Icons.campaign_outlined,
             onTap: () =>
