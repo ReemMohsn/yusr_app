@@ -54,6 +54,126 @@ class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
+  /// `About Campaign`
+  String get aboutCampaign {
+    return Intl.message(
+      'About Campaign',
+      name: 'aboutCampaign',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Campaign Dates`
+  String get campaignDates {
+    return Intl.message(
+      'Campaign Dates',
+      name: 'campaignDates',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Campaign Start Date`
+  String get campaignStartDate {
+    return Intl.message(
+      'Campaign Start Date',
+      name: 'campaignStartDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Campaign Return Date`
+  String get campaignReturnDate {
+    return Intl.message(
+      'Campaign Return Date',
+      name: 'campaignReturnDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `General Information`
+  String get generalInfo {
+    return Intl.message(
+      'General Information',
+      name: 'generalInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Pilgrims`
+  String get totalPilgrims {
+    return Intl.message(
+      'Total Pilgrims',
+      name: 'totalPilgrims',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Groups`
+  String get totalGroups {
+    return Intl.message(
+      'Total Groups',
+      name: 'totalGroups',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Supervisors`
+  String get totalSupervisors {
+    return Intl.message(
+      'Total Supervisors',
+      name: 'totalSupervisors',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View Campaign Groups`
+  String get viewCampaignGroups {
+    return Intl.message(
+      'View Campaign Groups',
+      name: 'viewCampaignGroups',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Campaign Groups`
+  String get campaignGroups {
+    return Intl.message(
+      'Campaign Groups',
+      name: 'campaignGroups',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No groups currently`
+  String get noGroupsCurrently {
+    return Intl.message(
+      'No groups currently',
+      name: 'noGroupsCurrently',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Supervisor`
+  String get supervisor {
+    return Intl.message('Supervisor', name: 'supervisor', desc: '', args: []);
+  }
+
+  /// `Hijri Year:`
+  String get hijriYear {
+    return Intl.message('Hijri Year:', name: 'hijriYear', desc: '', args: []);
+  }
+
   /// `Yusr`
   String get appName {
     return Intl.message('Yusr', name: 'appName', desc: '', args: []);
@@ -1882,6 +2002,551 @@ class AppLocalizations {
   /// `Stopped`
   String get stopped {
     return Intl.message('Stopped', name: 'stopped', desc: '', args: []);
+  }
+
+  /// `Session ended successfully`
+  String get sessionEndedSuccessfully {
+    return Intl.message(
+      'Session ended successfully',
+      name: 'sessionEndedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mute alarm temporarily`
+  String get muteAlarmTemporarily {
+    return Intl.message(
+      'Mute alarm temporarily',
+      name: 'muteAlarmTemporarily',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `🔇 Sound muted. It will return automatically when pilgrims are safe.`
+  String get alarmMutedTemporarilyMsg {
+    return Intl.message(
+      '🔇 Sound muted. It will return automatically when pilgrims are safe.',
+      name: 'alarmMutedTemporarilyMsg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Locating, please wait...`
+  String get locatingPleaseWait {
+    return Intl.message(
+      'Locating, please wait...',
+      name: 'locatingPleaseWait',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `End session officially`
+  String get endSessionOfficially {
+    return Intl.message(
+      'End session officially',
+      name: 'endSessionOfficially',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `End Session`
+  String get endSession {
+    return Intl.message('End Session', name: 'endSession', desc: '', args: []);
+  }
+
+  /// `Are you sure you want to end tracking? The session will be stopped for all pilgrims.`
+  String get confirmEndSessionMsg {
+    return Intl.message(
+      'Are you sure you want to end tracking? The session will be stopped for all pilgrims.',
+      name: 'confirmEndSessionMsg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm End`
+  String get confirmEnd {
+    return Intl.message('Confirm End', name: 'confirmEnd', desc: '', args: []);
+  }
+
+  /// `Inside safe zone 🟢`
+  String get inSafeZone {
+    return Intl.message(
+      'Inside safe zone 🟢',
+      name: 'inSafeZone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `On the borders 🟠`
+  String get onBorders {
+    return Intl.message(
+      'On the borders 🟠',
+      name: 'onBorders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Out of zone ⚠️ Danger`
+  String get outOfZoneDanger {
+    return Intl.message(
+      'Out of zone ⚠️ Danger',
+      name: 'outOfZoneDanger',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connected`
+  String get connectedMap {
+    return Intl.message('Connected', name: 'connectedMap', desc: '', args: []);
+  }
+
+  /// `Disconnected`
+  String get disconnectedMap {
+    return Intl.message(
+      'Disconnected',
+      name: 'disconnectedMap',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Distance from leader`
+  String get distanceFromLeader {
+    return Intl.message(
+      'Distance from leader',
+      name: 'distanceFromLeader',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `meter`
+  String get meterWord {
+    return Intl.message('meter', name: 'meterWord', desc: '', args: []);
+  }
+
+  /// `Last actual move`
+  String get lastActualMove {
+    return Intl.message(
+      'Last actual move',
+      name: 'lastActualMove',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last phone signal`
+  String get lastPhoneSignal {
+    return Intl.message(
+      'Last phone signal',
+      name: 'lastPhoneSignal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Searching for your location...`
+  String get searchingForLocation {
+    return Intl.message(
+      'Searching for your location...',
+      name: 'searchingForLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No Internet`
+  String get noInternet {
+    return Intl.message('No Internet', name: 'noInternet', desc: '', args: []);
+  }
+
+  /// `No pilgrims`
+  String get noPilgrims {
+    return Intl.message('No pilgrims', name: 'noPilgrims', desc: '', args: []);
+  }
+
+  /// `Inside zone`
+  String get insideZone {
+    return Intl.message('Inside zone', name: 'insideZone', desc: '', args: []);
+  }
+
+  /// `On borders`
+  String get onBordersOnly {
+    return Intl.message(
+      'On borders',
+      name: 'onBordersOnly',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Out of zone`
+  String get outOfZone {
+    return Intl.message('Out of zone', name: 'outOfZone', desc: '', args: []);
+  }
+
+  /// `Stop Tracking`
+  String get stopTracking {
+    return Intl.message(
+      'Stop Tracking',
+      name: 'stopTracking',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to stop tracking and leave the session? The supervisor will be notified.`
+  String get stopTrackingConfirmMsg {
+    return Intl.message(
+      'Are you sure you want to stop tracking and leave the session? The supervisor will be notified.',
+      name: 'stopTrackingConfirmMsg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yes, Stop`
+  String get yesStop {
+    return Intl.message('Yes, Stop', name: 'yesStop', desc: '', args: []);
+  }
+
+  /// `🔇 Sound muted. It will return automatically when you return to safety.`
+  String get alarmMutedPilgrimMsg {
+    return Intl.message(
+      '🔇 Sound muted. It will return automatically when you return to safety.',
+      name: 'alarmMutedPilgrimMsg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You`
+  String get youWord {
+    return Intl.message('You', name: 'youWord', desc: '', args: []);
+  }
+
+  /// `Warning zone (20m)`
+  String get warningZone20m {
+    return Intl.message(
+      'Warning zone (20m)',
+      name: 'warningZone20m',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Danger zone (30m)`
+  String get dangerZone30m {
+    return Intl.message(
+      'Danger zone (30m)',
+      name: 'dangerZone30m',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enable the GPS (Location) service on your device.`
+  String get gpsServiceDisabledWarning {
+    return Intl.message(
+      'Please enable the GPS (Location) service on your device.',
+      name: 'gpsServiceDisabledWarning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cannot start tracking without location permissions. Please enable them from Settings.`
+  String get gpsPermissionDeniedWarning {
+    return Intl.message(
+      'Cannot start tracking without location permissions. Please enable them from Settings.',
+      name: 'gpsPermissionDeniedWarning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Location service (GPS) has been turned off. Please enable it.`
+  String get gpsDisabledWarning {
+    return Intl.message(
+      'Location service (GPS) has been turned off. Please enable it.',
+      name: 'gpsDisabledWarning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `GPS has been enabled, acquiring signal...`
+  String get gpsReenabledWarning {
+    return Intl.message(
+      'GPS has been enabled, acquiring signal...',
+      name: 'gpsReenabledWarning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `GPS is active, updating location (may be indoors)...`
+  String get gpsReenabledLeaderWarning {
+    return Intl.message(
+      'GPS is active, updating location (may be indoors)...',
+      name: 'gpsReenabledLeaderWarning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A system error occurred. Please check your permissions.`
+  String get gpsSystemError {
+    return Intl.message(
+      'A system error occurred. Please check your permissions.',
+      name: 'gpsSystemError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tracking stopped because the supervisor lost connection for more than 30 minutes.`
+  String get leaderTimeoutError {
+    return Intl.message(
+      'Tracking stopped because the supervisor lost connection for more than 30 minutes.',
+      name: 'leaderTimeoutError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An error occurred while ending the session, please try again.`
+  String get endSessionError {
+    return Intl.message(
+      'An error occurred while ending the session, please try again.',
+      name: 'endSessionError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A pilgrim`
+  String get unknownPilgrim {
+    return Intl.message(
+      'A pilgrim',
+      name: 'unknownPilgrim',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stopped Tracking`
+  String get stoppedTracking {
+    return Intl.message(
+      'Stopped Tracking',
+      name: 'stoppedTracking',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `📍 Location Sharing Request`
+  String get locationRequestTitle {
+    return Intl.message(
+      '📍 Location Sharing Request',
+      name: 'locationRequestTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Distancing Warning`
+  String get pilgrimWarningChannelName {
+    return Intl.message(
+      'Distancing Warning',
+      name: 'pilgrimWarningChannelName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Distancing Alert`
+  String get pilgrimEmergencyChannelName {
+    return Intl.message(
+      'Distancing Alert',
+      name: 'pilgrimEmergencyChannelName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `🟡 Warning: You are drifting away!`
+  String get pilgrimWarningTitle {
+    return Intl.message(
+      '🟡 Warning: You are drifting away!',
+      name: 'pilgrimWarningTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You are moving away from your group. Hurry back to the supervisor.`
+  String get pilgrimWarningBody {
+    return Intl.message(
+      'You are moving away from your group. Hurry back to the supervisor.',
+      name: 'pilgrimWarningBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `🚨 Danger Alert!`
+  String get pilgrimEmergencyTitle {
+    return Intl.message(
+      '🚨 Danger Alert!',
+      name: 'pilgrimEmergencyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You have moved beyond the allowed distance from the supervisor!`
+  String get pilgrimEmergencyBody {
+    return Intl.message(
+      'You have moved beyond the allowed distance from the supervisor!',
+      name: 'pilgrimEmergencyBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Late Pilgrims Warnings`
+  String get leaderWarningChannelName {
+    return Intl.message(
+      'Late Pilgrims Warnings',
+      name: 'leaderWarningChannelName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pilgrim Emergency`
+  String get leaderEmergencyChannelName {
+    return Intl.message(
+      'Pilgrim Emergency',
+      name: 'leaderEmergencyChannelName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `🟡 Pilgrim Lagging Alert`
+  String get leaderPilgrimWarningTitle {
+    return Intl.message(
+      '🟡 Pilgrim Lagging Alert',
+      name: 'leaderPilgrimWarningTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pilgrim "{name}" has started drifting from the group.`
+  String leaderPilgrimWarningBody(String name) {
+    return Intl.message(
+      'Pilgrim "$name" has started drifting from the group.',
+      name: 'leaderPilgrimWarningBody',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `🚨 Danger: Pilgrim Missing!`
+  String get leaderPilgrimEmergencyTitle {
+    return Intl.message(
+      '🚨 Danger: Pilgrim Missing!',
+      name: 'leaderPilgrimEmergencyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pilgrim "{name}" has exceeded the safe zone!`
+  String leaderPilgrimEmergencyBody(String name) {
+    return Intl.message(
+      'Pilgrim "$name" has exceeded the safe zone!',
+      name: 'leaderPilgrimEmergencyBody',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Location Sharing Request`
+  String get locationRequestDialogTitle {
+    return Intl.message(
+      'Location Sharing Request',
+      name: 'locationRequestDialogTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invite accepted, starting tracking...`
+  String get inviteAcceptedMsg {
+    return Intl.message(
+      'Invite accepted, starting tracking...',
+      name: 'inviteAcceptedMsg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invite rejected successfully`
+  String get inviteRejectedMsg {
+    return Intl.message(
+      'Invite rejected successfully',
+      name: 'inviteRejectedMsg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tracking in Progress`
+  String get trackingInProgress {
+    return Intl.message(
+      'Tracking in Progress',
+      name: 'trackingInProgress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Join`
+  String get join {
+    return Intl.message('Join', name: 'join', desc: '', args: []);
+  }
+
+  /// `Reject`
+  String get dialogReject {
+    return Intl.message('Reject', name: 'dialogReject', desc: '', args: []);
+  }
+
+  /// `Accept`
+  String get dialogAccept {
+    return Intl.message('Accept', name: 'dialogAccept', desc: '', args: []);
+  }
+
+  /// `Family/Relative Number`
+  String get familyNumber {
+    return Intl.message(
+      'Family/Relative Number',
+      name: 'familyNumber',
+      desc: '',
+      args: [],
+    );
   }
 }
 

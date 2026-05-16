@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/constants/app_image.dart';
+import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 
 class PreparationCard extends StatelessWidget {
@@ -10,7 +11,9 @@ class PreparationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final locale = context.locale;
-    return SizedBox(
+    return GestureDetector(
+      onTap: () => Navigator.pushNamed(context, AppRoute.instructionsView),
+      child: SizedBox(
       height: 280.h,
       width: double.infinity,
       child: Stack(
@@ -103,6 +106,7 @@ class PreparationCard extends StatelessWidget {
           ),
         ],
       ),
-    );
+      ), // closes SizedBox
+    ); // closes GestureDetector
   }
 }

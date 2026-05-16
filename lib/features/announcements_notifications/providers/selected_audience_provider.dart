@@ -6,13 +6,12 @@ part 'selected_audience_provider.g.dart';
 @riverpod
 class SelectedAudience extends _$SelectedAudience {
   @override
-  TargetAudience build() {
-    // القيمة الافتراضية
-    return TargetAudience.all;
+  int? build() {
+    // القيمة الافتراضية null (سيتم ضبطها عند تحميل الفئات من الـ API)
+    return null;
   }
 
-  // دالة لتحديث القيمة
-  void setAudience(TargetAudience newAudience) {
-    state = newAudience;
+  void setAudienceId(int id) {
+    state = id;
   }
 }

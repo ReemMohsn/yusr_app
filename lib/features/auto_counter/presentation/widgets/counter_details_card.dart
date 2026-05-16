@@ -185,7 +185,8 @@ class CounterDetailsCard extends ConsumerWidget {
             SizedBox(
               width: double.infinity,
               height: 50.h,
-              child: ElevatedButton.icon(
+              child: ElevatedButton(
+                // تم تغيير ElevatedButton.icon إلى ElevatedButton
                 onPressed: () {
                   if (state.isRunning) {
                     notifier.reset();
@@ -202,18 +203,26 @@ class CounterDetailsCard extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(15.r),
                   ),
                 ),
-                icon: Icon(
-                  state.isRunning ? Icons.refresh : Icons.play_arrow,
-                  color: state.isRunning ? AppColor.danger : AppColor.withe,
-                  size: 22.sp,
-                ),
-                label: Text(
-                  state.isRunning ? locale.reset : locale.start,
-                  style: TextStyle(
-                    color: state.isRunning ? AppColor.danger : AppColor.withe,
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
+                child: Row(
+                  mainAxisAlignment:
+                      MainAxisAlignment.center, // لضمان تمركز المحتوى
+                  children: [
+                    if (state.isRunning) ...[
+                      Icon(Icons.refresh, color: AppColor.danger, size: 22.sp),
+                      SizedBox(width: 8.w), // مسافة بين الأيقونة والنص
+                    ],
+                    Text(
+                      state.isRunning ? locale.reset : locale.start,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: state.isRunning
+                            ? AppColor.danger
+                            : AppColor.withe,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

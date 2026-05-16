@@ -25,6 +25,11 @@ class PilgrimListItemWidget extends StatelessWidget {
       case 3:
         statusColor = Colors.redAccent.withOpacity(0.5);
         statusText = pilgrim.statusName;
+        break;
+      case 5:
+        statusColor = Colors.purpleAccent;
+        statusText = pilgrim.statusName;
+        break;
       default:
         statusColor = Colors.grey;
         break;

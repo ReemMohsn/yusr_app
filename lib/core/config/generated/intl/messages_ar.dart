@@ -20,8 +20,13 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ar';
 
+  static String m0(name) => "الحاج \"${name}\" تجاوز منطقة الأمان!";
+
+  static String m1(name) => "الحاج \"${name}\" بدأ يبتعد عن المجموعة.";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "aboutCampaign": MessageLookupByLibrary.simpleMessage("عن الحملة"),
     "accepted": MessageLookupByLibrary.simpleMessage("موافق"),
     "accountVerification": MessageLookupByLibrary.simpleMessage(
       "التحقق من الحساب",
@@ -44,6 +49,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "administration": MessageLookupByLibrary.simpleMessage("الإدارة"),
     "age": MessageLookupByLibrary.simpleMessage("العمر"),
+    "alarmMutedPilgrimMsg": MessageLookupByLibrary.simpleMessage(
+      "🔇 تم كتم الصوت. سيعود تلقائياً عند عودتك للأمان.",
+    ),
+    "alarmMutedTemporarilyMsg": MessageLookupByLibrary.simpleMessage(
+      "🔇 تم كتم الصوت. سيعود تلقائياً عند عودة الحجاج للأمان.",
+    ),
     "all_rounds_completed": MessageLookupByLibrary.simpleMessage(
       "لقد أتممت جميع الأشواط بنجاح",
     ),
@@ -62,8 +73,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "asr": MessageLookupByLibrary.simpleMessage("العصر"),
     "autoUpdate": MessageLookupByLibrary.simpleMessage("تحديث تلقائي"),
     "becomeALeader": MessageLookupByLibrary.simpleMessage("كن قائد"),
+    "campaignDates": MessageLookupByLibrary.simpleMessage("مواعيد الحملة"),
+    "campaignGroups": MessageLookupByLibrary.simpleMessage("قروبات الحملة"),
     "campaignLocation": MessageLookupByLibrary.simpleMessage(
       "موقع استقرار الحملة",
+    ),
+    "campaignReturnDate": MessageLookupByLibrary.simpleMessage(
+      "تاريخ عودة الحملة",
+    ),
+    "campaignStartDate": MessageLookupByLibrary.simpleMessage(
+      "تاريخ انطلاق الحملة",
     ),
     "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
     "changeLocation": MessageLookupByLibrary.simpleMessage("تغيير الموقع"),
@@ -75,6 +94,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "confirmDeleteAnnouncementMessage": MessageLookupByLibrary.simpleMessage(
       "هل أنت متأكد من حذف هذا الإعلان؟ لا يمكن التراجع عن هذا الإجراء.",
     ),
+    "confirmEnd": MessageLookupByLibrary.simpleMessage("تأكيد الإنهاء"),
+    "confirmEndSessionMsg": MessageLookupByLibrary.simpleMessage(
+      "هل أنت متأكد من إنهاء التتبع؟ سيتم إيقاف الجلسة لجميع الحجاج.",
+    ),
     "confirmPasswordLabel": MessageLookupByLibrary.simpleMessage(
       "تأكيد كلمة المرور",
     ),
@@ -83,6 +106,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "هل أنت متأكد من إرسال هذا الإعلان؟",
     ),
     "congratulations": MessageLookupByLibrary.simpleMessage("🎉 مبارك عليك!"),
+    "connectedMap": MessageLookupByLibrary.simpleMessage("متصل"),
     "connectionFailed": MessageLookupByLibrary.simpleMessage(
       "فشل الاتصال، يرجى التحقق من اتصالك بالإنترنت",
     ),
@@ -94,6 +118,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "copiedText": MessageLookupByLibrary.simpleMessage("تم النسخ"),
     "currentLocation": MessageLookupByLibrary.simpleMessage("الموقع الحالي"),
     "currentStroke": MessageLookupByLibrary.simpleMessage("الشوط الحالي"),
+    "dangerZone30m": MessageLookupByLibrary.simpleMessage("نطاق الخطر (30م)"),
     "dateOfBirth": MessageLookupByLibrary.simpleMessage("تاريخ الميلاد"),
     "delete": MessageLookupByLibrary.simpleMessage("حذف"),
     "deleteSuccess": MessageLookupByLibrary.simpleMessage(
@@ -102,6 +127,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "departureDate": MessageLookupByLibrary.simpleMessage("تاريخ المغادرة"),
     "detiles": MessageLookupByLibrary.simpleMessage("التفاصيل"),
     "dhuhr": MessageLookupByLibrary.simpleMessage("الظهر"),
+    "dialogAccept": MessageLookupByLibrary.simpleMessage("موافق"),
+    "dialogReject": MessageLookupByLibrary.simpleMessage("رفض"),
+    "disconnectedMap": MessageLookupByLibrary.simpleMessage("منقطع"),
+    "distanceFromLeader": MessageLookupByLibrary.simpleMessage(
+      "المسافة عن المشرف",
+    ),
     "done": MessageLookupByLibrary.simpleMessage("تم"),
     "edit": MessageLookupByLibrary.simpleMessage("تعديل"),
     "editNumber": MessageLookupByLibrary.simpleMessage("تعديل الرقم"),
@@ -118,6 +149,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "emailLabel": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
     "emailOrPassport": MessageLookupByLibrary.simpleMessage(
       "البريد الإلكتروني أو رقم الجواز",
+    ),
+    "endSession": MessageLookupByLibrary.simpleMessage("إنهاء الجلسة"),
+    "endSessionError": MessageLookupByLibrary.simpleMessage(
+      "حدث خطأ أثناء إنهاء الجلسة، يرجى المحاولة مرة أخرى.",
+    ),
+    "endSessionOfficially": MessageLookupByLibrary.simpleMessage(
+      "إنهاء الجلسة رسمياً",
     ),
     "enterAnnouncementTitle": MessageLookupByLibrary.simpleMessage(
       "أدخل عنوان الإعلان...",
@@ -148,6 +186,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "errorOccurred": MessageLookupByLibrary.simpleMessage("حدث خطأ: "),
     "fajr": MessageLookupByLibrary.simpleMessage("الفجر"),
+    "familyNumber": MessageLookupByLibrary.simpleMessage("رقم العائلة/المرافق"),
     "fetchDataError": MessageLookupByLibrary.simpleMessage(
       "حدث خطأ في جلب البيانات",
     ),
@@ -160,7 +199,26 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "fullName": MessageLookupByLibrary.simpleMessage("الاسم الرباعي"),
     "gender": MessageLookupByLibrary.simpleMessage("الجنس"),
+    "generalInfo": MessageLookupByLibrary.simpleMessage("معلومات عامة"),
     "getAnswer": MessageLookupByLibrary.simpleMessage("الحصول على الإجابة"),
+    "gpsDisabledWarning": MessageLookupByLibrary.simpleMessage(
+      "تم إغلاق خدمة الموقع (GPS) في الهاتف. يرجى تفعيلها.",
+    ),
+    "gpsPermissionDeniedWarning": MessageLookupByLibrary.simpleMessage(
+      "لا يمكن بدء التتبع بدون صلاحيات الموقع. يرجى تفعيلها من الإعدادات.",
+    ),
+    "gpsReenabledLeaderWarning": MessageLookupByLibrary.simpleMessage(
+      "الـ GPS مفعل، جاري تحديث الموقع (قد يكون في مكان مغلق)...",
+    ),
+    "gpsReenabledWarning": MessageLookupByLibrary.simpleMessage(
+      "تم تفعيل الـ GPS، جاري التقاط الإشارة...",
+    ),
+    "gpsServiceDisabledWarning": MessageLookupByLibrary.simpleMessage(
+      "يرجى تفعيل خدمة الـ GPS (الموقع) في هاتفك.",
+    ),
+    "gpsSystemError": MessageLookupByLibrary.simpleMessage(
+      "حدث خطأ في النظام. يرجى التأكد من الصلاحيات.",
+    ),
     "groupInfo": MessageLookupByLibrary.simpleMessage("معلومات المجموعة"),
     "groupInfoSectionTitle": MessageLookupByLibrary.simpleMessage(
       "معلومات المجموعة",
@@ -186,27 +244,65 @@ class MessageLookup extends MessageLookupByLibrary {
     "healthStable": MessageLookupByLibrary.simpleMessage("مستقرة"),
     "healthStatus": MessageLookupByLibrary.simpleMessage("الحالة الصحية"),
     "hijriDate": MessageLookupByLibrary.simpleMessage("التاريخ الهجري"),
+    "hijriYear": MessageLookupByLibrary.simpleMessage("السنة الهجرية:"),
     "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
     "importantAnnouncement": MessageLookupByLibrary.simpleMessage("إعلان هام"),
     "importantNotesTitle": MessageLookupByLibrary.simpleMessage("ملاحظات هامة"),
+    "inSafeZone": MessageLookupByLibrary.simpleMessage("داخل النطاق الآمن 🟢"),
     "inactive": MessageLookupByLibrary.simpleMessage("غير نشط"),
+    "insideZone": MessageLookupByLibrary.simpleMessage("داخل النطاق"),
     "instructions": MessageLookupByLibrary.simpleMessage("أنواع الحج"),
     "instructionsListData": MessageLookupByLibrary.simpleMessage(
       "[{\"title\":\"الإفراد\",\"subtitle\":\"الإحرام بالحج فقط\",\"description\":\"أن يُحرم بالحج وحده من الميقات، ويقول: لبيك حجًا\"},{\"title\":\"القران\",\"subtitle\":\"الإحرام بالحج والعمرة معاً\",\"description\":\"أن يُحرم بالعمرة والحج معًا من الميقات، ويقول: لبيك عمرة وحجًا\"},{\"title\":\"التمتع\",\"subtitle\":\"العمرة ثم الحج في أشهر الحج\",\"description\":\"أن يُحرم بالعمرة في أشهر الحج، ثم يتحلل منها ثم يُحرم بالحج\"}]",
     ),
+    "inviteAcceptedMsg": MessageLookupByLibrary.simpleMessage(
+      "تم قبول الدعوة، جاري بدء التتبع...",
+    ),
+    "inviteRejectedMsg": MessageLookupByLibrary.simpleMessage(
+      "تم رفض الدعوة بنجاح",
+    ),
     "isha": MessageLookupByLibrary.simpleMessage("العشاء"),
+    "join": MessageLookupByLibrary.simpleMessage("انضمام"),
     "journeyOfFaith": MessageLookupByLibrary.simpleMessage(
       "رِحْلَةُ الإِيمَانِ",
     ),
     "km": MessageLookupByLibrary.simpleMessage("كم"),
     "labbayk": MessageLookupByLibrary.simpleMessage("لبيك اللهم لبيك"),
+    "lastActualMove": MessageLookupByLibrary.simpleMessage("آخر تحرك فعلي"),
+    "lastPhoneSignal": MessageLookupByLibrary.simpleMessage("آخر إشارة هاتف"),
+    "leaderEmergencyChannelName": MessageLookupByLibrary.simpleMessage(
+      "طوارئ الحجاج",
+    ),
+    "leaderPilgrimEmergencyBody": m0,
+    "leaderPilgrimEmergencyTitle": MessageLookupByLibrary.simpleMessage(
+      "🚨 خطر: حاج مفقود!",
+    ),
+    "leaderPilgrimWarningBody": m1,
+    "leaderPilgrimWarningTitle": MessageLookupByLibrary.simpleMessage(
+      "🟡 تنبيه تأخر حاج",
+    ),
+    "leaderTimeoutError": MessageLookupByLibrary.simpleMessage(
+      "تم إيقاف التتبع لأن المشرف فقد الاتصال لأكثر من 30 دقيقة.",
+    ),
+    "leaderWarningChannelName": MessageLookupByLibrary.simpleMessage(
+      "تحذيرات الحجاج المتأخرين",
+    ),
     "loading": MessageLookupByLibrary.simpleMessage("جاري التحميل..."),
     "localSADialTitle": MessageLookupByLibrary.simpleMessage(
       "رقم محلي للتواصل داخل السعودية 🇸🇦",
     ),
+    "locatingPleaseWait": MessageLookupByLibrary.simpleMessage(
+      "جاري تحديد موقعك، يرجى الانتظار...",
+    ),
     "locationDescription": MessageLookupByLibrary.simpleMessage("وصف الموقع"),
     "locationList": MessageLookupByLibrary.simpleMessage("قائمة المواقع"),
     "locationName": MessageLookupByLibrary.simpleMessage("اسم الموقع"),
+    "locationRequestDialogTitle": MessageLookupByLibrary.simpleMessage(
+      "طلب مشاركة الموقع",
+    ),
+    "locationRequestTitle": MessageLookupByLibrary.simpleMessage(
+      "📍 طلب مشاركة الموقع",
+    ),
     "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
     "loginButton": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
     "loginToViewCampaignLocation": MessageLookupByLibrary.simpleMessage(
@@ -224,6 +320,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "messageFetchingCampLocationmessage": MessageLookupByLibrary.simpleMessage(
       "جاري جلب موقع الحملة...",
     ),
+    "meterWord": MessageLookupByLibrary.simpleMessage("متر"),
+    "muteAlarmTemporarily": MessageLookupByLibrary.simpleMessage(
+      "كتم الإنذار مؤقتاً",
+    ),
     "newNotification": MessageLookupByLibrary.simpleMessage("إشعار جديد"),
     "newPasswordDescription": MessageLookupByLibrary.simpleMessage(
       "يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمات المرور السابقة",
@@ -234,12 +334,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "noAnnouncementsCurrently": MessageLookupByLibrary.simpleMessage(
       "لا توجد إعلانات حالياً",
     ),
+    "noGroupsCurrently": MessageLookupByLibrary.simpleMessage(
+      "لا توجد قروبات حالياً",
+    ),
+    "noInternet": MessageLookupByLibrary.simpleMessage("لا يوجد إنترنت"),
     "noMatchingSearchResults": MessageLookupByLibrary.simpleMessage(
       "لا توجد نتائج مطابقة للبحث",
     ),
     "noNotificationsCurrently": MessageLookupByLibrary.simpleMessage(
       "لا توجد إشعارات حالياً",
     ),
+    "noPilgrims": MessageLookupByLibrary.simpleMessage("لا يوجد حجاج"),
     "noPilgrimsFound": MessageLookupByLibrary.simpleMessage("لا يوجد حجاج"),
     "noPilgrimsInSession": MessageLookupByLibrary.simpleMessage(
       "لا يوجد حجاج مرتبطين بهذه الجلسة.",
@@ -263,8 +368,14 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "notifications": MessageLookupByLibrary.simpleMessage("الإشعارات"),
     "ofWord": MessageLookupByLibrary.simpleMessage("من"),
+    "onBorders": MessageLookupByLibrary.simpleMessage("على حدود النطاق 🟠"),
+    "onBordersOnly": MessageLookupByLibrary.simpleMessage("على الحدود"),
     "otherLocations": MessageLookupByLibrary.simpleMessage(
       "مواقع استقرار أخرى",
+    ),
+    "outOfZone": MessageLookupByLibrary.simpleMessage("خارج النطاق"),
+    "outOfZoneDanger": MessageLookupByLibrary.simpleMessage(
+      "خارج النطاق ⚠️ خطر",
     ),
     "passportNumber": MessageLookupByLibrary.simpleMessage("رقم الجواز"),
     "password": MessageLookupByLibrary.simpleMessage("كلمة المرور"),
@@ -274,6 +385,24 @@ class MessageLookup extends MessageLookupByLibrary {
     "pending": MessageLookupByLibrary.simpleMessage("قيد الانتظار"),
     "personalData": MessageLookupByLibrary.simpleMessage("البيانات الشخصية"),
     "pilgrimDetails": MessageLookupByLibrary.simpleMessage("تفاصيل الحاج"),
+    "pilgrimEmergencyBody": MessageLookupByLibrary.simpleMessage(
+      "لقد ابتعدت عن المشرف خارج النطاق المسموح!",
+    ),
+    "pilgrimEmergencyChannelName": MessageLookupByLibrary.simpleMessage(
+      "تنبيه الابتعاد",
+    ),
+    "pilgrimEmergencyTitle": MessageLookupByLibrary.simpleMessage(
+      "🚨 إنذار خطر!",
+    ),
+    "pilgrimWarningBody": MessageLookupByLibrary.simpleMessage(
+      "بدأت تبتعد عن مجموعتك. إسرع الخطى للمشرف.",
+    ),
+    "pilgrimWarningChannelName": MessageLookupByLibrary.simpleMessage(
+      "تحذير الابتعاد",
+    ),
+    "pilgrimWarningTitle": MessageLookupByLibrary.simpleMessage(
+      "🟡 تحذير: أنت تبتعد!",
+    ),
     "pilgrimsCount": MessageLookupByLibrary.simpleMessage("عدد الحجاج"),
     "pilgrimsListTitle": MessageLookupByLibrary.simpleMessage("قائمة الحجاج"),
     "prayerTimes": MessageLookupByLibrary.simpleMessage("مواقيت الصلاة"),
@@ -326,6 +455,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "saveNumber": MessageLookupByLibrary.simpleMessage("حفظ الرقم"),
     "saveNumberBtn": MessageLookupByLibrary.simpleMessage("حفظ الرقم"),
     "searchPilgrim": MessageLookupByLibrary.simpleMessage("ابحث عن حاج..."),
+    "searchingForLocation": MessageLookupByLibrary.simpleMessage(
+      "جاري البحث عن موقعك...",
+    ),
     "secureArrivalMessage": MessageLookupByLibrary.simpleMessage(
       "لتنعم برحلة آمنة وتصل لمخيمك بسلام، يرجى تسجيل الدخول أولاً",
     ),
@@ -345,6 +477,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "serverNotResponding": MessageLookupByLibrary.simpleMessage(
       "الخادم لا يستجيب حالياً، يرجى المحاولة لاحقاً",
     ),
+    "sessionEndedSuccessfully": MessageLookupByLibrary.simpleMessage(
+      "تم إنهاء الجلسة بنجاح",
+    ),
     "sessionExpiredGuest": MessageLookupByLibrary.simpleMessage(
       "انتهت صلاحية الجلسة أو تم تعديل بياناتك. أنت الآن تتصفح كزائر.",
     ),
@@ -361,12 +496,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "smartMuftiHelper": MessageLookupByLibrary.simpleMessage(
       "مساعدك الذكي للإجابة على تساؤلات الحج",
     ),
-    "start": MessageLookupByLibrary.simpleMessage("أبدأ"),
+    "start": MessageLookupByLibrary.simpleMessage("ابدأ"),
     "startSession": MessageLookupByLibrary.simpleMessage("بدء الجلسة"),
     "status": MessageLookupByLibrary.simpleMessage("الحالة"),
     "steps": MessageLookupByLibrary.simpleMessage("الخطوات"),
+    "stopTracking": MessageLookupByLibrary.simpleMessage("إيقاف التتبع"),
+    "stopTrackingConfirmMsg": MessageLookupByLibrary.simpleMessage(
+      "هل أنت متأكد أنك تريد إيقاف التتبع والخروج من الجلسة؟ سيتم إشعار المشرف بذلك.",
+    ),
     "stopped": MessageLookupByLibrary.simpleMessage("توقف"),
+    "stoppedTracking": MessageLookupByLibrary.simpleMessage("أوقف التتبع"),
     "strokes": MessageLookupByLibrary.simpleMessage("أشواط"),
+    "supervisor": MessageLookupByLibrary.simpleMessage("المشرف"),
     "supervisorGroupDetails": MessageLookupByLibrary.simpleMessage(
       "تفاصيل المجموعة",
     ),
@@ -382,9 +523,14 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "titleLabel": MessageLookupByLibrary.simpleMessage("العنوان"),
     "total": MessageLookupByLibrary.simpleMessage("الإجمالي"),
+    "totalGroups": MessageLookupByLibrary.simpleMessage("إجمالي المجموعات"),
+    "totalPilgrims": MessageLookupByLibrary.simpleMessage("إجمالي الحجاج"),
+    "totalSupervisors": MessageLookupByLibrary.simpleMessage("إجمالي المشرفين"),
+    "trackingInProgress": MessageLookupByLibrary.simpleMessage("جاري التتبع"),
     "unexpectedError": MessageLookupByLibrary.simpleMessage(
       "حدث خطأ غير متوقع، يرجى المحاولة مرة أخرى",
     ),
+    "unknownPilgrim": MessageLookupByLibrary.simpleMessage("أحد الحجاج"),
     "updateLocationTitle": MessageLookupByLibrary.simpleMessage("تعديل موقع"),
     "updateSuccess": MessageLookupByLibrary.simpleMessage(
       "تم تحديث بيانات الموقع بنجاح",
@@ -392,11 +538,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "userRole": MessageLookupByLibrary.simpleMessage("مستخدم"),
     "verificationCodeLabel": MessageLookupByLibrary.simpleMessage("رمز التحقق"),
     "verifyCodeButton": MessageLookupByLibrary.simpleMessage("التحقق من الرمز"),
+    "viewCampaignGroups": MessageLookupByLibrary.simpleMessage(
+      "عرض قروبات الحملة",
+    ),
     "viewDetails": MessageLookupByLibrary.simpleMessage("عرض التفاصيل"),
     "waitingForYourQuestion": MessageLookupByLibrary.simpleMessage(
       "بانتظار سؤالك للإجابة عليه بالذكاء الاصطناعي..",
     ),
     "walking": MessageLookupByLibrary.simpleMessage("مشي"),
+    "warningZone20m": MessageLookupByLibrary.simpleMessage(
+      "نطاق التحذير (20م)",
+    ),
     "whatsappNumber": MessageLookupByLibrary.simpleMessage("رقم الواتساب"),
     "writeAnnouncementContentHere": MessageLookupByLibrary.simpleMessage(
       "اكتب محتوى الإعلان هنا...",
@@ -407,7 +559,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "yemeniMobileNumber": MessageLookupByLibrary.simpleMessage(
       "رقم الجوال اليمني",
     ),
+    "yesStop": MessageLookupByLibrary.simpleMessage("نعم، إيقاف"),
     "youAreHere": MessageLookupByLibrary.simpleMessage("أنت هنا"),
+    "youWord": MessageLookupByLibrary.simpleMessage("أنت"),
     "yourQuestion": MessageLookupByLibrary.simpleMessage("سؤالك"),
   };
 }
