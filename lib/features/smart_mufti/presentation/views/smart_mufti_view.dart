@@ -25,7 +25,7 @@
 //             title: locale.smartMufti,
 //             subtitle: locale.ritualsPreparationDesc,
 //           ),
-          
+
 //           SizedBox(height: 24.h),
 
 //           // 2. كرت إدخال السؤال (تم استبدال النص المباشر بـ locale)
@@ -33,20 +33,20 @@
 //             label: locale.enterRequiredData,
 //             hint: locale.writeYourFatwaQuestion,
 //           ),
-          
+
 //           SizedBox(height: 20.h),
 
 //           // 3. زر الحصول على الفتوى (تم استبدال النص المباشر بـ locale)
 //           SizedBox(
 //             width: double.infinity,
 //             child: CustomBigButton(
-//               text: locale.sendQuestion, 
+//               text: locale.sendQuestion,
 //               onPressed: () {
 //                 // هنا نربط الـ Logic مستقبلاً
 //               },
 //             ),
 //           ),
-          
+
 //           SizedBox(height: 24.h),
 
 //           // 4. كرت عرض الإجابة (تم استبدال النصوص المباشرة بـ locale)
@@ -83,7 +83,7 @@
 //     final locale = context.locale;
 //     // تعريف المتحكم هنا (داخل الـ build في ConsumerWidget مسموح لأنه Stateless)
 //     final questionController = TextEditingController();
-    
+
 //     // مراقبة حالة الكنترولر لعرض الإجابة
 //     final muftiState = ref.watch(muftiControllerProvider);
 
@@ -112,7 +112,7 @@
 //             title: locale.askForFatwa,
 //             subtitle: locale.smartMuftiHelper,
 //           ),
-          
+
 //           SizedBox(height: 24.h),
 
 //           QuestionCard(
@@ -120,26 +120,26 @@
 //             hint: locale.questionExample,
 //             controller: questionController, // تمرير المتحكم
 //           ),
-          
+
 //           SizedBox(height: 20.h),
 
 //           SizedBox(
 //             width: double.infinity,
 //             child: SmartMuftiButtonWidget(
-//               text: locale.getAnswer, 
+//               text: locale.getAnswer,
 //               icon: Icons.auto_awesome, // هذه هي الأيقونة المطلوبة من الصورة
 //               onPressed: () {
 //                 if (questionController.text.trim().isNotEmpty) {
-//                   FocusScope.of(context).unfocus(); 
+//                   FocusScope.of(context).unfocus();
 //                   ref.read(muftiControllerProvider.notifier)
 //                       .sendQuestion(questionController.text.trim());
 //                 } else {
-//                   context.showErrorSnackBar(locale.fieldRequired); 
+//                   context.showErrorSnackBar(locale.fieldRequired);
 //                 }
 //               },
 //             ),
 //           ),
-          
+
 //           SizedBox(height: 24.h),
 
 //           // كرت عرض الإجابة مع التعامل مع الحالات
@@ -152,7 +152,7 @@
 //               // التغيير هنا: بدلاً من النص، نضع الـ Shimmer
 //                loading: () => "", // نترك النص فارغاً لأننا سنعرض Shimmer فوق الكرت أو داخله
 //             ),
-           
+
 //           ),
 
 //           SizedBox(height: 40.h),
@@ -162,14 +162,11 @@
 //   }
 // }
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:yusr/core/common/widgets/widget.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/core/services/errors/exception.dart';
-import 'package:yusr/features/smart_mufti/data/models/mufti_response_model.dart';
 import 'package:yusr/features/smart_mufti/presentation/widgets/mufti_header_section_widget.dart';
 import 'package:yusr/features/smart_mufti/presentation/widgets/question_card_widget.dart';
 import 'package:yusr/features/smart_mufti/presentation/widgets/sharia_answer_card_widget.dart';
@@ -177,12 +174,13 @@ import 'package:yusr/features/smart_mufti/presentation/widgets/smart_mufti_butto
 import 'package:yusr/features/smart_mufti/providers/mufti_controller_provider.dart';
 
 // 1. تعريف الكنترولر باستخدام Provider لضمان ثبات النص وتنظيف الذاكرة تلقائياً
-final questionTextControllerProvider = Provider.autoDispose<TextEditingController>((ref) {
-  final controller = TextEditingController();
-  // التأكد من حذف الكنترولر من الذاكرة فور إغلاق الشاشة
-  ref.onDispose(() => controller.dispose());
-  return controller;
-});
+final questionTextControllerProvider =
+    Provider.autoDispose<TextEditingController>((ref) {
+      final controller = TextEditingController();
+      // التأكد من حذف الكنترولر من الذاكرة فور إغلاق الشاشة
+      ref.onDispose(() => controller.dispose());
+      return controller;
+    });
 
 class SmartMuftiView extends ConsumerWidget {
   const SmartMuftiView({super.key});
@@ -190,26 +188,23 @@ class SmartMuftiView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = context.locale;
-    
+
     // 2. استدعاء الكنترولر ومراقبة حالة المفتي
     final questionController = ref.watch(questionTextControllerProvider);
     final muftiState = ref.watch(muftiControllerProvider);
 
     // 3. الاستماع للحالات (فقط للأخطاء أو النجاح النهائي) بدون LoadingDialog
-    ref.listen<AsyncValue<MuftiState>>(
-      muftiControllerProvider,
-      (prev, next) {
-        if (!next.isLoading && next.hasError) { 
-      context.showErrorSnackBar(locale.fetchDataError);
+    ref.listen<AsyncValue<MuftiState>>(muftiControllerProvider, (prev, next) {
+      if (!next.isLoading && next.hasError) {
+        context.showErrorSnackBar(locale.fetchDataError);
         // if (next.hasError) {
         //   // في حالة الخطأ، نعرض رسالة ونترك النص كما هو ليعدله المستخدم
         //   context.showErrorSnackBar(locale.fetchDataError);
-        } else if (next.hasValue && !next.isLoading && next.value != null) {
-          // في حالة النجاح التام، يمكنكِ مسح النص هنا إذا رغبتِ
-          // questionController.clear(); 
-        }
-      },
-    );
+      } else if (next.hasValue && !next.isLoading && next.value != null) {
+        // في حالة النجاح التام، يمكنكِ مسح النص هنا إذا رغبتِ
+        // questionController.clear();
+      }
+    });
 
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
@@ -220,7 +215,7 @@ class SmartMuftiView extends ConsumerWidget {
             title: locale.askForFatwa,
             subtitle: locale.smartMuftiHelper,
           ),
-          
+
           SizedBox(height: 24.h),
 
           QuestionCard(
@@ -228,36 +223,37 @@ class SmartMuftiView extends ConsumerWidget {
             hint: locale.questionExample,
             controller: questionController,
           ),
-          
+
           SizedBox(height: 20.h),
 
           SizedBox(
             width: double.infinity,
             child: SmartMuftiButtonWidget(
-              text: locale.getAnswer, 
-              icon: Icons.auto_awesome, 
+              text: locale.getAnswer,
+              icon: Icons.auto_awesome,
               // 4. تمرير حالة التحميل للزر مباشرة ليظهر مؤشر التحميل داخله
               isLoading: muftiState.isLoading,
-              onPressed: muftiState.isLoading 
-                ? () {} // تعطيل الزر أثناء التحميل لمنع تكرار الطلبات
-                : () {
-                    if (questionController.text.trim().isNotEmpty) {
-                      FocusScope.of(context).unfocus(); 
-                      ref.read(muftiControllerProvider.notifier)
-                          .sendQuestion(questionController.text.trim());
-                    } else {
-                      context.showErrorSnackBar(locale.fieldRequired); 
-                    }
-                  },
+              onPressed: muftiState.isLoading
+                  ? () {} // تعطيل الزر أثناء التحميل لمنع تكرار الطلبات
+                  : () {
+                      if (questionController.text.trim().isNotEmpty) {
+                        FocusScope.of(context).unfocus();
+                        ref
+                            .read(muftiControllerProvider.notifier)
+                            .sendQuestion(questionController.text.trim());
+                      } else {
+                        context.showErrorSnackBar(locale.fieldRequired);
+                      }
+                    },
             ),
           ),
-          
+
           SizedBox(height: 24.h),
 
           // 5. كرت عرض الإجابة مع الـ Shimmer التلقائي
           // ShariaAnswerCardWidget(
           //   title: locale.shariaAnswer,
-          //   isLoading: muftiState.isLoading, 
+          //   isLoading: muftiState.isLoading,
           //   content: muftiState.when(
           //     data: (response) => response?.data?.answer ?? locale.shariaAnswerPlaceholder,
           //     error: (err, stack) => locale.fetchDataError,
@@ -266,24 +262,25 @@ class SmartMuftiView extends ConsumerWidget {
           // ),
           ShariaAnswerCardWidget(
             title: locale.shariaAnswer,
-            isLoading: muftiState.isLoading, 
+            isLoading: muftiState.isLoading,
             content: muftiState.when(
               // حالة النجاح: عرض الإجابة أو الـ Placeholder من ملف الترجمة
-              data: (response) => response?.data?.answer ?? locale.shariaAnswerPlaceholder,
-              
+              data: (response) =>
+                  response?.data?.answer ?? locale.shariaAnswerPlaceholder,
+
               // حالة الخطأ: التعديل المطلوب لعرض رسالة السيرفر أو رسالة الخطأ الافتراضية
               error: (err, stack) {
                 // إذا كان الخطأ يحتوي على رسالة من السيرفر (detail) نعرضها
                 // وإلا نعود لملف الترجمة الموحد للمشروع
-                if (err is ServerException && err.errModel.errorMessage.isNotEmpty) {
+                if (err is ServerException &&
+                    err.errModel.errorMessage.isNotEmpty) {
                   return err.errModel.errorMessage;
                 }
-                return locale.fetchDataError; 
+                return locale.fetchDataError;
               },
-              
-              loading: () => "", 
-            ),
 
+              loading: () => "",
+            ),
           ),
 
           SizedBox(height: 40.h),

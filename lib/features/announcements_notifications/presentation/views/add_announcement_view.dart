@@ -9,13 +9,13 @@ import 'package:yusr/core/constants/app_size.dart';
 import 'package:yusr/core/extensions/async_value_ui.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/core/utils/app_validator.dart';
-import 'package:yusr/features/announcements_notifications/data/enums/target_audience_enum.dart';
+import 'package:yusr/features/announcements_notifications/data/models/target_audience_model.dart';
 import 'package:yusr/features/announcements_notifications/presentation/widgets/confirm_announcement_dialog.dart';
 import 'package:yusr/features/announcements_notifications/presentation/widgets/input_card_widget.dart';
 import 'package:yusr/features/announcements_notifications/providers/add_announcement_provider.dart';
 import 'package:yusr/features/announcements_notifications/providers/announcements_provider.dart';
 import 'package:yusr/features/announcements_notifications/providers/selected_audience_provider.dart';
-import 'package:yusr/features/home/providers/user_provider.dart';
+import 'package:yusr/features/announcements_notifications/providers/target_audiences_provider.dart';
 
 class AddAnnouncementView extends ConsumerStatefulWidget {
   const AddAnnouncementView({super.key});
@@ -28,8 +28,6 @@ class AddAnnouncementView extends ConsumerStatefulWidget {
 class _AddAnnouncementViewState extends ConsumerState<AddAnnouncementView> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _bodyController = TextEditingController();
-
-  final TargetAudience _selectedAudience = TargetAudience.all;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -42,40 +40,12 @@ class _AddAnnouncementViewState extends ConsumerState<AddAnnouncementView> {
   @override
   Widget build(BuildContext context) {
     final locale = context.locale;
-    // جلب بيانات المستخدم لمعرفة الدور الحالي
-    final userProfileState = ref.watch(userProfileProvider);
-    final userRole = userProfileState.value?.userRole.trim() ?? '';
-    final bool isSupervisor = userRole == 'مشرف';
 
-    // 1. قراءة القيمة الحالية من البروفايدر المُولد
-    final selectedAudience = ref.watch(selectedAudienceProvider);
+    // جلب الفئات المستهدفة من الـ API (الـ backend يفلترها تلقائياً حسب دور المستخدم)
+    final audiencesAsync = ref.watch(targetAudiencesProvider);
 
-    // إعداد المتغيرات الخاصة بالدروب داون بناءً على الدور
-    List<TargetAudience> audienceItems;
-
-    if (isSupervisor) {
-      // في حالة المشرف: نعرض خيار القروب فقط
-      audienceItems = [TargetAudience.groupPilgrims];
-    } else {
-      // في حالة مدير الحملة: نعرض كل الخيارات ما عدا القروب
-      audienceItems = TargetAudience.values
-          .where((element) => element != TargetAudience.groupPilgrims)
-          .toList();
-    }
-
-    // تحديد القيمة المختارة حالياً
-    final TargetAudience currentAudience = isSupervisor
-        ? TargetAudience.groupPilgrims
-        : selectedAudience;
-
-    // دالة التغيير: تمرير null يعطل الدروب داون للمشرف تلقائياً
-    final void Function(TargetAudience?)? onAudienceChanged = isSupervisor
-        ? null
-        : (newValue) {
-            if (newValue != null) {
-              ref.read(selectedAudienceProvider.notifier).setAudience(newValue);
-            }
-          };
+    // قراءة الـ ID المحدد حالياً
+    final selectedAudienceId = ref.watch(selectedAudienceProvider);
 
     // الاستماع لنتيجة الإضافة (نجاح أو فشل)
     ref.listen(addAnnouncementProvider, (_, state) {
@@ -136,33 +106,70 @@ class _AddAnnouncementViewState extends ConsumerState<AddAnnouncementView> {
               InputCardWidget(
                 title: locale.targetAudience,
                 icon: Icons.people_outline,
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 16.w,
-                    vertical: 4.h,
+                child: audiencesAsync.when(
+                  loading: () => const SizedBox(
+                    height: 48,
+                    child: Center(child: CircularProgressIndicator()),
                   ),
-                  decoration: BoxDecoration(
-                    color: AppColor.backgroundColor,
-                    borderRadius: BorderRadius.circular(8.r),
+                  error: (e, _) => Text(
+                    'تعذّر تحميل الفئات',
+                    style: TextStyle(color: Colors.red, fontSize: 14.sp),
                   ),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<TargetAudience>(
-                      isExpanded: true,
-                      value: currentAudience,
-                      icon: Icon(
-                        Icons.keyboard_arrow_down,
-                        color: isSupervisor ? Colors.grey : AppColor.golden,
+                  data: (List<TargetAudienceModel> audiences) {
+                    // ضبط القيمة الافتراضية عند أول تحميل
+                    if (selectedAudienceId == null && audiences.isNotEmpty) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        ref
+                            .read(selectedAudienceProvider.notifier)
+                            .setAudienceId(audiences.first.targetAudienceId);
+                      });
+                    }
+
+                    final currentId = selectedAudienceId ??
+                        (audiences.isNotEmpty
+                            ? audiences.first.targetAudienceId
+                            : null);
+
+                    final bool singleItem = audiences.length == 1;
+
+                    return Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                        vertical: 4.h,
                       ),
-                      // تحويل قيم الـ Enum إلى عناصر في القائمة
-                      items: audienceItems.map((TargetAudience audience) {
-                        return DropdownMenuItem<TargetAudience>(
-                          value: audience,
-                          child: Text(audience.name),
-                        );
-                      }).toList(),
-                      onChanged: onAudienceChanged,
-                    ),
-                  ),
+                      decoration: BoxDecoration(
+                        color: AppColor.backgroundColor,
+                        borderRadius: BorderRadius.circular(8.r),
+                      ),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<int>(
+                          isExpanded: true,
+                          value: currentId,
+                          icon: Icon(
+                            Icons.keyboard_arrow_down,
+                            color: singleItem ? Colors.grey : AppColor.golden,
+                          ),
+                          items: audiences
+                              .map((TargetAudienceModel audience) {
+                            return DropdownMenuItem<int>(
+                              value: audience.targetAudienceId,
+                              child: Text(audience.targetAudienceName),
+                            );
+                          }).toList(),
+                          // إذا كان عنصر واحد فقط (مشرف) يتم تعطيل الدروب داون
+                          onChanged: singleItem
+                              ? null
+                              : (int? newId) {
+                                  if (newId != null) {
+                                    ref
+                                        .read(selectedAudienceProvider.notifier)
+                                        .setAudienceId(newId);
+                                  }
+                                },
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
 
@@ -171,25 +178,42 @@ class _AddAnnouncementViewState extends ConsumerState<AddAnnouncementView> {
                 text: locale.publishAnnouncement,
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    // 2. إظهار نافذة التأكيد وانتظار النتيجة
+                    final audiences = ref.read(targetAudiencesProvider).value;
+                    final int? audienceId = selectedAudienceId ??
+                        (audiences != null && audiences.isNotEmpty
+                            ? audiences.first.targetAudienceId
+                            : null);
+
+                    if (audienceId == null) return;
+
+                    // اسم الفئة المختارة لعرضه في نافذة التأكيد
+                    final String audienceName = audiences
+                            ?.firstWhere(
+                              (a) => a.targetAudienceId == audienceId,
+                              orElse: () => TargetAudienceModel(
+                                targetAudienceId: audienceId,
+                                targetAudienceName: '',
+                              ),
+                            )
+                            .targetAudienceName ??
+                        '';
+
                     final bool? shouldSubmit = await showDialog<bool>(
                       context: context,
                       builder: (context) => ConfirmAnnouncementDialog(
                         title: _titleController.text,
                         body: _bodyController.text,
-                        targetAudience:
-                            _selectedAudience.name, // سيتم تمرير اسم الفئة هنا
+                        targetAudience: audienceName,
                       ),
                     );
 
-                    // 3. إذا ضغط المستخدم على "تأكيد الإرسال" (shouldSubmit == true) نقوم بتنفيذ الـ Provider
                     if (shouldSubmit == true) {
                       ref
                           .read(addAnnouncementProvider.notifier)
                           .createAnnouncement(
                             title: _titleController.text,
                             body: _bodyController.text,
-                            targetAudienceId: _selectedAudience.id,
+                            targetAudienceId: audienceId,
                           );
                     }
                   }

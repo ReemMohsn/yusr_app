@@ -5,6 +5,7 @@ import 'package:yusr/core/services/API/api_service.dart';
 import 'package:yusr/core/services/API/repository_request_handler.dart';
 import 'package:yusr/features/announcements_notifications/data/models/announcement_model.dart';
 import 'package:yusr/features/announcements_notifications/data/models/notifications_model.dart' show NotificationModel;
+import 'package:yusr/features/announcements_notifications/data/models/target_audience_model.dart';
 
 class AnnouncementsRepository {
   final ApiService apiService;
@@ -48,6 +49,19 @@ class AnnouncementsRepository {
     );
     return response;
   }
+  Future<ApiResponse<List<TargetAudienceModel>>> getTargetAudiences() async {
+    final response =
+        await repositoryRequestHandler<List<TargetAudienceModel>>(
+      () => apiService.get(ApiLink.getTargetAudiences),
+      fromJson: (data) {
+        return (data as List)
+            .map((item) => TargetAudienceModel.fromJson(item))
+            .toList();
+      },
+    );
+    return response;
+  }
+
   Future<ApiResponse<List<NotificationModel>>> getNotifications() async {
     final response = await repositoryRequestHandler<List<NotificationModel>>(
       () => apiService.get(ApiLink.getNotifications),

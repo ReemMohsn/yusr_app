@@ -85,6 +85,7 @@ class ProfileContactRow extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   value,
+                  textDirection: TextDirection.ltr,
                   style: const TextStyle(
                     color: AppColor.textDark,
                     fontSize: 14,

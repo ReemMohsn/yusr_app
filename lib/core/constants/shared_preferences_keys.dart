@@ -7,4 +7,11 @@ class SharedPreferencesKeys {
   static const String otpCode = 'otp_code';
   static const String currentSessionId = 'current_session_id';
   static const String sessionId = 'current_session_id';
+
+  // 🔔 إشعارات كن قائد المحلية (تخزين القائمة JSON)
+  static const String trackingNotifications = 'tracking_notifications_json';
+
+  // دعوة جلسة معلقة (FCM وصل ولم يرد عليه الحاج)
+  static const String pendingTrackingSessionId = 'pending_tracking_session_id';
+  static const String pendingTrackingBody = 'pending_tracking_body';
 }

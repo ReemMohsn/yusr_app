@@ -69,6 +69,7 @@ class GroupContactRow extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   value,
+                  textDirection: TextDirection.ltr,
                   style: const TextStyle(
                     fontSize: 14,
                     color: AppColor.textDark,

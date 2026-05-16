@@ -48,7 +48,6 @@ class CustomDrawer extends ConsumerWidget {
             children: [
               // 1. رأس القائمة (Header)
               BuildDrawerHeader(profile: profile!),
-
               // 2. خيارات القائمة بناءً على الدور
               Expanded(
                 child: SingleChildScrollView(
@@ -83,31 +82,27 @@ class CustomDrawer extends ConsumerWidget {
             title: locale.becomeALeader,
             icon: Icons.workspace_premium_outlined,
             onTap: () async {
-              Navigator.pop(context); // 1. إغلاق القائمة الجانبية
-
               final sharedPrefs = ref.read(sharedPreferencesServiceProvider);
               final activeSessionId = await sharedPrefs.getInt(
                 SharedPreferencesKeys.currentSessionId,
               );
 
               if (activeSessionId != null && activeSessionId > 0) {
-                // 🚀 التحقق الأول: هل الوظيفة تعمل حالياً في الذاكرة (التطبيق لم يُغلق)؟
+                // 🚀 التحقق الأول: هل الوظيفة تعمل حالياً في الذاكرة؟
                 final isAlreadyRunning = ref
                     .read(leaderTrackingControllerProvider.notifier)
                     .isCurrentlyTracking;
 
                 if (isAlreadyRunning) {
-                  // المشرف كان فقط يتصفح واجهة أخرى، لا حاجة للاتصال بالفايربيس!
-                  // نوجهه مباشرة لقائمة الحجاج
                   Navigator.of(context).pushNamed(
                     AppRoute.leaderPilgrimsListView,
                     arguments: activeSessionId,
                   );
-                  return; // نخرج من الدالة فوراً
+                  return; // نخرج من الدالة
                 }
 
-                // 🛑 التحقق الثاني: وصلنا هنا يعني أن التطبيق أُغلق بالقوة (App Killed) والذاكرة فُرغت.
-                // يجب أن نسأل الفايربيس هل مر 30 دقيقة أم لا؟
+                // 🛑 التحقق الثاني (نسأل الفايربيس):
+                // نفتح التحميل (والقائمة الجانبية لا تزال مفتوحة لكي يبقى السياق context حياً)
                 context.showLoadingDialog();
 
                 final repo = ref.read(trackingRepositoryProvider);
@@ -126,16 +121,15 @@ class CustomDrawer extends ConsumerWidget {
                     isSessionExpired = false; // الجلسة لا زالت صالحة
                   }
                 }
-
-                context.closeLoadingDialog(); // إخفاء التحميل
+                context.closeLoadingDialog(); // إخفاء التحميل بأمان
 
                 if (isSessionExpired) {
-                  // 🔴 الجلسة ميتة (مر أكثر من 30 دقيقة)
-                  // تنظيف صامت وتوجيه لإنشاء جلسة جديدة
+                  // 🔴 الجلسة ميتة
                   await ref
                       .read(leaderTrackingControllerProvider.notifier)
                       .cleanUpGhostSession(activeSessionId);
 
+                  if (!context.mounted) return;
                   context.showErrorSnackBar(
                     'انتهت صلاحية جلستك السابقة لعدم نشاطك لأكثر من 30 دقيقة.',
                   );
@@ -143,11 +137,12 @@ class CustomDrawer extends ConsumerWidget {
                     context,
                   ).pushNamed(AppRoute.leaderStartSessionView);
                 } else {
-                  // 🟢 الجلسة صالحة (أقل من 30 دقيقة)
-                  // 🚀 بدون أي دايالوج خيارات، نقوم بتشغيل التتبع وتوجيهه فوراً!
+                  // 🟢 الجلسة صالحة
                   ref
                       .read(leaderTrackingControllerProvider.notifier)
                       .startTracking(activeSessionId);
+
+                  if (!context.mounted) return;
                   Navigator.of(context).pushNamed(
                     AppRoute.leaderPilgrimsListView,
                     arguments: activeSessionId,
@@ -162,52 +157,6 @@ class CustomDrawer extends ConsumerWidget {
             },
           ),
 
-          // BuildMenuItem(
-          //   context: context,
-          //   title: locale.becomeALeader,
-          //   icon: Icons.workspace_premium_outlined,
-          //   onTap: () async {
-          //     // 1. إغلاق القائمة الجانبية أولاً
-          //     Navigator.pop(context);
-
-          //     // 2. قراءة التفضيلات المحلية (SharedPreferences)
-          //     final sharedPrefs = ref.read(sharedPreferencesServiceProvider);
-          //     final activeSessionId = await sharedPrefs.getInt(
-          //       SharedPreferencesKeys.currentSessionId,
-          //     );
-
-          //     // 3. منطق التوجيه (الشرط)
-          //     if (activeSessionId != null && activeSessionId > 0) {
-          //       // 🟢 توجد جلسة نشطة!
-
-          //       // أ. نقوم بتشغيل كنترولر التتبع الشامل في الخلفية (حتى يبدأ بجلب المواقع)
-          //       ref
-          //           .read(leaderTrackingControllerProvider.notifier)
-          //           .startTracking(activeSessionId);
-
-          //       // ب. نوجه المشرف مباشرة إلى صفحة (قائمة الحجاج) بدلاً من صفحة البداية
-          //       // ونمرر activeSessionId كـ argument كما تطلب الصفحة
-          //       Navigator.of(context).pushNamed(
-          //         AppRoute.leaderPilgrimsListView,
-          //         arguments: activeSessionId,
-          //       );
-          //     } else {
-          //       // 🔴 لا توجد جلسة نشطة
-          //       // نوجه المشرف لصفحة "بدء الجلسة" كالمعتاد
-          //       Navigator.of(
-          //         context,
-          //       ).pushNamed(AppRoute.leaderStartSessionView);
-          //     }
-          //   },
-          //   // onTap: () {
-          //   //   Navigator.pop(
-          //   //     context,
-          //   //   ); // إغلاق القائمة الجانبية أولاً (مهم جداً للاحترافية)
-          //   //   Navigator.of(
-          //   //     context,
-          //   //   ).pushNamed(AppRoute.leaderStartSessionView); // الانتقال للصفحة
-          //   // },
-          // ),
           BuildMenuItem(
             context: context,
             title: locale.announcements,

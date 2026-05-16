@@ -11,12 +11,16 @@ class ApiLink {
 
   // 3. Profile
   static const String getProfile = '$server/Profile/GetProfileMobile';
-  static const String updateProfile = '$server/Profile/UpdateUserProfile';
-  static String getGroupDetailsMobile(int groupId) => '$server/Groups/GetGroupDetailsMobile/$groupId';
-  static String getHajDetailsMobile(int userId) => '$server/Groups/GetHajDetailsMobile/$userId';
-  static String getGroupPilgrimsMobile(int groupId) => '$server/Groups/GetGroupPilgrimsMobile/$groupId';
-  static const String getMyGroupPilgrimsMobile = '$server/Groups/GetMyGroupPilgrims';
-  
+
+  static const String updateProfile = '$server/Profile/UpdateSaudiNumber';
+  static String getGroupDetailsMobile(int groupId) =>
+      '$server/Groups/GetGroupDetailsMobile/$groupId';
+  static String getHajDetailsMobile(int userId) =>
+      '$server/Groups/GetHajDetailsMobile/$userId';
+  static String getGroupPilgrimsMobile(int groupId) =>
+      '$server/Groups/GetGroupPilgrimsMobile/$groupId';
+  static const String getMyGroupPilgrimsMobile =
+      '$server/Groups/GetMyGroupPilgrims';
   // 4. Announcements & Notifications
   static const String syncData = '$server/Announcements/SyncData';
   static const String getNotifications =
@@ -27,7 +31,9 @@ class ApiLink {
       '$server/Announcements/CreateAndPublishAnnouncement';
   static const String deleteAnnouncement =
       '$server/Announcements/DeleteAnnouncement';
-      
+
+  static const String getTargetAudiences =
+      '$server/Announcements/GetTargetAudiences';
   // Location
   static const String getActiveLocation = '$server/Location/GetActiveLocation';
   static const String getCampaignLocations =
@@ -58,7 +64,7 @@ class ApiLink {
   static const String participantResponse =
       '$server/Monitoring/ParticipantResponse';
   static const String endTrackingSession = '$server/Monitoring/EndSession';
-  
+
   // رابط خدمة المفتي الذكي (Hugging Face)
   static const String geminiChat = 'https://manar13-yusr-hajj-api.hf.space/ask';
   
