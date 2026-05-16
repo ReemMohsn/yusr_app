@@ -36,8 +36,10 @@ class NotificationService {
         if (profile == null) return;
 
         final role = profile.userRole.trim();
+          debugPrint("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy${role}");
 
-        if (role == 'مدير الحملة') {
+        if (role == "مدير الحملة") {
+
           debugPrint("المستخدم مدير حملة: تم تخطي المزامنة.");
           return; // إنهاء الدالة بنجاح
         }

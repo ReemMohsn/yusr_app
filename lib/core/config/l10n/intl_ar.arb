@@ -1,4 +1,5 @@
 {
+  "familyNumber": "رقم العائلة",
   "aboutCampaign": "عن الحملة",
   "campaignDates": "مواعيد الحملة",
   "campaignStartDate": "تاريخ انطلاق الحملة",
@@ -11,7 +12,7 @@
   "campaignGroups": "قروبات الحملة",
   "noGroupsCurrently": "لا توجد قروبات حالياً",
   "supervisor": "المشرف:",
-  "hijriYear": "السنة الهجرية:"
+  "hijriYear": "السنة الهجرية:",
   "appName": "يسر",
   "appSlogan": "مرافق الحاج الذكي",
   "home": "الرئيسية",

@@ -1,5 +1,5 @@
 {
-
+  "familyNumber": "Family Number",
   "aboutCampaign": "About Campaign",
   "campaignDates": "Campaign Dates",
   "campaignStartDate": "Campaign Start Date",
@@ -12,7 +12,7 @@
   "campaignGroups": "Campaign Groups",
   "noGroupsCurrently": "No groups currently",
   "supervisor": "Supervisor:",
-  "hijriYear": "Hijri Year:"
+  "hijriYear": "Hijri Year:",
 
 
   "appName": "Yusr",

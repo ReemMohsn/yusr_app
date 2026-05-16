@@ -5,11 +5,12 @@ import 'package:geolocator/geolocator.dart';
 
 class LocationService {
   // 🌟 1. إعدادات الموقع المثالية (دقة عالية مع منع التذبذب)
+  // distanceFilter: 5م — يمنع تحديثات GPS الوهمية عند الوقوف (drift 理想 2-4م)
   LocationSettings get optimalLocationSettings {
     if (defaultTargetPlatform == TargetPlatform.android) {
       return AndroidSettings(
         accuracy: LocationAccuracy.bestForNavigation,
-        distanceFilter: 2,
+        distanceFilter: 5, // ارتفعنا من 2 إلى 5 لتصفية تذبذب GPS عند الوقوف
         forceLocationManager: false,
         intervalDuration: const Duration(seconds: 5),
       );
@@ -17,7 +18,7 @@ class LocationService {
       return AppleSettings(
         accuracy: LocationAccuracy.bestForNavigation,
         activityType: ActivityType.fitness,
-        distanceFilter: 2,
+        distanceFilter: 5,
         pauseLocationUpdatesAutomatically: false,
       );
     }
@@ -25,14 +26,18 @@ class LocationService {
 
   // 2. بث الموقع العادي (بدون إشعار خلفية)
   Stream<Position> get positionStream =>
-      Geolocator.getPositionStream(locationSettings: optimalLocationSettings);
+      Geolocator.getPositionStream(locationSettings: optimalLocationSettings)
+          .handleError((Object error) {
+        // GPS مغلق أو خطأ آخر — نتجاهله بهدوء بدلاً من unhandled exception
+        debugPrint('⚠️ [GPS] خطأ في positionStream (تم التعامل معه): $error');
+      });
 
   // 3. بث مخصص للخلفية (Foreground Service) — مهم لوظيفة المشرف لمنع قتل الـ GPS
   Stream<Position> get foregroundPositionStream {
     final locationSettings = defaultTargetPlatform == TargetPlatform.android
         ? AndroidSettings(
             accuracy: LocationAccuracy.bestForNavigation,
-            distanceFilter: 2,
+            distanceFilter: 5, // تصفية تذبذب GPS عند الوقوف
             forceLocationManager: false,
             intervalDuration: const Duration(seconds: 5),
             foregroundNotificationConfig: const ForegroundNotificationConfig(
@@ -44,11 +49,17 @@ class LocationService {
         : AppleSettings(
             accuracy: LocationAccuracy.bestForNavigation,
             activityType: ActivityType.fitness,
-            distanceFilter: 2,
+            distanceFilter: 5,
             pauseLocationUpdatesAutomatically: false,
           );
 
-    return Geolocator.getPositionStream(locationSettings: locationSettings);
+    // .handleError يمنع رمي unhandled exception عند إغلاق GPS
+    return Geolocator.getPositionStream(locationSettings: locationSettings)
+        .handleError((Object error) {
+      debugPrint(
+        '⚠️ [GPS] خطأ في foregroundPositionStream (تم التعامل معه): $error',
+      );
+    });
   }
 
   // 4. بث اتجاه البوصلة

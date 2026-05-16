@@ -25,6 +25,8 @@ class YusrApp extends ConsumerWidget {
 
     return ScreenUtilInit(
       designSize: const Size(393, 852),
+      minTextAdapt: true,
+      splitScreenMode: true,
       builder: (context, child) => MaterialApp(
         localizationsDelegates: const [
           AppLocalizations.delegate,

@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:beacon_broadcast/beacon_broadcast.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'package:geolocator/geolocator.dart';
 
 /// خدمة بلوتوث موحَّدة تدعم وضعَين:
 ///
@@ -15,6 +16,7 @@ import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 ///
 /// كلا الوضعَين يستخدمان [_initBleWithAdapterMonitoring] المشتركة
 /// لإزالة تكرار منطق التهيئة والمراقبة.
+
 class BleRadarService {
   // ─── وضع المسح (Leader) ─────────────────────────────────────────────────
 
@@ -48,10 +50,29 @@ class BleRadarService {
     );
   }
 
-  void _startActualBleScanning() {
+  Future<void> _startActualBleScanning() async {
+    // ─ فحص GPS قبل البدء (Android يتطلبه لمسح BLE) ────────────────────────
+    final bool gpsEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!gpsEnabled) {
+      debugPrint(
+        '⚠️ [رادار البلوتوث] GPS مغلق — سيُعاد المسح تلقائياً عند تفعيله.',
+      );
+      _onScanWarningChanged?.call('يرجى تفعيل GPS لتشغيل رادار البلوتوث.');
+      return; // نخرج بهدوء بدلاً من رمي PlatformException
+    }
+
     debugPrint('📡 [رادار البلوتوث] بدء مسح جديد مستمر...');
     _bleScanSub?.cancel();
-    FlutterBluePlus.startScan(continuousUpdates: true);
+
+    try {
+      await FlutterBluePlus.startScan(continuousUpdates: true);
+    } on Exception catch (e) {
+      debugPrint('❌ [رادار البلوتوث] فشل في بدء المسح: $e');
+      _onScanWarningChanged?.call(
+        'تعذّر بدء مسح البلوتوث. تأكد من تفعيل GPS والبلوتوث.',
+      );
+      return;
+    }
 
     int devicesFound = 0;
     _bleScanSub = FlutterBluePlus.scanResults.listen((results) {
@@ -166,7 +187,8 @@ class BleRadarService {
   /// - [onEnabled]: تُستدعى عند تشغيل البلوتوث (أو كانت مُشغَّلاً).
   /// - [onDisabled]: تُستدعى عند إطفاء البلوتوث.
   /// - [notSupportedMessage]: رسالة تُرسَل إذا كان الجهاز لا يدعم البلوتوث.
-  Future<StreamSubscription<BluetoothAdapterState>?> _initBleWithAdapterMonitoring({
+  Future<StreamSubscription<BluetoothAdapterState>?>
+  _initBleWithAdapterMonitoring({
     required String tag,
     required Function(String?) onWarning,
     required VoidCallback onEnabled,
