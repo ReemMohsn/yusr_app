@@ -1,4 +1,17 @@
 {
+  "aboutCampaign": "عن الحملة",
+  "campaignDates": "مواعيد الحملة",
+  "campaignStartDate": "تاريخ انطلاق الحملة",
+  "campaignReturnDate": "تاريخ عودة الحملة",
+  "generalInfo": "معلومات عامة",
+  "totalPilgrims": "إجمالي الحجاج",
+  "totalGroups": "إجمالي المجموعات",
+  "totalSupervisors": "إجمالي المشرفين",
+  "viewCampaignGroups": "عرض قروبات الحملة",
+  "campaignGroups": "قروبات الحملة",
+  "noGroupsCurrently": "لا توجد قروبات حالياً",
+  "supervisor": "المشرف:",
+  "hijriYear": "السنة الهجرية:"
   "appName": "يسر",
   "appSlogan": "مرافق الحاج الذكي",
   "home": "الرئيسية",

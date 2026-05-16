@@ -1,4 +1,20 @@
 {
+
+  "aboutCampaign": "About Campaign",
+  "campaignDates": "Campaign Dates",
+  "campaignStartDate": "Campaign Start Date",
+  "campaignReturnDate": "Campaign Return Date",
+  "generalInfo": "General Information",
+  "totalPilgrims": "Total Pilgrims",
+  "totalGroups": "Total Groups",
+  "totalSupervisors": "Total Supervisors",
+  "viewCampaignGroups": "View Campaign Groups",
+  "campaignGroups": "Campaign Groups",
+  "noGroupsCurrently": "No groups currently",
+  "supervisor": "Supervisor:",
+  "hijriYear": "Hijri Year:"
+
+
   "appName": "Yusr",
   "appSlogan": "The Smart Pilgrim Companion",
   "home": "Home",
