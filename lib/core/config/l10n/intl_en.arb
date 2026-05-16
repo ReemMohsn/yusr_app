@@ -12,7 +12,7 @@
   "campaignGroups": "Campaign Groups",
   "noGroupsCurrently": "No groups currently",
   "supervisor": "Supervisor:",
-  "hijriYear": "Hijri Year:"
+  "hijriYear": "Hijri Year:",
 
 
   "appName": "Yusr",
@@ -293,5 +293,6 @@
   "trackingInProgress": "Tracking in Progress",
   "join": "Join",
   "dialogReject": "Reject",
-  "dialogAccept": "Accept"
+  "dialogAccept": "Accept",
+  "familyNumber": "Family/Relative Number"
 }

@@ -11,7 +11,7 @@
   "campaignGroups": "قروبات الحملة",
   "noGroupsCurrently": "لا توجد قروبات حالياً",
   "supervisor": "المشرف:",
-  "hijriYear": "السنة الهجرية:"
+  "hijriYear": "السنة الهجرية:",
   "appName": "يسر",
   "appSlogan": "مرافق الحاج الذكي",
   "home": "الرئيسية",
@@ -290,5 +290,7 @@
   "trackingInProgress": "جاري التتبع",
   "join": "انضمام",
   "dialogReject": "رفض",
-  "dialogAccept": "موافق"
+  "dialogAccept": "موافق",
+  "familyNumber": "رقم العائلة/المرافق"
+
 }

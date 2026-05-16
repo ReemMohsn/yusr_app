@@ -26,6 +26,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "aboutCampaign": MessageLookupByLibrary.simpleMessage("عن الحملة"),
     "accepted": MessageLookupByLibrary.simpleMessage("موافق"),
     "accountVerification": MessageLookupByLibrary.simpleMessage(
       "التحقق من الحساب",
@@ -72,8 +73,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "asr": MessageLookupByLibrary.simpleMessage("العصر"),
     "autoUpdate": MessageLookupByLibrary.simpleMessage("تحديث تلقائي"),
     "becomeALeader": MessageLookupByLibrary.simpleMessage("كن قائد"),
+    "campaignDates": MessageLookupByLibrary.simpleMessage("مواعيد الحملة"),
+    "campaignGroups": MessageLookupByLibrary.simpleMessage("قروبات الحملة"),
     "campaignLocation": MessageLookupByLibrary.simpleMessage(
       "موقع استقرار الحملة",
+    ),
+    "campaignReturnDate": MessageLookupByLibrary.simpleMessage(
+      "تاريخ عودة الحملة",
+    ),
+    "campaignStartDate": MessageLookupByLibrary.simpleMessage(
+      "تاريخ انطلاق الحملة",
     ),
     "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
     "changeLocation": MessageLookupByLibrary.simpleMessage("تغيير الموقع"),
@@ -177,6 +186,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "errorOccurred": MessageLookupByLibrary.simpleMessage("حدث خطأ: "),
     "fajr": MessageLookupByLibrary.simpleMessage("الفجر"),
+    "familyNumber": MessageLookupByLibrary.simpleMessage("رقم العائلة/المرافق"),
     "fetchDataError": MessageLookupByLibrary.simpleMessage(
       "حدث خطأ في جلب البيانات",
     ),
@@ -189,6 +199,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "fullName": MessageLookupByLibrary.simpleMessage("الاسم الرباعي"),
     "gender": MessageLookupByLibrary.simpleMessage("الجنس"),
+    "generalInfo": MessageLookupByLibrary.simpleMessage("معلومات عامة"),
     "getAnswer": MessageLookupByLibrary.simpleMessage("الحصول على الإجابة"),
     "gpsDisabledWarning": MessageLookupByLibrary.simpleMessage(
       "تم إغلاق خدمة الموقع (GPS) في الهاتف. يرجى تفعيلها.",
@@ -233,6 +244,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "healthStable": MessageLookupByLibrary.simpleMessage("مستقرة"),
     "healthStatus": MessageLookupByLibrary.simpleMessage("الحالة الصحية"),
     "hijriDate": MessageLookupByLibrary.simpleMessage("التاريخ الهجري"),
+    "hijriYear": MessageLookupByLibrary.simpleMessage("السنة الهجرية:"),
     "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
     "importantAnnouncement": MessageLookupByLibrary.simpleMessage("إعلان هام"),
     "importantNotesTitle": MessageLookupByLibrary.simpleMessage("ملاحظات هامة"),
@@ -321,6 +333,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "noAnnouncementsCurrently": MessageLookupByLibrary.simpleMessage(
       "لا توجد إعلانات حالياً",
+    ),
+    "noGroupsCurrently": MessageLookupByLibrary.simpleMessage(
+      "لا توجد قروبات حالياً",
     ),
     "noInternet": MessageLookupByLibrary.simpleMessage("لا يوجد إنترنت"),
     "noMatchingSearchResults": MessageLookupByLibrary.simpleMessage(
@@ -508,6 +523,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "titleLabel": MessageLookupByLibrary.simpleMessage("العنوان"),
     "total": MessageLookupByLibrary.simpleMessage("الإجمالي"),
+    "totalGroups": MessageLookupByLibrary.simpleMessage("إجمالي المجموعات"),
+    "totalPilgrims": MessageLookupByLibrary.simpleMessage("إجمالي الحجاج"),
+    "totalSupervisors": MessageLookupByLibrary.simpleMessage("إجمالي المشرفين"),
     "trackingInProgress": MessageLookupByLibrary.simpleMessage("جاري التتبع"),
     "unexpectedError": MessageLookupByLibrary.simpleMessage(
       "حدث خطأ غير متوقع، يرجى المحاولة مرة أخرى",
@@ -520,6 +538,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "userRole": MessageLookupByLibrary.simpleMessage("مستخدم"),
     "verificationCodeLabel": MessageLookupByLibrary.simpleMessage("رمز التحقق"),
     "verifyCodeButton": MessageLookupByLibrary.simpleMessage("التحقق من الرمز"),
+    "viewCampaignGroups": MessageLookupByLibrary.simpleMessage(
+      "عرض قروبات الحملة",
+    ),
     "viewDetails": MessageLookupByLibrary.simpleMessage("عرض التفاصيل"),
     "waitingForYourQuestion": MessageLookupByLibrary.simpleMessage(
       "بانتظار سؤالك للإجابة عليه بالذكاء الاصطناعي..",

@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "aboutCampaign": MessageLookupByLibrary.simpleMessage("About Campaign"),
     "accepted": MessageLookupByLibrary.simpleMessage("Accepted"),
     "accountVerification": MessageLookupByLibrary.simpleMessage(
       "Account Verification",
@@ -77,8 +78,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "asr": MessageLookupByLibrary.simpleMessage("Asr"),
     "autoUpdate": MessageLookupByLibrary.simpleMessage("Auto Update"),
     "becomeALeader": MessageLookupByLibrary.simpleMessage("Become a Leader"),
+    "campaignDates": MessageLookupByLibrary.simpleMessage("Campaign Dates"),
+    "campaignGroups": MessageLookupByLibrary.simpleMessage("Campaign Groups"),
     "campaignLocation": MessageLookupByLibrary.simpleMessage(
       "Campaign Location",
+    ),
+    "campaignReturnDate": MessageLookupByLibrary.simpleMessage(
+      "Campaign Return Date",
+    ),
+    "campaignStartDate": MessageLookupByLibrary.simpleMessage(
+      "Campaign Start Date",
     ),
     "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
     "changeLocation": MessageLookupByLibrary.simpleMessage("Change Location"),
@@ -190,6 +199,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "An error occurred: ",
     ),
     "fajr": MessageLookupByLibrary.simpleMessage("Fajr"),
+    "familyNumber": MessageLookupByLibrary.simpleMessage(
+      "Family/Relative Number",
+    ),
     "fetchDataError": MessageLookupByLibrary.simpleMessage(
       "Error fetching data",
     ),
@@ -205,6 +217,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "fullName": MessageLookupByLibrary.simpleMessage("Full Name"),
     "gender": MessageLookupByLibrary.simpleMessage("Gender"),
+    "generalInfo": MessageLookupByLibrary.simpleMessage("General Information"),
     "getAnswer": MessageLookupByLibrary.simpleMessage("Get Answer"),
     "gpsDisabledWarning": MessageLookupByLibrary.simpleMessage(
       "Location service (GPS) has been turned off. Please enable it.",
@@ -249,6 +262,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "healthStable": MessageLookupByLibrary.simpleMessage("Stable"),
     "healthStatus": MessageLookupByLibrary.simpleMessage("Health Status"),
     "hijriDate": MessageLookupByLibrary.simpleMessage("Hijri Date"),
+    "hijriYear": MessageLookupByLibrary.simpleMessage("Hijri Year:"),
     "home": MessageLookupByLibrary.simpleMessage("Home"),
     "importantAnnouncement": MessageLookupByLibrary.simpleMessage(
       "Important Announcement",
@@ -343,6 +357,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "newPasswordLabel": MessageLookupByLibrary.simpleMessage("New Password"),
     "noAnnouncementsCurrently": MessageLookupByLibrary.simpleMessage(
       "There are currently no announcements",
+    ),
+    "noGroupsCurrently": MessageLookupByLibrary.simpleMessage(
+      "No groups currently",
     ),
     "noInternet": MessageLookupByLibrary.simpleMessage("No Internet"),
     "noMatchingSearchResults": MessageLookupByLibrary.simpleMessage(
@@ -538,6 +555,11 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "titleLabel": MessageLookupByLibrary.simpleMessage("Title"),
     "total": MessageLookupByLibrary.simpleMessage("Total"),
+    "totalGroups": MessageLookupByLibrary.simpleMessage("Total Groups"),
+    "totalPilgrims": MessageLookupByLibrary.simpleMessage("Total Pilgrims"),
+    "totalSupervisors": MessageLookupByLibrary.simpleMessage(
+      "Total Supervisors",
+    ),
     "trackingInProgress": MessageLookupByLibrary.simpleMessage(
       "Tracking in Progress",
     ),
@@ -556,6 +578,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Verification Code",
     ),
     "verifyCodeButton": MessageLookupByLibrary.simpleMessage("Verify Code"),
+    "viewCampaignGroups": MessageLookupByLibrary.simpleMessage(
+      "View Campaign Groups",
+    ),
     "viewDetails": MessageLookupByLibrary.simpleMessage("View Details"),
     "waitingForYourQuestion": MessageLookupByLibrary.simpleMessage(
       "Waiting for your question to be answered by AI...",

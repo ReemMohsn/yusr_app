@@ -1,7 +1,7 @@
 allprojects {
     repositories {
         google()
-        mavenCentral()
+        mavenCentral() // 🛠️ تصحيح الدالة هنا
     }
 }
 
@@ -25,14 +25,35 @@ subprojects {
                     sourceCompatibility = JavaVersion.VERSION_17
                     targetCompatibility = JavaVersion.VERSION_17
                 }
+                
+                // 🛠️ الطريقة المصححة والآمنة لقراءة الـ Manifest وتعيين الـ namespace
+                if (namespace == null) {
+                    val manifestFile = project.file("src/main/AndroidManifest.xml")
+                    if (manifestFile.exists()) {
+                        try {
+                            val dbFactory = javax.xml.parsers.DocumentBuilderFactory.newInstance()
+                            val dBuilder = dbFactory.newDocumentBuilder()
+                            val doc = dBuilder.parse(manifestFile)
+                            doc.documentElement.normalize()
+                            val packageName = doc.documentElement.getAttribute("package")
+                            if (!packageName.isNullOrEmpty()) {
+                                namespace = packageName
+                            }
+                        } catch (e: Exception) {
+                            // في حال حدوث أي خطأ أثناء القراءة لا يتوقف البناء
+                        }
+                    }
+                }
             }
         }
     }
+    
     // إجبار الجافا لجميع المكتبات على 17
     tasks.withType<JavaCompile>().configureEach {
         sourceCompatibility = JavaVersion.VERSION_17.toString()
         targetCompatibility = JavaVersion.VERSION_17.toString()
     }
+    
     // إجبار الكوتلن لجميع المكتبات على 17
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
         compilerOptions {
@@ -48,4 +69,3 @@ subprojects {
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
 }
-

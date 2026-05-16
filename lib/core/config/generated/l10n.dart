@@ -54,6 +54,126 @@ class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
+  /// `About Campaign`
+  String get aboutCampaign {
+    return Intl.message(
+      'About Campaign',
+      name: 'aboutCampaign',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Campaign Dates`
+  String get campaignDates {
+    return Intl.message(
+      'Campaign Dates',
+      name: 'campaignDates',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Campaign Start Date`
+  String get campaignStartDate {
+    return Intl.message(
+      'Campaign Start Date',
+      name: 'campaignStartDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Campaign Return Date`
+  String get campaignReturnDate {
+    return Intl.message(
+      'Campaign Return Date',
+      name: 'campaignReturnDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `General Information`
+  String get generalInfo {
+    return Intl.message(
+      'General Information',
+      name: 'generalInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Pilgrims`
+  String get totalPilgrims {
+    return Intl.message(
+      'Total Pilgrims',
+      name: 'totalPilgrims',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Groups`
+  String get totalGroups {
+    return Intl.message(
+      'Total Groups',
+      name: 'totalGroups',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Supervisors`
+  String get totalSupervisors {
+    return Intl.message(
+      'Total Supervisors',
+      name: 'totalSupervisors',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View Campaign Groups`
+  String get viewCampaignGroups {
+    return Intl.message(
+      'View Campaign Groups',
+      name: 'viewCampaignGroups',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Campaign Groups`
+  String get campaignGroups {
+    return Intl.message(
+      'Campaign Groups',
+      name: 'campaignGroups',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No groups currently`
+  String get noGroupsCurrently {
+    return Intl.message(
+      'No groups currently',
+      name: 'noGroupsCurrently',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Supervisor`
+  String get supervisor {
+    return Intl.message('Supervisor', name: 'supervisor', desc: '', args: []);
+  }
+
+  /// `Hijri Year:`
+  String get hijriYear {
+    return Intl.message('Hijri Year:', name: 'hijriYear', desc: '', args: []);
+  }
+
   /// `Yusr`
   String get appName {
     return Intl.message('Yusr', name: 'appName', desc: '', args: []);
@@ -2099,11 +2219,6 @@ class AppLocalizations {
     return Intl.message('Yes, Stop', name: 'yesStop', desc: '', args: []);
   }
 
-  /// `Supervisor`
-  String get supervisor {
-    return Intl.message('Supervisor', name: 'supervisor', desc: '', args: []);
-  }
-
   /// `🔇 Sound muted. It will return automatically when you return to safety.`
   String get alarmMutedPilgrimMsg {
     return Intl.message(
@@ -2422,6 +2537,16 @@ class AppLocalizations {
   /// `Accept`
   String get dialogAccept {
     return Intl.message('Accept', name: 'dialogAccept', desc: '', args: []);
+  }
+
+  /// `Family/Relative Number`
+  String get familyNumber {
+    return Intl.message(
+      'Family/Relative Number',
+      name: 'familyNumber',
+      desc: '',
+      args: [],
+    );
   }
 }
 

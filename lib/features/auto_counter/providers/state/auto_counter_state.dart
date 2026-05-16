@@ -1,19 +1,27 @@
 enum TrackingType { tawaf, saee }
 
 class AutoCounterState {
-  final int currentLap;          // الشوط الحالي (1-7)
-  final int totalLaps;           // إجمالي الأشواط (7)
-  final bool isRunning;          // هل الحساسات تعمل الآن؟
-  final bool isCompleted;        // هل تم الانتهاء من النسك بالكامل؟
-  final int stepsInCurrentLap;   // عدد خطوات الشوط الحالي (للسعي)
-  final double accumulatedAngle; // الزاوية التراكمية (للطواف)
-  final bool isMoving;           // هل يتم رصد حركة مشي حقيقية حالياً؟
-  final TrackingType trackingType; // نوع النسك الحالي
-  
-  // متغيرات السعي المتقدمة
-  final double startHeading;     // اتجاه البوصلة عند بداية كل شوط
-  final bool turnDetected;       // هل تم رصد التفاف U-Turn؟
-  final String? permissionError; // لتخزين رسائل خطأ الحساسات إن وجدت
+  final int currentLap;
+
+  final int totalLaps;
+
+  final bool isRunning;
+
+  final bool isCompleted;
+
+  final int stepsInCurrentLap;
+
+  final double accumulatedAngle;
+
+  final bool isMoving;
+
+  final TrackingType trackingType;
+
+  final double startHeading;
+
+  final bool turnDetected;
+
+  final String? permissionError;
 
   const AutoCounterState({
     this.currentLap = 1,
@@ -29,10 +37,8 @@ class AutoCounterState {
     this.permissionError,
   });
 
-  // حساب الأشواط المتبقية (اختياري للواجهات)
   int get remainingLaps => (totalLaps - currentLap) + 1;
 
-  // دالة copyWith لتحديث الحالة في الـ Controller دون فقدان البيانات الأخرى
   AutoCounterState copyWith({
     int? currentLap,
     int? totalLaps,
@@ -61,9 +67,13 @@ class AutoCounterState {
     );
   }
 
-  // دالة اختيارية لتمثيل الحالة كنص (مفيدة في الـ Debugging)
   @override
-  String toString() {
-    return 'AutoCounterState(Lap: $currentLap, Moving: $isMoving, Steps: $stepsInCurrentLap, Turn: $turnDetected)';
-  }
+  String toString() =>
+      'AutoCounterState('
+      'Lap:$currentLap '
+      'Moving:$isMoving '
+      'Steps:$stepsInCurrentLap '
+      'Angle:${accumulatedAngle.toStringAsFixed(1)} '
+      'Turn:$turnDetected'
+      ')';
 }
