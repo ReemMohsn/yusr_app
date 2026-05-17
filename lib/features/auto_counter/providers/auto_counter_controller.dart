@@ -10,6 +10,7 @@ import 'auto_counter_notification_provider.dart';
 import 'auto_counter_storage_provider.dart';
 import 'state/auto_counter_state.dart';
 import 'counter_provider.dart';
+import '../services/auto_counter_strings.dart';
 
 part 'auto_counter_controller.g.dart';
 
@@ -77,7 +78,8 @@ class AutoCounterController extends _$AutoCounterController {
 
     if (!isGranted.isGranted) {
       state = state.copyWith(
-        permissionError: 'يرجى منح صلاحية رصد النشاط الحركي من إعدادات الجهاز',
+        permissionError: AutoCounterStrings.activityPermissionDenied,
+        // permissionError: 'يرجى منح صلاحية رصد النشاط الحركي من إعدادات الجهاز',
       );
       return;
     }
@@ -177,7 +179,7 @@ class AutoCounterController extends _$AutoCounterController {
     // Hardware Pedometer
     _stepSub = repo.stepStream.listen(
       (event) => _handleStep(event, isTawaf),
-      onError: (_) => _handleSensorError('تعذّر الوصول لعداد الخطوات'),
+      onError: (_) => _handleSensorError(AutoCounterStrings.stepSensorError),
     );
 
     // Walking Statu
@@ -189,7 +191,8 @@ class AutoCounterController extends _$AutoCounterController {
     //لجيروسكوب — قياس الدوران
     _gyroSub = repo.gyroscopeStream.listen(
       (reading) => isTawaf ? _processTawaf(reading) : _processSaee(reading),
-      onError: (_) => _handleSensorError('تعذّر الوصول للجيروسكوب'),
+      onError: (_) =>
+          _handleSensorError(AutoCounterStrings.gyroscopeSensorError),
     );
   }
 
@@ -477,8 +480,10 @@ class AutoCounterController extends _$AutoCounterController {
         accuracy: LocationAccuracy.low,
         distanceFilter: 1000,
         foregroundNotificationConfig: ForegroundNotificationConfig(
-          notificationTitle: 'يُسر - العداد التلقائي نشط',
-          notificationText: 'جاري حساب أشواطك بدقة في الخلفية',
+          // notificationTitle: 'يُسر - العداد التلقائي نشط',
+          // notificationText: 'جاري حساب أشواطك بدقة في الخلفية',
+          notificationTitle: AutoCounterStrings.foregroundNotificationTitle,
+          notificationText: AutoCounterStrings.foregroundNotificationBody,
           enableWakeLock: true,
         ),
       ),

@@ -1,16 +1,12 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import '../services/auto_counter_strings.dart';
 
-/// خدمة الإشعارات المحلية لعداد الطواف والسعي
-///
-/// مسؤولية واحدة: إرسال الإشعارات عند اكتمال الأشواط
-/// مستقلة تماماً — لا تعرف شيئاً عن الكونترولر أو الـ State
 class AutoCounterNotificationService {
   final FlutterLocalNotificationsPlugin _notifications =
       FlutterLocalNotificationsPlugin();
   bool _initialized = false;
 
   static const String _channelId = 'tawaf_counter';
-  static const String _channelName = 'عداد الطواف والسعي';
 
   /// تهيئة الإشعارات — يُستدعى مرة واحدة عند بناء الكونترولر
   Future<void> init() async {
@@ -32,17 +28,19 @@ class AutoCounterNotificationService {
     required bool isTawaf,
   }) async {
     if (!_initialized) return;
-    final type = isTawaf ? 'الطواف' : 'السعي';
+    final type = isTawaf ? AutoCounterStrings.tawaf : AutoCounterStrings.saee;
     final remaining = 7 - completedLap;
     try {
       await _notifications.show(
         completedLap,
-        '✅ $type — الشوط $completedLap مكتمل',
-        remaining > 0 ? 'تبقّى $remaining أشواط' : 'اكتمل النسك بحمد الله!',
-        const NotificationDetails(
+        AutoCounterStrings.lapCompletedTitle(type, completedLap),
+        remaining > 0
+            ? AutoCounterStrings.lapsRemaining(remaining)
+            : AutoCounterStrings.allLapsCompleted,
+        NotificationDetails(
           android: AndroidNotificationDetails(
             _channelId,
-            _channelName,
+            AutoCounterStrings.notificationChannelName,
             importance: Importance.high,
             priority: Priority.high,
             playSound: false,
@@ -55,16 +53,16 @@ class AutoCounterNotificationService {
   /// إشعار اكتمال النسك كاملاً (الشوط السابع)
   Future<void> showCompletionNotification({required bool isTawaf}) async {
     if (!_initialized) return;
-    final type = isTawaf ? 'الطواف' : 'السعي';
+    final type = isTawaf ? AutoCounterStrings.tawaf : AutoCounterStrings.saee;
     try {
       await _notifications.show(
         100,
-        '🎉 تم إتمام $type',
-        'اكتملت الأشواط السبعة بحمد الله وفضله',
-        const NotificationDetails(
+        AutoCounterStrings.completionNotificationTitle(type),
+        AutoCounterStrings.completionNotificationBody,
+        NotificationDetails(
           android: AndroidNotificationDetails(
             _channelId,
-            _channelName,
+            AutoCounterStrings.notificationChannelName,
             importance: Importance.max,
             priority: Priority.max,
             playSound: true,

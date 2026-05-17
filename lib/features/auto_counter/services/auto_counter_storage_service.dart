@@ -3,8 +3,7 @@ import 'package:yusr/core/services/shared_preferences_service.dart';
 
 /// خدمة حفظ واستعادة حالة عداد الطواف والسعي
 ///
-/// تتبع أسلوب المشروع: تعتمد على [SharedPreferencesService] من core
-/// بدلاً من استدعاء [SharedPreferences.getInstance()] مباشرة
+
 class AutoCounterStorageService {
   final SharedPreferencesService _prefs;
 
@@ -24,7 +23,6 @@ class AutoCounterStorageService {
   }
 
   /// استعادة الشوط المحفوظ إذا كانت هناك جلسة سابقة لم تكتمل
-  /// يعيد 1 إذا لم توجد جلسة سابقة أو كانت من نوع مختلف
   Future<int> loadSavedLap(bool isTawaf) async {
     try {
       final savedRunning =
