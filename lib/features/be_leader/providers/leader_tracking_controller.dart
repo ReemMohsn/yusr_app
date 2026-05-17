@@ -218,7 +218,7 @@ class LeaderTrackingController extends _$LeaderTrackingController {
       );
 
       // 🔴 فلتر 1: رفض المواقع ضعيفة الدقة
-      if (position.accuracy > 25) {
+      if (position.accuracy > 20) {
         debugPrint(
           "⚠️ [المشرف] ❌ دقة ضعيفة (${position.accuracy}  م).فقط وعدم الإعتماد و أخد هذه القراءة  إرسال نبضة حياة...",
         );

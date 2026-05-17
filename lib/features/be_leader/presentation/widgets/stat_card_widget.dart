@@ -35,34 +35,37 @@ class StatCardWidget extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, color: color, size: 18.sp),
-              SizedBox(width: 4.w),
-              Text(
-                title,
-                style: TextStyle(
-                  color: color,
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w500,
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(icon, color: color, size: 18.sp),
+                SizedBox(width: 4.w),
+                Text(
+                  title,
+                  style: TextStyle(
+                    color: color,
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          SizedBox(height: 8.h),
-          Text(
-            count,
-            style: TextStyle(
-              color: color,
-              fontSize: 24.sp,
-              fontWeight: FontWeight.bold,
+              ],
             ),
-          ),
-        ],
+            SizedBox(height: 8.h),
+            Text(
+              count,
+              style: TextStyle(
+                color: color,
+                fontSize: 24.sp,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
