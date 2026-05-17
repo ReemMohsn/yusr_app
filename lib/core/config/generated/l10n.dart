@@ -54,6 +54,16 @@ class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
+  /// `Family/Relative Number`
+  String get familyNumber {
+    return Intl.message(
+      'Family/Relative Number',
+      name: 'familyNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `About Campaign`
   String get aboutCampaign {
     return Intl.message(
@@ -2537,16 +2547,6 @@ class AppLocalizations {
   /// `Accept`
   String get dialogAccept {
     return Intl.message('Accept', name: 'dialogAccept', desc: '', args: []);
-  }
-
-  /// `Family/Relative Number`
-  String get familyNumber {
-    return Intl.message(
-      'Family/Relative Number',
-      name: 'familyNumber',
-      desc: '',
-      args: [],
-    );
   }
 }
 

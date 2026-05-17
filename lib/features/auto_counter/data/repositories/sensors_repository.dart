@@ -1,106 +1,6 @@
-// // import 'package:sensors_plus/sensors_plus.dart';
-// // import 'dart:math' as math;
-
-// // class SensorsRepository {
-// //   // دفق بيانات المشي مع فلترة القمم
-// //   Stream<double> get accelerationStream {
-// //     return userAccelerometerEvents.map((event) {
-// //       return math.sqrt(event.x * event.x + event.y * event.y + event.z * event.z);
-// //     });
-// //   }
-
-// //   // دفق البوصلة (الاتجاه) مهم جداً للسعي لمعرفة الالتفاف
-// //   Stream<double> get headingStream {
-// //     return magnetometerEvents.map((event) {
-// //       double heading = math.atan2(event.y, event.x) * (180 / math.pi);
-// //       if (heading < 0) heading += 360;
-// //       return heading;
-// //     });
-// //   }
-// // }
-
-// //////////////////////////
-// ///
-
-// // ============================================================
-// // sensors_repository.dart
-// // المستودع الوحيد لجميع بيانات الحساسات
-// //
-// // التغيير الجوهري: استبدال المغناطيس (Magnetometer) بالجيروسكوب (Gyroscope)
-// // السبب: المغناطيس داخل المسجد الحرام غير موثوق بسبب:
-// //   - التداخل المعدني للمبنى
-// //   - آلاف الهواتف المحيطة
-// // الجيروسكوب: يقيس سرعة الدوران مباشرة ولا يتأثر بالبيئة الخارجية
-// // ============================================================
-
-// import 'package:sensors_plus/sensors_plus.dart';
-// import 'dart:math' as math;
-
-// // ── نموذج بيانات قراءة الجيروسكوب ──────────────────────────
-// class GyroscopeReading {
-//   /// معدل الدوران حول المحور Z بالدرجة/ثانية (موقَّع: + عكس الساعة، - مع الساعة)
-//   /// المحور Z هو محور الدوران الأفقي عندما يكون الهاتف عمودياً في الجيب
-//   final double zRate;
-
-//   /// طابع زمني للقراءة — يُستخدم لحساب dt بدقة بين قراءتين
-//   final DateTime timestamp;
-
-//   const GyroscopeReading({required this.zRate, required this.timestamp});
-// }
-
-// // ── المستودع الرئيسي ─────────────────────────────────────────
-// class SensorsRepository {
-//   /// مجرى التسارع الخطي (بعد حذف الجاذبية) — لرصد الخطوات
-//   ///
-//   /// يُعيد القوة الكلية للحركة بوحدة m/s²
-//   /// يُستخدم كـ "نبضمتر" لرصد ذروات التسارع عند كل خطوة
-//   Stream<double> get accelerationStream {
-//     return userAccelerometerEvents.map((event) {
-//       return math.sqrt(
-//         event.x * event.x + event.y * event.y + event.z * event.z,
-//       );
-//     });
-//   }
-
-//   /// مجرى الجيروسكوب — لقياس الدوران في الطواف ورصد الالتفاف في السعي
-//   ///
-//   /// يُعيد [GyroscopeReading] يحتوي على:
-//   /// - zRate: سرعة الدوران الأفقي (درجة/ثانية)
-//   /// - timestamp: لحساب الزمن المنقضي بين قراءتين (dt) بدقة
-//   Stream<GyroscopeReading> get gyroscopeStream {
-//     return gyroscopeEvents.map((event) {
-//       const double radToDeg = 180.0 / math.pi;
-//       return GyroscopeReading(
-//         zRate: event.z * radToDeg,
-//         timestamp: DateTime.now(),
-//       );
-//     });
-//   }
-// }
-///////////////////////////
-///
-///
-// ============================================================
-// sensors_repository.dart
-// المستودع الوحيد لجميع بيانات الحساسات
-//
-// التحسينات النهائية:
-//   ✅ Hardware Pedometer بدل Accelerometer الخام
-//      → دقة 97% مقابل 70% | لا يتأثر بهز اليد أو وضع الهاتف
-//   ✅ الجيروسكوب للدوران (تكامل موقَّع)
-//      → مستقل عن البيئة المغناطيسية في المسجد الحرام
-//
-// متطلبات AndroidManifest.xml:
-//   <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
-// ============================================================
-
 import 'package:pedometer/pedometer.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'dart:math' as math;
-
-// ─────────────────────────────────────────────────────────────
-// نماذج البيانات
-// ─────────────────────────────────────────────────────────────
 
 /// حدث خطوة من الـ Hardware Pedometer
 class StepEvent {
@@ -172,7 +72,6 @@ class SensorsRepository {
   }
 
   /// مجرى الجيروسكوب لقياس الدوران
-  /// ✅ [التحسين]: استخدام Dot Product للعمل في أي وضعية للهاتف
   Stream<GyroscopeReading> get gyroscopeStream {
     return gyroscopeEvents.map((event) {
       // 1. تسوية متجه الجاذبية (Normalization)
