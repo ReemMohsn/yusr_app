@@ -42,11 +42,8 @@ class SwitchTrackingTypeDialog extends StatelessWidget {
             // الهيدر
             Row(
               children: [
-                GestureDetector(
-                  onTap: () => Navigator.pop(context, false),
-                  child: Icon(Icons.close, color: Colors.grey, size: 24.sp),
-                ),
-                const Spacer(),
+                Icon(Icons.swap_horiz, color: AppColor.golden, size: 24.sp),
+                SizedBox(width: 8.w),
                 Text(
                   locale.switchTrackingType,
                   style: TextStyle(
@@ -55,11 +52,13 @@ class SwitchTrackingTypeDialog extends StatelessWidget {
                     color: Colors.black,
                   ),
                 ),
-                SizedBox(width: 8.w),
-                Icon(Icons.swap_horiz, color: AppColor.golden, size: 24.sp),
+                const Spacer(),
+                GestureDetector(
+                  onTap: () => Navigator.pop(context, false),
+                  child: Icon(Icons.close, color: Colors.grey, size: 24.sp),
+                ),
               ],
             ),
-
             SizedBox(height: 20.h),
 
             //  صندوق التحذير
@@ -102,30 +101,6 @@ class SwitchTrackingTypeDialog extends StatelessWidget {
             //  أزرار الإجراءات
             Row(
               children: [
-                // زر الإلغاء
-                Expanded(
-                  child: OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: 12.h),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.r),
-                      ),
-                      side: BorderSide(color: Colors.grey.shade300),
-                    ),
-                    onPressed: () => Navigator.pop(context, false),
-                    child: Text(
-                      locale.cancel,
-                      style: TextStyle(
-                        color: Colors.grey.shade700,
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-
-                SizedBox(width: 12.w),
-
                 // زر التأكيد
                 Expanded(
                   child: ElevatedButton(
@@ -141,6 +116,30 @@ class SwitchTrackingTypeDialog extends StatelessWidget {
                       locale.confirm,
                       style: TextStyle(
                         color: AppColor.golden,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+
+                SizedBox(width: 12.w),
+
+                // زر الإلغاء
+                Expanded(
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(vertical: 12.h),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.r),
+                      ),
+                      side: BorderSide(color: Colors.grey.shade300),
+                    ),
+                    onPressed: () => Navigator.pop(context, false),
+                    child: Text(
+                      locale.cancel,
+                      style: TextStyle(
+                        color: Colors.grey.shade700,
                         fontSize: 16.sp,
                         fontWeight: FontWeight.bold,
                       ),
