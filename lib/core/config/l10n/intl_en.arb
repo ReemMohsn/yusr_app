@@ -294,5 +294,9 @@
   "join": "Join",
   "dialogReject": "Reject",
   "dialogAccept": "Accept",
-  "familyNumber": "Family/Relative Number"
+  "familyNumber": "Family/Relative Number",
+  "switchTrackingType": "Switch Ritual",
+  "switchTrackingTypeWarning": "The current {targetName} will be stopped and reset from the first lap. Do you want to continue?",
+  "confirm": "Confirm"
+
 }

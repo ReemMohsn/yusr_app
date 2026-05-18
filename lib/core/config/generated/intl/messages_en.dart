@@ -25,6 +25,9 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m1(name) =>
       "Pilgrim \"${name}\" has started drifting from the group.";
 
+  static String m2(targetName) =>
+      "The current ${targetName} will be stopped and reset from the first lap. Do you want to continue?";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "aboutCampaign": MessageLookupByLibrary.simpleMessage("About Campaign"),
@@ -97,6 +100,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "clickToStart": MessageLookupByLibrary.simpleMessage(
       "Click to start counting",
     ),
+    "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
     "confirmDelete": MessageLookupByLibrary.simpleMessage(
       "Are you sure you want to delete this item permanently?",
     ),
@@ -545,6 +549,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "Supervisor Information",
     ),
     "supervisorName": MessageLookupByLibrary.simpleMessage("Supervisor Name"),
+    "switchTrackingType": MessageLookupByLibrary.simpleMessage("Switch Ritual"),
+    "switchTrackingTypeWarning": m2,
     "targetAudience": MessageLookupByLibrary.simpleMessage("Target Audience"),
     "tawaf": MessageLookupByLibrary.simpleMessage("Tawaf"),
     "tawafDescription": MessageLookupByLibrary.simpleMessage(

@@ -292,6 +292,9 @@
   "join": "انضمام",
   "dialogReject": "رفض",
   "dialogAccept": "موافق",
-  "familyNumber": "رقم العائلة/المرافق"
+  "familyNumber": "رقم العائلة/المرافق",
+  "switchTrackingType":"تبديل النُسك",
+  "switchTrackingTypeWarning":"سيتم إيقاف {targetName} الحالي وإعادة الضبط من الشوط الأول، هل تريد المتابعة؟",
+  "confirm":"تأكيد"
 
 }

@@ -17,7 +17,9 @@ class CircularCounterWidget extends ConsumerWidget {
     if (state.trackingType == TrackingType.tawaf) {
       lapProgress = state.accumulatedAngle / 360;
     } else {
-      lapProgress = state.stepsInCurrentLap / 350;
+      // lapProgress = state.stepsInCurrentLap / 350;
+      final int targetSteps = state.currentLap == 7 ? 500 : 650;
+      lapProgress = state.stepsInCurrentLap / targetSteps;
     }
 
     return Stack(
@@ -30,20 +32,22 @@ class CircularCounterWidget extends ConsumerWidget {
           decoration: const BoxDecoration(shape: BoxShape.circle),
         ),
 
-        //  إطار الدائرة الرمادي  
+        //  إطار الدائرة الرمادي
         Container(
           width: 250.w,
           height: 250.w,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: Border.all(
-              color: AppColor.inputFieldBoundaries.withOpacity(0.4), // اللون الرمادي الفاتح للإطار
+              color: AppColor.inputFieldBoundaries.withOpacity(
+                0.4,
+              ), // اللون الرمادي الفاتح للإطار
               width: 12.w,
             ),
           ),
         ),
 
-        // مؤشر التقدم 
+        // مؤشر التقدم
         if (state.isRunning)
           SizedBox(
             width: 250.w,

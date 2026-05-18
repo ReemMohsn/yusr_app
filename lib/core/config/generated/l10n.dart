@@ -54,6 +54,16 @@ class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
+  /// `Family/Relative Number`
+  String get familyNumber {
+    return Intl.message(
+      'Family/Relative Number',
+      name: 'familyNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `About Campaign`
   String get aboutCampaign {
     return Intl.message(
@@ -2539,14 +2549,29 @@ class AppLocalizations {
     return Intl.message('Accept', name: 'dialogAccept', desc: '', args: []);
   }
 
-  /// `Family/Relative Number`
-  String get familyNumber {
+  /// `Switch Ritual`
+  String get switchTrackingType {
     return Intl.message(
-      'Family/Relative Number',
-      name: 'familyNumber',
+      'Switch Ritual',
+      name: 'switchTrackingType',
       desc: '',
       args: [],
     );
+  }
+
+  /// `The current {targetName} will be stopped and reset from the first lap. Do you want to continue?`
+  String switchTrackingTypeWarning(Object targetName) {
+    return Intl.message(
+      'The current $targetName will be stopped and reset from the first lap. Do you want to continue?',
+      name: 'switchTrackingTypeWarning',
+      desc: '',
+      args: [targetName],
+    );
+  }
+
+  /// `Confirm`
+  String get confirm {
+    return Intl.message('Confirm', name: 'confirm', desc: '', args: []);
   }
 }
 
