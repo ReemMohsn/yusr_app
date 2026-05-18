@@ -2548,6 +2548,31 @@ class AppLocalizations {
   String get dialogAccept {
     return Intl.message('Accept', name: 'dialogAccept', desc: '', args: []);
   }
+
+  /// `Switch Ritual`
+  String get switchTrackingType {
+    return Intl.message(
+      'Switch Ritual',
+      name: 'switchTrackingType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The current {targetName} will be stopped and reset from the first lap. Do you want to continue?`
+  String switchTrackingTypeWarning(Object targetName) {
+    return Intl.message(
+      'The current $targetName will be stopped and reset from the first lap. Do you want to continue?',
+      name: 'switchTrackingTypeWarning',
+      desc: '',
+      args: [targetName],
+    );
+  }
+
+  /// `Confirm`
+  String get confirm {
+    return Intl.message('Confirm', name: 'confirm', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -24,6 +24,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m1(name) => "الحاج \"${name}\" بدأ يبتعد عن المجموعة.";
 
+  static String m2(targetName) =>
+      "سيتم إيقاف ${targetName} الحالي وإعادة الضبط من الشوط الأول، هل تريد المتابعة؟";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "aboutCampaign": MessageLookupByLibrary.simpleMessage("عن الحملة"),
@@ -90,6 +93,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "اختر إحداثيات الموقع",
     ),
     "clickToStart": MessageLookupByLibrary.simpleMessage("انقر لبدء العد"),
+    "confirm": MessageLookupByLibrary.simpleMessage("تأكيد"),
     "confirmDelete": MessageLookupByLibrary.simpleMessage("تأكيد الحذف"),
     "confirmDeleteAnnouncementMessage": MessageLookupByLibrary.simpleMessage(
       "هل أنت متأكد من حذف هذا الإعلان؟ لا يمكن التراجع عن هذا الإجراء.",
@@ -513,6 +517,8 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "supervisorInfo": MessageLookupByLibrary.simpleMessage("معلومات المشرف"),
     "supervisorName": MessageLookupByLibrary.simpleMessage("اسم المشرف"),
+    "switchTrackingType": MessageLookupByLibrary.simpleMessage("تبديل النُسك"),
+    "switchTrackingTypeWarning": m2,
     "targetAudience": MessageLookupByLibrary.simpleMessage("الفئة المستهدفة"),
     "tawaf": MessageLookupByLibrary.simpleMessage("طواف"),
     "tawafDescription": MessageLookupByLibrary.simpleMessage(
