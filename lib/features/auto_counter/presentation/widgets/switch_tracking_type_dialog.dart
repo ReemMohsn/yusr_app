@@ -4,7 +4,7 @@ import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 
 class SwitchTrackingTypeDialog extends StatelessWidget {
-  /// النسك الذي سيُنتقل إليه
+  /// النسك الذي سينتقل إليه
   final bool toTawaf;
 
   const SwitchTrackingTypeDialog({super.key, required this.toTawaf});

@@ -18,7 +18,8 @@ class CircularCounterWidget extends ConsumerWidget {
       lapProgress = state.accumulatedAngle / 360;
     } else {
       // lapProgress = state.stepsInCurrentLap / 350;
-      final int targetSteps = state.currentLap == 7 ? 500 : 650;
+      // final int targetSteps = state.currentLap == 7 ? 500 : 650;
+      final int targetSteps = state.currentLap == 7 ? 10 : 10;
       lapProgress = state.stepsInCurrentLap / targetSteps;
     }
 
