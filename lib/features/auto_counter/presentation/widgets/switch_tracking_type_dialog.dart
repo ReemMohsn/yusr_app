@@ -3,21 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 
-/// ديالوج تأكيد تبديل نوع النسك (طواف ↔ سعي) أثناء التشغيل
-///
-/// يعيد [true] عند الضغط على تأكيد → ينقل ويُصفِّر كل شيء
-/// يعيد [false] عند الضغط على إلغاء أو الإغلاق → لا يتغير شيء
 class SwitchTrackingTypeDialog extends StatelessWidget {
   /// النسك الذي سيُنتقل إليه
   final bool toTawaf;
 
   const SwitchTrackingTypeDialog({super.key, required this.toTawaf});
 
-  /// طريقة الاستخدام من خارج الـ widget:
-  /// ```dart
-  /// final confirmed = await SwitchTrackingTypeDialog.show(context, toTawaf: true);
-  /// if (confirmed == true) { ... }
-  /// ```
   static Future<bool?> show(BuildContext context, {required bool toTawaf}) {
     return showDialog<bool>(
       context: context,
@@ -48,7 +39,7 @@ class SwitchTrackingTypeDialog extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // ── الهيدر ────────────────────────────────────────
+            // الهيدر
             Row(
               children: [
                 GestureDetector(
@@ -71,7 +62,7 @@ class SwitchTrackingTypeDialog extends StatelessWidget {
 
             SizedBox(height: 20.h),
 
-            // ── صندوق التحذير ────────────────────────────────
+            //  صندوق التحذير
             Container(
               padding: EdgeInsets.all(12.w),
               decoration: BoxDecoration(
@@ -108,7 +99,7 @@ class SwitchTrackingTypeDialog extends StatelessWidget {
             Divider(color: Colors.grey.shade200, height: 1),
             SizedBox(height: 20.h),
 
-            // ── أزرار الإجراءات ───────────────────────────────
+            //  أزرار الإجراءات
             Row(
               children: [
                 // زر الإلغاء
