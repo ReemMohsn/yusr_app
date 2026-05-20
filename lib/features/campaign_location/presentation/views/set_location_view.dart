@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yusr/core/common/widgets/custom_golden_back_button.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/constants/app_size.dart'; // ملف الأحجام المعتمد
+import 'package:yusr/core/extensions/async_value_ui.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/core/services/API/ApiResponse.dart';
 import 'package:yusr/features/campaign_location/presentation/widgets/location_action_buttons.dart';
@@ -37,22 +39,24 @@ class _SetLocationViewState extends ConsumerState<SetLocationView> {
     final locale = context.locale;
     final theme = Theme.of(context).textTheme;
     final locationsAsync = ref.watch(getCampaignLocationsProvider);
+// الاستماع لحالة الـ Provider لتفعيل الموقع (نفس طريقة الإعلانات)
+    ref.listen(setActiveLocationControllerProvider, (_, state) {
+      if (state.isLoading) {
+        context.showLoadingDialog();
+      } else if (state.hasError) {
+        context.closeLoadingDialog();
+        context.showErrorSnackBar(state.errorMessage);
+      } else if (state.hasValue && state.value != null) {
+        context.closeLoadingDialog();
+        context.showSuccessSnackBar(locale.updateSuccess);
+        
+        // إذا كنتِ تحتاجين لتحديث قائمة المواقع أو تفاصيل الحملة لتنعكس حالة النشاط فوراً:
+        // ref.invalidate(campaignLocationsProvider); 
+        
+        Navigator.pop(context);
+      }
+    });
 
-    ref.listen<AsyncValue<ApiResponse<dynamic>?>>(
-      setActiveLocationControllerProvider,
-      (prev, next) {
-        if (next.isLoading) {
-          context.showLoadingDialog();
-        } else if (next.hasError) {
-          context.closeLoadingDialog();
-          context.showErrorSnackBar(next.error.toString());
-        } else if (next.hasValue && next.value != null) {
-          context.closeLoadingDialog();
-          context.showSuccessSnackBar(locale.updateSuccess);
-          Navigator.pop(context);
-        }
-      },
-    );
 
     return Scaffold(
       appBar: AppBar(
@@ -71,23 +75,24 @@ class _SetLocationViewState extends ConsumerState<SetLocationView> {
             Expanded(
               child: locationsAsync.when(
                 data: (data) {
-                  if (data == null) {
+                  if (data == null)
                     return Center(
                       child: Text(locale.notFound, style: theme.bodyMedium),
                     );
-                  }
 
                   final allLocations = [
                     if (data.currentLocation != null) data.currentLocation!,
                     ...data.previousLocations,
                   ];
 
-                  // تهيئة البيانات لأول مرة بدون setState
+                  
+                  // تهيئة البيانات لأول مرة بأمان خارج دورة البناء المباشرة لتجنب تضارب الـ Frame
                   if (!_isInitialized && data.currentLocation != null) {
                     _isInitialized = true;
                     _initialActiveId = data.currentLocation!.locationId;
-                    _selectedLocationIdNotifier.value =
-                        data.currentLocation!.locationId;
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      _selectedLocationIdNotifier.value = data.currentLocation!.locationId;
+                    });
                   }
 
                   return ListView.separated(

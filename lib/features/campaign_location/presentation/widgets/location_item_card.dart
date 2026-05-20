@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yusr/core/constants/app_color.dart';
-
+import 'package:yusr/features/campaign_location/data/models/campaign_location_item_model.dart';
 class LocationItemCard extends StatelessWidget {
-  final dynamic loc;
+  final CampaignLocationItemModel loc;
   final bool isSelected;
   final bool isCurrentlyActive;
   final dynamic locale;

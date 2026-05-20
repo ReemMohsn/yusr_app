@@ -107,6 +107,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "confirmDeleteAnnouncementMessage": MessageLookupByLibrary.simpleMessage(
       "Are you sure you want to delete this announcement? This action cannot be undone.",
     ),
+    "confirmDeleteLocationMessage": MessageLookupByLibrary.simpleMessage(
+      "Are you sure you want to delete this location? This action cannot be undone.",
+    ),
     "confirmEnd": MessageLookupByLibrary.simpleMessage("Confirm End"),
     "confirmEndSessionMsg": MessageLookupByLibrary.simpleMessage(
       "Are you sure you want to end tracking? The session will be stopped for all pilgrims.",
