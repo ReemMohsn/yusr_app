@@ -30,7 +30,7 @@ class AutoCounterController extends _$AutoCounterController {
   // static const int _tawafMinSteps = 200;
   // static const int _tawafMinSeconds = 120;
   static const int _tawafMinSteps = 10;
-  static const int _tawafMinSeconds = 50;
+  static const int _tawafMinSeconds = 5;
 
   // — السعي —
   static const double _saeeUTurnAngle = 130.0;
