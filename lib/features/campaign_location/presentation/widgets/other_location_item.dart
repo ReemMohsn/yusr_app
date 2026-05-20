@@ -5,8 +5,9 @@ import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/features/campaign_location/data/models/campaign_location_item_model.dart';
-import 'package:yusr/features/campaign_location/providers/campaign_location_controller_provider.dart';
-
+// import 'package:yusr/features/campaign_location/providers/campaign_location_controller_provider.dart';
+import 'package:yusr/features/campaign_location/presentation/widgets/confirm_delete_dialog.dart';
+import 'package:yusr/features/campaign_location/providers/delete_location_controller_provider.dart';
 class OtherLocationItem extends ConsumerWidget {
   final CampaignLocationItemModel location;
   const OtherLocationItem({super.key, required this.location});
@@ -29,7 +30,7 @@ class OtherLocationItem extends ConsumerWidget {
       ),
       child: Row(
         children: [
-          // 3. أيقونة الموقع الذهبية (في أقصى اليمين)
+          // أيقونة الموقع الذهبية
           Container(
             padding: EdgeInsets.all(10.w),
             decoration: BoxDecoration(
@@ -39,20 +40,21 @@ class OtherLocationItem extends ConsumerWidget {
             child: Icon(Icons.location_on, color: AppColor.golden, size: 20.sp),
           ),
           SizedBox(width: 10.w),
-          // 2. اسم الموقع (مربوط بالـ API)
+          
+          // اسم الموقع
           Text(
             location.locationName,
             style: context.theme.textTheme.headlineSmall,
           ),
           const Spacer(),
 
-          // 1. أزرار الحذف والتعديل (في جهة اليسار)
+          // أزرار الحذف والتعديل
           _buildBtn(
             Icons.delete_outline,
             Colors.white,
             AppColor.golden,
             isBorder: true,
-            onTap: () => _confirmDelete(context, ref),
+            onTap: () => _confirmDelete(context, ref), // استدعاء الدالة الجديدة المحدثة
           ),
           SizedBox(width: 6.w),
           _buildBtn(
@@ -98,77 +100,21 @@ class OtherLocationItem extends ConsumerWidget {
     );
   }
 
-  // نافذة تأكيد الحذف مع توسيط الأزرار وربطها بالـ API
-  // ... (بقيت أجزاء الكود كما هي حتى دالة _confirmDelete)
-
-  void _confirmDelete(BuildContext context, WidgetRef ref) {
-    final locale = context.locale;
-
-    showDialog(
+  // دالة الحذف الجديدة المستدعاة والمطابقة لصفحة الإعلانات 100%
+  void _confirmDelete(BuildContext context, WidgetRef ref) async {
+    // إظهار نافذة التأكيد الموحدة وانتظار رد المستخدم (true أو false)
+    final shouldDelete = await showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.r),
-        ),
-        title: Row(
-          children: [
-            Icon(
-              Icons.warning_amber_rounded,
-              color: AppColor.danger,
-              size: 28.sp,
-            ),
-            SizedBox(width: 10.w),
-            Text(locale.delete, style: context.theme.textTheme.bodySmall),
-          ],
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              locale.confirmDelete,
-              style: TextStyle(fontSize: 14.sp, color: Colors.grey.shade700),
-            ),
-            SizedBox(height: 24.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // زر الحذف المربوط بالـ API
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColor.danger,
-                  ),
-                  onPressed: () {
-                    // 1. إغلاق دايلوج "هل أنت متأكد؟"
-                    Navigator.of(context).pop();
-
-                    // 2. بدء عملية الحذف
-                    // الـ listen سيلتقط حالة الـ loading ويظهر الـ LoadingDialog تلقائياً
-                    ref
-                        .read(campaignLocationControllerProvider.notifier)
-                        .removeLocation(location.locationId);
-                  },
-                  child: Text(locale.delete),
-                ),
-                SizedBox(width: 12.w),
-                // زر الإلغاء
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text(
-                    locale.cancel,
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        actions: const [],
-      ),
+      builder: (context) => const ConfirmDeleteDialog(),
     );
+
+    // إذا ضغط المستخدم على زر "حذف" وتم إرجاع قيمة true
+    //  الكود الجديد الصحيح
+      if (shouldDelete == true) {
+        ref
+            .read(deleteLocationControllerProvider.notifier)
+            .removeLocation(location.locationId);
+      }
   }
 }
+

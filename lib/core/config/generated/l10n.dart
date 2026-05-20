@@ -2573,6 +2573,16 @@ class AppLocalizations {
   String get confirm {
     return Intl.message('Confirm', name: 'confirm', desc: '', args: []);
   }
+
+  /// `Are you sure you want to delete this location? This action cannot be undone.`
+  String get confirmDeleteLocationMessage {
+    return Intl.message(
+      'Are you sure you want to delete this location? This action cannot be undone.',
+      name: 'confirmDeleteLocationMessage',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {

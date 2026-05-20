@@ -98,6 +98,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "confirmDeleteAnnouncementMessage": MessageLookupByLibrary.simpleMessage(
       "هل أنت متأكد من حذف هذا الإعلان؟ لا يمكن التراجع عن هذا الإجراء.",
     ),
+    "confirmDeleteLocationMessage": MessageLookupByLibrary.simpleMessage(
+      "هل أنت متأكد من حذف هذا الموقع؟ لا يمكن التراجع عن هذا الإجراء.",
+    ),
     "confirmEnd": MessageLookupByLibrary.simpleMessage("تأكيد الإنهاء"),
     "confirmEndSessionMsg": MessageLookupByLibrary.simpleMessage(
       "هل أنت متأكد من إنهاء التتبع؟ سيتم إيقاف الجلسة لجميع الحجاج.",

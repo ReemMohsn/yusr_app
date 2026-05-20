@@ -5,6 +5,7 @@ import 'package:yusr/core/services/API/api_service.dart';
 import 'package:yusr/core/services/API/repository_request_handler.dart';
 import 'package:yusr/features/campaign_location/data/models/campaign_locations_view_model.dart';
 
+
 class CampaignLocationRepository {
   final ApiService apiService;
   final Ref ref;

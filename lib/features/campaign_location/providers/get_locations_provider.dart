@@ -1,5 +1,4 @@
-
-// تأكدي من هذا الاستيراد
+import 'package:flutter_riverpod/flutter_riverpod.dart'; // تأكدي من هذا الاستيراد
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:yusr/features/campaign_location/data/models/campaign_locations_view_model.dart';
 import 'campaign_location_repository_provider.dart';
