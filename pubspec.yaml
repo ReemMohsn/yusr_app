@@ -77,7 +77,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  flutter_native_splash: ^2.4.0
   # المكتبات المعلقة (إبقاء للذكرى أو الرجوع إليها)
   # dio: ^5.8.0+1
   # intl: any
@@ -121,11 +121,12 @@ dependencies:
   flutter_local_notifications: ^17.0.0 # للإشعارات المحلية
   flutter_markdown: ^0.7.7+1
   shimmer: ^3.0.0
-  
+  flutter_launcher_icons: ^0.13.1
   # --- تم توحيد مكتبات البلوتوث هنا ---
   flutter_blue_plus: ^1.34.0 # الرادار: استماع وبحث (للمشرف)
   # flutter_ble_peripheral: ^2.1.0
   beacon_broadcast: ^0.3.0 # تم إيقافها واستبدالها بالتي فوقها
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -188,3 +189,24 @@ flutter_intl:
   main_locale: en
   arb_dir: lib/core/config/l10n
   output_dir: lib/core/config/generated
+
+flutter_native_splash:
+  color: "#000000" 
+  image: "asset/images/splash.png" 
+  
+  # منع تمدد الصورة أو قصها في الأنظمة القديمة
+  android_gravity: center
+
+  android_12:
+    image: "asset/images/splash.png"
+    color: "#000000"
+    icon_background_color: "#000000"
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "asset/images/app_icon.png" 
+  
+  # إعدادات أندرويد 8 فما فوق (الأيقونات المتكيفة) لضمان عدم قصها
+  adaptive_icon_background: "#000000" 
+  adaptive_icon_foreground: "asset/images/app_icon.png"

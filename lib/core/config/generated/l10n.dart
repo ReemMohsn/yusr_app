@@ -174,9 +174,9 @@ class AppLocalizations {
     );
   }
 
-  /// `Supervisor`
+  /// `Supervisor:`
   String get supervisor {
-    return Intl.message('Supervisor', name: 'supervisor', desc: '', args: []);
+    return Intl.message('Supervisor:', name: 'supervisor', desc: '', args: []);
   }
 
   /// `Hijri Year:`
@@ -2012,6 +2012,136 @@ class AppLocalizations {
   /// `Stopped`
   String get stopped {
     return Intl.message('Stopped', name: 'stopped', desc: '', args: []);
+  }
+
+  /// `Skip`
+  String get skip {
+    return Intl.message('Skip', name: 'skip', desc: '', args: []);
+  }
+
+  /// `Next`
+  String get next {
+    return Intl.message('Next', name: 'next', desc: '', args: []);
+  }
+
+  /// `Yusr App`
+  String get onboarding_title_1 {
+    return Intl.message(
+      'Yusr App',
+      name: 'onboarding_title_1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your trusted digital companion to guide you step-by-step through your Hajj journey.`
+  String get onboarding_desc_1 {
+    return Intl.message(
+      'Your trusted digital companion to guide you step-by-step through your Hajj journey.',
+      name: 'onboarding_desc_1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Smart Guidance & Tracking`
+  String get onboarding_title_2 {
+    return Intl.message(
+      'Smart Guidance & Tracking',
+      name: 'onboarding_title_2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Instant guidance back to your tent and camp, with live field tracking by your supervisor for maximum safety.`
+  String get onboarding_desc_2 {
+    return Intl.message(
+      'Instant guidance back to your tent and camp, with live field tracking by your supervisor for maximum safety.',
+      name: 'onboarding_desc_2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Smart Tawaf Counter`
+  String get onboarding_title_3 {
+    return Intl.message(
+      'Smart Tawaf Counter',
+      name: 'onboarding_title_3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Automatically tracks your Tawaf and Sa'ee laps, letting you focus fully on your prayers.`
+  String get onboarding_desc_3 {
+    return Intl.message(
+      'Automatically tracks your Tawaf and Sa\'ee laps, letting you focus fully on your prayers.',
+      name: 'onboarding_desc_3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hajj Guide`
+  String get onboarding_title_4 {
+    return Intl.message(
+      'Hajj Guide',
+      name: 'onboarding_title_4',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Day-by-day Fiqh instructions, clearly covering rituals, restrictions, and recommended Duas.`
+  String get onboarding_desc_4 {
+    return Intl.message(
+      'Day-by-day Fiqh instructions, clearly covering rituals, restrictions, and recommended Duas.',
+      name: 'onboarding_desc_4',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `AI Mufti for Hajj Rulings`
+  String get onboarding_title_5 {
+    return Intl.message(
+      'AI Mufti for Hajj Rulings',
+      name: 'onboarding_title_5',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ask your Hajj-related questions and get instant, reliable scholarly answers anytime.`
+  String get onboarding_desc_5 {
+    return Intl.message(
+      'Ask your Hajj-related questions and get instant, reliable scholarly answers anytime.',
+      name: 'onboarding_desc_5',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notifications & Alerts`
+  String get onboarding_title_6 {
+    return Intl.message(
+      'Notifications & Alerts',
+      name: 'onboarding_title_6',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Receive instant updates and urgent announcements directly from your supervisor or manager.`
+  String get onboarding_desc_6 {
+    return Intl.message(
+      'Receive instant updates and urgent announcements directly from your supervisor or manager.',
+      name: 'onboarding_desc_6',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Session ended successfully`

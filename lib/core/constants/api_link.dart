@@ -48,13 +48,17 @@ class ApiLink {
       '$server/CampaignLocation/DeleteLocation';
 
   // Campaign Management (مدير الحملة)
-  static const String getCampaignInfoMobile = '$server/AboutCampaign/GetCampaignInfoMobile';
-  static const String getCampaignGroupsMobile = '$server/AboutCampaign/GetCampaignGroupsMobile';
-  static String getCampaignGroupDetailsMobile(int groupId) => '$server/AboutCampaign/GetCampaignGroupDetailsMobile/$groupId';
-  
+  static const String getCampaignInfoMobile =
+      '$server/AboutCampaign/GetCampaignInfoMobile';
+  static const String getCampaignGroupsMobile =
+      '$server/AboutCampaign/GetCampaignGroupsMobile';
+  static String getCampaignGroupDetailsMobile(int groupId) =>
+      '$server/AboutCampaign/GetCampaignGroupDetailsMobile/$groupId';
+
   // static const String getCampaignPilgrimsMobile = '$server/AboutCampaign/GetCampaignPilgrimsMobile';
-  static String getCampaignPilgrimDetailsMobile(int userId) => '$server/AboutCampaign/GetCampaignPilgrimDetailsMobile/$userId';
-  
+  static String getCampaignPilgrimDetailsMobile(int userId) =>
+      '$server/AboutCampaign/GetCampaignPilgrimDetailsMobile/$userId';
+
   // static const String getCampaignSupervisorsMobile = '$server/AboutCampaign/GetCampaignSupervisorsMobile';
   // static String getCampaignSupervisorDetailsMobile(int userId) => '$server/AboutCampaign/GetCampaignSupervisorDetailsMobile/$userId';
 
@@ -67,11 +71,15 @@ class ApiLink {
 
   // رابط خدمة المفتي الذكي (Hugging Face)
   static const String geminiChat = 'https://manar13-yusr-hajj-api.hf.space/ask';
-  
+
   // 5. وظائف ديناميكية
   static String changeResidentialNeighborhoodManager({
     required int neighborhoodId,
   }) {
     return '$server/residential-neighborhoods/$neighborhoodId/manager';
   }
+
+  // 6. Onboarding
+  static const String getOnboardingData =
+      '$server/Onboarding/GetOnboardingMobile';
 }

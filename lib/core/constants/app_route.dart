@@ -37,6 +37,7 @@ import 'package:yusr/features/profile/presentation/views/saudi_phone_view.dart';
 import 'package:yusr/features/group/presentation/views/group_info_view.dart';
 import 'package:yusr/features/group/presentation/views/supervisor_group_view.dart';
 import 'package:yusr/features/group/presentation/views/pilgrim_details_view.dart';
+import 'package:yusr/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:yusr/features/campaign_management/presentation/views/campaign_info_view.dart';
 import 'package:yusr/features/campaign_management/presentation/views/campaign_groups_view.dart';
 import 'package:yusr/features/campaign_management/presentation/views/campaign_group_details_view.dart';
@@ -47,6 +48,8 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   Route? generateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case AppRoute.onboardingView:
+        return MaterialPageRoute(builder: (_) => const OnboardingView());
       case AppRoute.mainHomeView:
         return MaterialPageRoute(builder: (_) => const MainHomeView());
       case AppRoute.loginView:
@@ -169,6 +172,7 @@ class AppRouter {
 }
 
 class AppRoute {
+  static const String onboardingView = '/OnboardingView';
   static const String mainHomeView = '/MainHomeView';
   static const String loginView = '/loginView';
   static const String forgotPassword = '/ForgotPassword';

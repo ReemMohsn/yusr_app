@@ -55,10 +55,12 @@ class PushNotificationService {
     // 1. تهيئة الإشعارات المحلية (Local Notifications)
     // ==========================================
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+        AndroidInitializationSettings('ic_notification');
 
     const InitializationSettings initializationSettings =
-        InitializationSettings(android: initializationSettingsAndroid);
+        InitializationSettings(android: initializationSettingsAndroid,
+        iOS: DarwinInitializationSettings(),
+        );
 
     await _localNotificationsPlugin.initialize(
       initializationSettings,
@@ -439,6 +441,31 @@ class PushNotificationService {
     Timer(const Duration(seconds: 5), () {
       controller.close();
     });
+    //كود اظهار الايقونة الخاصة بالتطبيق للاشعارات
+    final int notificationId = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+
+    final AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
+      'yusr_channel_id',        
+      'Yusr Notifications',     
+      importance: Importance.max,
+      priority: Priority.high,
+      icon: 'ic_notification',  
+      color: const Color(0xFFD4AF37), // اللون الذهبي للدائرة المحيطة باللوحة المنسدلة
+      playSound: true,
+    );
+
+    final NotificationDetails notificationDetails = NotificationDetails(
+      android: androidNotificationDetails,
+      iOS: const DarwinNotificationDetails(),
+    );
+
+    await _localNotificationsPlugin.show(
+      notificationId,
+      message.notification?.title ?? locale.newNotification,
+      message.notification?.body ?? '',
+      notificationDetails,
+      payload: status, 
+    );
   }
 
   // ==========================================
