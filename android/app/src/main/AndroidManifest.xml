@@ -13,9 +13,9 @@
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <application
-        android:label="yusr"
+        android:label="يُسر"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         
         <service
             android:name="com.baseflow.geolocator.GeolocatorLocationService"
@@ -47,7 +47,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@mipmap/ic_notification" />
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />

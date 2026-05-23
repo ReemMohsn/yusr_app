@@ -362,6 +362,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "The new password must be different from previous passwords",
     ),
     "newPasswordLabel": MessageLookupByLibrary.simpleMessage("New Password"),
+    "next": MessageLookupByLibrary.simpleMessage("Next"),
     "noAnnouncementsCurrently": MessageLookupByLibrary.simpleMessage(
       "There are currently no announcements",
     ),
@@ -405,6 +406,38 @@ class MessageLookup extends MessageLookupByLibrary {
     "ofWord": MessageLookupByLibrary.simpleMessage("of"),
     "onBorders": MessageLookupByLibrary.simpleMessage("On the borders 🟠"),
     "onBordersOnly": MessageLookupByLibrary.simpleMessage("On borders"),
+    "onboarding_desc_1": MessageLookupByLibrary.simpleMessage(
+      "Your trusted digital companion to guide you step-by-step through your Hajj journey.",
+    ),
+    "onboarding_desc_2": MessageLookupByLibrary.simpleMessage(
+      "Instant guidance back to your tent and camp, with live field tracking by your supervisor for maximum safety.",
+    ),
+    "onboarding_desc_3": MessageLookupByLibrary.simpleMessage(
+      "Automatically tracks your Tawaf and Sa\'ee laps, letting you focus fully on your prayers.",
+    ),
+    "onboarding_desc_4": MessageLookupByLibrary.simpleMessage(
+      "Day-by-day Fiqh instructions, clearly covering rituals, restrictions, and recommended Duas.",
+    ),
+    "onboarding_desc_5": MessageLookupByLibrary.simpleMessage(
+      "Ask your Hajj-related questions and get instant, reliable scholarly answers anytime.",
+    ),
+    "onboarding_desc_6": MessageLookupByLibrary.simpleMessage(
+      "Receive instant updates and urgent announcements directly from your supervisor or manager.",
+    ),
+    "onboarding_title_1": MessageLookupByLibrary.simpleMessage("Yusr App"),
+    "onboarding_title_2": MessageLookupByLibrary.simpleMessage(
+      "Smart Guidance & Tracking",
+    ),
+    "onboarding_title_3": MessageLookupByLibrary.simpleMessage(
+      "Smart Tawaf Counter",
+    ),
+    "onboarding_title_4": MessageLookupByLibrary.simpleMessage("Hajj Guide"),
+    "onboarding_title_5": MessageLookupByLibrary.simpleMessage(
+      "AI Mufti for Hajj Rulings",
+    ),
+    "onboarding_title_6": MessageLookupByLibrary.simpleMessage(
+      "Notifications & Alerts",
+    ),
     "otherLocations": MessageLookupByLibrary.simpleMessage("Other Locations"),
     "outOfZone": MessageLookupByLibrary.simpleMessage("Out of zone"),
     "outOfZoneDanger": MessageLookupByLibrary.simpleMessage(
@@ -529,6 +562,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "sharing": MessageLookupByLibrary.simpleMessage("Sharing..."),
     "showMap": MessageLookupByLibrary.simpleMessage("Show Map"),
+    "skip": MessageLookupByLibrary.simpleMessage("Skip"),
     "smartMufti": MessageLookupByLibrary.simpleMessage("Smart Mufti"),
     "smartMuftiHelper": MessageLookupByLibrary.simpleMessage(
       "Your smart assistant for Hajj questions",
@@ -544,7 +578,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "stopped": MessageLookupByLibrary.simpleMessage("Stopped"),
     "stoppedTracking": MessageLookupByLibrary.simpleMessage("Stopped Tracking"),
     "strokes": MessageLookupByLibrary.simpleMessage("Strokes"),
-    "supervisor": MessageLookupByLibrary.simpleMessage("Supervisor"),
+    "supervisor": MessageLookupByLibrary.simpleMessage("Supervisor:"),
     "supervisorGroupDetails": MessageLookupByLibrary.simpleMessage(
       "Group Details",
     ),
