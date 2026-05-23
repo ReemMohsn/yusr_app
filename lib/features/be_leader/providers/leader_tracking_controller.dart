@@ -218,12 +218,14 @@ class LeaderTrackingController extends _$LeaderTrackingController {
       );
 
       // 🔴 فلتر 1: رفض المواقع ضعيفة الدقة
-      if (position.accuracy > 20) {
+      // العتبة: kLeaderAccuracyThreshold (20م) — المشرف في مناطق مكشوفة → صرامة أعلى
+      // راجع: SmartLocationFilterService.kLeaderAccuracyThreshold
+      if (position.accuracy > SmartLocationFilterService.kLeaderAccuracyThreshold) {
         debugPrint(
-          "⚠️ [المشرف] ❌ دقة ضعيفة (${position.accuracy}  م).فقط وعدم الإعتماد و أخد هذه القراءة  إرسال نبضة حياة...",
+          '⚠️ [المشرف] ❌ دقة ضعيفة (${position.accuracy.toStringAsFixed(1)} م > ${SmartLocationFilterService.kLeaderAccuracyThreshold} م) — رفض وإرسال نبضة حياة...',
         );
 
-        // 🌟 الحل (نبضة الحياة): نرسل آخر موقع معروف للفايربيس لكي لا تنغلق الجلسة!
+        // نبضة الحياة: نرسل آخر موقع صالح لفايربيس لإبقاء الجلسة حية دون تحريك الخريطة
         if (_lastValidLeaderPosition != null) {
           final lastLatLng = LatLng(
             _lastValidLeaderPosition!.latitude,
@@ -235,7 +237,7 @@ class LeaderTrackingController extends _$LeaderTrackingController {
             heading: _lastValidLeaderPosition!.heading,
           );
         }
-        return; // نوقف الكود هنا لكي لا نحدث الخريطة بالموقع المشوش
+        return;
       }
 
       // 🔴 فلتر 2 + 3: رفض القفزات الوهمية (سرعة و خطوات)
@@ -256,8 +258,9 @@ class LeaderTrackingController extends _$LeaderTrackingController {
               timeDiffSeconds: timeDiffSeconds,
               tag: ' [المشرف]',
             ) ==
-            false)
+            false) {
           return;
+        }
 
         // فلتر 3: الخطوات
         if (!_locationFilter.isMovementReal(distanceJump, tag: ' [المشرف]')) {
@@ -487,7 +490,7 @@ class LeaderTrackingController extends _$LeaderTrackingController {
   ) async {
     if (_yellowWarnedPilgrims.contains(pilgrimId)) return;
     _yellowWarnedPilgrims.add(pilgrimId);
-    if (await Vibration.hasVibrator() ?? false) {
+    if ((await Vibration.hasVibrator()) == true) {
       Vibration.vibrate(pattern: [0, 200, 100, 200, 100, 200, 100, 200]);
     }
     final AndroidNotificationDetails warningDetails =
@@ -553,7 +556,7 @@ class LeaderTrackingController extends _$LeaderTrackingController {
             pilgrimName: pilgrimName,
           ),
         );
-    if (await Vibration.hasVibrator() ?? false) {
+    if ((await Vibration.hasVibrator()) == true) {
       Vibration.vibrate(pattern: [500, 1000, 500, 1000]);
     }
     if (!_isMutedManually) {

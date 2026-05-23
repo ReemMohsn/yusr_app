@@ -258,9 +258,12 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
         );
 
         // 🔴 فلتر 1: رفض المواقع ضعيفة الدقة — نبضة الحياة
-        if (position.accuracy > 25) {
+        // العتبة: kPilgrimAccuracyThreshold (25م) — أعلى من المشرف (20م) عمداً:
+        //   الحاج يتحرك في مناطق مزدحمة وداخل مبانٍ → هامش أوسع لتقليل نبضات الحياة
+        // راجع: SmartLocationFilterService.kPilgrimAccuracyThreshold
+        if (position.accuracy > SmartLocationFilterService.kPilgrimAccuracyThreshold) {
           debugPrint(
-            '⚠️ [الحاج] ❌ دقة ضعيفة (${position.accuracy} م). إرسال نبضة حياة...',
+            '⚠️ [الحاج] ❌ دقة ضعيفة (${position.accuracy.toStringAsFixed(1)} م > ${SmartLocationFilterService.kPilgrimAccuracyThreshold} م) — رفض وإرسال نبضة حياة...',
           );
           if (_lastValidPosition != null) {
             // isRealMove: false (افتراضي) — نبضة حياة: تُبقي الجلسة حية بدون تغيير lastPositionUpdate
