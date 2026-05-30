@@ -2689,13 +2689,13 @@ class AppLocalizations {
     );
   }
 
-  /// `The current {targetName} will be stopped and reset from the first lap. Do you want to continue?`
-  String switchTrackingTypeWarning(Object targetName) {
+  /// `The current {currentName} will be stopped and reset from the first lap. Do you want to continue?`
+  String switchTrackingTypeWarning(Object currentName) {
     return Intl.message(
-      'The current $targetName will be stopped and reset from the first lap. Do you want to continue?',
+      'The current $currentName will be stopped and reset from the first lap. Do you want to continue?',
       name: 'switchTrackingTypeWarning',
       desc: '',
-      args: [targetName],
+      args: [currentName],
     );
   }
 

@@ -307,7 +307,7 @@
   "dialogAccept": "Accept",
   "familyNumber": "Family/Relative Number",
   "switchTrackingType": "Switch Ritual",
-  "switchTrackingTypeWarning": "The current {targetName} will be stopped and reset from the first lap. Do you want to continue?",
+  "switchTrackingTypeWarning": "The current {currentName} will be stopped and reset from the first lap. Do you want to continue?",
   "confirm": "Confirm",
   "confirmDeleteLocationMessage": "Are you sure you want to delete this location? This action cannot be undone."
 

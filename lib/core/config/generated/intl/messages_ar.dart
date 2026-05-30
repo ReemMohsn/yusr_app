@@ -24,8 +24,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m1(name) => "الحاج \"${name}\" بدأ يبتعد عن المجموعة.";
 
-  static String m2(targetName) =>
-      "سيتم إيقاف ${targetName} الحالي وإعادة الضبط من الشوط الأول، هل تريد المتابعة؟";
+  static String m2(currentName) =>
+      "سيتم إيقاف ال${currentName} الحالي وإعادة الضبط من الشوط الأول، هل تريد المتابعة؟";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
