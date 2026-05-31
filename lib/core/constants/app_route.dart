@@ -42,6 +42,7 @@ import 'package:yusr/features/campaign_management/presentation/views/campaign_in
 import 'package:yusr/features/campaign_management/presentation/views/campaign_groups_view.dart';
 import 'package:yusr/features/campaign_management/presentation/views/campaign_group_details_view.dart';
 import 'package:yusr/features/campaign_management/presentation/views/campaign_pilgrim_details_view.dart';
+import 'package:yusr/features/return_to_compaign_location/data/models/active_location_model.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -78,8 +79,14 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => NotificationDetailsView(notification: notification),
         );
+      // case AppRoute.returnMeMapView:
+      //   return MaterialPageRoute(builder: (_) => const ReturnMeMapView());
+
       case AppRoute.returnMeMapView:
-        return MaterialPageRoute(builder: (_) => const ReturnMeMapView());
+        final location = settings.arguments as ActiveLocationModel;
+        return MaterialPageRoute(
+          builder: (_) => ReturnMeMapView(location: location),
+        );
       case AppRoute.returnMeView:
         return MaterialPageRoute(builder: (_) => const ReturnMeView());
       case AppRoute.campaignLocationView:
@@ -114,7 +121,7 @@ class AppRouter {
         );
       // case AppRoute.tawafCounterView:
       //   return MaterialPageRoute(builder: (_) => const TawafCounterView());
-       case AppRoute.instructionsView:
+      case AppRoute.instructionsView:
         return MaterialPageRoute(builder: (_) => const InstructionsView());
       case AppRoute.hajjDetailsView:
         final hajjType = settings.arguments as String;
@@ -127,11 +134,15 @@ class AppRouter {
           builder: (_) => ActionDetailsView(action: action),
         );
       case AppRoute.addSaudiNumber:
-        final Map<String, dynamic> args = settings.arguments as Map<String, dynamic>? ?? {};
+        final Map<String, dynamic> args =
+            settings.arguments as Map<String, dynamic>? ?? {};
         final bool isEditMode = args['isEditMode'] as bool? ?? false;
         final String? currentNumber = args['currentNumber'] as String?;
         return MaterialPageRoute(
-          builder: (_) => SaudiPhoneView(isEditMode: isEditMode, currentNumber: currentNumber),
+          builder: (_) => SaudiPhoneView(
+            isEditMode: isEditMode,
+            currentNumber: currentNumber,
+          ),
         );
       case AppRoute.groupInfoView:
         return MaterialPageRoute(builder: (_) => const GroupInfoView());
@@ -204,13 +215,14 @@ class AppRoute {
   static const String groupInfoView = '/GroupInfoView';
   static const String supervisorGroupView = '/SupervisorGroupView';
   static const String pilgrimDetailsView = '/PilgrimDetailsView';
-  
+
   // Campaign Management (مدير الحملة)
   static const String campaignInfoView = '/CampaignInfoView';
   static const String campaignGroupsView = '/CampaignGroupsView';
   static const String campaignGroupDetailsView = '/CampaignGroupDetailsView';
   // static const String campaignPilgrimsView = '/CampaignPilgrimsView';
-  static const String campaignPilgrimDetailsView = '/CampaignPilgrimDetailsView';
+  static const String campaignPilgrimDetailsView =
+      '/CampaignPilgrimDetailsView';
   // static const String campaignSupervisorsView = '/CampaignSupervisorsView';
   // static const String campaignSupervisorDetailsView = '/CampaignSupervisorDetailsView';
 }
