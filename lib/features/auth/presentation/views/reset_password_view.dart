@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:yusr/core/common/providers/shared_preferences_service_provider.dart';
-import 'package:yusr/core/common/widgets/widget.dart';
+import 'package:yusr/core/common/widgets/custom_big_button.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/constants/app_image.dart';
 import 'package:yusr/core/constants/app_route.dart';

@@ -309,6 +309,25 @@
   "switchTrackingType":"تبديل النُسك",
   "switchTrackingTypeWarning":"سيتم إيقاف {targetName} الحالي وإعادة الضبط من الشوط الأول، هل تريد المتابعة؟",
   "confirm":"تأكيد",
-  "confirmDeleteLocationMessage": "هل أنت متأكد من حذف هذا الموقع؟ لا يمكن التراجع عن هذا الإجراء."
-
+  "confirmDeleteLocationMessage": "هل أنت متأكد من حذف هذا الموقع؟ لا يمكن التراجع عن هذا الإجراء.",
+  "locationTrackingTitle": "مرافق الحاج - كن قائد نشط",
+  "locationTrackingDesc": "التطبيق يقوم بتتبع موقعك لإرشاد الحجاج",
+  "unknownError": "حدث خطأ غير معروف",
+  "operationSuccessful": "تمت العملية بنجاح",
+  "unsupportedDataFormat": "صيغة البيانات القادمة من الخادم غير مدعومة",
+  "locationRequestBody": "هل توافق على مشاركة موقعك الجغرافي؟",
+  "pilgrimJoinedSession": "✅ \"{name}\" انضم إلى الجلسة وبدأ التتبع",
+  "@pilgrimJoinedSession": { "placeholders": { "name": { "type": "String" } } },
+  "pilgrimRejectedSession": "❌ \"{name}\" رفض الانضمام إلى الجلسة",
+  "@pilgrimRejectedSession": { "placeholders": { "name": { "type": "String" } } },
+  "pilgrimStoppedSharingLocation": "⚠️ \"{name}\" أوقف مشاركة موقعه",
+  "@pilgrimStoppedSharingLocation": { "placeholders": { "name": { "type": "String" } } },
+  "pilgrimStatusChanged": "تغيّرت حالة أحد الحجاج",
+  "pilgrimStatusChangedTitle": "👥 تغيّر حالة حاج",
+  "bleClosedLeaderWarning": "تم إغلاق البلوتوث. دقة تحديد الحجاج القريبين ستنخفض. يرجى تفعيله.",
+  "bleNotSupportedLeaderWarning": "جهازك لا يدعم البلوتوث.",
+  "pleaseEnableGpsForBleWarning": "يرجى تفعيل GPS لتشغيل رادار البلوتوث.",
+  "bleScanFailedWarning": "تعذّر بدء مسح البلوتوث. تأكد من تفعيل GPS والبلوتوث.",
+  "bleClosedPilgrimWarning": "تم إغلاق البلوتوث. لن يتمكن المشرف من رصدك بدقة. يرجى تفعيله.",
+  "bleNotSupportedPilgrimWarning": "جهازك لا يدعم البلوتوث — لن يتمكن المشرف من رصدك بدقة."
 }

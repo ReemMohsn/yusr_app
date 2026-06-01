@@ -112,9 +112,7 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => PilgrimMapTrackingView(sessionId: sessionId),
         );
-      // case AppRoute.tawafCounterView:
-      //   return MaterialPageRoute(builder: (_) => const TawafCounterView());
-       case AppRoute.instructionsView:
+      case AppRoute.instructionsView:
         return MaterialPageRoute(builder: (_) => const InstructionsView());
       case AppRoute.hajjDetailsView:
         final hajjType = settings.arguments as String;
@@ -127,11 +125,15 @@ class AppRouter {
           builder: (_) => ActionDetailsView(action: action),
         );
       case AppRoute.addSaudiNumber:
-        final Map<String, dynamic> args = settings.arguments as Map<String, dynamic>? ?? {};
+        final Map<String, dynamic> args =
+            settings.arguments as Map<String, dynamic>? ?? {};
         final bool isEditMode = args['isEditMode'] as bool? ?? false;
         final String? currentNumber = args['currentNumber'] as String?;
         return MaterialPageRoute(
-          builder: (_) => SaudiPhoneView(isEditMode: isEditMode, currentNumber: currentNumber),
+          builder: (_) => SaudiPhoneView(
+            isEditMode: isEditMode,
+            currentNumber: currentNumber,
+          ),
         );
       case AppRoute.groupInfoView:
         return MaterialPageRoute(builder: (_) => const GroupInfoView());
@@ -151,20 +153,11 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => CampaignGroupDetailsView(groupId: groupId),
         );
-      // case AppRoute.campaignPilgrimsView:
-      //   return MaterialPageRoute(builder: (_) => const CampaignPilgrimsView());
       case AppRoute.campaignPilgrimDetailsView:
         final userId = settings.arguments as int;
         return MaterialPageRoute(
           builder: (_) => CampaignPilgrimDetailsView(userId: userId),
         );
-      // case AppRoute.campaignSupervisorsView:
-      //   return MaterialPageRoute(builder: (_) => const CampaignSupervisorsView());
-      // case AppRoute.campaignSupervisorDetailsView:
-      //   final userId = settings.arguments as int;
-      //   return MaterialPageRoute(
-      //     builder: (_) => CampaignSupervisorDetailsView(userId: userId),
-      //   );
       default:
         return null;
     }
@@ -204,13 +197,11 @@ class AppRoute {
   static const String groupInfoView = '/GroupInfoView';
   static const String supervisorGroupView = '/SupervisorGroupView';
   static const String pilgrimDetailsView = '/PilgrimDetailsView';
-  
+
   // Campaign Management (مدير الحملة)
   static const String campaignInfoView = '/CampaignInfoView';
   static const String campaignGroupsView = '/CampaignGroupsView';
   static const String campaignGroupDetailsView = '/CampaignGroupDetailsView';
-  // static const String campaignPilgrimsView = '/CampaignPilgrimsView';
-  static const String campaignPilgrimDetailsView = '/CampaignPilgrimDetailsView';
-  // static const String campaignSupervisorsView = '/CampaignSupervisorsView';
-  // static const String campaignSupervisorDetailsView = '/CampaignSupervisorDetailsView';
+  static const String campaignPilgrimDetailsView =
+      '/CampaignPilgrimDetailsView';
 }

@@ -55,12 +55,8 @@ class ApiLink {
   static String getCampaignGroupDetailsMobile(int groupId) =>
       '$server/AboutCampaign/GetCampaignGroupDetailsMobile/$groupId';
 
-  // static const String getCampaignPilgrimsMobile = '$server/AboutCampaign/GetCampaignPilgrimsMobile';
   static String getCampaignPilgrimDetailsMobile(int userId) =>
       '$server/AboutCampaign/GetCampaignPilgrimDetailsMobile/$userId';
-
-  // static const String getCampaignSupervisorsMobile = '$server/AboutCampaign/GetCampaignSupervisorsMobile';
-  // static String getCampaignSupervisorDetailsMobile(int userId) => '$server/AboutCampaign/GetCampaignSupervisorDetailsMobile/$userId';
 
   // be a leader
   static const String startTrackingSession = '$server/Monitoring/StartSession';
@@ -68,18 +64,9 @@ class ApiLink {
   static const String participantResponse =
       '$server/Monitoring/ParticipantResponse';
   static const String endTrackingSession = '$server/Monitoring/EndSession';
+  static const String getActiveTrackingSession =
+      '$server/Monitoring/GetActiveSession';
 
   // رابط خدمة المفتي الذكي (Hugging Face)
   static const String geminiChat = 'https://manar13-yusr-hajj-api.hf.space/ask';
-
-  // 5. وظائف ديناميكية
-  static String changeResidentialNeighborhoodManager({
-    required int neighborhoodId,
-  }) {
-    return '$server/residential-neighborhoods/$neighborhoodId/manager';
-  }
-
-  // 6. Onboarding
-  static const String getOnboardingData =
-      '$server/Onboarding/GetOnboardingMobile';
 }

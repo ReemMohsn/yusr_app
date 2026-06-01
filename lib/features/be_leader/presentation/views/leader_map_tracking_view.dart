@@ -10,6 +10,7 @@ import 'package:yusr/features/be_leader/presentation/widgets/leader_mute_alarm_b
 import 'package:yusr/features/be_leader/providers/leader_tracking_controller.dart';
 import 'package:yusr/features/be_leader/providers/state/tracking_state.dart';
 import 'package:yusr/features/return_to_compaign_location/presentation/widgets/tracking_fab_widget.dart';
+import 'package:yusr/features/be_leader/presentation/widgets/location_accuracy_hint.dart';
 
 class LeaderMapTrackingView extends ConsumerStatefulWidget {
   final int sessionId;
@@ -85,16 +86,22 @@ class _LeaderMapTrackingViewState extends ConsumerState<LeaderMapTrackingView> {
             mapState: mapState,
           ),
 
-          // ── البطاقة العلوية ───────────────────────────────────
+          // ── البطاقة العلوية والتنبيه ──────────────────────────
           Positioned(
             top: 55,
             left: 20,
             right: 20,
-            child: LeaderMapTopCard(
-              state: mapState,
-              isLeaderConnected:
-                  mapState.leaderLocation != null &&
-                  mapState.gpsWarning == null,
+            child: Column(
+              children: [
+                LeaderMapTopCard(
+                  state: mapState,
+                  isLeaderConnected:
+                      mapState.leaderLocation != null &&
+                      mapState.gpsWarning == null,
+                ),
+                const SizedBox(height: 10),
+                const LocationAccuracyHint(),
+              ],
             ),
           ),
 

@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yusr/core/common/widgets/custom_golden_back_button.dart';
 import 'package:yusr/core/common/widgets/custom_text_field.dart';
-import 'package:yusr/core/common/widgets/widget.dart';
+import 'package:yusr/core/common/widgets/custom_big_button.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/constants/app_size.dart';
 import 'package:yusr/core/extensions/async_value_ui.dart';
@@ -125,7 +125,8 @@ class _AddAnnouncementViewState extends ConsumerState<AddAnnouncementView> {
                       });
                     }
 
-                    final currentId = selectedAudienceId ??
+                    final currentId =
+                        selectedAudienceId ??
                         (audiences.isNotEmpty
                             ? audiences.first.targetAudienceId
                             : null);
@@ -149,8 +150,7 @@ class _AddAnnouncementViewState extends ConsumerState<AddAnnouncementView> {
                             Icons.keyboard_arrow_down,
                             color: singleItem ? Colors.grey : AppColor.golden,
                           ),
-                          items: audiences
-                              .map((TargetAudienceModel audience) {
+                          items: audiences.map((TargetAudienceModel audience) {
                             return DropdownMenuItem<int>(
                               value: audience.targetAudienceId,
                               child: Text(audience.targetAudienceName),
@@ -179,7 +179,8 @@ class _AddAnnouncementViewState extends ConsumerState<AddAnnouncementView> {
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     final audiences = ref.read(targetAudiencesProvider).value;
-                    final int? audienceId = selectedAudienceId ??
+                    final int? audienceId =
+                        selectedAudienceId ??
                         (audiences != null && audiences.isNotEmpty
                             ? audiences.first.targetAudienceId
                             : null);
@@ -187,7 +188,8 @@ class _AddAnnouncementViewState extends ConsumerState<AddAnnouncementView> {
                     if (audienceId == null) return;
 
                     // اسم الفئة المختارة لعرضه في نافذة التأكيد
-                    final String audienceName = audiences
+                    final String audienceName =
+                        audiences
                             ?.firstWhere(
                               (a) => a.targetAudienceId == audienceId,
                               orElse: () => TargetAudienceModel(

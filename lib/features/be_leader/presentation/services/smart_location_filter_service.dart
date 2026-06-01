@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:pedometer/pedometer.dart';
@@ -131,37 +132,39 @@ class SmartLocationFilterService {
   /// - الخطوات الفعلية < المتوقع + المسافة > 15م: رفض (حماية من القفزات)
   ///
   /// [tag] — وسم للتمييز في سجلات الـ Debug.
-  bool isMovementReal(double distanceMeters, {String tag = ''}) {
-    // مسافات صغيرة جداً تُقبل دائماً (GPS error margin طبيعي)
+  bool isMovementReal({
+    required double distanceMeters,
+    required double currentAccuracy,
+    required double previousAccuracy,
+    String tag = '',
+  }) {
+    // 1. مسافات صغيرة جداً تُقبل دائماً (GPS error margin طبيعي)
     if (distanceMeters < 5) return true;
-
-    // 🆕 فلتر التوقف: إذا كان الشخص جالساً/واقفاً → رفض أي قفزة > 5م
-    if (!_isCurrentlyWalking && distanceMeters > 5) {
-      debugPrint(
-        '🛑 [حماية الموقع$tag] الشخص متوقف — رفض قفزة GPS بـ ${distanceMeters.toStringAsFixed(1)}م',
-      );
-      return false;
-    }
 
     final int stepsTaken = _trustedTotalSteps - _stepsAtLastGpsUpdate;
     final double expectedMinSteps = distanceMeters / 1.5;
 
-    debugPrint(
-      '🔍 [حماية الموقع$tag] المسافة ${distanceMeters.toStringAsFixed(1)} م'
-      ' | خطوات فعلية: $stepsTaken'
-      ' | المتوقع الأدنى: ${expectedMinSteps.toStringAsFixed(1)}',
-    );
-
-    if (stepsTaken < expectedMinSteps && distanceMeters > 15) {
-      debugPrint(
-        'لم يمشِ المستخدم$tag مسافة كافية لقطع هذه المسافة — سيتم رفض التحديث',
-      );
-      return false;
+    // 2. إذا كانت الخطوات كافية للمسافة، نقبل فوراً
+    if (stepsTaken >= expectedMinSteps) {
+      _stepsAtLastGpsUpdate = _trustedTotalSteps;
+      debugPrint('✅ [حماية الموقع$tag] مشى المستخدم مسافة كافية ($stepsTaken خطوات).');
+      return true;
     }
 
-    _stepsAtLastGpsUpdate = _trustedTotalSteps;
-    debugPrint('مشى المستخدم$tag مسافة كافية — سيتم قبول التحديث');
-    return true;
+    // 3. الخطوات غير كافية.. هل هذه القفزة تصحيح للـ GPS؟
+    // نأخذ الأكبر بين دقة الموقع السابق والحالي كدائرة تداخل مسموحة
+    final double allowedNoiseRadius = math.max(currentAccuracy, previousAccuracy);
+
+    if (distanceMeters <= allowedNoiseRadius) {
+      // القفزة مبررة بأنها ضمن دائرة الخطأ للـ GPS
+      _stepsAtLastGpsUpdate = _trustedTotalSteps;
+      debugPrint('🔄 [حماية الموقع$tag] تصحيح GPS مسموح: المسافة (${distanceMeters.toStringAsFixed(1)}م) ضمن هامش الخطأ (${allowedNoiseRadius.toStringAsFixed(1)}م) بدون خطوات.');
+      return true;
+    }
+
+    // 4. المسافة أكبر من هامش الخطأ، ولا يوجد خطوات -> قفزة وهمية مرفوضة!
+    debugPrint('🛑 [حماية الموقع$tag] رفض! مسافة (${distanceMeters.toStringAsFixed(1)}م) أكبر من هامش الخطأ (${allowedNoiseRadius.toStringAsFixed(1)}م) بخطوات غير كافية ($stepsTaken).');
+    return false;
   }
 
   /// يتحقق إن كانت السرعة المحسوبة منطقية (أقل من 4 م/ث — فلتر السرعة).

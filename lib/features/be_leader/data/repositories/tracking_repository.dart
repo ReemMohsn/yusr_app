@@ -159,4 +159,15 @@ class TrackingRepository {
       return null;
     }
   }
+
+  /// التحقق الفعلي من Firebase هل الجلسة ما زالت موجودة؟
+  Future<bool> checkSessionExists(int sessionId) async {
+    try {
+      final snapshot = await _db.ref('TrackingSessions/$sessionId').get();
+      return snapshot.exists;
+    } catch (e) {
+      debugPrint("❌ فشل التحقق من وجود الجلسة: $e");
+      return false; // نعتبر أنها غير موجودة في حالة الفشل (أو يمكن إرجاع true للحيطة)
+    }
+  }
 }
