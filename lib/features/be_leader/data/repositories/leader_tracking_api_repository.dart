@@ -38,6 +38,17 @@ class LeaderTrackingApiRepository {
     return response;
   }
 
+  // دالة لجلب الجلسة النشطة الحالية إن وجدت
+  Future<ApiResponse<SessionResponseModel>> getActiveSession() async {
+    final response = await repositoryRequestHandler<SessionResponseModel>(
+      () => apiService.get(ApiLink.getActiveTrackingSession),
+      fromJson: (data) {
+        return SessionResponseModel.fromJson(data);
+      },
+    );
+    return response;
+  }
+
   // إضافة هذه الدالة داخل كلاس LeaderTrackingApiRepository
 
   Future<ApiResponse<List<PilgrimModel>>> getPilgrimsList(int sessionId) async {

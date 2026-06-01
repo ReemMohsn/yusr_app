@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yusr/core/common/widgets/custom_golden_back_button.dart';
-import 'package:yusr/core/common/widgets/widget.dart';
+import 'package:yusr/core/common/widgets/custom_big_button.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/core/constants/app_size.dart'; // استيراد ملف المقاسات
@@ -16,30 +16,31 @@ import '../widgets/other_location_item.dart';
 import 'package:yusr/features/campaign_location/data/models/campaign_location_item_model.dart';
 import 'package:yusr/features/campaign_location/data/models/campaign_locations_view_model.dart';
 import 'package:yusr/features/campaign_location/presentation/widgets/confirm_delete_dialog.dart';
+
 class CampaignLocationView extends ConsumerWidget {
   const CampaignLocationView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = context.locale;
-ref.listen(deleteLocationControllerProvider, (_, state) {
-  if (state.isLoading) {
-    context.showLoadingDialog();
-  } else if (state.hasError) {
-    context.closeLoadingDialog();
-    context.showErrorSnackBar(state.errorMessage);
-  } else if (state.hasValue && state.value != null) {
-    context.closeLoadingDialog();
-    
-    // جلب الرسالة القادمة من السيرفر بعد الحذف الناجح
-    final message = state.value?.message ?? locale.deleteSuccess;
-    context.showSuccessSnackBar(message);
-  }
-});
+    ref.listen(deleteLocationControllerProvider, (_, state) {
+      if (state.isLoading) {
+        context.showLoadingDialog();
+      } else if (state.hasError) {
+        context.closeLoadingDialog();
+        context.showErrorSnackBar(state.errorMessage);
+      } else if (state.hasValue && state.value != null) {
+        context.closeLoadingDialog();
+
+        // جلب الرسالة القادمة من السيرفر بعد الحذف الناجح
+        final message = state.value?.message ?? locale.deleteSuccess;
+        context.showSuccessSnackBar(message);
+      }
+    });
 
     final theme = Theme.of(context).textTheme; // الوصول للثيم الموحد
     final locationsAsync = ref.watch(getCampaignLocationsProvider);
-    
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -123,7 +124,8 @@ ref.listen(deleteLocationControllerProvider, (_, state) {
                     if (data.currentLocation != null)
                       CurrentLocationCard(
                         location: data.currentLocation!,
-                        isPreviewOnly: true, // هنا تم التثبيت وإظهار كارد البيانات والأزرار
+                        isPreviewOnly:
+                            true, // هنا تم التثبيت وإظهار كارد البيانات والأزرار
                       )
                     else
                       EmptyCard(message: locale.notFound, theme: theme),

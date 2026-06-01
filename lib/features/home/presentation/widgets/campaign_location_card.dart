@@ -50,13 +50,14 @@ class CampaignLocationCard extends ConsumerWidget {
       data: (data) {
         final current = data?.currentLocation;
         final title = current?.locationName ?? locale.notFound;
-        final subtitle = current?.description ?? locale.loginToViewCampaignLocation;
+        final subtitle =
+            current?.description ?? locale.loginToViewCampaignLocation;
 
         return LocationCardShell(
           icon: Icons.location_on_outlined,
           title: title,
           subtitle: subtitle,
-          onTap: () => Navigator.pushNamed(context, AppRoute.campaignLocationView),
+          onTap: null,
         );
       },
     );
@@ -101,15 +102,15 @@ class LocationCardShell extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // ── Icon ──
-            Container(
-              width: 39.w,
-              height: 39.w,
-              decoration: BoxDecoration(
-                color: AppColor.goldenWithOpacity,
-                shape: BoxShape.circle,
-              ),
-              child: Icon(icon, color: AppColor.golden, size: 20.sp),
-            ),
+            // Container(
+            //   width: 39.w,
+            //   height: 39.w,
+            //   decoration: BoxDecoration(
+            //     color: AppColor.goldenWithOpacity,
+            //     shape: BoxShape.circle,
+            //   ),
+            //   child: Icon(icon, color: AppColor.golden, size: 20.sp),
+            // ),
             SizedBox(width: 8.w),
 
             // ── Text ──
@@ -136,10 +137,6 @@ class LocationCardShell extends StatelessWidget {
                 ],
               ),
             ),
-
-            // ── Chevron (only when tappable) ──
-            if (onTap != null)
-              Icon(Icons.chevron_right, color: AppColor.golden, size: 20.sp),
           ],
         ),
       ),

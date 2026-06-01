@@ -9,6 +9,7 @@ import 'package:yusr/features/be_leader/presentation/widgets/pilgrim_mute_alarm_
 import 'package:yusr/features/be_leader/presentation/widgets/pilgrim_stop_tracking_fab.dart';
 import 'package:yusr/features/be_leader/providers/pilgrim_tracking_controller.dart';
 import 'package:yusr/features/be_leader/providers/state/pilgrim_tracking_state.dart';
+import 'package:yusr/features/be_leader/presentation/widgets/location_accuracy_hint.dart';
 import 'package:yusr/features/return_to_compaign_location/presentation/widgets/tracking_fab_widget.dart';
 
 class PilgrimMapTrackingView extends ConsumerStatefulWidget {
@@ -61,6 +62,12 @@ class _PilgrimMapTrackingViewState
           ),
         );
       }
+      // ✔️ تحريك الخريطة تلقائياً عند تغيير موقع الحاج (GPS عاد للعمل) — مطابق لخريطة المشرف
+      if (_isTracking &&
+          next.pilgrimLocation != null &&
+          next.pilgrimLocation != previous?.pilgrimLocation) {
+        _mapController.move(next.pilgrimLocation!, 17.0);
+      }
     });
 
     if (mapState.errorMessage != null) {
@@ -69,7 +76,8 @@ class _PilgrimMapTrackingViewState
       );
     }
 
-    final bool isConnected = mapState.pilgrimLocation != null;
+    final bool isConnected =
+        mapState.pilgrimLocation != null && mapState.gpsWarning == null;
     final bool isAlarmZone = mapState.distance > 30;
 
     return Scaffold(
@@ -81,14 +89,20 @@ class _PilgrimMapTrackingViewState
             mapState: mapState,
           ),
 
-          // ── الشريط العلوي ─────────────────────────────────────
+          // ── الشريط العلوي والتنبيه ───────────────────────────
           Positioned(
             top: 55,
             left: 20,
             right: 20,
-            child: PilgrimMapTopCard(
-              state: mapState,
-              isConnected: isConnected,
+            child: Column(
+              children: [
+                PilgrimMapTopCard(
+                  state: mapState,
+                  isConnected: isConnected,
+                ),
+                const SizedBox(height: 10),
+                const LocationAccuracyHint(),
+              ],
             ),
           ),
 

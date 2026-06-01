@@ -24,6 +24,10 @@ class SharedPreferencesService {
     await _prefs.remove(key);
   }
 
+  Future<void> removeKey(String key) async {
+    await _prefs.remove(key);
+  }
+
   /// حفظ حالة تسجيل الدخول
   Future<void> setLoggedIn(bool value) async {
     await _prefs.setBool(SharedPreferencesKeys.isLoggedIn, value);

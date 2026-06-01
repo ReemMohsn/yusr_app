@@ -15,8 +15,8 @@ class TrackingFAB extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: 110.h,
-      right: 20.w,
+      bottom: 220,
+      right: 16,
       child: FloatingActionButton(
         mini: true,
         backgroundColor: AppColor.withe,

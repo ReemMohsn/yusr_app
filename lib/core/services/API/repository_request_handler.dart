@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:yusr/core/services/API/ApiResponse.dart';
 import 'package:yusr/core/services/errors/errormodel.dart';
 import 'package:yusr/core/services/errors/exception.dart';
+import 'package:yusr/core/constants/app_route.dart';
+import 'package:yusr/core/extensions/context_extension.dart';
 
 Future<ApiResponse<T>> repositoryRequestHandler<T>(
   Future<Response> Function() request, {
@@ -16,7 +18,7 @@ Future<ApiResponse<T>> repositoryRequestHandler<T>(
 
       if (isSuccess) {
         // 1. نسحب الرسالة
-        final String message = data['message'] ?? 'تمت العملية بنجاح';
+        final String message = data['message'] ?? navigatorKey.currentContext?.locale.operationSuccessful ?? 'تمت العملية بنجاح';
 
         // 2. نسحب الداتا ونحولها (إذا طلبنا ذلك)
         final T parsedData = fromJson != null
@@ -32,7 +34,7 @@ Future<ApiResponse<T>> repositoryRequestHandler<T>(
       // 🔥 التعديل هنا: التعامل مع حالة البيانات الغريبة التي ليست Map
       throw ServerException(
         errModel: ErrorModel(
-          errorMessage: 'صيغة البيانات القادمة من الخادم غير مدعومة',
+          errorMessage: navigatorKey.currentContext?.locale.unsupportedDataFormat ?? 'صيغة البيانات القادمة من الخادم غير مدعومة',
           statusCode: 404,
           isSuccess: false,
         ),

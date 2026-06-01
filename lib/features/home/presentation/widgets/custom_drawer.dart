@@ -7,6 +7,7 @@ import 'package:yusr/core/constants/shared_preferences_keys.dart';
 import 'package:yusr/core/extensions/async_value_ui.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/features/auth/providers/logout_controller_provider.dart';
+import 'package:yusr/features/be_leader/providers/be_leader_repository_provider.dart';
 import 'package:yusr/features/be_leader/providers/leader_tracking_controller.dart';
 import 'package:yusr/features/be_leader/providers/tracking_repository_provider.dart';
 import 'package:yusr/features/home/presentation/widgets/build_drawer_header.dart';
@@ -83,9 +84,30 @@ class CustomDrawer extends ConsumerWidget {
             icon: Icons.workspace_premium_outlined,
             onTap: () async {
               final sharedPrefs = ref.read(sharedPreferencesServiceProvider);
-              final activeSessionId = await sharedPrefs.getInt(
+              int? activeSessionId = await sharedPrefs.getInt(
                 SharedPreferencesKeys.currentSessionId,
               );
+
+              // 🛑 إضافة التحقق من الباك إند إذا لم نجد الجلسة محلياً (تمت معالجة حالة إلغاء التثبيت)
+              if (activeSessionId == null || activeSessionId == 0) {
+                context.showLoadingDialog();
+                try {
+                  final apiRepo = ref.read(leaderTrackingApiRepositoryProvider);
+                  final response = await apiRepo.getActiveSession();
+                  if (response.data != null && response.data!.sessionId > 0) {
+                    activeSessionId = response.data!.sessionId;
+                    // نحفظه محلياً لكي لا نطلبه مرة أخرى
+                    await sharedPrefs.setInt(
+                      SharedPreferencesKeys.currentSessionId,
+                      activeSessionId,
+                    );
+                  }
+                } catch (e) {
+                  // نتجاهل الخطأ ونفترض أنه لا توجد جلسة
+                }
+                if (!context.mounted) return;
+                context.closeLoadingDialog();
+              }
 
               if (activeSessionId != null && activeSessionId > 0) {
                 // 🚀 التحقق الأول: هل الوظيفة تعمل حالياً في الذاكرة؟
