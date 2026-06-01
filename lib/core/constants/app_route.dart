@@ -119,11 +119,7 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => PilgrimMapTrackingView(sessionId: sessionId),
         );
-<<<<<<< HEAD
-=======
-      // case AppRoute.tawafCounterView:
-      //   return MaterialPageRoute(builder: (_) => const TawafCounterView());
->>>>>>> master
+
       case AppRoute.instructionsView:
         return MaterialPageRoute(builder: (_) => const InstructionsView());
       case AppRoute.hajjDetailsView:
@@ -214,14 +210,6 @@ class AppRoute {
   static const String campaignInfoView = '/CampaignInfoView';
   static const String campaignGroupsView = '/CampaignGroupsView';
   static const String campaignGroupDetailsView = '/CampaignGroupDetailsView';
-<<<<<<< HEAD
   static const String campaignPilgrimDetailsView =
       '/CampaignPilgrimDetailsView';
-=======
-  // static const String campaignPilgrimsView = '/CampaignPilgrimsView';
-  static const String campaignPilgrimDetailsView =
-      '/CampaignPilgrimDetailsView';
-  // static const String campaignSupervisorsView = '/CampaignSupervisorsView';
-  // static const String campaignSupervisorDetailsView = '/CampaignSupervisorDetailsView';
->>>>>>> master
 }
