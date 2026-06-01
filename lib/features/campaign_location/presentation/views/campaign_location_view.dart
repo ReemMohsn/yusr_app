@@ -2,44 +2,44 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yusr/core/common/widgets/custom_golden_back_button.dart';
+import 'package:yusr/core/common/widgets/widget.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/core/constants/app_size.dart'; // استيراد ملف المقاسات
+import 'package:yusr/core/extensions/async_value_ui.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/core/services/API/ApiResponse.dart';
-import 'package:yusr/features/campaign_location/providers/campaign_location_controller_provider.dart';
+import 'package:yusr/features/campaign_location/providers/delete_location_controller_provider.dart';
 import 'package:yusr/features/campaign_location/providers/get_locations_provider.dart';
 import '../widgets/current_location_card.dart';
 import '../widgets/other_location_item.dart';
-
+import 'package:yusr/features/campaign_location/data/models/campaign_location_item_model.dart';
+import 'package:yusr/features/campaign_location/data/models/campaign_locations_view_model.dart';
+import 'package:yusr/features/campaign_location/presentation/widgets/confirm_delete_dialog.dart';
 class CampaignLocationView extends ConsumerWidget {
   const CampaignLocationView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = context.locale;
+ref.listen(deleteLocationControllerProvider, (_, state) {
+  if (state.isLoading) {
+    context.showLoadingDialog();
+  } else if (state.hasError) {
+    context.closeLoadingDialog();
+    context.showErrorSnackBar(state.errorMessage);
+  } else if (state.hasValue && state.value != null) {
+    context.closeLoadingDialog();
+    
+    // جلب الرسالة القادمة من السيرفر بعد الحذف الناجح
+    final message = state.value?.message ?? locale.deleteSuccess;
+    context.showSuccessSnackBar(message);
+  }
+});
+
     final theme = Theme.of(context).textTheme; // الوصول للثيم الموحد
     final locationsAsync = ref.watch(getCampaignLocationsProvider);
-
-    ref.listen<AsyncValue<ApiResponse<dynamic>?>>(
-      // تغيير النوع هنا إلى dynamic
-      campaignLocationControllerProvider,
-      (prev, next) {
-        if (next.isLoading) {
-          context.showLoadingDialog();
-        } else if (next.hasError) {
-          context.closeLoadingDialog();
-          context.showErrorSnackBar(next.error.toString());
-        } else if (next.hasValue && !next.isLoading) {
-          context.closeLoadingDialog();
-
-          // الآن سيعمل هذا السطر بنجاح لأن النوع dynamic
-          final message = next.value?.message ?? locale.deleteSuccess;
-          context.showSuccessSnackBar(message);
-        }
-      },
-    );
-
+    
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -54,11 +54,10 @@ class CampaignLocationView extends ConsumerWidget {
         padding: const EdgeInsets.all(AppSize.paddingOfPage),
         child: locationsAsync.when(
           data: (data) {
-            if (data == null) {
+            if (data == null)
               return Center(
                 child: Text(locale.notFound, style: theme.bodyMedium),
               );
-            }
 
             return RefreshIndicator(
               onRefresh: () async =>
@@ -122,7 +121,10 @@ class CampaignLocationView extends ConsumerWidget {
                     SectionHeader(title: locale.currentLocation, theme: theme),
                     SizedBox(height: 16.h),
                     if (data.currentLocation != null)
-                      CurrentLocationCard(location: data.currentLocation!)
+                      CurrentLocationCard(
+                        location: data.currentLocation!,
+                        isPreviewOnly: true, // هنا تم التثبيت وإظهار كارد البيانات والأزرار
+                      )
                     else
                       EmptyCard(message: locale.notFound, theme: theme),
 

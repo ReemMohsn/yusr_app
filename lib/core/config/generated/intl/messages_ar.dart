@@ -98,6 +98,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "confirmDeleteAnnouncementMessage": MessageLookupByLibrary.simpleMessage(
       "هل أنت متأكد من حذف هذا الإعلان؟ لا يمكن التراجع عن هذا الإجراء.",
     ),
+    "confirmDeleteLocationMessage": MessageLookupByLibrary.simpleMessage(
+      "هل أنت متأكد من حذف هذا الموقع؟ لا يمكن التراجع عن هذا الإجراء.",
+    ),
     "confirmEnd": MessageLookupByLibrary.simpleMessage("تأكيد الإنهاء"),
     "confirmEndSessionMsg": MessageLookupByLibrary.simpleMessage(
       "هل أنت متأكد من إنهاء التتبع؟ سيتم إيقاف الجلسة لجميع الحجاج.",
@@ -335,6 +338,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "newPasswordLabel": MessageLookupByLibrary.simpleMessage(
       "كلمة المرور الجديدة",
     ),
+    "next": MessageLookupByLibrary.simpleMessage("التالي"),
     "noAnnouncementsCurrently": MessageLookupByLibrary.simpleMessage(
       "لا توجد إعلانات حالياً",
     ),
@@ -374,6 +378,34 @@ class MessageLookup extends MessageLookupByLibrary {
     "ofWord": MessageLookupByLibrary.simpleMessage("من"),
     "onBorders": MessageLookupByLibrary.simpleMessage("على حدود النطاق 🟠"),
     "onBordersOnly": MessageLookupByLibrary.simpleMessage("على الحدود"),
+    "onboarding_desc_1": MessageLookupByLibrary.simpleMessage(
+      "رفيقك الرقمي الموثوق لتيسير مناسك الحج، يرافقك خطوة بخطوة في المشاعر المقدسة ليضمن لك رحلة إيمانية آمنة وميسرة.",
+    ),
+    "onboarding_desc_2": MessageLookupByLibrary.simpleMessage(
+      "إرشاد فوري لموقع خيمتك ومقر حملتك، مع تتبع ميداني مباشر من المشرف لسلامتك.",
+    ),
+    "onboarding_desc_3": MessageLookupByLibrary.simpleMessage(
+      "عداد طواف وسعي ذكي يحسب تقدمك تلقائياً حتى تركز على مناسكك بثقة.",
+    ),
+    "onboarding_desc_4": MessageLookupByLibrary.simpleMessage(
+      "تعليمات فقهية مقسمة حسب الأيام، تشمل محظورات الإحرام والأدعية المستحبة.",
+    ),
+    "onboarding_desc_5": MessageLookupByLibrary.simpleMessage(
+      "اطرح أسئلتك الفقهية حول الحج واحصل على إجابات شرعية فورية وموثوقة.",
+    ),
+    "onboarding_desc_6": MessageLookupByLibrary.simpleMessage(
+      "تلقّ التوجيهات والتنبيهات من المشرف ومدير الحملة مباشرة ولحظة بلحظة.",
+    ),
+    "onboarding_title_1": MessageLookupByLibrary.simpleMessage("تطبيق يُسْر"),
+    "onboarding_title_2": MessageLookupByLibrary.simpleMessage(
+      "التوجيه الذكي والمراقبة",
+    ),
+    "onboarding_title_3": MessageLookupByLibrary.simpleMessage("عداد طواف ذكي"),
+    "onboarding_title_4": MessageLookupByLibrary.simpleMessage("إرشادات الحج"),
+    "onboarding_title_5": MessageLookupByLibrary.simpleMessage("المفتي الذكي"),
+    "onboarding_title_6": MessageLookupByLibrary.simpleMessage(
+      "الإشعارات والتنبيهات",
+    ),
     "otherLocations": MessageLookupByLibrary.simpleMessage(
       "مواقع استقرار أخرى",
     ),
@@ -496,6 +528,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "sharing": MessageLookupByLibrary.simpleMessage("جاري المشاركة..."),
     "showMap": MessageLookupByLibrary.simpleMessage("عرض الخريطة"),
+    "skip": MessageLookupByLibrary.simpleMessage("تخطي"),
     "smartMufti": MessageLookupByLibrary.simpleMessage("المفتي الذكي"),
     "smartMuftiHelper": MessageLookupByLibrary.simpleMessage(
       "مساعدك الذكي للإجابة على تساؤلات الحج",
@@ -511,7 +544,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "stopped": MessageLookupByLibrary.simpleMessage("توقف"),
     "stoppedTracking": MessageLookupByLibrary.simpleMessage("أوقف التتبع"),
     "strokes": MessageLookupByLibrary.simpleMessage("أشواط"),
-    "supervisor": MessageLookupByLibrary.simpleMessage("المشرف"),
+    "supervisor": MessageLookupByLibrary.simpleMessage("المشرف:"),
     "supervisorGroupDetails": MessageLookupByLibrary.simpleMessage(
       "تفاصيل المجموعة",
     ),

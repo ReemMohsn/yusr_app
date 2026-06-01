@@ -7,6 +7,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:yusr/core/common/widgets/custom_golden_back_button.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/constants/app_size.dart';
+import 'package:yusr/core/extensions/async_value_ui.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/features/campaign_location/data/models/campaign_location_item_model.dart';
 import 'package:yusr/features/campaign_location/presentation/widgets/location_input_card.dart';
@@ -55,20 +56,25 @@ class _EditLocationViewState extends ConsumerState<EditLocationView> {
   Widget build(BuildContext context) {
     final locale = context.locale;
     final theme = Theme.of(context).textTheme;
-
-    // الاستماع لحالة الـ Provider للتعامل مع التحميل والأخطاء
-    ref.listen(editLocationControllerProvider, (prev, next) {
-      if (next.isLoading) {
+// الاستماع لحالة الـ Provider للتعامل مع التحميل والأخطاء (نفس طريقة الإعلانات)
+    ref.listen(editLocationControllerProvider, (_, state) {
+      if (state.isLoading) {
         context.showLoadingDialog();
-      } else if (next.hasError) {
+      } else if (state.hasError) {
         context.closeLoadingDialog();
-        context.showErrorSnackBar(next.error.toString());
-      } else if (next.hasValue && next.value != null) {
+        // استخدام errorMessage المعتمد في المشروع بدلاً من error.toString()
+        context.showErrorSnackBar(state.errorMessage);
+      } else if (state.hasValue && state.value != null) {
         context.closeLoadingDialog();
-        context.showSuccessSnackBar(next.value!.message);
+        context.showSuccessSnackBar(state.value!.message);
+        
+        // إذا كنتِ تحتاجين لتحديث قائمة المواقع أو تفاصيل الموقع الحالي بعد التعديل:
+        // ref.invalidate(campaignLocationsProvider); 
+        
         Navigator.pop(context);
       }
     });
+
 
     return Scaffold(
       appBar: AppBar(
@@ -135,20 +141,31 @@ class _EditLocationViewState extends ConsumerState<EditLocationView> {
                                 builder: (context, pos, child) {
                                   return FlutterMap(
                                     mapController: _mapController,
-                                    options: MapOptions(
-                                      initialCenter: pos,
+                                   options: MapOptions(
+                                      initialCenter: pos, // الإحداثيات الحالية القادمة من السيرفر للموقع المراد تعديله
                                       initialZoom: 15.0,
+                                      maxZoom: 20.0,      // 🔥 إضافة مهمة جداً لتمكين التقريب الشديد ورؤية تفاصيل الفنادق مع خرائط جوجل
+                                      minZoom: 3.0,       // لمنع تصغير الخريطة لدرجة تصبح فيها غير واضحة
+                                      
+                                      // 🔥 تمكين التحكم الكامل بالتنقل والسحب بحرية في واجهة التعديل
+                                      interactionOptions: const InteractionOptions(
+                                        flags: InteractiveFlag.all, 
+                                      ),
+                                      
                                       onTap: (tapPosition, point) {
                                         HapticFeedback.lightImpact();
-                                        _selectedPosNotifier.value = point;
+                                        _selectedPosNotifier.value = point; // تحديث الإحداثيات الجديدة عند الضغط على الخريطة
                                       },
                                     ),
                                     children: [
-                                      TileLayer(
-                                        urlTemplate:
-                                            'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                                        userAgentPackageName: 'com.yusr.app',
-                                      ),
+
+                                        TileLayer(
+                            // رابط سيرفرات جوجل ماب الرسمية (النسخة العادية التفصيلية الملونة)
+                                            urlTemplate: 'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
+                                            
+                                            // لضمان تحميل المربعات بأعلى سرعة وأمان
+                                            userAgentPackageName: 'net.runasp.yusrapp.volunteer_app_final_release',
+                                          ),
                                       MarkerLayer(
                                         markers: [
                                           Marker(
