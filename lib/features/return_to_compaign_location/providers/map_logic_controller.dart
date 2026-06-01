@@ -7,7 +7,6 @@ import '../../../core/common/providers/location_service.dart';
 import 'state/map_state.dart';
 import 'return_to_campaign_repository_provider.dart';
 import 'package:yusr/features/return_to_compaign_location/data/models/active_location_model.dart';
-
 part 'map_logic_controller.g.dart';
 
 @riverpod
@@ -25,45 +24,53 @@ class MapLogicController extends _$MapLogicController {
   }
 
   void initializeTracking(MapController controller, ActiveLocationModel data) {
-    final target = LatLng(
-      double.parse(data.latitude.toString()),
-      double.parse(data.longitude.toString()),
+    final target = LatLng(data.latitude, data.longitude);
+    state = state.copyWith(
+      targetLocation: target,
+      isTracking: true,
+      isLoading: true,
     );
-
-    state = state.copyWith(targetLocation: target, isTracking: true);
-    controller.move(target, 15.0);
     _startListeners(controller);
   }
 
   void _startListeners(MapController controller) async {
     final service = ref.read(locationServiceProvider);
-
     final permission = await service.requestPermission();
 
     if (!ref.mounted) return;
 
     if (permission == LocationPermission.always ||
         permission == LocationPermission.whileInUse) {
-      //  الاستماع للبوصلة (اتجاه الهاتف)
+      // نشغّل الـ stream فوراً
       _compassSub = service.compassStream?.listen((event) {
         if (!ref.mounted) return;
-
         if (state.isTracking) {
           state = state.copyWith(heading: event.heading ?? 0.0);
-          // تدوير الخريطة لتناسب اتجاه نظر المستخدم
           controller.rotate(-(event.heading ?? 0.0));
         }
       });
 
-      //  الاستماع للموقع (GPS)
       _gpsSub = service.positionStream.listen((position) {
         if (!ref.mounted) return;
-
         if (state.isTracking && state.targetLocation != null) {
           final userPos = LatLng(position.latitude, position.longitude);
           _updateProgress(userPos);
         }
       });
+
+      // نجلب الموقع الفوري بالتوازي مع الـ stream
+      final currentPosition = await service.tryGetCurrentPosition();
+      if (!ref.mounted) return;
+      if (currentPosition != null) {
+        _updateProgress(
+          LatLng(currentPosition.latitude, currentPosition.longitude),
+        );
+      } else {
+        state = state.copyWith(isLoading: false);
+      }
+    } else {
+      if (!ref.mounted) return;
+      state = state.copyWith(isLoading: false);
     }
   }
 
@@ -75,10 +82,12 @@ class MapLogicController extends _$MapLogicController {
       state.targetLocation!.longitude,
     );
 
-    // تحديث الموقع الحالي والمسافة المتبقية بالكيلومتر
-    state = state.copyWith(userLocation: userPos, distance: dist / 1000);
+    state = state.copyWith(
+      userLocation: userPos,
+      distance: dist / 1000,
+      isLoading: false,
+    );
 
-    // تحديث رسم المسار على الخريطة
     updateRoute(userPos: userPos, targetPos: state.targetLocation);
   }
 
@@ -99,10 +108,7 @@ class MapLogicController extends _$MapLogicController {
           .map((c) => LatLng(c[1] as double, c[0] as double))
           .toList();
 
-      state = state.copyWith(
-        routePoints: [userPos, ...apiPoints, targetPos],
-        isLoading: false,
-      );
+      state = state.copyWith(routePoints: [userPos, ...apiPoints, targetPos]);
     }
   }
 
