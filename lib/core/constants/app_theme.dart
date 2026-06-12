@@ -9,12 +9,6 @@ class AppTheme {
     brightness: Brightness.light,
     scaffoldBackgroundColor: AppColor.backgroundColor,
 
-    // colorScheme: ColorScheme.fromSeed(
-    //   seedColor: primaryColor,
-    //   primary: primaryColor,
-    //   secondary: primaryColor,
-    // ),
-
     // text
     textTheme: TextTheme(
       headlineLarge: TextStyle(

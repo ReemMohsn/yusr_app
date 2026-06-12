@@ -24,7 +24,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m1(name) => "الحاج \"${name}\" بدأ يبتعد عن المجموعة.";
 
-  static String m2(currentName) =>
+  static String m2(name) => "✅ \"${name}\" انضم إلى الجلسة وبدأ التتبع";
+
+  static String m3(name) => "❌ \"${name}\" رفض الانضمام إلى الجلسة";
+
+  static String m4(name) => "⚠️ \"${name}\" أوقف مشاركة موقعه";
+
+  static String m5(currentName) =>
       "سيتم إيقاف ال${currentName} الحالي وإعادة الضبط من الشوط الأول، هل تريد المتابعة؟";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -76,6 +82,21 @@ class MessageLookup extends MessageLookupByLibrary {
     "asr": MessageLookupByLibrary.simpleMessage("العصر"),
     "autoUpdate": MessageLookupByLibrary.simpleMessage("تحديث تلقائي"),
     "becomeALeader": MessageLookupByLibrary.simpleMessage("كن قائد"),
+    "bleClosedLeaderWarning": MessageLookupByLibrary.simpleMessage(
+      "تم إغلاق البلوتوث. دقة تحديد الحجاج القريبين ستنخفض. يرجى تفعيله.",
+    ),
+    "bleClosedPilgrimWarning": MessageLookupByLibrary.simpleMessage(
+      "تم إغلاق البلوتوث. لن يتمكن المشرف من رصدك بدقة. يرجى تفعيله.",
+    ),
+    "bleNotSupportedLeaderWarning": MessageLookupByLibrary.simpleMessage(
+      "جهازك لا يدعم البلوتوث.",
+    ),
+    "bleNotSupportedPilgrimWarning": MessageLookupByLibrary.simpleMessage(
+      "جهازك لا يدعم البلوتوث — لن يتمكن المشرف من رصدك بدقة.",
+    ),
+    "bleScanFailedWarning": MessageLookupByLibrary.simpleMessage(
+      "تعذّر بدء مسح البلوتوث. تأكد من تفعيل GPS والبلوتوث.",
+    ),
     "campaignDates": MessageLookupByLibrary.simpleMessage("مواعيد الحملة"),
     "campaignGroups": MessageLookupByLibrary.simpleMessage("قروبات الحملة"),
     "campaignLocation": MessageLookupByLibrary.simpleMessage(
@@ -304,11 +325,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "locationDescription": MessageLookupByLibrary.simpleMessage("وصف الموقع"),
     "locationList": MessageLookupByLibrary.simpleMessage("قائمة المواقع"),
     "locationName": MessageLookupByLibrary.simpleMessage("اسم الموقع"),
+    "locationRequestBody": MessageLookupByLibrary.simpleMessage(
+      "هل توافق على مشاركة موقعك الجغرافي؟",
+    ),
     "locationRequestDialogTitle": MessageLookupByLibrary.simpleMessage(
       "طلب مشاركة الموقع",
     ),
     "locationRequestTitle": MessageLookupByLibrary.simpleMessage(
       "📍 طلب مشاركة الموقع",
+    ),
+    "locationTrackingDesc": MessageLookupByLibrary.simpleMessage(
+      "التطبيق يقوم بتتبع موقعك لإرشاد الحجاج",
+    ),
+    "locationTrackingTitle": MessageLookupByLibrary.simpleMessage(
+      "مرافق الحاج - كن قائد نشط",
     ),
     "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
     "loginButton": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
@@ -406,6 +436,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "onboarding_title_6": MessageLookupByLibrary.simpleMessage(
       "الإشعارات والتنبيهات",
     ),
+    "operationSuccessful": MessageLookupByLibrary.simpleMessage(
+      "تمت العملية بنجاح",
+    ),
     "otherLocations": MessageLookupByLibrary.simpleMessage(
       "مواقع استقرار أخرى",
     ),
@@ -430,6 +463,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "pilgrimEmergencyTitle": MessageLookupByLibrary.simpleMessage(
       "🚨 إنذار خطر!",
     ),
+    "pilgrimJoinedSession": m2,
+    "pilgrimRejectedSession": m3,
+    "pilgrimStatusChanged": MessageLookupByLibrary.simpleMessage(
+      "تغيّرت حالة أحد الحجاج",
+    ),
+    "pilgrimStatusChangedTitle": MessageLookupByLibrary.simpleMessage(
+      "👥 تغيّر حالة حاج",
+    ),
+    "pilgrimStoppedSharingLocation": m4,
     "pilgrimWarningBody": MessageLookupByLibrary.simpleMessage(
       "بدأت تبتعد عن مجموعتك. إسرع الخطى للمشرف.",
     ),
@@ -441,6 +483,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "pilgrimsCount": MessageLookupByLibrary.simpleMessage("عدد الحجاج"),
     "pilgrimsListTitle": MessageLookupByLibrary.simpleMessage("قائمة الحجاج"),
+    "pleaseEnableGpsForBleWarning": MessageLookupByLibrary.simpleMessage(
+      "يرجى تفعيل GPS لتشغيل رادار البلوتوث.",
+    ),
     "prayerTimes": MessageLookupByLibrary.simpleMessage("مواقيت الصلاة"),
     "profileTitle": MessageLookupByLibrary.simpleMessage("الملف الشخصي"),
     "publishAnnouncement": MessageLookupByLibrary.simpleMessage("نشر الإعلان"),
@@ -551,7 +596,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "supervisorInfo": MessageLookupByLibrary.simpleMessage("معلومات المشرف"),
     "supervisorName": MessageLookupByLibrary.simpleMessage("اسم المشرف"),
     "switchTrackingType": MessageLookupByLibrary.simpleMessage("تبديل النُسك"),
-    "switchTrackingTypeWarning": m2,
+    "switchTrackingTypeWarning": m5,
     "targetAudience": MessageLookupByLibrary.simpleMessage("الفئة المستهدفة"),
     "tawaf": MessageLookupByLibrary.simpleMessage("طواف"),
     "tawafDescription": MessageLookupByLibrary.simpleMessage(
@@ -569,7 +614,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "unexpectedError": MessageLookupByLibrary.simpleMessage(
       "حدث خطأ غير متوقع، يرجى المحاولة مرة أخرى",
     ),
+    "unknownError": MessageLookupByLibrary.simpleMessage("حدث خطأ غير معروف"),
     "unknownPilgrim": MessageLookupByLibrary.simpleMessage("أحد الحجاج"),
+    "unsupportedDataFormat": MessageLookupByLibrary.simpleMessage(
+      "صيغة البيانات القادمة من الخادم غير مدعومة",
+    ),
     "updateLocationTitle": MessageLookupByLibrary.simpleMessage("تعديل موقع"),
     "updateSuccess": MessageLookupByLibrary.simpleMessage(
       "تم تحديث بيانات الموقع بنجاح",

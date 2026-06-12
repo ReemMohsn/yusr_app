@@ -119,8 +119,7 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => PilgrimMapTrackingView(sessionId: sessionId),
         );
-      // case AppRoute.tawafCounterView:
-      //   return MaterialPageRoute(builder: (_) => const TawafCounterView());
+
       case AppRoute.instructionsView:
         return MaterialPageRoute(builder: (_) => const InstructionsView());
       case AppRoute.hajjDetailsView:
@@ -162,20 +161,11 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => CampaignGroupDetailsView(groupId: groupId),
         );
-      // case AppRoute.campaignPilgrimsView:
-      //   return MaterialPageRoute(builder: (_) => const CampaignPilgrimsView());
       case AppRoute.campaignPilgrimDetailsView:
         final userId = settings.arguments as int;
         return MaterialPageRoute(
           builder: (_) => CampaignPilgrimDetailsView(userId: userId),
         );
-      // case AppRoute.campaignSupervisorsView:
-      //   return MaterialPageRoute(builder: (_) => const CampaignSupervisorsView());
-      // case AppRoute.campaignSupervisorDetailsView:
-      //   final userId = settings.arguments as int;
-      //   return MaterialPageRoute(
-      //     builder: (_) => CampaignSupervisorDetailsView(userId: userId),
-      //   );
       default:
         return null;
     }
@@ -220,9 +210,6 @@ class AppRoute {
   static const String campaignInfoView = '/CampaignInfoView';
   static const String campaignGroupsView = '/CampaignGroupsView';
   static const String campaignGroupDetailsView = '/CampaignGroupDetailsView';
-  // static const String campaignPilgrimsView = '/CampaignPilgrimsView';
   static const String campaignPilgrimDetailsView =
       '/CampaignPilgrimDetailsView';
-  // static const String campaignSupervisorsView = '/CampaignSupervisorsView';
-  // static const String campaignSupervisorDetailsView = '/CampaignSupervisorDetailsView';
 }

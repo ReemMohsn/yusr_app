@@ -2713,6 +2713,176 @@ class AppLocalizations {
       args: [],
     );
   }
+
+  /// `Smart Pilgrim Companion - Be an active leader`
+  String get locationTrackingTitle {
+    return Intl.message(
+      'Smart Pilgrim Companion - Be an active leader',
+      name: 'locationTrackingTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The app tracks your location to guide pilgrims`
+  String get locationTrackingDesc {
+    return Intl.message(
+      'The app tracks your location to guide pilgrims',
+      name: 'locationTrackingDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An unknown error occurred`
+  String get unknownError {
+    return Intl.message(
+      'An unknown error occurred',
+      name: 'unknownError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Operation completed successfully`
+  String get operationSuccessful {
+    return Intl.message(
+      'Operation completed successfully',
+      name: 'operationSuccessful',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unsupported data format from server`
+  String get unsupportedDataFormat {
+    return Intl.message(
+      'Unsupported data format from server',
+      name: 'unsupportedDataFormat',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Do you agree to share your geographic location?`
+  String get locationRequestBody {
+    return Intl.message(
+      'Do you agree to share your geographic location?',
+      name: 'locationRequestBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `✅ "{name}" joined the session and started tracking`
+  String pilgrimJoinedSession(String name) {
+    return Intl.message(
+      '✅ "$name" joined the session and started tracking',
+      name: 'pilgrimJoinedSession',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `❌ "{name}" rejected joining the session`
+  String pilgrimRejectedSession(String name) {
+    return Intl.message(
+      '❌ "$name" rejected joining the session',
+      name: 'pilgrimRejectedSession',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `⚠️ "{name}" stopped sharing their location`
+  String pilgrimStoppedSharingLocation(String name) {
+    return Intl.message(
+      '⚠️ "$name" stopped sharing their location',
+      name: 'pilgrimStoppedSharingLocation',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `A pilgrim's status has changed`
+  String get pilgrimStatusChanged {
+    return Intl.message(
+      'A pilgrim\'s status has changed',
+      name: 'pilgrimStatusChanged',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `👥 Pilgrim status changed`
+  String get pilgrimStatusChangedTitle {
+    return Intl.message(
+      '👥 Pilgrim status changed',
+      name: 'pilgrimStatusChangedTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bluetooth is disabled. Proximity accuracy will decrease. Please enable it.`
+  String get bleClosedLeaderWarning {
+    return Intl.message(
+      'Bluetooth is disabled. Proximity accuracy will decrease. Please enable it.',
+      name: 'bleClosedLeaderWarning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your device does not support Bluetooth.`
+  String get bleNotSupportedLeaderWarning {
+    return Intl.message(
+      'Your device does not support Bluetooth.',
+      name: 'bleNotSupportedLeaderWarning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enable GPS to use Bluetooth radar.`
+  String get pleaseEnableGpsForBleWarning {
+    return Intl.message(
+      'Please enable GPS to use Bluetooth radar.',
+      name: 'pleaseEnableGpsForBleWarning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to start Bluetooth scan. Ensure GPS and Bluetooth are enabled.`
+  String get bleScanFailedWarning {
+    return Intl.message(
+      'Failed to start Bluetooth scan. Ensure GPS and Bluetooth are enabled.',
+      name: 'bleScanFailedWarning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bluetooth is disabled. The supervisor won't track you accurately. Please enable it.`
+  String get bleClosedPilgrimWarning {
+    return Intl.message(
+      'Bluetooth is disabled. The supervisor won\'t track you accurately. Please enable it.',
+      name: 'bleClosedPilgrimWarning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your device doesn't support Bluetooth — supervisor won't track you accurately.`
+  String get bleNotSupportedPilgrimWarning {
+    return Intl.message(
+      'Your device doesn\'t support Bluetooth — supervisor won\'t track you accurately.',
+      name: 'bleNotSupportedPilgrimWarning',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {

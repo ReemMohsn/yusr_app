@@ -1,8 +1,10 @@
-// تأكدي من مسار الملف الصحيح حسب مشروعك
 import 'package:yusr/core/constants/shared_preferences_keys.dart';
 import 'package:yusr/features/announcements_notifications/providers/unread_notifications_count_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yusr/features/be_leader/providers/session_restoration_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:yusr/core/common/providers/api_service_provider.dart';
 import 'package:yusr/core/common/providers/shared_preferences_service_provider.dart';
 import 'package:yusr/core/constants/app_color.dart';
@@ -40,12 +42,11 @@ class _MainHomeViewState extends ConsumerState<MainHomeView>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _syncNotifications();
-    _initActiveSession(); // قراءة الجلسة المحفوظة لتهيئة الزر
+    ref.read(sessionRestorationServiceProvider).initActiveSession();
     // استعادة بطاقة دعوة الجلسة المحفوظة في SharedPreferences (إن وجدت)
+    // + عرض Dialog القبول/الرفض إن كانت هناك دعوة معلقة
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref
-          .read(trackingNotificationsStoreProvider.notifier)
-          .loadPersistedInvite();
+      ref.read(sessionRestorationServiceProvider).restorePendingInvite();
     });
   }
 
@@ -55,29 +56,15 @@ class _MainHomeViewState extends ConsumerState<MainHomeView>
     super.dispose();
   }
 
-  /// عند عودة التطبيق للمقدمة: أعِد قراءة الجلسة وحدِّث قائمة الحجاج إن وُجدت
+  /// عند عودة التطبيق للمقدمة: أعِد قراءة الجلسة وحدّث قائمة الحجاج إن وُجدت
   @override
-  void didChangeAppLifecycleState(AppLifecycleState appState) {
+  void didChangeAppLifecycleState(AppLifecycleState appState) async {
     if (appState == AppLifecycleState.resumed) {
-      _initActiveSession();
-      // إعادة تحميل الدعوة المعلقة عند العودة للمقدمة (احتياطي)
-      ref
-          .read(trackingNotificationsStoreProvider.notifier)
-          .loadPersistedInvite();
-    }
-  }
-
-  /// تهيئة [activeSessionIdProvider] من SharedPreferences
-  Future<void> _initActiveSession() async {
-    final prefs = ref.read(sharedPreferencesServiceProvider);
-    final sessionId =
-        await prefs.getInt(SharedPreferencesKeys.currentSessionId) ?? 0;
-    if (mounted) {
-      ref.read(activeSessionIdProvider.notifier).updateSessionId(sessionId);
-      // تحديث قائمة الحجاج إن كانت جلسة المشرف نشطة
-      if (sessionId > 0) {
-        ref.invalidate(pilgrimsListProvider(sessionId));
-      }
+      // ✅ مهم: انتظر _initActiveSession أولاً قبل _restorePendingInvite
+      // حتى تُفحَص sessionEndedFlag وتُمسَح pendingInvite إذا انتهت الجلسة،
+      // ثم _restorePendingInvite تعرض Dialog فقط للدعوات الحقيقية الجديدة
+      await ref.read(sessionRestorationServiceProvider).initActiveSession();
+      await ref.read(sessionRestorationServiceProvider).restorePendingInvite();
     }
   }
 
@@ -211,7 +198,9 @@ class _MainHomeViewState extends ConsumerState<MainHomeView>
 
   /// الواجهة في حالة المستخدم المسجل (صورة + خريطة التتبع + جرس)
   Widget _buildLoggedInLeading(BuildContext context, ProfileModel profile) {
-    final unreadCount = ref.watch(unreadNotificationsCountProvider);
+    final unreadAnnouncementsCount = ref.watch(unreadNotificationsCountProvider);
+    final trackingNotificationsCount = ref.watch(trackingNotificationsStoreProvider).length;
+    final unreadCount = unreadAnnouncementsCount + trackingNotificationsCount;
 
     return Row(
       children: [

@@ -3,6 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_compass/flutter_compass.dart';
 import 'package:geolocator/geolocator.dart';
 
+import 'package:yusr/core/constants/app_route.dart';
+import 'package:yusr/core/extensions/context_extension.dart';
+
 class LocationService {
   // 🌟 1. إعدادات الموقع المثالية (دقة عالية مع منع التذبذب)
   // distanceFilter: 5م — يمنع تحديثات GPS الوهمية عند الوقوف (drift 理想 2-4م)
@@ -26,8 +29,9 @@ class LocationService {
 
   // 2. بث الموقع العادي (بدون إشعار خلفية)
   Stream<Position> get positionStream =>
-      Geolocator.getPositionStream(locationSettings: optimalLocationSettings)
-          .handleError((Object error) {
+      Geolocator.getPositionStream(
+        locationSettings: optimalLocationSettings,
+      ).handleError((Object error) {
         // GPS مغلق أو خطأ آخر — نتجاهله بهدوء بدلاً من unhandled exception
         debugPrint('⚠️ [GPS] خطأ في positionStream (تم التعامل معه): $error');
       });
@@ -37,25 +41,30 @@ class LocationService {
     final locationSettings = defaultTargetPlatform == TargetPlatform.android
         ? AndroidSettings(
             accuracy: LocationAccuracy.bestForNavigation,
-            distanceFilter: 5, // تصفية تذبذب GPS عند الوقوف
+            distanceFilter: 2, // تصفية تذبذب GPS عند الوقوف
             forceLocationManager: false,
             intervalDuration: const Duration(seconds: 5),
-            foregroundNotificationConfig: const ForegroundNotificationConfig(
-              notificationText: "التطبيق يقوم بتتبع موقعك لإرشاد الحجاج",
-              notificationTitle: "مرافق الحاج - كن قائد نشط",
+            foregroundNotificationConfig: ForegroundNotificationConfig(
+              notificationText: navigatorKey.currentContext?.locale.locationTrackingDesc ?? "التطبيق يقوم بتتبع موقعك لإرشاد الحجاج",
+              notificationTitle: navigatorKey.currentContext?.locale.locationTrackingTitle ?? "مرافق الحاج - كن قائد نشط",
               enableWakeLock: true,
+              notificationIcon: AndroidResource(
+                name: 'ic_notification',
+                defType: 'drawable',
+              ),
             ),
           )
         : AppleSettings(
             accuracy: LocationAccuracy.bestForNavigation,
             activityType: ActivityType.fitness,
-            distanceFilter: 5,
+            distanceFilter: 2,
             pauseLocationUpdatesAutomatically: false,
           );
 
     // .handleError يمنع رمي unhandled exception عند إغلاق GPS
-    return Geolocator.getPositionStream(locationSettings: locationSettings)
-        .handleError((Object error) {
+    return Geolocator.getPositionStream(
+      locationSettings: locationSettings,
+    ).handleError((Object error) {
       debugPrint(
         '⚠️ [GPS] خطأ في foregroundPositionStream (تم التعامل معه): $error',
       );
@@ -82,11 +91,14 @@ class LocationService {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
     }
-    final granted = permission != LocationPermission.denied &&
+    final granted =
+        permission != LocationPermission.denied &&
         permission != LocationPermission.deniedForever;
-    debugPrint(granted
-        ? "✅ [GPS] صلاحيات الموقع ممنوحة."
-        : "❌ [GPS] صلاحيات الموقع مرفوضة.");
+    debugPrint(
+      granted
+          ? "✅ [GPS] صلاحيات الموقع ممنوحة."
+          : "❌ [GPS] صلاحيات الموقع مرفوضة.",
+    );
     return granted;
   }
 

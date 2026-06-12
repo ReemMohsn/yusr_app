@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:yusr/core/common/widgets/widget.dart';
+import 'package:yusr/core/common/widgets/custom_big_button.dart';
 import 'package:yusr/core/constants/app_color.dart';
 import 'package:yusr/core/constants/app_image.dart';
 import 'package:yusr/core/constants/app_route.dart';

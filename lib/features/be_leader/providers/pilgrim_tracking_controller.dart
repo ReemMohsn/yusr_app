@@ -11,9 +11,10 @@ import 'package:vibration/vibration.dart';
 import 'package:yusr/core/common/providers/location_service.dart';
 import 'package:yusr/core/common/providers/shared_preferences_service_provider.dart';
 import 'package:yusr/core/constants/shared_preferences_keys.dart';
+import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/features/be_leader/data/models/tracking_notification_model.dart';
 import 'package:yusr/features/be_leader/presentation/services/smart_location_filter_service.dart';
-import 'package:yusr/features/be_leader/presentation/services/tracking_strings.dart';
+import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/features/be_leader/providers/active_session_id_provider.dart';
 import 'package:yusr/features/be_leader/providers/be_leader_repository_provider.dart';
 import 'package:yusr/features/be_leader/providers/ble_radar_service_provider.dart';
@@ -161,7 +162,7 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
       debugPrint('⚠️ [GPS] الخدمة مطفأة عند بدء التتبع.');
       state = PilgrimTrackingState(
         leaderLocation: state.leaderLocation,
-        gpsWarning: TrackingStrings.gpsServiceDisabled,
+        gpsWarning: navigatorKey.currentContext?.locale.gpsServiceDisabledWarning ?? 'يرجى تفعيل خدمة الـ GPS (الموقع) في هاتفك.',
       );
     }
 
@@ -170,7 +171,7 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
     if (!permissionsGranted) {
       state = PilgrimTrackingState(
         leaderLocation: state.leaderLocation,
-        gpsWarning: TrackingStrings.gpsPermissionDenied,
+        gpsWarning: navigatorKey.currentContext?.locale.gpsPermissionDeniedWarning ?? 'لا يمكن بدء التتبع بدون صلاحيات الموقع. يرجى تفعيلها من الإعدادات.',
       );
       return;
     }
@@ -258,9 +259,13 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
         );
 
         // 🔴 فلتر 1: رفض المواقع ضعيفة الدقة — نبضة الحياة
-        if (position.accuracy > 25) {
+        // العتبة: kPilgrimAccuracyThreshold (25م) — أعلى من المشرف (20م) عمداً:
+        //   الحاج يتحرك في مناطق مزدحمة وداخل مبانٍ → هامش أوسع لتقليل نبضات الحياة
+        // راجع: SmartLocationFilterService.kPilgrimAccuracyThreshold
+        if (position.accuracy >
+            SmartLocationFilterService.kPilgrimAccuracyThreshold) {
           debugPrint(
-            '⚠️ [الحاج] ❌ دقة ضعيفة (${position.accuracy} م). إرسال نبضة حياة...',
+            '⚠️ [الحاج] ❌ دقة ضعيفة (${position.accuracy.toStringAsFixed(1)} م > ${SmartLocationFilterService.kPilgrimAccuracyThreshold} م) — رفض وإرسال نبضة حياة...',
           );
           if (_lastValidPosition != null) {
             // isRealMove: false (افتراضي) — نبضة حياة: تُبقي الجلسة حية بدون تغيير lastPositionUpdate
@@ -299,9 +304,16 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
             return;
           }
 
-          // فلتر 3: الخطوات
-          if (!_locationFilter.isMovementReal(distanceJump, tag: ' [الحاج]')) {
-            debugPrint('🛑 [حماية] قفزة GPS وهمية — لا خطوات كافية!');
+          // فلتر 3: الخطوات وتصحيح الـ GPS
+          if (!_locationFilter.isMovementReal(
+            distanceMeters: distanceJump,
+            currentAccuracy: position.accuracy,
+            previousAccuracy: _lastValidPosition!.accuracy,
+            tag: ' [الحاج]',
+          )) {
+            debugPrint(
+              '🛑 [حماية] قفزة GPS وهمية — لا خطوات كافية والمسافة خارج هامش الخطأ!',
+            );
             return;
           }
         }
@@ -331,6 +343,22 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
               _resetLeaderTimeoutTimer();
               _updateStateAndCheckDistance(leaderLoc: LatLng(lat, lng));
             }
+          } else {
+            // 🚩 تم حذف عقدة المشرف من Firebase (أي أنه أنهى الجلسة)
+            debugPrint(
+              '🚩 [الحاج] تم حذف جلسة التتبع من الخادم — سيتم إيقاف التتبع فوراً.',
+            );
+            // 1. مسح بطاقة الدعوة من الذاكرة
+            ref
+                .read(trackingNotificationsStoreProvider.notifier)
+                .clearSessionInvite();
+            // 2. إيقاف التتبع محلياً
+            stopTracking();
+            // 3. إغلاق الخريطة والعودة للرئيسية
+            navigatorKey.currentState?.popUntil((route) {
+              return route.settings.name == AppRoute.mainHomeView ||
+                  route.isFirst;
+            });
           }
         });
   }
@@ -376,23 +404,14 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
     ) async {
       if (status == ServiceStatus.disabled) {
         debugPrint('⚠️ [GPS] تم إغلاق مفتاح GPS!');
-        state = PilgrimTrackingState(
-          pilgrimLocation: state.pilgrimLocation,
-          leaderLocation: state.leaderLocation,
-          distance: state.distance,
-          gpsWarning: TrackingStrings.gpsDisabled,
-          bleWarning: state.bleWarning,
-        );
+        // الحفاظ على جميع حقول الحالة الحالية وتغيير gpsWarning فقط
+        state = state.copyWith(gpsWarning: navigatorKey.currentContext?.locale.gpsDisabledWarning ?? 'تم إغلاق خدمة الموقع (GPS) في الهاتف. يرجى تفعيلها.');
       } else {
         debugPrint('✅ [GPS] تم تفعيل GPS — إعادة تشغيل المستمع...');
-        state = PilgrimTrackingState(
-          pilgrimLocation: state.pilgrimLocation,
-          leaderLocation: state.leaderLocation,
-          distance: state.distance,
-          gpsWarning: TrackingStrings.gpsReenabled,
-          bleWarning: state.bleWarning,
-        );
+        // الحفاظ على جميع حقول الحالة الحالية وتغيير gpsWarning فقط
+        state = state.copyWith(gpsWarning: navigatorKey.currentContext?.locale.gpsReenabledWarning ?? 'تم تفعيل الـ GPS، جاري التقاط الإشارة...');
         _startLocationUpdates();
+        // جلب موقع فوري لإنعاش الخريطة — مطابق لسلوك كنترولر المشرف
         final quickPos = await locationService.tryGetCurrentPosition();
         if (quickPos != null) _applyValidPosition(quickPos);
       }
@@ -401,10 +420,13 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
 
   void _listenToNetworkStatus() {
     _networkSub?.cancel();
-    _networkSub = FirebaseDatabase.instance.ref('.info/connected').onValue.listen((event) {
-      final isConnected = event.snapshot.value as bool? ?? false;
-      state = state.copyWith(isNetworkConnected: isConnected);
-    });
+    _networkSub = FirebaseDatabase.instance
+        .ref('.info/connected')
+        .onValue
+        .listen((event) {
+          final isConnected = event.snapshot.value as bool? ?? false;
+          state = state.copyWith(isNetworkConnected: isConnected);
+        });
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -530,9 +552,7 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
           .read(trackingNotificationsStoreProvider.notifier)
           .clearSessionInvite();
       stopTracking();
-      state = PilgrimTrackingState(
-        errorMessage: TrackingStrings.leaderTimeout,
-      );
+      state = PilgrimTrackingState(errorMessage: navigatorKey.currentContext?.locale.leaderTimeoutError ?? 'تم إيقاف التتبع لأن المشرف فقد الاتصال لأكثر من 30 دقيقة.');
     });
   }
 
@@ -547,7 +567,7 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
     final AndroidNotificationDetails warningDetails =
         AndroidNotificationDetails(
           'warning_channel_pilgrim',
-          TrackingStrings.pilgrimWarningChannelName,
+          navigatorKey.currentContext?.locale.pilgrimWarningChannelName ?? 'تحذير الابتعاد',
           importance: Importance.defaultImportance,
           priority: Priority.defaultPriority,
           playSound: false,
@@ -555,21 +575,23 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
         );
     await _notificationsPlugin.show(
       1,
-      TrackingStrings.pilgrimWarningTitle,
-      TrackingStrings.pilgrimWarningBody,
+      navigatorKey.currentContext?.locale.pilgrimWarningTitle ?? '🟡 تحذير: أنت تبتعد!',
+      navigatorKey.currentContext?.locale.pilgrimWarningBody ?? 'بدأت تبتعد عن مجموعتك. إسرع الخطى للمشرف.',
       NotificationDetails(android: warningDetails),
     );
     // حفظ في الواجهة ← متزامن مع show()
-    ref.read(trackingNotificationsStoreProvider.notifier).addNotification(
-      TrackingNotificationModel(
-        id: 'local_1',
-        title: TrackingStrings.pilgrimWarningTitle,
-        body: TrackingStrings.pilgrimWarningBody,
-        timestamp: DateTime.now().toIso8601String(),
-        type: TrackingNotificationType.pilgrimWarning,
-        sessionId: _currentSessionId,
-      ),
-    );
+    ref
+        .read(trackingNotificationsStoreProvider.notifier)
+        .addNotification(
+          TrackingNotificationModel(
+            id: 'local_1',
+            title: navigatorKey.currentContext?.locale.pilgrimWarningTitle ?? '🟡 تحذير: أنت تبتعد!',
+            body: navigatorKey.currentContext?.locale.pilgrimWarningBody ?? 'بدأت تبتعد عن مجموعتك. إسرع الخطى للمشرف.',
+            timestamp: DateTime.now().toIso8601String(),
+            type: TrackingNotificationType.pilgrimWarning,
+            sessionId: _currentSessionId,
+          ),
+        );
   }
 
   Future<void> _triggerEmergency() async {
@@ -579,27 +601,29 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
     final AndroidNotificationDetails androidDetails =
         AndroidNotificationDetails(
           'emergency_channel_pilgrim',
-          TrackingStrings.pilgrimEmergencyChannelName,
+          navigatorKey.currentContext?.locale.pilgrimEmergencyChannelName ?? 'تنبيه الابتعاد',
           importance: Importance.max,
           priority: Priority.high,
         );
     await _notificationsPlugin.show(
       1001,
-      TrackingStrings.pilgrimEmergencyTitle,
-      TrackingStrings.pilgrimEmergencyBody,
+      navigatorKey.currentContext?.locale.pilgrimEmergencyTitle ?? '🚨 إنذار خطر!',
+      navigatorKey.currentContext?.locale.pilgrimEmergencyBody ?? 'لقد ابتعدت عن المشرف خارج النطاق المسموح!',
       NotificationDetails(android: androidDetails),
     );
     // حفظ في الواجهة ← متزامن مع show()
-    ref.read(trackingNotificationsStoreProvider.notifier).addNotification(
-      TrackingNotificationModel(
-        id: 'local_1001',
-        title: TrackingStrings.pilgrimEmergencyTitle,
-        body: TrackingStrings.pilgrimEmergencyBody,
-        timestamp: DateTime.now().toIso8601String(),
-        type: TrackingNotificationType.pilgrimEmergency,
-        sessionId: _currentSessionId,
-      ),
-    );
+    ref
+        .read(trackingNotificationsStoreProvider.notifier)
+        .addNotification(
+          TrackingNotificationModel(
+            id: 'local_1001',
+            title: navigatorKey.currentContext?.locale.pilgrimEmergencyTitle ?? '🚨 إنذار خطر!',
+            body: navigatorKey.currentContext?.locale.pilgrimEmergencyBody ?? 'لقد ابتعدت عن المشرف خارج النطاق المسموح!',
+            timestamp: DateTime.now().toIso8601String(),
+            type: TrackingNotificationType.pilgrimEmergency,
+            sessionId: _currentSessionId,
+          ),
+        );
 
     if (await Vibration.hasVibrator() == true) {
       Vibration.vibrate(pattern: [500, 1000, 500, 1000]);
@@ -675,25 +699,37 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
     required int sessionId,
     required String pilgrimId,
   }) async {
+    // نحفظ sessionId محلياً لأن stopTracking() ستُصفِّر _currentSessionId
+    final savedSessionId = sessionId.toString();
+
     try {
       final trackingApiRepo = ref.read(leaderTrackingApiRepositoryProvider);
-      await trackingApiRepo.respondToSession(sessionId, 4);
-
       final trackingRepo = ref.read(trackingRepositoryProvider);
+
+      // 1️⃣ أولاً: حذف موقع الحاج من Firebase قبل أي شيء آخر
+      //    يجب أن يحدث هذا أولاً لكي يختفي الماركر من خريطة المشرف فوراً
       await trackingRepo.removePilgrimFromSession(
-        sessionId: sessionId.toString(),
+        sessionId: savedSessionId,
         pilgrimId: pilgrimId,
       );
 
+      // 2️⃣ ثانياً: إرسال الحالة 5 (أوقف التتبع) للباك إند
+      //    الحالة 5 = "أوقف التتبع" وليس 4 (غير مفعل)
+      //    هذا ما يُطلق إشعار FCM للمشرف من الباك إند
+      await trackingApiRepo.respondToSession(sessionId, 5);
+
+      // 3️⃣ أخيراً: إيقاف الـ Streams وتنظيف الحالة المحلية
       stopTracking();
     } catch (e) {
+      debugPrint('❌ [الحاج] خطأ في إيقاف التتبع: $e');
       state = PilgrimTrackingState(errorMessage: e.toString());
     }
   }
 }
 
 @riverpod
-class RespondToTrackingSessionController extends _$RespondToTrackingSessionController {
+class RespondToTrackingSessionController
+    extends _$RespondToTrackingSessionController {
   @override
   FutureOr<String> build() => '';
 

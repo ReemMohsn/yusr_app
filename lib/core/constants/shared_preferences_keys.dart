@@ -15,8 +15,16 @@ class SharedPreferencesKeys {
   static const String pendingTrackingSessionId = 'pending_tracking_session_id';
   static const String pendingTrackingBody = 'pending_tracking_body';
 
+  // 🚩 علامة تُكتب بواسطة firebaseMessagingBackgroundHandler عند إنهاء الجلسة
+  // ليقرأها التطبيق عند عودته من الخلفية أو من الإغلاق ويُوقف التتبع فوراً
+  static const String sessionEndedFlag = 'session_ended_flag';
+
   //عداد الطواف والسعي التلقائي
   static const String tawafSavedLap = 'tawaf_saved_lap';
   static const String tawafSavedType = 'tawaf_saved_type';
   static const String tawafSavedRunning = 'tawaf_saved_running';
+
+  // إشعارات الحملة والمجموعة
+  static const String savedCampaignId = 'saved_campaign_id';
+  static const String savedGroupId = 'saved_group_id';
 }

@@ -309,6 +309,25 @@
   "switchTrackingType": "Switch Ritual",
   "switchTrackingTypeWarning": "The current {currentName} will be stopped and reset from the first lap. Do you want to continue?",
   "confirm": "Confirm",
-  "confirmDeleteLocationMessage": "Are you sure you want to delete this location? This action cannot be undone."
-
+  "confirmDeleteLocationMessage": "Are you sure you want to delete this location? This action cannot be undone.",
+  "locationTrackingTitle": "Smart Pilgrim Companion - Be an active leader",
+  "locationTrackingDesc": "The app tracks your location to guide pilgrims",
+  "unknownError": "An unknown error occurred",
+  "operationSuccessful": "Operation completed successfully",
+  "unsupportedDataFormat": "Unsupported data format from server",
+  "locationRequestBody": "Do you agree to share your geographic location?",
+  "pilgrimJoinedSession": "✅ \"{name}\" joined the session and started tracking",
+  "@pilgrimJoinedSession": { "placeholders": { "name": { "type": "String" } } },
+  "pilgrimRejectedSession": "❌ \"{name}\" rejected joining the session",
+  "@pilgrimRejectedSession": { "placeholders": { "name": { "type": "String" } } },
+  "pilgrimStoppedSharingLocation": "⚠️ \"{name}\" stopped sharing their location",
+  "@pilgrimStoppedSharingLocation": { "placeholders": { "name": { "type": "String" } } },
+  "pilgrimStatusChanged": "A pilgrim's status has changed",
+  "pilgrimStatusChangedTitle": "👥 Pilgrim status changed",
+  "bleClosedLeaderWarning": "Bluetooth is disabled. Proximity accuracy will decrease. Please enable it.",
+  "bleNotSupportedLeaderWarning": "Your device does not support Bluetooth.",
+  "pleaseEnableGpsForBleWarning": "Please enable GPS to use Bluetooth radar.",
+  "bleScanFailedWarning": "Failed to start Bluetooth scan. Ensure GPS and Bluetooth are enabled.",
+  "bleClosedPilgrimWarning": "Bluetooth is disabled. The supervisor won't track you accurately. Please enable it.",
+  "bleNotSupportedPilgrimWarning": "Your device doesn't support Bluetooth — supervisor won't track you accurately."
 }

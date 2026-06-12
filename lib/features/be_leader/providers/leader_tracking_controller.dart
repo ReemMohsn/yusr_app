@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
+import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/features/be_leader/data/models/tracking_notification_model.dart';
 import 'package:yusr/features/be_leader/presentation/services/smart_location_filter_service.dart';
 import 'package:yusr/features/be_leader/providers/ble_radar_service_provider.dart';
@@ -14,7 +15,7 @@ import 'package:yusr/core/common/providers/location_service.dart';
 import 'package:yusr/core/common/providers/shared_preferences_service_provider.dart';
 import 'package:yusr/core/constants/shared_preferences_keys.dart';
 import 'package:yusr/features/be_leader/data/repositories/tracking_repository.dart';
-import 'package:yusr/features/be_leader/presentation/services/tracking_strings.dart';
+import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/features/be_leader/providers/be_leader_repository_provider.dart';
 import 'package:yusr/features/be_leader/providers/state/pilgrim_marker_data.dart';
 import 'package:yusr/features/be_leader/providers/state/tracking_state.dart';
@@ -87,7 +88,9 @@ class LeaderTrackingController extends _$LeaderTrackingController {
         debugPrint("⚠️ [GPS] الخدمة مطفأة عند بدء التتبع.");
         state = TrackingState(
           isLoading: false,
-          gpsWarning: TrackingStrings.gpsServiceDisabled,
+          gpsWarning:
+              navigatorKey.currentContext?.locale.gpsServiceDisabledWarning ??
+              'يرجى تفعيل خدمة الـ GPS (الموقع) في هاتفك.',
         );
       }
 
@@ -97,7 +100,9 @@ class LeaderTrackingController extends _$LeaderTrackingController {
       if (!permissionsGranted) {
         state = TrackingState(
           isLoading: false,
-          gpsWarning: TrackingStrings.gpsPermissionDenied,
+          gpsWarning:
+              navigatorKey.currentContext?.locale.gpsPermissionDeniedWarning ??
+              'لا يمكن بدء التتبع بدون صلاحيات الموقع. يرجى تفعيلها من الإعدادات.',
         );
         return;
       }
@@ -146,7 +151,9 @@ class LeaderTrackingController extends _$LeaderTrackingController {
     } catch (e) {
       state = TrackingState(
         isLoading: false,
-        gpsWarning: TrackingStrings.gpsSystemError,
+        gpsWarning:
+            navigatorKey.currentContext?.locale.gpsSystemError ??
+            'حدث خطأ في النظام. يرجى التأكد من الصلاحيات.',
       );
     }
   }
@@ -218,12 +225,15 @@ class LeaderTrackingController extends _$LeaderTrackingController {
       );
 
       // 🔴 فلتر 1: رفض المواقع ضعيفة الدقة
-      if (position.accuracy > 20) {
+      // العتبة: kLeaderAccuracyThreshold (20م) — المشرف في مناطق مكشوفة → صرامة أعلى
+      // راجع: SmartLocationFilterService.kLeaderAccuracyThreshold
+      if (position.accuracy >
+          SmartLocationFilterService.kLeaderAccuracyThreshold) {
         debugPrint(
-          "⚠️ [المشرف] ❌ دقة ضعيفة (${position.accuracy}  م).فقط وعدم الإعتماد و أخد هذه القراءة  إرسال نبضة حياة...",
+          '⚠️ [المشرف] ❌ دقة ضعيفة (${position.accuracy.toStringAsFixed(1)} م > ${SmartLocationFilterService.kLeaderAccuracyThreshold} م) — رفض وإرسال نبضة حياة...',
         );
 
-        // 🌟 الحل (نبضة الحياة): نرسل آخر موقع معروف للفايربيس لكي لا تنغلق الجلسة!
+        // نبضة الحياة: نرسل آخر موقع صالح لفايربيس لإبقاء الجلسة حية دون تحريك الخريطة
         if (_lastValidLeaderPosition != null) {
           final lastLatLng = LatLng(
             _lastValidLeaderPosition!.latitude,
@@ -235,7 +245,7 @@ class LeaderTrackingController extends _$LeaderTrackingController {
             heading: _lastValidLeaderPosition!.heading,
           );
         }
-        return; // نوقف الكود هنا لكي لا نحدث الخريطة بالموقع المشوش
+        return;
       }
 
       // 🔴 فلتر 2 + 3: رفض القفزات الوهمية (سرعة و خطوات)
@@ -256,13 +266,19 @@ class LeaderTrackingController extends _$LeaderTrackingController {
               timeDiffSeconds: timeDiffSeconds,
               tag: ' [المشرف]',
             ) ==
-            false)
+            false) {
           return;
+        }
 
-        // فلتر 3: الخطوات
-        if (!_locationFilter.isMovementReal(distanceJump, tag: ' [المشرف]')) {
+        // فلتر 3: الخطوات وتصحيح الـ GPS
+        if (!_locationFilter.isMovementReal(
+          distanceMeters: distanceJump,
+          currentAccuracy: position.accuracy,
+          previousAccuracy: _lastValidLeaderPosition!.accuracy,
+          tag: ' [المشرف]',
+        )) {
           debugPrint(
-            '🛑 [حماية] قفزة GPS وهمية — لا خطوات كافية للمسافة المقطوعة!',
+            '🛑 [حماية] قفزة GPS وهمية — لا خطوات كافية والمسافة خارج هامش الخطأ!',
           );
           return;
         }
@@ -288,7 +304,9 @@ class LeaderTrackingController extends _$LeaderTrackingController {
           yellowPilgrims: state.yellowPilgrims,
           redPilgrims: state.redPilgrims,
           isLoading: false,
-          gpsWarning: TrackingStrings.gpsDisabled,
+          gpsWarning:
+              navigatorKey.currentContext?.locale.gpsDisabledWarning ??
+              'تم إغلاق خدمة الموقع (GPS) في الهاتف. يرجى تفعيلها.',
           bleWarning: state.bleWarning,
         );
       } else {
@@ -299,7 +317,9 @@ class LeaderTrackingController extends _$LeaderTrackingController {
           yellowPilgrims: state.yellowPilgrims,
           redPilgrims: state.redPilgrims,
           isLoading: false,
-          gpsWarning: TrackingStrings.gpsReenabledLeader,
+          gpsWarning:
+              navigatorKey.currentContext?.locale.gpsReenabledLeaderWarning ??
+              'الـ GPS مفعل، جاري تحديث الموقع (قد يكون في مكان مغلق)...',
           bleWarning: state.bleWarning,
         );
         _startLocationUpdates();
@@ -331,7 +351,24 @@ class LeaderTrackingController extends _$LeaderTrackingController {
   }
 
   void _processPilgrimsAndAlert(DataSnapshot snapshot) {
-    if (_currentLeaderPosition == null || !snapshot.exists) return;
+    if (_currentLeaderPosition == null) return;
+
+    // ✅ إذا حُذف جميع الحجاج (snapshot فارغ) → امسح الماركرات من الخريطة فوراً
+    if (!snapshot.exists || snapshot.value == null) {
+      stopAlarmManual();
+      _alertedPilgrims.clear();
+      _redZoneEntryTimes.clear();
+      _yellowWarnedPilgrims.clear();
+      state = TrackingState(
+        leaderLocation: state.leaderLocation,
+        greenPilgrims: [],
+        yellowPilgrims: [],
+        redPilgrims: [],
+        isLoading: false,
+        isNetworkConnected: state.isNetworkConnected,
+      );
+      return;
+    }
 
     final pilgrimsData = snapshot.value as Map<dynamic, dynamic>;
 
@@ -343,7 +380,10 @@ class LeaderTrackingController extends _$LeaderTrackingController {
     pilgrimsData.forEach((key, value) {
       final lat = value['latitude'];
       final lng = value['longitude'];
-      final name = value['name'] ?? TrackingStrings.unknownPilgrim;
+      final name =
+          value['name'] ??
+          navigatorKey.currentContext?.locale.unknownPilgrim ??
+          'أحد الحجاج';
       // lastPositionUpdate: آخر تحرك فعلي للحاج (يتجاهل نبضات الحياة)
       // lastUpdate: heartbeat — هاتف الحاج متصل (يتحدث مع كل إرسال)
       final rawPositionUpdate = value['lastPositionUpdate'];
@@ -487,13 +527,14 @@ class LeaderTrackingController extends _$LeaderTrackingController {
   ) async {
     if (_yellowWarnedPilgrims.contains(pilgrimId)) return;
     _yellowWarnedPilgrims.add(pilgrimId);
-    if (await Vibration.hasVibrator() ?? false) {
+    if ((await Vibration.hasVibrator()) == true) {
       Vibration.vibrate(pattern: [0, 200, 100, 200, 100, 200, 100, 200]);
     }
     final AndroidNotificationDetails warningDetails =
         AndroidNotificationDetails(
           'warning_channel',
-          TrackingStrings.leaderWarningChannelName,
+          navigatorKey.currentContext?.locale.leaderWarningChannelName ??
+              'تحذيرات الحجاج المتأخرين',
           importance: Importance.defaultImportance,
           priority: Priority.defaultPriority,
           playSound: false,
@@ -501,8 +542,12 @@ class LeaderTrackingController extends _$LeaderTrackingController {
         );
     await _notificationsPlugin.show(
       pilgrimId.hashCode,
-      TrackingStrings.leaderPilgrimWarningTitle,
-      TrackingStrings.leaderPilgrimWarningBody(pilgrimName),
+      navigatorKey.currentContext?.locale.leaderPilgrimWarningTitle ??
+          '🟡 تنبيه تأخر حاج',
+      navigatorKey.currentContext?.locale.leaderPilgrimWarningBody(
+            pilgrimName,
+          ) ??
+          'الحاج "$pilgrimName" بدأ يبتعد عن المجموعة.',
       NotificationDetails(android: warningDetails),
       payload: 'warning_notification',
     );
@@ -512,8 +557,14 @@ class LeaderTrackingController extends _$LeaderTrackingController {
         .addNotification(
           TrackingNotificationModel(
             id: 'leader_warn_$pilgrimId',
-            title: TrackingStrings.leaderPilgrimWarningTitle,
-            body: TrackingStrings.leaderPilgrimWarningBody(pilgrimName),
+            title:
+                navigatorKey.currentContext?.locale.leaderPilgrimWarningTitle ??
+                '🟡 تنبيه تأخر حاج',
+            body:
+                navigatorKey.currentContext?.locale.leaderPilgrimWarningBody(
+                  pilgrimName,
+                ) ??
+                'الحاج "$pilgrimName" بدأ يبتعد عن المجموعة.',
             timestamp: DateTime.now().toIso8601String(),
             type: TrackingNotificationType.leaderWarning,
             sessionId: _currentSessionId,
@@ -528,14 +579,19 @@ class LeaderTrackingController extends _$LeaderTrackingController {
     final AndroidNotificationDetails androidDetails =
         AndroidNotificationDetails(
           'emergency_channel',
-          TrackingStrings.leaderEmergencyChannelName,
+          navigatorKey.currentContext?.locale.leaderEmergencyChannelName ??
+              'طوارئ الحجاج',
           importance: Importance.max,
           priority: Priority.high,
         );
     await _notificationsPlugin.show(
       pilgrimId.hashCode + 1000,
-      TrackingStrings.leaderPilgrimEmergencyTitle,
-      TrackingStrings.leaderPilgrimEmergencyBody(pilgrimName),
+      navigatorKey.currentContext?.locale.leaderPilgrimEmergencyTitle ??
+          '🚨 خطر: ضياع حاج!',
+      navigatorKey.currentContext?.locale.leaderPilgrimEmergencyBody(
+            pilgrimName,
+          ) ??
+          'الحاج "$pilgrimName" تجاوز النطاق الآمن!',
       NotificationDetails(android: androidDetails),
       payload: 'emergency_notification',
     );
@@ -545,15 +601,24 @@ class LeaderTrackingController extends _$LeaderTrackingController {
         .addNotification(
           TrackingNotificationModel(
             id: 'leader_emrg_$pilgrimId',
-            title: TrackingStrings.leaderPilgrimEmergencyTitle,
-            body: TrackingStrings.leaderPilgrimEmergencyBody(pilgrimName),
+            title:
+                navigatorKey
+                    .currentContext
+                    ?.locale
+                    .leaderPilgrimEmergencyTitle ??
+                '🚨 خطر: ضياع حاج!',
+            body:
+                navigatorKey.currentContext?.locale.leaderPilgrimEmergencyBody(
+                  pilgrimName,
+                ) ??
+                'الحاج "$pilgrimName" تجاوز النطاق الآمن!',
             timestamp: DateTime.now().toIso8601String(),
             type: TrackingNotificationType.leaderEmergency,
             sessionId: _currentSessionId,
             pilgrimName: pilgrimName,
           ),
         );
-    if (await Vibration.hasVibrator() ?? false) {
+    if ((await Vibration.hasVibrator()) == true) {
       Vibration.vibrate(pattern: [500, 1000, 500, 1000]);
     }
     if (!_isMutedManually) {
@@ -596,7 +661,10 @@ class LeaderTrackingController extends _$LeaderTrackingController {
       _lastValidLeaderPosition = null;
     } catch (e) {
       debugPrint("خطأ أثناء إغلاق الجلسة: $e");
-      throw Exception(TrackingStrings.endSessionError);
+      throw Exception(
+        navigatorKey.currentContext?.locale.endSessionError ??
+            'حدث خطأ أثناء إنهاء الجلسة، يرجى المحاولة مرة أخرى.',
+      );
     }
   }
 

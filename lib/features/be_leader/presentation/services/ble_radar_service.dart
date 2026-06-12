@@ -5,6 +5,8 @@ import 'package:beacon_broadcast/beacon_broadcast.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:yusr/core/constants/app_route.dart';
+import 'package:yusr/core/extensions/context_extension.dart';
 
 /// خدمة بلوتوث موحَّدة تدعم وضعَين:
 ///
@@ -43,10 +45,10 @@ class BleRadarService {
       onDisabled: () {
         _bleScanSub?.cancel();
         _onScanWarningChanged?.call(
-          'تم إغلاق البلوتوث. دقة تحديد الحجاج القريبين ستنخفض. يرجى تفعيله.',
+          navigatorKey.currentContext?.locale.bleClosedLeaderWarning ?? 'تم إغلاق البلوتوث. دقة تحديد الحجاج القريبين ستنخفض. يرجى تفعيله.',
         );
       },
-      notSupportedMessage: 'جهازك لا يدعم البلوتوث.',
+      notSupportedMessage: navigatorKey.currentContext?.locale.bleNotSupportedLeaderWarning ?? 'جهازك لا يدعم البلوتوث.',
     );
   }
 
@@ -57,7 +59,7 @@ class BleRadarService {
       debugPrint(
         '⚠️ [رادار البلوتوث] GPS مغلق — سيُعاد المسح تلقائياً عند تفعيله.',
       );
-      _onScanWarningChanged?.call('يرجى تفعيل GPS لتشغيل رادار البلوتوث.');
+      _onScanWarningChanged?.call(navigatorKey.currentContext?.locale.pleaseEnableGpsForBleWarning ?? 'يرجى تفعيل GPS لتشغيل رادار البلوتوث.');
       return; // نخرج بهدوء بدلاً من رمي PlatformException
     }
 
@@ -69,7 +71,7 @@ class BleRadarService {
     } on Exception catch (e) {
       debugPrint('❌ [رادار البلوتوث] فشل في بدء المسح: $e');
       _onScanWarningChanged?.call(
-        'تعذّر بدء مسح البلوتوث. تأكد من تفعيل GPS والبلوتوث.',
+        navigatorKey.currentContext?.locale.bleScanFailedWarning ?? 'تعذّر بدء مسح البلوتوث. تأكد من تفعيل GPS والبلوتوث.',
       );
       return;
     }
@@ -142,11 +144,11 @@ class BleRadarService {
       onDisabled: () {
         _beaconBroadcast.stop();
         _onBroadcastWarningChanged?.call(
-          'تم إغلاق البلوتوث. لن يتمكن المشرف من رصدك بدقة. يرجى تفعيله.',
+          navigatorKey.currentContext?.locale.bleClosedPilgrimWarning ?? 'تم إغلاق البلوتوث. لن يتمكن المشرف من رصدك بدقة. يرجى تفعيله.',
         );
       },
       notSupportedMessage:
-          'جهازك لا يدعم البلوتوث — لن يتمكن المشرف من رصدك بدقة.',
+          navigatorKey.currentContext?.locale.bleNotSupportedPilgrimWarning ?? 'جهازك لا يدعم البلوتوث — لن يتمكن المشرف من رصدك بدقة.',
     );
   }
 

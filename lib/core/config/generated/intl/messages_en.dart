@@ -25,7 +25,14 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m1(name) =>
       "Pilgrim \"${name}\" has started drifting from the group.";
 
-  static String m2(currentName) =>
+  static String m2(name) =>
+      "✅ \"${name}\" joined the session and started tracking";
+
+  static String m3(name) => "❌ \"${name}\" rejected joining the session";
+
+  static String m4(name) => "⚠️ \"${name}\" stopped sharing their location";
+
+  static String m5(currentName) =>
       "The current ${currentName} will be stopped and reset from the first lap. Do you want to continue?";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -81,6 +88,21 @@ class MessageLookup extends MessageLookupByLibrary {
     "asr": MessageLookupByLibrary.simpleMessage("Asr"),
     "autoUpdate": MessageLookupByLibrary.simpleMessage("Auto Update"),
     "becomeALeader": MessageLookupByLibrary.simpleMessage("Become a Leader"),
+    "bleClosedLeaderWarning": MessageLookupByLibrary.simpleMessage(
+      "Bluetooth is disabled. Proximity accuracy will decrease. Please enable it.",
+    ),
+    "bleClosedPilgrimWarning": MessageLookupByLibrary.simpleMessage(
+      "Bluetooth is disabled. The supervisor won\'t track you accurately. Please enable it.",
+    ),
+    "bleNotSupportedLeaderWarning": MessageLookupByLibrary.simpleMessage(
+      "Your device does not support Bluetooth.",
+    ),
+    "bleNotSupportedPilgrimWarning": MessageLookupByLibrary.simpleMessage(
+      "Your device doesn\'t support Bluetooth — supervisor won\'t track you accurately.",
+    ),
+    "bleScanFailedWarning": MessageLookupByLibrary.simpleMessage(
+      "Failed to start Bluetooth scan. Ensure GPS and Bluetooth are enabled.",
+    ),
     "campaignDates": MessageLookupByLibrary.simpleMessage("Campaign Dates"),
     "campaignGroups": MessageLookupByLibrary.simpleMessage("Campaign Groups"),
     "campaignLocation": MessageLookupByLibrary.simpleMessage(
@@ -330,11 +352,20 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "locationList": MessageLookupByLibrary.simpleMessage("Location List"),
     "locationName": MessageLookupByLibrary.simpleMessage("Location Name"),
+    "locationRequestBody": MessageLookupByLibrary.simpleMessage(
+      "Do you agree to share your geographic location?",
+    ),
     "locationRequestDialogTitle": MessageLookupByLibrary.simpleMessage(
       "Location Sharing Request",
     ),
     "locationRequestTitle": MessageLookupByLibrary.simpleMessage(
       "📍 Location Sharing Request",
+    ),
+    "locationTrackingDesc": MessageLookupByLibrary.simpleMessage(
+      "The app tracks your location to guide pilgrims",
+    ),
+    "locationTrackingTitle": MessageLookupByLibrary.simpleMessage(
+      "Smart Pilgrim Companion - Be an active leader",
     ),
     "login": MessageLookupByLibrary.simpleMessage("Login"),
     "loginButton": MessageLookupByLibrary.simpleMessage("Login"),
@@ -438,6 +469,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "onboarding_title_6": MessageLookupByLibrary.simpleMessage(
       "Notifications & Alerts",
     ),
+    "operationSuccessful": MessageLookupByLibrary.simpleMessage(
+      "Operation completed successfully",
+    ),
     "otherLocations": MessageLookupByLibrary.simpleMessage("Other Locations"),
     "outOfZone": MessageLookupByLibrary.simpleMessage("Out of zone"),
     "outOfZoneDanger": MessageLookupByLibrary.simpleMessage(
@@ -460,6 +494,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "pilgrimEmergencyTitle": MessageLookupByLibrary.simpleMessage(
       "🚨 Danger Alert!",
     ),
+    "pilgrimJoinedSession": m2,
+    "pilgrimRejectedSession": m3,
+    "pilgrimStatusChanged": MessageLookupByLibrary.simpleMessage(
+      "A pilgrim\'s status has changed",
+    ),
+    "pilgrimStatusChangedTitle": MessageLookupByLibrary.simpleMessage(
+      "👥 Pilgrim status changed",
+    ),
+    "pilgrimStoppedSharingLocation": m4,
     "pilgrimWarningBody": MessageLookupByLibrary.simpleMessage(
       "You are moving away from your group. Hurry back to the supervisor.",
     ),
@@ -471,6 +514,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "pilgrimsCount": MessageLookupByLibrary.simpleMessage("Pilgrims Count"),
     "pilgrimsListTitle": MessageLookupByLibrary.simpleMessage("Pilgrims List"),
+    "pleaseEnableGpsForBleWarning": MessageLookupByLibrary.simpleMessage(
+      "Please enable GPS to use Bluetooth radar.",
+    ),
     "prayerTimes": MessageLookupByLibrary.simpleMessage("Prayer Times"),
     "profileTitle": MessageLookupByLibrary.simpleMessage("Profile"),
     "publishAnnouncement": MessageLookupByLibrary.simpleMessage(
@@ -587,7 +633,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "supervisorName": MessageLookupByLibrary.simpleMessage("Supervisor Name"),
     "switchTrackingType": MessageLookupByLibrary.simpleMessage("Switch Ritual"),
-    "switchTrackingTypeWarning": m2,
+    "switchTrackingTypeWarning": m5,
     "targetAudience": MessageLookupByLibrary.simpleMessage("Target Audience"),
     "tawaf": MessageLookupByLibrary.simpleMessage("Tawaf"),
     "tawafDescription": MessageLookupByLibrary.simpleMessage(
@@ -609,7 +655,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "unexpectedError": MessageLookupByLibrary.simpleMessage(
       "An unexpected error occurred, please try again.",
     ),
+    "unknownError": MessageLookupByLibrary.simpleMessage(
+      "An unknown error occurred",
+    ),
     "unknownPilgrim": MessageLookupByLibrary.simpleMessage("A pilgrim"),
+    "unsupportedDataFormat": MessageLookupByLibrary.simpleMessage(
+      "Unsupported data format from server",
+    ),
     "updateLocationTitle": MessageLookupByLibrary.simpleMessage(
       "Update Location",
     ),

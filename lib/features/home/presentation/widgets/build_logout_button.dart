@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/features/auth/providers/logout_controller_provider.dart';
+import 'package:yusr/core/common/providers/shared_preferences_service_provider.dart';
+import 'package:yusr/core/constants/shared_preferences_keys.dart';
 
 class BuildLogoutButton extends StatelessWidget {
   const BuildLogoutButton({
@@ -19,9 +21,54 @@ class BuildLogoutButton extends StatelessWidget {
 
     return InkWell(
       onTap: () async {
+        final shouldLogout = await showDialog<bool>(
+          context: context,
+          builder: (dialogContext) => AlertDialog(
+            title: Text(locale.logout),
+            content: const Text("هل أنت متأكد من رغبتك في تسجيل الخروج؟"),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(dialogContext, false),
+                child: const Text("إلغاء"),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(dialogContext, true),
+                child: const Text("تأكيد", style: TextStyle(color: Colors.red)),
+              ),
+            ],
+          ),
+        );
+
+        if (shouldLogout != true) return;
+
+        // التحقق من وجود جلسة نشطة
+        final sharedPrefs = ref.read(sharedPreferencesServiceProvider);
+        final activeSessionId = await sharedPrefs.getInt(
+          SharedPreferencesKeys.currentSessionId,
+        );
+
+        if (activeSessionId != null && activeSessionId > 0) {
+          if (!context.mounted) return;
+          showDialog(
+            context: context,
+            builder: (dialogContext) => AlertDialog(
+              title: const Text("تنبيه"),
+              content: const Text(
+                "توجد جلسة نشطة حالياً. إذا كنت تريد تسجيل الخروج، قم أولاً بإيقاف تلك الجلسة.",
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(dialogContext),
+                  child: const Text("حسناً"),
+                ),
+              ],
+            ),
+          );
+          return; // منع تسجيل الخروج
+        }
+
+        if (!context.mounted) return;
         ref.read(logoutControllerProvider.notifier).logout();
-        // Navigator.of(context).pushNamed(AppRoute.loginView);
-        // // ref.invalidate(userProfileProvider);
       },
       child: Container(
         width: double.infinity,

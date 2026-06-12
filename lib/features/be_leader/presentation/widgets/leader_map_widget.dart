@@ -26,11 +26,12 @@ class LeaderMapWidget extends ConsumerWidget {
   ) {
     return Marker(
       point: p.location,
-      width: 40,
-      height: 50,
+      width: 70,
+      height: 65,
       child: GestureDetector(
         onTap: () => _showPilgrimInfoSheet(context, p, color),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             // فقاعة الاسم
             Container(
@@ -44,6 +45,8 @@ class LeaderMapWidget extends ConsumerWidget {
               ),
               child: Text(
                 p.name.length > 8 ? '${p.name.substring(0, 8)}..' : p.name,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontSize: 8.sp,
                   color: Colors.white,

@@ -1,8 +1,10 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:yusr/core/common/providers/shared_preferences_service_provider.dart';
+import 'package:yusr/core/services/shared_preferences_service.dart';
 import 'package:yusr/core/constants/shared_preferences_keys.dart';
 import 'package:yusr/features/be_leader/data/models/tracking_notification_model.dart';
-import 'package:yusr/features/be_leader/presentation/services/tracking_strings.dart';
+import 'package:yusr/core/constants/app_route.dart';
+import 'package:yusr/core/extensions/context_extension.dart';
 
 part 'tracking_notifications_store.g.dart';
 
@@ -17,6 +19,9 @@ part 'tracking_notifications_store.g.dart';
 class TrackingNotificationsStore extends _$TrackingNotificationsStore {
   @override
   List<TrackingNotificationModel> build() => [];
+
+  SharedPreferencesService get _prefs =>
+      ref.read(sharedPreferencesServiceProvider);
 
   // ═══════════════════════════════════════════════════════════════════════
   // العمليات
@@ -37,16 +42,22 @@ class TrackingNotificationsStore extends _$TrackingNotificationsStore {
   /// قراءة الدعوة المحفوظة من SharedPreferences عند فتح التطبيق.
   /// تُستدعى مرة واحدة فقط من [MainHomeView.initState].
   Future<void> loadPersistedInvite() async {
-    final prefs = SharedPreferencesAsync();
-    final sessionIdStr = await prefs.getString(
+    final sessionIdStr = await _prefs.getString(
       SharedPreferencesKeys.pendingTrackingSessionId,
     );
-    final body = await prefs.getString(
+    final body = await _prefs.getString(
       SharedPreferencesKeys.pendingTrackingBody,
     );
 
     final sessionId = int.tryParse(sessionIdStr ?? '0') ?? 0;
-    if (sessionId <= 0 || body == null) return;
+    if (sessionId <= 0 || body == null) {
+      // 💡 المزامنة الصحيحة: إذا كانت الدعوة غير موجودة في الذاكرة الدائمة (ربما تم مسحها في الخلفية)،
+      // يجب أن نزيلها من الذاكرة المؤقتة (RAM) أيضاً لكي تختفي النقطة الحمراء.
+      state = state
+          .where((n) => n.type != TrackingNotificationType.sessionInvite)
+          .toList();
+      return;
+    }
 
     // تجنّب إضافة نسخة مكررة إذا كانت موجودة في الذاكرة بالفعل
     final alreadyExists = state.any(
@@ -59,7 +70,7 @@ class TrackingNotificationsStore extends _$TrackingNotificationsStore {
     addNotification(
       TrackingNotificationModel(
         id: 'session_invite_$sessionId',
-        title: TrackingStrings.locationRequestTitle,
+        title: navigatorKey.currentContext?.locale.locationRequestTitle ?? '📍 طلب مشاركة الموقع',
         body: body,
         timestamp: DateTime.now().toIso8601String(),
         type: TrackingNotificationType.sessionInvite,
@@ -74,17 +85,17 @@ class TrackingNotificationsStore extends _$TrackingNotificationsStore {
     state = state
         .where((n) => n.type != TrackingNotificationType.sessionInvite)
         .toList();
-    final prefs = SharedPreferencesAsync();
-    await prefs.remove(SharedPreferencesKeys.pendingTrackingSessionId);
-    await prefs.remove(SharedPreferencesKeys.pendingTrackingBody);
+    await _prefs.removeKey(SharedPreferencesKeys.sessionId);
+    await _prefs.removeKey(SharedPreferencesKeys.pendingTrackingSessionId);
+    await _prefs.removeKey(SharedPreferencesKeys.pendingTrackingBody);
   }
 
   /// احذف كل إشعارات جلسة معينة دفعة واحدة (عند tracking_session_ended).
   Future<void> clearBySessionId(int sessionId) async {
     state = state.where((n) => n.sessionId != sessionId).toList();
-    final prefs = SharedPreferencesAsync();
-    await prefs.remove(SharedPreferencesKeys.pendingTrackingSessionId);
-    await prefs.remove(SharedPreferencesKeys.pendingTrackingBody);
+    await _prefs.removeKey(SharedPreferencesKeys.sessionId);
+    await _prefs.removeKey(SharedPreferencesKeys.pendingTrackingSessionId);
+    await _prefs.removeKey(SharedPreferencesKeys.pendingTrackingBody);
   }
 
   /// مسح كامل (تسجيل خروج) — لا يمسح SharedPreferences (الجلسة تستمر).
