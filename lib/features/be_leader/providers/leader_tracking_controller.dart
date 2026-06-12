@@ -35,7 +35,7 @@ class LeaderTrackingController extends _$LeaderTrackingController {
   Position? _currentLeaderPosition;
   Position? _lastValidLeaderPosition;
   DateTime? _lastLeaderUpdateTime;
-  final AudioPlayer _audioPlayer = AudioPlayer();
+  final AudioPlayer _audioPlayer = AudioPlayer()..audioCache = AudioCache(prefix: '');
   final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
@@ -623,7 +623,7 @@ class LeaderTrackingController extends _$LeaderTrackingController {
     }
     if (!_isMutedManually) {
       await _audioPlayer.setReleaseMode(ReleaseMode.loop);
-      await _audioPlayer.play(AssetSource('sounds/alarm.mp3'));
+      await _audioPlayer.play(AssetSource('asset/sounds/alarm.mp3'));
     }
   }
 
@@ -647,6 +647,20 @@ class LeaderTrackingController extends _$LeaderTrackingController {
       ref.read(bleRadarServiceProvider).stop(); // 🌟 إيقاف الرادار
       _locationFilter.stop(); // 🌟 إيقاف مستشعر الحركة وتصفير العدادات
       stopAlarmManual();
+
+      for (var key in _alertedPilgrims) {
+        _notificationsPlugin.cancel(key.hashCode + 1000);
+      }
+      for (var key in _yellowWarnedPilgrims) {
+        _notificationsPlugin.cancel(key.hashCode);
+      }
+      _alertedPilgrims.clear();
+      _yellowWarnedPilgrims.clear();
+      _redZoneEntryTimes.clear();
+
+      if (_currentSessionId != null) {
+        ref.read(trackingNotificationsStoreProvider.notifier).clearBySessionId(_currentSessionId!);
+      }
 
       final repo = ref.read(trackingRepositoryProvider);
       await repo.deleteSession(_currentSessionId.toString());

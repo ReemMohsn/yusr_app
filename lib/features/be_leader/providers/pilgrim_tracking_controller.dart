@@ -448,6 +448,7 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
         distance: state.distance,
         gpsWarning: clearWarning ? null : state.gpsWarning,
         bleWarning: state.bleWarning,
+        isSafeByBle: _isSafeByBle,
       );
       return;
     }
@@ -475,6 +476,7 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
         distance: displayedDistance, // ← مسافة BLE في الواجهة لا GPS
         gpsWarning: clearWarning ? null : state.gpsWarning,
         bleWarning: state.bleWarning,
+        isSafeByBle: _isSafeByBle,
       );
       return;
     }
@@ -489,6 +491,7 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
       distance: distance,
       gpsWarning: clearWarning ? null : state.gpsWarning,
       bleWarning: state.bleWarning,
+      isSafeByBle: _isSafeByBle,
     );
 
     if (distance <= _yellowZone) {
@@ -679,6 +682,13 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
 
     // 🌟 إيقاف بث البلوتوث
     ref.read(bleRadarServiceProvider).stopBroadcasting();
+
+    _notificationsPlugin.cancel(1);
+    _notificationsPlugin.cancel(1001);
+
+    if (_currentSessionId != null) {
+      ref.read(trackingNotificationsStoreProvider.notifier).clearBySessionId(_currentSessionId!);
+    }
 
     _lastValidPosition = null;
     _lastUpdateTime = null;

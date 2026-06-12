@@ -22,7 +22,7 @@ class TrackingFAB extends StatelessWidget {
         backgroundColor: AppColor.withe,
         onPressed: onPressed,
         child: Icon(
-          isTracking ? Icons.explore : Icons.explore_off,
+          isTracking ? Icons.my_location : Icons.location_searching,
           color: AppColor.golden,
         ),
       ),

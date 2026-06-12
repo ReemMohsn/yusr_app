@@ -11,6 +11,7 @@ class PilgrimTrackingState {
   final String? gpsWarning;
   final String? bleWarning; // 🌟 تحذير حالة البلوتوث
   final bool isNetworkConnected; // 🌐 إضافة لحالة الإنترنت
+  final bool isSafeByBle;
 
   PilgrimTrackingState({
     this.pilgrimLocation,
@@ -21,6 +22,7 @@ class PilgrimTrackingState {
     this.gpsWarning,
     this.bleWarning,
     this.isNetworkConnected = true,
+    this.isSafeByBle = false,
   });
 
   /// نسخة محدَّثة من الحالة مع تغيير حقول بعينها فقط
@@ -34,6 +36,7 @@ class PilgrimTrackingState {
     Object? gpsWarning = _sentinel,
     Object? bleWarning = _sentinel,
     bool? isNetworkConnected,
+    bool? isSafeByBle,
   }) {
     return PilgrimTrackingState(
       pilgrimLocation: pilgrimLocation ?? this.pilgrimLocation,
@@ -44,18 +47,19 @@ class PilgrimTrackingState {
       gpsWarning: gpsWarning == _sentinel ? this.gpsWarning : gpsWarning as String?,
       bleWarning: bleWarning == _sentinel ? this.bleWarning : bleWarning as String?,
       isNetworkConnected: isNetworkConnected ?? this.isNetworkConnected,
+      isSafeByBle: isSafeByBle ?? this.isSafeByBle,
     );
   }
 
   Color get statusColor {
-    if (distance <= 75.0) return Colors.teal;
-    if (distance <= 150.0) return Colors.amber;
+    if (isSafeByBle || distance <= 20.0) return Colors.teal;
+    if (distance <= 30.0) return Colors.orange;
     return Colors.red;
   }
 
   String get statusText {
-    if (distance <= 75.0) return 'في النطاق الآمن';
-    if (distance <= 150.0) return 'على حدود النطاق';
+    if (isSafeByBle || distance <= 20.0) return 'في النطاق الآمن';
+    if (distance <= 30.0) return 'على حدود النطاق';
     return 'خارج النطاق!';
   }
 }
