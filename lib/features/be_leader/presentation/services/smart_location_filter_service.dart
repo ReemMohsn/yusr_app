@@ -141,31 +141,90 @@ class SmartLocationFilterService {
     // 1. مسافات صغيرة جداً تُقبل دائماً (GPS error margin طبيعي)
     if (distanceMeters < 5) return true;
 
+    // 2. ZUPT: الشخص متوقف تماماً (مفيش خطوات) → فقط تصحيحات GPS ضمن هامش الخطأ
+    if (!_isCurrentlyWalking) {
+      final double allowedNoiseRadius = math.max(
+        currentAccuracy,
+        previousAccuracy,
+      );
+      if (distanceMeters <= allowedNoiseRadius) {
+        debugPrint(
+          '🔄 [ZUPT$tag] متوقف لكن القفزة (${distanceMeters.toStringAsFixed(1)}م) ضمن هامش الخطأ (${allowedNoiseRadius.toStringAsFixed(1)}م) — مقبولة.',
+        );
+        return true;
+      }
+      debugPrint(
+        '🛑 [ZUPT$tag] رفض! متوقف تماماً والقفزة (${distanceMeters.toStringAsFixed(1)}م) أكبر من هامش الخطأ.',
+      );
+      return false;
+    }
+
+    // 3. حساب الخطوات منذ آخر تحديث GPS مقبول
     final int stepsTaken = _trustedTotalSteps - _stepsAtLastGpsUpdate;
     final double expectedMinSteps = distanceMeters / 1.5;
 
-    // 2. إذا كانت الخطوات كافية للمسافة، نقبل فوراً
+    // 4. الخطوات كافية للمسافة → قبول
     if (stepsTaken >= expectedMinSteps) {
       _stepsAtLastGpsUpdate = _trustedTotalSteps;
-      debugPrint('✅ [حماية الموقع$tag] مشى المستخدم مسافة كافية ($stepsTaken خطوات).');
+      debugPrint(
+        '✅ [حماية الموقع$tag] مشى المستخدم مسافة كافية ($stepsTaken خطوات).',
+      );
       return true;
     }
 
-    // 3. الخطوات غير كافية.. هل هذه القفزة تصحيح للـ GPS؟
-    // نأخذ الأكبر بين دقة الموقع السابق والحالي كدائرة تداخل مسموحة
-    final double allowedNoiseRadius = math.max(currentAccuracy, previousAccuracy);
-
+    // 5. الخطوات غير كافية.. هل القفزة تصحيح GPS ضمن هامش الخطأ؟
+    final double allowedNoiseRadius = math.max(
+      currentAccuracy,
+      previousAccuracy,
+    );
     if (distanceMeters <= allowedNoiseRadius) {
-      // القفزة مبررة بأنها ضمن دائرة الخطأ للـ GPS
       _stepsAtLastGpsUpdate = _trustedTotalSteps;
-      debugPrint('🔄 [حماية الموقع$tag] تصحيح GPS مسموح: المسافة (${distanceMeters.toStringAsFixed(1)}م) ضمن هامش الخطأ (${allowedNoiseRadius.toStringAsFixed(1)}م) بدون خطوات.');
+      debugPrint(
+        '🔄 [حماية الموقع$tag] تصحيح GPS مسموح ضمن هامش الخطأ بدون خطوات.',
+      );
       return true;
     }
 
-    // 4. المسافة أكبر من هامش الخطأ، ولا يوجد خطوات -> قفزة وهمية مرفوضة!
-    debugPrint('🛑 [حماية الموقع$tag] رفض! مسافة (${distanceMeters.toStringAsFixed(1)}م) أكبر من هامش الخطأ (${allowedNoiseRadius.toStringAsFixed(1)}م) بخطوات غير كافية ($stepsTaken).');
+    // 6. رفض القفزة الوهمية
+    debugPrint(
+      '🛑 [حماية الموقع$tag] رفض! مسافة (${distanceMeters.toStringAsFixed(1)}م) > هامش الخطأ (${allowedNoiseRadius.toStringAsFixed(1)}م) بخطوات غير كافية ($stepsTaken).',
+    );
     return false;
   }
+  // bool isMovementReal({
+  //   required double distanceMeters,
+  //   required double currentAccuracy,
+  //   required double previousAccuracy,
+  //   String tag = '',
+  // }) {
+  //   // 1. مسافات صغيرة جداً تُقبل دائماً (GPS error margin طبيعي)
+  //   if (distanceMeters < 5) return true;
+
+  //   final int stepsTaken = _trustedTotalSteps - _stepsAtLastGpsUpdate;
+  //   final double expectedMinSteps = distanceMeters / 1.5;
+
+  //   // 2. إذا كانت الخطوات كافية للمسافة، نقبل فوراً
+  //   if (stepsTaken >= expectedMinSteps) {
+  //     _stepsAtLastGpsUpdate = _trustedTotalSteps;
+  //     debugPrint('✅ [حماية الموقع$tag] مشى المستخدم مسافة كافية ($stepsTaken خطوات).');
+  //     return true;
+  //   }
+
+  //   // 3. الخطوات غير كافية.. هل هذه القفزة تصحيح للـ GPS؟
+  //   // نأخذ الأكبر بين دقة الموقع السابق والحالي كدائرة تداخل مسموحة
+  //   final double allowedNoiseRadius = math.max(currentAccuracy, previousAccuracy);
+
+  //   if (distanceMeters <= allowedNoiseRadius) {
+  //     // القفزة مبررة بأنها ضمن دائرة الخطأ للـ GPS
+  //     _stepsAtLastGpsUpdate = _trustedTotalSteps;
+  //     debugPrint('🔄 [حماية الموقع$tag] تصحيح GPS مسموح: المسافة (${distanceMeters.toStringAsFixed(1)}م) ضمن هامش الخطأ (${allowedNoiseRadius.toStringAsFixed(1)}م) بدون خطوات.');
+  //     return true;
+  //   }
+
+  //   // 4. المسافة أكبر من هامش الخطأ، ولا يوجد خطوات -> قفزة وهمية مرفوضة!
+  //   debugPrint('🛑 [حماية الموقع$tag] رفض! مسافة (${distanceMeters.toStringAsFixed(1)}م) أكبر من هامش الخطأ (${allowedNoiseRadius.toStringAsFixed(1)}م) بخطوات غير كافية ($stepsTaken).');
+  //   return false;
+  // }
 
   /// يتحقق إن كانت السرعة المحسوبة منطقية (أقل من 4 م/ث — فلتر السرعة).
   ///

@@ -62,11 +62,15 @@ class LeaderMapTopCard extends StatelessWidget {
                     Text(
                       !state.isNetworkConnected
                           ? locale.noInternet
-                          : (isLeaderConnected ? locale.connectedMap : locale.searchingForLocation),
+                          : (isLeaderConnected
+                                ? locale.connectedMap
+                                : locale.searchingForLocation),
                       style: TextStyle(
                         color: !state.isNetworkConnected
                             ? Colors.red
-                            : (isLeaderConnected ? Colors.green : Colors.orange),
+                            : (isLeaderConnected
+                                  ? Colors.green
+                                  : Colors.orange),
                         fontWeight: FontWeight.bold,
                         fontSize: isLeaderConnected ? 14.sp : 11.sp,
                       ),
@@ -77,11 +81,20 @@ class LeaderMapTopCard extends StatelessWidget {
                 Row(
                   children: [
                     if (state.greenPilgrims.isNotEmpty)
-                      _PilgrimCount(count: state.greenPilgrims.length, color: Colors.teal),
+                      _PilgrimCount(
+                        count: state.greenPilgrims.length,
+                        color: Colors.teal,
+                      ),
                     if (state.yellowPilgrims.isNotEmpty)
-                      _PilgrimCount(count: state.yellowPilgrims.length, color: Colors.orange),
+                      _PilgrimCount(
+                        count: state.yellowPilgrims.length,
+                        color: Colors.orange,
+                      ),
                     if (state.redPilgrims.isNotEmpty)
-                      _PilgrimCount(count: state.redPilgrims.length, color: Colors.red),
+                      _PilgrimCount(
+                        count: state.redPilgrims.length,
+                        color: Colors.red,
+                      ),
                     if (state.totalPilgrims == 0)
                       Text(
                         locale.noPilgrims,

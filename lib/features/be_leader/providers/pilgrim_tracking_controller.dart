@@ -373,22 +373,32 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
           if (event.snapshot.exists) {
             final data = event.snapshot.value as Map<dynamic, dynamic>;
             final bool isSafe = data['isSafeByBle'] ?? false;
+            final double? newBleDistance = (data['bleDistance'] as num?)?.toDouble();
 
-            // ← قراءة مسافة BLE التي أرسلها المشرف لعرضها في الواجهة بدلاً من GPS
-            _currentBleDistance = (data['bleDistance'] as num?)?.toDouble();
+            bool shouldUpdateUI = false;
 
+            // 1. هل تغيرت مسافة البلوتوث؟
+            if (_currentBleDistance != newBleDistance) {
+              _currentBleDistance = newBleDistance;
+              shouldUpdateUI = true;
+            }
+
+            // 2. هل تغيرت حالة الأمان؟
             if (_isSafeByBle != isSafe) {
               _isSafeByBle = isSafe;
-              if (_isSafeByBle) {
-                // صك الأمان الجديد: أعد حساب المسافة فوراً لإلغاء أي إنذار نشط
-                _updateStateAndCheckDistance(
-                  pilgrimLoc: state.pilgrimLocation,
-                  leaderLoc: state.leaderLocation,
-                );
-              } else {
+              shouldUpdateUI = true;
+              if (!_isSafeByBle) {
                 // انتهى صك الأمان → صفّر مسافة BLE
                 _currentBleDistance = null;
               }
+            }
+
+            // تحديث الشاشة إذا تغير الأمان أو مسافة البلوتوث
+            if (shouldUpdateUI) {
+              _updateStateAndCheckDistance(
+                pilgrimLoc: state.pilgrimLocation,
+                leaderLoc: state.leaderLocation,
+              );
             }
           }
         });
