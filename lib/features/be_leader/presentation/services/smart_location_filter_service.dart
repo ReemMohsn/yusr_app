@@ -13,17 +13,17 @@ import 'package:pedometer/pedometer.dart';
 /// - لا يتأثر بوضع الهاتف (جيب / يد / حقيبة) لأن المعالجة تتم على مستوى الـ HAL
 /// - أقل استهلاكاً للطاقة لأنه لا يُطلق أحداثاً إلا عند وقوع خطوة فعلية (≠ 100 حدث/ثانية)
 ///
-/// ### ثوابت عتبة دقة GPS (التعديل 3)
-/// تم توحيد العتبة لتكون 25م لكل من المشرف والحاج لتجنب إرسال نبضات حياة متكررة جداً في المناطق ضعيفة الإشارة.
-/// - [kLeaderAccuracyThreshold]: 25م
-/// - [kPilgrimAccuracyThreshold]: 25م
+/// ### ثوابت عتبة دقة GPS (التعديل 4)
+/// تم توحيد العتبة لتكون 35م لكل من المشرف والحاج لتوسيع هامش التسامح مع الدقة قليلاً.
+/// - [kLeaderAccuracyThreshold]: 35م
+/// - [kPilgrimAccuracyThreshold]: 35م
 class SmartLocationFilterService {
   // ─── ثوابت عتبة دقة GPS ───────────────────────────────────────────────────
-  /// عتبة دقة GPS للمشرف والحاج — تم توحيدها لـ 25 لتجنب إرسال نبضات حياة متكررة في المناطق ضعيفة الإشارة
-  static const double kLeaderAccuracyThreshold = 25.0;
+  /// عتبة دقة GPS للمشرف والحاج — تم توسيعها لـ 35
+  static const double kLeaderAccuracyThreshold = 35.0;
 
   /// عتبة دقة GPS للحاج
-  static const double kPilgrimAccuracyThreshold = 25.0;
+  static const double kPilgrimAccuracyThreshold = 35.0;
 
   // ─── Hardware Pedometer ──────────────────────────────────────────────────
   StreamSubscription<StepCount>? _stepCountSub;

@@ -33,9 +33,14 @@ class PilgrimInfoBottomSheet extends StatelessWidget {
         pilgrim.lastHeartbeat != null &&
         DateTime.now().difference(pilgrim.lastHeartbeat!).inSeconds < 120;
 
-    final distanceText = pilgrim.distance < 1000
-        ? '${pilgrim.distance.toStringAsFixed(1)} ${locale.meterWord}'
-        : '${(pilgrim.distance / 1000).toStringAsFixed(2)} ${locale.km}';
+    // المسافة: إذا BLE مؤكَّد → "مسافة مؤكدة"، وإلا → "مسافة تقديرية"
+    final distanceLabel = pilgrim.isSafeByBle
+        ? locale.distanceConfirmed
+        : locale.distanceApprox;
+    final distancePrefix = pilgrim.isSafeByBle ? '' : '~';
+    final distanceValue = pilgrim.distance < 1000
+        ? '$distancePrefix${pilgrim.distance.toStringAsFixed(1)} ${locale.meterWord}'
+        : '$distancePrefix${(pilgrim.distance / 1000).toStringAsFixed(2)} ${locale.km}';
 
     String zoneLabel;
     IconData zoneIcon;
@@ -50,11 +55,12 @@ class PilgrimInfoBottomSheet extends StatelessWidget {
       zoneIcon = Icons.dangerous;
     }
 
-    return Padding(
-      padding: EdgeInsets.all(20.w),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.all(20.w),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
           // مقبض
           Container(
             width: 40.w,
@@ -70,7 +76,7 @@ class PilgrimInfoBottomSheet extends StatelessWidget {
           Row(
             children: [
               CircleAvatar(
-                backgroundColor: zoneColor.withOpacity(0.15),
+                backgroundColor: zoneColor.withValues(alpha: 0.15),
                 radius: 24.r,
                 child: Icon(Icons.person, color: zoneColor, size: 26.r),
               ),
@@ -108,8 +114,8 @@ class PilgrimInfoBottomSheet extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                 decoration: BoxDecoration(
                   color: isPhoneOnline
-                      ? Colors.green.withOpacity(0.1)
-                      : Colors.red.withOpacity(0.1),
+                      ? Colors.green.withValues(alpha: 0.1)
+                      : Colors.red.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(20.r),
                   border: Border.all(
                     color: isPhoneOnline ? Colors.green : Colors.red,
@@ -126,7 +132,9 @@ class PilgrimInfoBottomSheet extends StatelessWidget {
                     ),
                     SizedBox(width: 3.w),
                     Text(
-                      isPhoneOnline ? locale.connectedMap : locale.disconnectedMap,
+                      isPhoneOnline
+                          ? locale.connectedMap
+                          : locale.disconnectedMap,
                       style: TextStyle(
                         fontSize: 10.sp,
                         color: isPhoneOnline ? Colors.green : Colors.red,
@@ -139,16 +147,21 @@ class PilgrimInfoBottomSheet extends StatelessWidget {
             ],
           ),
 
-          SizedBox(height: 20.h),
+          SizedBox(height: 16.h),
+
+          // ── بطاقة حالة BLE ───────────────────────────────────────────
+          _BleBadge(isSafeByBle: pilgrim.isSafeByBle, locale: locale),
+
+          SizedBox(height: 16.h),
           const Divider(),
           SizedBox(height: 12.h),
 
-          // تفاصيل
+          // تفاصيل المسافة (مع توضيح تقديري/مؤكَّد)
           _InfoRow(
             icon: Icons.social_distance,
-            label: locale.distanceFromLeader,
-            value: distanceText,
-            color: Colors.blue,
+            label: distanceLabel,
+            value: distanceValue,
+            color: pilgrim.isSafeByBle ? Colors.blue : Colors.blueGrey,
           ),
           SizedBox(height: 12.h),
           _InfoRow(
@@ -164,7 +177,114 @@ class PilgrimInfoBottomSheet extends StatelessWidget {
             value: lastHeartbeatText,
             color: isPhoneOnline ? Colors.green : Colors.red,
           ),
-          SizedBox(height: 24.h),
+
+          SizedBox(height: 12.h),
+          // تنبيه صغير في الأسفل
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+            decoration: BoxDecoration(
+              color: Colors.blueGrey.withValues(alpha: 0.07),
+              borderRadius: BorderRadius.circular(10.r),
+              border: Border.all(
+                color: Colors.blueGrey.withValues(alpha: 0.2),
+              ),
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.info_outline,
+                  size: 14.sp,
+                  color: Colors.blueGrey.shade500,
+                ),
+                SizedBox(width: 6.w),
+                Expanded(
+                  child: Text(
+                    locale.mapApproxHint,
+                    style: TextStyle(
+                      fontSize: 10.sp,
+                      color: Colors.blueGrey.shade600,
+                      height: 1.4,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          SizedBox(height: 20.h),
+        ],
+      ),
+      ),
+    );
+  }
+}
+
+/// بطاقة BLE: خضراء إذا مؤكَّد، رمادية إذا غير مرصود
+class _BleBadge extends StatelessWidget {
+  final bool isSafeByBle;
+  final dynamic locale; // AppLocalizations
+
+  const _BleBadge({required this.isSafeByBle, required this.locale});
+
+  @override
+  Widget build(BuildContext context) {
+    final color = isSafeByBle ? Colors.blue.shade600 : Colors.grey.shade500;
+    final bgColor = isSafeByBle
+        ? Colors.blue.withValues(alpha: 0.08)
+        : Colors.grey.withValues(alpha: 0.07);
+    final borderColor = isSafeByBle
+        ? Colors.blue.withValues(alpha: 0.3)
+        : Colors.grey.withValues(alpha: 0.3);
+    final label = isSafeByBle
+        ? locale.bleConfirmedNearby as String
+        : locale.bleNotDetected as String;
+
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: BorderRadius.circular(12.r),
+        border: Border.all(color: borderColor),
+      ),
+      child: Row(
+        children: [
+          // دائرة BLE
+          Container(
+            width: 14.w,
+            height: 14.w,
+            decoration: BoxDecoration(
+              color: color,
+              shape: BoxShape.circle,
+              boxShadow: isSafeByBle
+                  ? [
+                      BoxShadow(
+                        color: Colors.blue.withValues(alpha: 0.4),
+                        blurRadius: 6,
+                        spreadRadius: 1,
+                      ),
+                    ]
+                  : [],
+            ),
+          ),
+          SizedBox(width: 10.w),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                locale.bleProximityLabel as String,
+                style: TextStyle(fontSize: 10.sp, color: Colors.grey.shade600),
+              ),
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.bold,
+                  color: color,
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -191,7 +311,7 @@ class _InfoRow extends StatelessWidget {
         Container(
           padding: EdgeInsets.all(8.w),
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+            color: color.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(10.r),
           ),
           child: Icon(icon, size: 20.sp, color: color),

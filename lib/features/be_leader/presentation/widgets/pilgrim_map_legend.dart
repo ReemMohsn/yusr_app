@@ -43,8 +43,52 @@ class PilgrimMapLegend extends StatelessWidget {
             text: locale.dangerZone30m,
             color: Colors.red,
           ),
+          SizedBox(height: 8.h),
+          Divider(height: 1, thickness: 0.8, color: Colors.grey.shade300),
+          SizedBox(height: 8.h),
+          _BleLegendItem(text: locale.bleConfirmedLegend),
         ],
       ),
+    );
+  }
+}
+
+/// عنصر BLE بنقطة زرقاء بدل أيقونة الموقع
+class _BleLegendItem extends StatelessWidget {
+  final String text;
+
+  const _BleLegendItem({required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          width: 12.w,
+          height: 12.w,
+          decoration: BoxDecoration(
+            color: Colors.blue.shade600,
+            shape: BoxShape.circle,
+            border: Border.all(color: Colors.white, width: 1.5),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.blue.withValues(alpha: 0.4),
+                blurRadius: 4,
+                spreadRadius: 1,
+              ),
+            ],
+          ),
+        ),
+        SizedBox(width: 6.w),
+        Text(
+          text,
+          style: TextStyle(
+            fontSize: 10.sp,
+            fontWeight: FontWeight.w600,
+            color: Colors.blue.shade700,
+          ),
+        ),
+      ],
     );
   }
 }

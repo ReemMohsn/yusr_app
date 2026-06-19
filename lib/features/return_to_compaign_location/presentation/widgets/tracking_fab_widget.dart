@@ -15,7 +15,7 @@ class TrackingFAB extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: 220,
+      bottom: 255,
       right: 16,
       child: FloatingActionButton(
         mini: true,

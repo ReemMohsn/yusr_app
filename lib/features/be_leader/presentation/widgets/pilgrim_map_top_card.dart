@@ -21,9 +21,11 @@ class PilgrimMapTopCard extends StatelessWidget {
         ? '${state.distance.toStringAsFixed(0)} ${locale.meterWord}'
         : '${(state.distance / 1000).toStringAsFixed(2)} ${locale.km}';
 
-    return Row(
+    return Column(
       children: [
-        // زر الرجوع
+        Row(
+          children: [
+            // زر الرجوع
         GestureDetector(
           onTap: () => Navigator.pop(context),
           child: Container(
@@ -107,10 +109,10 @@ class PilgrimMapTopCard extends StatelessWidget {
                           vertical: 2.h,
                         ),
                         decoration: BoxDecoration(
-                          color: state.statusColor.withOpacity(0.12),
+                          color: state.statusColor.withValues(alpha: 0.12),
                           borderRadius: BorderRadius.circular(20.r),
                           border: Border.all(
-                            color: state.statusColor.withOpacity(0.4),
+                            color: state.statusColor.withValues(alpha: 0.4),
                           ),
                         ),
                         child: Text(
@@ -137,6 +139,8 @@ class PilgrimMapTopCard extends StatelessWidget {
               ],
             ),
           ),
+        ),
+          ],
         ),
       ],
     );

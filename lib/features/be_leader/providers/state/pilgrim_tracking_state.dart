@@ -52,13 +52,14 @@ class PilgrimTrackingState {
   }
 
   Color get statusColor {
-    if (isSafeByBle || distance <= 20.0) return Colors.teal;
-    if (distance <= 30.0) return Colors.orange;
-    return Colors.red;
+    if (distance <= 20.0 || isSafeByBle) return Colors.teal; // GPS آمن أو BLE آمن
+    if (distance <= 30.0) return Colors.orange; // GPS تحذير
+    return Colors.red; // GPS خطر
   }
 
   String get statusText {
-    if (isSafeByBle || distance <= 20.0) return 'في النطاق الآمن';
+    if (isSafeByBle) return 'بلوتوث يؤكد: أنت قريب 🔵'; // توضيح صريح لمصدر الحكم
+    if (distance <= 20.0) return 'في النطاق الآمن';
     if (distance <= 30.0) return 'على حدود النطاق';
     return 'خارج النطاق!';
   }

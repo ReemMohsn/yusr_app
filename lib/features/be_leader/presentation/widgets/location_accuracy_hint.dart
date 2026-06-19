@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:yusr/core/extensions/context_extension.dart';
 
 class LocationAccuracyHint extends StatefulWidget {
   const LocationAccuracyHint({super.key});
@@ -14,11 +15,12 @@ class _LocationAccuracyHintState extends State<LocationAccuracyHint> {
   @override
   Widget build(BuildContext context) {
     if (!_isVisible) return const SizedBox.shrink();
+    final locale = context.locale;
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
       decoration: BoxDecoration(
-        color: Colors.blue.shade50.withOpacity(0.95),
+        color: Colors.blue.shade50.withValues(alpha: 0.95),
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: Colors.blue.shade200),
         boxShadow: const [
@@ -28,11 +30,11 @@ class _LocationAccuracyHintState extends State<LocationAccuracyHint> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.info_outline, color: Colors.blue.shade700, size: 20),
+          Icon(Icons.sensors, color: Colors.blue.shade700, size: 20),
           SizedBox(width: 8.w),
           Expanded(
             child: Text(
-              'في حال عدم دقة الموقع على الخريطة، يرجى إغلاق الـ GPS وإعادة تشغيله مرة أخرى (غالباً ما يحدث ذلك عند الالتقاط الأول).',
+              locale.mapApproxHint,
               style: TextStyle(
                 color: Colors.blue.shade900,
                 fontSize: 11.sp,
