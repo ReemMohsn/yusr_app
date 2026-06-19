@@ -20,7 +20,7 @@ class SwitchTrackingTypeDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final locale = context.locale;
-    final targetName = toTawaf ? locale.tawaf : locale.saei;
+    final currentName = toTawaf ? locale.saei : locale.tawaf;
 
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
@@ -82,7 +82,7 @@ class SwitchTrackingTypeDialog extends StatelessWidget {
                   SizedBox(width: 8.w),
                   Expanded(
                     child: Text(
-                      locale.switchTrackingTypeWarning(targetName),
+                      locale.switchTrackingTypeWarning(currentName),
                       style: TextStyle(
                         fontSize: 13.sp,
                         color: Colors.grey.shade700,

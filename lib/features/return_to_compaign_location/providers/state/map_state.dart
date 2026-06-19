@@ -2,7 +2,7 @@ import 'package:latlong2/latlong.dart';
 
 class MapState {
   final LatLng userLocation;
-  final LatLng? targetLocation; // nullable — null يعني لم تُجلب البيانات بعد
+  final LatLng? targetLocation;
   final List<LatLng> routePoints;
   final double distance;
   final double heading;

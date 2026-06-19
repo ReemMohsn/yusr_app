@@ -41,6 +41,9 @@ class AutoCounterController extends _$AutoCounterController {
   static const int _saeeMinSeconds = 5;
   static const int _saeeLastLapMinSteps = 10;
 
+  //-مقياس التسارع -
+  static const double _walkingDetectionThreshold = 2.0;
+
   // متغيرات داخلية
   // ═══════════════════════════════════════════════════════════
 
@@ -48,6 +51,7 @@ class AutoCounterController extends _$AutoCounterController {
   StreamSubscription<WalkingStatus>? _walkSub;
   StreamSubscription<GyroscopeReading>? _gyroSub;
   StreamSubscription<Position>? _keepAliveSub;
+  StreamSubscription<double>? _linearAccSub;
   Timer? _stoppedTimer;
 
   int _lastTotalSteps = -1;
@@ -79,7 +83,6 @@ class AutoCounterController extends _$AutoCounterController {
     if (!isGranted.isGranted) {
       state = state.copyWith(
         permissionError: AutoCounterStrings.activityPermissionDenied,
-        // permissionError: 'يرجى منح صلاحية رصد النشاط الحركي من إعدادات الجهاز',
       );
       return;
     }
@@ -104,8 +107,7 @@ class AutoCounterController extends _$AutoCounterController {
       currentLap: savedLap,
       stepsInCurrentLap: 0,
       accumulatedAngle: 0.0,
-      // isMoving: false,
-      isMoving: true,
+      isMoving: false,
       turnDetected: false,
       startHeading: -1.0,
       permissionError: null,
@@ -175,6 +177,17 @@ class AutoCounterController extends _$AutoCounterController {
     final repo = SensorsRepository();
 
     _startForegroundKeepAlive();
+
+    // كشف فوري عن بداية الحركة
+    _linearAccSub = repo.linearAccelerationStream.listen((magnitude) {
+      if (!ref.mounted) return;
+      // لو الحاج واقف وتجاوز التسارع العتبة → بدأ يمشي
+      if (!state.isMoving && magnitude > _walkingDetectionThreshold) {
+        state = state.copyWith(isMoving: true);
+        _lastGyroTime = null; // تصفير الزمن لبدء قراءة نظيفة
+        _resetStoppedTimer(); // تشغيل حارس التوقف كإجراء أمني
+      }
+    }, onError: (_) {});
 
     // Hardware Pedometer
     _stepSub = repo.stepStream.listen(
@@ -450,11 +463,14 @@ class AutoCounterController extends _$AutoCounterController {
     _stepSub?.cancel();
     _walkSub?.cancel();
     _gyroSub?.cancel();
+    _linearAccSub?.cancel();
     _keepAliveSub?.cancel();
     _stoppedTimer?.cancel();
+
     _stepSub = null;
     _walkSub = null;
     _gyroSub = null;
+    _linearAccSub = null;
     _keepAliveSub = null;
     _stoppedTimer = null;
     _lastGyroTime = null;
@@ -480,8 +496,6 @@ class AutoCounterController extends _$AutoCounterController {
         accuracy: LocationAccuracy.low,
         distanceFilter: 1000,
         foregroundNotificationConfig: ForegroundNotificationConfig(
-          // notificationTitle: 'يُسر - العداد التلقائي نشط',
-          // notificationText: 'جاري حساب أشواطك بدقة في الخلفية',
           notificationTitle: AutoCounterStrings.foregroundNotificationTitle,
           notificationText: AutoCounterStrings.foregroundNotificationBody,
           enableWakeLock: true,

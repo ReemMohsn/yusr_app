@@ -30,8 +30,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m4(name) => "⚠️ \"${name}\" أوقف مشاركة موقعه";
 
-  static String m5(targetName) =>
-      "سيتم إيقاف ${targetName} الحالي وإعادة الضبط من الشوط الأول، هل تريد المتابعة؟";
+  static String m5(currentName) =>
+      "سيتم إيقاف ال${currentName} الحالي وإعادة الضبط من الشوط الأول، هل تريد المتابعة؟";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
