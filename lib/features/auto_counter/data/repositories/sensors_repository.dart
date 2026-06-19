@@ -91,4 +91,13 @@ class SensorsRepository {
       );
     });
   }
+
+  /// مجرى التسارع الخطي (بدون الجاذبية) — للكشف الفوري عن بداية الحركة
+  Stream<double> get linearAccelerationStream {
+    return userAccelerometerEvents.map((event) {
+      return math.sqrt(
+        event.x * event.x + event.y * event.y + event.z * event.z,
+      );
+    });
+  }
 }
