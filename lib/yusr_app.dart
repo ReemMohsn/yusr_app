@@ -35,7 +35,6 @@ class YusrApp extends ConsumerWidget {
           GlobalCupertinoLocalizations.delegate,
         ],
         supportedLocales: const [Locale('en'), Locale('ar')],
-        // supportedLocales: AppLocalizations.delegate.supportedLocales,
         locale: const Locale('ar'),
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,

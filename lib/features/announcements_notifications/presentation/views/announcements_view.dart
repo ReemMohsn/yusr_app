@@ -34,8 +34,6 @@ class _AnnouncementsViewState extends ConsumerState<AnnouncementsView> {
   Widget build(BuildContext context) {
     final locale = context.locale;
 
-    // 🌟 مراقبة حالة الإعلانات (تحميل، خطأ، أو داتا)
-    // final announcementsState = ref.watch(announcementsProvider);
     final filteredState = ref.watch(filteredAnnouncementsProvider);
 
     ref.listen(deleteAnnouncementProvider, (_, state) {
@@ -112,7 +110,8 @@ class _AnnouncementsViewState extends ConsumerState<AnnouncementsView> {
                 // 2. حالة الخطأ
                 error: (error, stackTrace) => Center(
                   child: Text(
-                    '${locale.errorFetchingAnnouncements}\n${filteredState.errorMessage}',                    textAlign: TextAlign.center,
+                    '${locale.errorFetchingAnnouncements}\n${filteredState.errorMessage}',
+                    textAlign: TextAlign.center,
                   ),
                 ),
 

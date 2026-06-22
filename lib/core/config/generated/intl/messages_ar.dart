@@ -33,11 +33,9 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m5(currentName) =>
       "سيتم إيقاف ال${currentName} الحالي وإعادة الضبط من الشوط الأول، هل تريد المتابعة؟";
 
-  static String m6(name) =>
-      "الحاج \"${name}\" لم يُرصد بالبلوتوث منذ قليل — ترقَّب";
+  static String m6(name) => "الحاج \"${name}\" لم يُرصد بالبلوتوث منذ قليل — ترقَّب";
 
-  static String m7(name) =>
-      "⚠️ الحاج \"${name}\" خارج النطاق ولم يُرصد بالبلوتوث منذ دقيقة";
+  static String m7(name) => "الحاج \"${name}\" خارج النطاق ولم يُرصد بالبلوتوث منذ دقيقة";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -94,12 +92,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "bleClosedPilgrimWarning": MessageLookupByLibrary.simpleMessage(
       "تم إغلاق البلوتوث. لن يتمكن المشرف من رصدك بدقة. يرجى تفعيله.",
     ),
+    "bleConfirmedLegend": MessageLookupByLibrary.simpleMessage(
+      "مرصود بالبلوتوث (قريب مؤكد)",
+    ),
+    "bleConfirmedNearby": MessageLookupByLibrary.simpleMessage(
+      "مرصود بالبلوتوث — قريب مؤكد",
+    ),
+    "bleNotDetected": MessageLookupByLibrary.simpleMessage("غير مرصود بالبلوتوث"),
     "bleNotSupportedLeaderWarning": MessageLookupByLibrary.simpleMessage(
       "جهازك لا يدعم البلوتوث.",
     ),
     "bleNotSupportedPilgrimWarning": MessageLookupByLibrary.simpleMessage(
       "جهازك لا يدعم البلوتوث — لن يتمكن المشرف من رصدك بدقة.",
     ),
+    "bleProximityLabel": MessageLookupByLibrary.simpleMessage("حالة القُرب (BLE)"),
     "bleScanFailedWarning": MessageLookupByLibrary.simpleMessage(
       "تعذّر بدء مسح البلوتوث. تأكد من تفعيل GPS والبلوتوث.",
     ),
@@ -164,6 +170,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "dialogAccept": MessageLookupByLibrary.simpleMessage("موافق"),
     "dialogReject": MessageLookupByLibrary.simpleMessage("رفض"),
     "disconnectedMap": MessageLookupByLibrary.simpleMessage("منقطع"),
+    "distanceApprox": MessageLookupByLibrary.simpleMessage("مسافة تقديرية"),
+    "distanceConfirmed": MessageLookupByLibrary.simpleMessage("مسافة مؤكدة"),
     "distanceFromLeader": MessageLookupByLibrary.simpleMessage(
       "المسافة عن المشرف",
     ),
@@ -307,10 +315,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "leaderEmergencyChannelName": MessageLookupByLibrary.simpleMessage(
       "طوارئ الحجاج",
     ),
+    "leaderPilgrimEmergencyBleBody": m7,
     "leaderPilgrimEmergencyBody": m0,
     "leaderPilgrimEmergencyTitle": MessageLookupByLibrary.simpleMessage(
       "🚨 خطر: حاج مفقود!",
     ),
+    "leaderPilgrimWarningBleBody": m6,
     "leaderPilgrimWarningBody": m1,
     "leaderPilgrimWarningTitle": MessageLookupByLibrary.simpleMessage(
       "🟡 تنبيه تأخر حاج",
@@ -340,6 +350,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "locationRequestTitle": MessageLookupByLibrary.simpleMessage(
       "📍 طلب مشاركة الموقع",
     ),
+    "mapApproxHint": MessageLookupByLibrary.simpleMessage(
+      "المواقع على الخريطة تقديرية. المسافة المؤكدة تُحسب عبر البلوتوث عندما يكون الحاج قريباً.",
+    ),
     "locationTrackingDesc": MessageLookupByLibrary.simpleMessage(
       "التطبيق يقوم بتتبع موقعك لإرشاد الحجاج",
     ),
@@ -364,6 +377,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "جاري جلب موقع الحملة...",
     ),
     "meterWord": MessageLookupByLibrary.simpleMessage("متر"),
+    "mustBeCampaignMemberToUseFeature": MessageLookupByLibrary.simpleMessage(
+      "يجب أن تكون عضواً في حملة لاستخدام هذه الوظيفة",
+    ),
     "muteAlarmTemporarily": MessageLookupByLibrary.simpleMessage(
       "كتم الإنذار مؤقتاً",
     ),
@@ -657,14 +673,5 @@ class MessageLookup extends MessageLookupByLibrary {
     "youAreHere": MessageLookupByLibrary.simpleMessage("أنت هنا"),
     "youWord": MessageLookupByLibrary.simpleMessage("أنت"),
     "yourQuestion": MessageLookupByLibrary.simpleMessage("سؤالك"),
-    "bleConfirmedNearby": MessageLookupByLibrary.simpleMessage("🔵 قريب (بلوتوث مؤكّد)"),
-    "bleNotDetected": MessageLookupByLibrary.simpleMessage("غير مرصود ببلوتوث"),
-    "bleProximityLabel": MessageLookupByLibrary.simpleMessage("حالة البلوتوث"),
-    "bleConfirmedLegend": MessageLookupByLibrary.simpleMessage("مؤكّد بالبلوتوث"),
-    "mapApproxHint": MessageLookupByLibrary.simpleMessage("📡 الخريطة تقريبية — البلوتوث 🔵 يحدد القُرب الفعلي"),
-    "distanceApprox": MessageLookupByLibrary.simpleMessage("مسافة تقديرية"),
-    "distanceConfirmed": MessageLookupByLibrary.simpleMessage("مسافة مؤكدة (BLE)"),
-    "leaderPilgrimWarningBleBody": m6,
-    "leaderPilgrimEmergencyBleBody": m7,
   };
 }

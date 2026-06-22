@@ -21,6 +21,7 @@ class ApiLink {
       '$server/Groups/GetGroupPilgrimsMobile/$groupId';
   static const String getMyGroupPilgrimsMobile =
       '$server/Groups/GetMyGroupPilgrims';
+
   // 4. Announcements & Notifications
   static const String syncData = '$server/Announcements/SyncData';
   static const String getNotifications =
@@ -34,7 +35,8 @@ class ApiLink {
 
   static const String getTargetAudiences =
       '$server/Announcements/GetTargetAudiences';
-  // Location
+
+  // 5. Location
   static const String getActiveLocation = '$server/Location/GetActiveLocation';
   static const String getCampaignLocations =
       '$server/CampaignLocation/GetCampaignLocationsView';
@@ -47,7 +49,7 @@ class ApiLink {
   static const String deleteLocation =
       '$server/CampaignLocation/DeleteLocation';
 
-  // Campaign Management (مدير الحملة)
+  // 6. Campaign Management (مدير الحملة)
   static const String getCampaignInfoMobile =
       '$server/AboutCampaign/GetCampaignInfoMobile';
   static const String getCampaignGroupsMobile =
@@ -58,7 +60,7 @@ class ApiLink {
   static String getCampaignPilgrimDetailsMobile(int userId) =>
       '$server/AboutCampaign/GetCampaignPilgrimDetailsMobile/$userId';
 
-  // be a leader
+  // 7. be a leader
   static const String startTrackingSession = '$server/Monitoring/StartSession';
   static const String getPilgrims = '$server/Monitoring/GetSessionParticipants';
   static const String participantResponse =

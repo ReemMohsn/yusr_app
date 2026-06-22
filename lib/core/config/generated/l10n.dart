@@ -589,6 +589,16 @@ class AppLocalizations {
     );
   }
 
+  /// `You must be a campaign member to use this feature`
+  String get mustBeCampaignMemberToUseFeature {
+    return Intl.message(
+      'You must be a campaign member to use this feature',
+      name: 'mustBeCampaignMemberToUseFeature',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Connection failed, please check your internet connection.`
   String get connectionFailed {
     return Intl.message(
@@ -2884,10 +2894,20 @@ class AppLocalizations {
     );
   }
 
-  /// `🔵 Nearby (Bluetooth confirmed)`
+  /// `Detected by Bluetooth (confirmed nearby)`
+  String get bleConfirmedLegend {
+    return Intl.message(
+      'Detected by Bluetooth (confirmed nearby)',
+      name: 'bleConfirmedLegend',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Detected by Bluetooth — confirmed nearby`
   String get bleConfirmedNearby {
     return Intl.message(
-      '🔵 Nearby (Bluetooth confirmed)',
+      'Detected by Bluetooth — confirmed nearby',
       name: 'bleConfirmedNearby',
       desc: '',
       args: [],
@@ -2904,31 +2924,21 @@ class AppLocalizations {
     );
   }
 
-  /// `Bluetooth Status`
+  /// `Proximity status (BLE)`
   String get bleProximityLabel {
     return Intl.message(
-      'Bluetooth Status',
+      'Proximity status (BLE)',
       name: 'bleProximityLabel',
       desc: '',
       args: [],
     );
   }
 
-  /// `Bluetooth confirmed`
-  String get bleConfirmedLegend {
+  /// `Confirmed distance`
+  String get distanceConfirmed {
     return Intl.message(
-      'Bluetooth confirmed',
-      name: 'bleConfirmedLegend',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `📡 Map is approximate — Bluetooth 🔵 determines actual proximity`
-  String get mapApproxHint {
-    return Intl.message(
-      '📡 Map is approximate — Bluetooth 🔵 determines actual proximity',
-      name: 'mapApproxHint',
+      'Confirmed distance',
+      name: 'distanceConfirmed',
       desc: '',
       args: [],
     );
@@ -2944,30 +2954,30 @@ class AppLocalizations {
     );
   }
 
-  /// `Confirmed distance (BLE)`
-  String get distanceConfirmed {
+  /// `Positions on the map are approximate. Confirmed distance is calculated via Bluetooth when the pilgrim is nearby.`
+  String get mapApproxHint {
     return Intl.message(
-      'Confirmed distance (BLE)',
-      name: 'distanceConfirmed',
+      'Positions on the map are approximate. Confirmed distance is calculated via Bluetooth when the pilgrim is nearby.',
+      name: 'mapApproxHint',
       desc: '',
       args: [],
     );
   }
 
-  /// `{name} has not been detected by Bluetooth recently — watch out`
+  /// `Pilgrim "{name}" has not been detected by Bluetooth recently — stay alert`
   String leaderPilgrimWarningBleBody(String name) {
     return Intl.message(
-      'Pilgrim "$name" has not been detected by Bluetooth recently — watch out',
+      'Pilgrim "$name" has not been detected by Bluetooth recently — stay alert',
       name: 'leaderPilgrimWarningBleBody',
       desc: '',
       args: [name],
     );
   }
 
-  /// `⚠️ {name} is out of zone and undetected by Bluetooth for 1 minute`
+  /// `Pilgrim "{name}" is out of range and has not been detected by Bluetooth for a minute`
   String leaderPilgrimEmergencyBleBody(String name) {
     return Intl.message(
-      '⚠️ Pilgrim "$name" is out of zone and undetected by Bluetooth for 1 minute',
+      'Pilgrim "$name" is out of range and has not been detected by Bluetooth for a minute',
       name: 'leaderPilgrimEmergencyBleBody',
       desc: '',
       args: [name],

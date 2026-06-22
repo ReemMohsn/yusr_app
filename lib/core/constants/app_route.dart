@@ -79,9 +79,6 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => NotificationDetailsView(notification: notification),
         );
-      // case AppRoute.returnMeMapView:
-      //   return MaterialPageRoute(builder: (_) => const ReturnMeMapView());
-
       case AppRoute.returnMeMapView:
         final location = settings.arguments as ActiveLocationModel;
         return MaterialPageRoute(

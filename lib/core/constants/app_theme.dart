@@ -53,19 +53,6 @@ class AppTheme {
       leadingWidth: 60.w,
       iconTheme: IconThemeData(color: Colors.black),
     ),
-
-    // Buttons
-    // elevatedButtonTheme: ElevatedButtonThemeData(
-    //   style: ElevatedButton.styleFrom(
-    //     backgroundColor: primaryColor,
-    //     foregroundColor: Colors.white,
-    //     padding: EdgeInsets.symmetric(vertical: 14.h),
-    //     shape: RoundedRectangleBorder(
-    //       borderRadius: BorderRadius.circular(26.r),
-    //     ),
-    //     textStyle: TextStyle(fontSize: 8.sp, fontWeight: FontWeight.bold),
-    //   ),
-    // ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 2.h),

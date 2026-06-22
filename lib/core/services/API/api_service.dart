@@ -6,7 +6,6 @@ import 'package:yusr/core/services/shared_preferences_service.dart';
 
 class ApiService {
   late final Dio _dio;
-  // لا نحتاج لتخزين الـ prefs هنا، فقط نستخدمها في الـ Constructor
 
   ApiService(SharedPreferencesService prefsService) {
     // نستقبل الخدمة هنا
