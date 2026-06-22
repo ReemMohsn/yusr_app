@@ -76,21 +76,6 @@ class _OtpVerificationViewState extends ConsumerState<OtpVerificationView> {
         }
       },
     );
-    // ref.listen<AsyncValue<void>>(otpVerificationControllerProvider, (_, state) {
-    //   if (state.isLoading) {
-    //     context.showLoadingDialog();
-    //   } else {
-    //     context.closeLoadingDialog();
-    //     if (state.hasError) {
-    //       context.showErrorSnackBar(state.errorMessage);
-    //     } else if (state.hasValue) {
-    //       context.showSuccessSnackBar(
-    //         "تم التحقق من الرمز بنجاح، يمكنك الآن تعيين كلمة مرور جديدة",
-    //       );
-    //       Navigator.pushNamed(context, AppRoute.resetPasswordView);
-    //     }
-    //   }
-    // });
 
     return Scaffold(
       appBar: AppBar(

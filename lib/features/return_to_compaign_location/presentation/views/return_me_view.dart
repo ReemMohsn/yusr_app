@@ -5,6 +5,7 @@ import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/core/constants/app_size.dart';
 import 'package:yusr/core/extensions/async_value_ui.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
+import 'package:yusr/features/home/providers/user_provider.dart';
 import '../../../../core/common/widgets/big_circular_button.dart';
 import '../../providers/fetch_camp_location_controller.dart';
 
@@ -47,6 +48,15 @@ class ReturnMeView extends ConsumerWidget {
             BigcircularButton(
               title: locale.returnMe,
               onTap: () async {
+                // ✅ تحقق أولاً: هل المستخدم مسجل دخول؟
+                final profile = ref.read(userProfileProvider).asData?.value;
+                if (profile == null) {
+                  // الزائر لا يملك عضوية في الحملة — لا نرسل أي طلب للـ API
+                  context.showErrorSnackBar(
+                    locale.mustBeCampaignMemberToUseFeature,
+                  );
+                  return;
+                }
                 await Geolocator.requestPermission();
                 ref
                     .read(fetchCampLocationControllerProvider.notifier)

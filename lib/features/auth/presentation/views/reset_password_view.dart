@@ -57,35 +57,12 @@ class _ResetPasswordViewState extends ConsumerState<ResetPasswordView> {
           await ref.read(sharedPreferencesServiceProvider).removeResetEmail();
           await ref.read(sharedPreferencesServiceProvider).removeOtpCode();
 
-          //  ref.invalidate(userProfileProvider);
           Navigator.of(
             context,
           ).pushNamedAndRemoveUntil(AppRoute.mainHomeView, (route) => false);
-
-          // Navigator.of(context).pushNamed(AppRoute.loginView);
         }
       },
     );
-    // ref.listen<AsyncValue<void>>(resetPasswordControllerProvider, (
-    //   _,
-    //   state,
-    // ) async {
-    //   if (state.isLoading) {
-    //     context.showLoadingDialog();
-    //   } else {
-    //     context.closeLoadingDialog();
-    //     if (state.hasError) {
-    //       context.showErrorSnackBar(state.errorMessage);
-    //     } else {
-    //       context.showSuccessSnackBar("تم إعاده تعيين كلمة المرور بنجاح");
-    //       // Clear any saved reset email after successful password reset
-
-    //       await ref.read(sharedPreferencesServiceProvider).removeResetEmail();
-    //       await ref.read(sharedPreferencesServiceProvider).removeOtpCode();
-    //       Navigator.of(context).pushNamed(AppRoute.loginView);
-    //     }
-    //   }
-    // });
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,

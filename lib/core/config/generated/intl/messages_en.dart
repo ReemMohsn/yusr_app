@@ -36,10 +36,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "The current ${currentName} will be stopped and reset from the first lap. Do you want to continue?";
 
   static String m6(name) =>
-      "Pilgrim \"${name}\" has not been detected by Bluetooth recently — watch out";
+      "Pilgrim \"${name}\" has not been detected by Bluetooth recently \u2014 stay alert";
 
   static String m7(name) =>
-      "⚠️ Pilgrim \"${name}\" is out of zone and undetected by Bluetooth for 1 minute";
+      "Pilgrim \"${name}\" is out of range and has not been detected by Bluetooth for a minute";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -100,11 +100,23 @@ class MessageLookup extends MessageLookupByLibrary {
     "bleClosedPilgrimWarning": MessageLookupByLibrary.simpleMessage(
       "Bluetooth is disabled. The supervisor won\'t track you accurately. Please enable it.",
     ),
+    "bleConfirmedLegend": MessageLookupByLibrary.simpleMessage(
+      "Detected by Bluetooth (confirmed nearby)",
+    ),
+    "bleConfirmedNearby": MessageLookupByLibrary.simpleMessage(
+      "Detected by Bluetooth \u2014 confirmed nearby",
+    ),
+    "bleNotDetected": MessageLookupByLibrary.simpleMessage(
+      "Not detected by Bluetooth",
+    ),
     "bleNotSupportedLeaderWarning": MessageLookupByLibrary.simpleMessage(
       "Your device does not support Bluetooth.",
     ),
     "bleNotSupportedPilgrimWarning": MessageLookupByLibrary.simpleMessage(
-      "Your device doesn\'t support Bluetooth — supervisor won\'t track you accurately.",
+      "Your device doesn\'t support Bluetooth \u2014 supervisor won\'t track you accurately.",
+    ),
+    "bleProximityLabel": MessageLookupByLibrary.simpleMessage(
+      "Proximity status (BLE)",
     ),
     "bleScanFailedWarning": MessageLookupByLibrary.simpleMessage(
       "Failed to start Bluetooth scan. Ensure GPS and Bluetooth are enabled.",
@@ -176,6 +188,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "dialogAccept": MessageLookupByLibrary.simpleMessage("Accept"),
     "dialogReject": MessageLookupByLibrary.simpleMessage("Reject"),
     "disconnectedMap": MessageLookupByLibrary.simpleMessage("Disconnected"),
+    "distanceApprox": MessageLookupByLibrary.simpleMessage(
+      "Approximate distance",
+    ),
+    "distanceConfirmed": MessageLookupByLibrary.simpleMessage(
+      "Confirmed distance",
+    ),
     "distanceFromLeader": MessageLookupByLibrary.simpleMessage(
       "Distance from leader",
     ),
@@ -332,10 +350,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "leaderEmergencyChannelName": MessageLookupByLibrary.simpleMessage(
       "Pilgrim Emergency",
     ),
+    "leaderPilgrimEmergencyBleBody": m7,
     "leaderPilgrimEmergencyBody": m0,
     "leaderPilgrimEmergencyTitle": MessageLookupByLibrary.simpleMessage(
       "🚨 Danger: Pilgrim Missing!",
     ),
+    "leaderPilgrimWarningBleBody": m6,
     "leaderPilgrimWarningBody": m1,
     "leaderPilgrimWarningTitle": MessageLookupByLibrary.simpleMessage(
       "🟡 Pilgrim Lagging Alert",
@@ -391,6 +411,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Fetching campaign location...",
     ),
     "meterWord": MessageLookupByLibrary.simpleMessage("meter"),
+    "mustBeCampaignMemberToUseFeature": MessageLookupByLibrary.simpleMessage(
+      "You must be a campaign member to use this feature",
+    ),
     "muteAlarmTemporarily": MessageLookupByLibrary.simpleMessage(
       "Mute alarm temporarily",
     ),
@@ -704,14 +727,5 @@ class MessageLookup extends MessageLookupByLibrary {
     "youAreHere": MessageLookupByLibrary.simpleMessage("You are here"),
     "youWord": MessageLookupByLibrary.simpleMessage("You"),
     "yourQuestion": MessageLookupByLibrary.simpleMessage("Your Question"),
-    "bleConfirmedNearby": MessageLookupByLibrary.simpleMessage("🔵 Nearby (Bluetooth confirmed)"),
-    "bleNotDetected": MessageLookupByLibrary.simpleMessage("Not detected by Bluetooth"),
-    "bleProximityLabel": MessageLookupByLibrary.simpleMessage("Bluetooth Status"),
-    "bleConfirmedLegend": MessageLookupByLibrary.simpleMessage("Bluetooth confirmed"),
-    "mapApproxHint": MessageLookupByLibrary.simpleMessage("📡 Map is approximate — Bluetooth 🔵 determines actual proximity"),
-    "distanceApprox": MessageLookupByLibrary.simpleMessage("Approximate distance"),
-    "distanceConfirmed": MessageLookupByLibrary.simpleMessage("Confirmed distance (BLE)"),
-    "leaderPilgrimWarningBleBody": m6,
-    "leaderPilgrimEmergencyBleBody": m7,
   };
 }
