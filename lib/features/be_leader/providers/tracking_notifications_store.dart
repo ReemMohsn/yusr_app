@@ -40,7 +40,6 @@ class TrackingNotificationsStore extends _$TrackingNotificationsStore {
   }
 
   /// قراءة الدعوة المحفوظة من SharedPreferences عند فتح التطبيق.
-  /// تُستدعى مرة واحدة فقط من [MainHomeView.initState].
   Future<void> loadPersistedInvite() async {
     final sessionIdStr = await _prefs.getString(
       SharedPreferencesKeys.pendingTrackingSessionId,
@@ -70,7 +69,9 @@ class TrackingNotificationsStore extends _$TrackingNotificationsStore {
     addNotification(
       TrackingNotificationModel(
         id: 'session_invite_$sessionId',
-        title: navigatorKey.currentContext?.locale.locationRequestTitle ?? '📍 طلب مشاركة الموقع',
+        title:
+            navigatorKey.currentContext?.locale.locationRequestTitle ??
+            '📍 طلب مشاركة الموقع',
         body: body,
         timestamp: DateTime.now().toIso8601String(),
         type: TrackingNotificationType.sessionInvite,

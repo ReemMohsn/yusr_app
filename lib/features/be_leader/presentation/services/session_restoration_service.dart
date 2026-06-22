@@ -15,7 +15,8 @@ class SessionRestorationService {
 
   SessionRestorationService(this.ref);
 
-  SharedPreferencesService get _prefsService => ref.read(sharedPreferencesServiceProvider);
+  SharedPreferencesService get _prefsService =>
+      ref.read(sharedPreferencesServiceProvider);
 
   /// تهيئة [activeSessionIdProvider] من SharedPreferences.
   /// في حالة الجلسة غير موجودة في الخادم → نوقف التتبع ونمسح كل شيء فوراً ثم نرجع.
@@ -23,22 +24,29 @@ class SessionRestorationService {
   Future<void> initActiveSession() async {
     final trackingRepo = ref.read(trackingRepositoryProvider);
     final activeSessionIdNotifier = ref.read(activeSessionIdProvider.notifier);
-    final pilgrimTrackingNotifier = ref.read(pilgrimTrackingControllerProvider.notifier);
-    final trackingNotificationsNotifier = ref.read(trackingNotificationsStoreProvider.notifier);
+    final pilgrimTrackingNotifier = ref.read(
+      pilgrimTrackingControllerProvider.notifier,
+    );
+    final trackingNotificationsNotifier = ref.read(
+      trackingNotificationsStoreProvider.notifier,
+    );
 
-    final sessionId = await _prefsService.getInt(SharedPreferencesKeys.currentSessionId) ?? 0;
+    final sessionId =
+        await _prefsService.getInt(SharedPreferencesKeys.currentSessionId) ?? 0;
 
     if (sessionId > 0) {
       // 🔵 التحقق الفعلي من Firebase هل الجلسة ما زالت موجودة؟
       final exists = await trackingRepo.checkSessionExists(sessionId);
-      
+
       if (!exists) {
-        debugPrint('🚩 [SessionRestoration] الجلسة ($sessionId) محذوفة من الخادم → تنظيف الذاكرة');
-        
+        debugPrint(
+          '🚩 [SessionRestoration] الجلسة ($sessionId) محذوفة من الخادم → تنظيف الذاكرة',
+        );
+
         // تنظيف الذاكرة وإغلاق التتبع
         pilgrimTrackingNotifier.stopTracking();
         await trackingNotificationsNotifier.clearSessionInvite();
-        
+
         // العودة للرئيسية إن كانت الخريطة مفتوحة
         navigatorKey.currentState?.popUntil((route) {
           return route.settings.name == AppRoute.mainHomeView || route.isFirst;
@@ -56,7 +64,9 @@ class SessionRestorationService {
 
   /// فحص وجود دعوة جلسة معلقة وعرض إشعار لها.
   Future<void> restorePendingInvite() async {
-    final trackingNotificationsNotifier = ref.read(trackingNotificationsStoreProvider.notifier);
+    final trackingNotificationsNotifier = ref.read(
+      trackingNotificationsStoreProvider.notifier,
+    );
     final trackingRepo = ref.read(trackingRepositoryProvider);
 
     final prefsService = _prefsService;
@@ -76,15 +86,19 @@ class SessionRestorationService {
     if (sessionId > 0 && body != null) {
       // 🔵 التحقق الفعلي من Firebase هل الجلسة ما زالت قائمة قبل إبقاء الدعوة؟
       final exists = await trackingRepo.checkSessionExists(sessionId);
-      
+
       if (!exists) {
-        debugPrint('📨 [SessionRestoration] الدعوة المعلقة للجلسة ($sessionId) أصبحت ملغاة من الخادم → سيتم مسحها');
+        debugPrint(
+          '📨 [SessionRestoration] الدعوة المعلقة للجلسة ($sessionId) أصبحت ملغاة من الخادم → سيتم مسحها',
+        );
         await trackingNotificationsNotifier.clearSessionInvite();
         return;
       }
-      
+
       // الجلسة موجودة وصالحة
-      debugPrint('📨 [SessionRestoration] دعوة معلقة موجودة وصالحة (session=$sessionId) → محفوظة في الإشعارات');
+      debugPrint(
+        '📨 [SessionRestoration] دعوة معلقة موجودة وصالحة (session=$sessionId) → محفوظة في الإشعارات',
+      );
     }
   }
 }

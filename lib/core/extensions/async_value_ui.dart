@@ -1,4 +1,3 @@
-// هذا الكود هو نفسه الكود القديم، لكن وضعناه هنا مرة واحدة للأبد
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:yusr/core/services/errors/exception.dart';
 
@@ -7,7 +6,7 @@ extension AsyncValueUI on AsyncValue {
     // 1. يفحص هل يوجد خطأ
     if (!hasError || error == null) return "";
 
-    // 2. يفحص النوع (نفس الـ If القديمة حقتك)
+    // 2. يفحص النوع
     if (error is ServerException) {
       return (error as ServerException).errModel.errorMessage;
     }

@@ -6,8 +6,6 @@ import 'package:yusr/core/constants/shared_preferences_keys.dart';
 import 'package:yusr/features/auth/data/models/login_model.dart';
 
 class SharedPreferencesService {
-  /// نستخدم النسخة الحديثة Async المتوافقة مع الويب والموبايل
-  /// لا حاجة لدالة init() في بداية التطبيق
   final SharedPreferencesAsync _prefs = SharedPreferencesAsync();
 
   // ===========================================================================

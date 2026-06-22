@@ -29,16 +29,16 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   final status = message.data['status'];
 
   // ✅ إشعار إنهاء الجلسة
-  if (status == 'end_tracking_session') {
-    // 1️⃣ مسح البيانات من الذاكرة لكي لا تُقرأ كجلسة معلقة
-    await prefs.removeKey(SharedPreferencesKeys.sessionId);
-    await prefs.removeKey(SharedPreferencesKeys.pendingTrackingSessionId);
-    await prefs.removeKey(SharedPreferencesKeys.pendingTrackingBody);
-    debugPrint(
-      '[الخلفية] ✅ تم مسح الجلسة المعلقة من الذاكرة (سيتولى MainHomeView التحقق عبر Firebase)',
-    );
-    return;
-  }
+  // if (status == 'end_tracking_session') {
+  //   // 1️⃣ مسح البيانات من الذاكرة لكي لا تُقرأ كجلسة معلقة
+  //   await prefs.removeKey(SharedPreferencesKeys.sessionId);
+  //   await prefs.removeKey(SharedPreferencesKeys.pendingTrackingSessionId);
+  //   await prefs.removeKey(SharedPreferencesKeys.pendingTrackingBody);
+  //   debugPrint(
+  //     '[الخلفية] ✅ تم مسح الجلسة المعلقة من الذاكرة (سيتولى MainHomeView التحقق عبر Firebase)',
+  //   );
+  //   return;
+  // }
 
   // ✅ إشعار بدء الجلسة — حفظ الدعوة لتنجو من إغلاق/خلفية التطبيق
   if (status == 'start_tracking_session') {
@@ -136,6 +136,27 @@ class PushNotificationService {
                 .read(leaderTrackingControllerProvider.notifier)
                 .stopAlarmManual(isUserAction: true);
           }
+        } else if (response.payload ==
+            'start_tracking_session_from_background') {
+          final context = navigatorKey.currentContext;
+          if (context != null) {
+            Future(() async {
+              final container = ProviderScope.containerOf(context);
+              final prefs = container.read(sharedPreferencesServiceProvider);
+              final sessionIdStr = await prefs.getString(
+                SharedPreferencesKeys.pendingTrackingSessionId,
+              );
+              final body =
+                  await prefs.getString(
+                    SharedPreferencesKeys.pendingTrackingBody,
+                  ) ??
+                  'هل توافق على مشاركة موقعك الجغرافي؟';
+              final sessionId = int.tryParse(sessionIdStr ?? '0') ?? 0;
+              if (sessionId > 0 && context.mounted) {
+                _showTrackingAcceptDialog(context, sessionId, body);
+              }
+            });
+          }
         }
       },
     );
@@ -224,18 +245,18 @@ class PushNotificationService {
       );
     }
     // 🔥 2. معالجة إشعار طلب بدء المراقبة
-    else if (message.data['status'] == 'start_tracking_session') {
-      final sessionId =
-          int.tryParse(message.data['sessionId']?.toString() ?? '0') ?? 0;
-      final notificationBody =
-          message.data['body'] ??
-          locale.locationRequestBody ??
-          'هل توافق على مشاركة موقعك الجغرافي؟';
-
-      if (sessionId > 0) {
-        _showTrackingAcceptDialog(context, sessionId, notificationBody);
-      }
-    } else if (message.data['status'] == 'pilgrim_status_changed') {
+    // else if (message.data['status'] == 'start_tracking_session') {
+    //   final sessionId =
+    //       int.tryParse(message.data['sessionId']?.toString() ?? '0') ?? 0;
+    //   final notificationBody =
+    //       message.data['body'] ??
+    //       locale.locationRequestBody ??
+    //       'هل توافق على مشاركة موقعك الجغرافي؟';
+    //   if (sessionId > 0) {
+    //     _showTrackingAcceptDialog(context, sessionId, notificationBody);
+    //   }
+    // }
+    else if (message.data['status'] == 'pilgrim_status_changed') {
       final sessionId =
           int.tryParse(message.data['sessionId']?.toString() ?? '0') ?? 0;
       if (sessionId > 0) {

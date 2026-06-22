@@ -1,10 +1,7 @@
-import 'package:yusr/core/constants/shared_preferences_keys.dart';
 import 'package:yusr/features/announcements_notifications/providers/unread_notifications_count_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yusr/features/be_leader/providers/session_restoration_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:yusr/core/common/providers/api_service_provider.dart';
 import 'package:yusr/core/common/providers/shared_preferences_service_provider.dart';
 import 'package:yusr/core/constants/app_color.dart';
@@ -18,7 +15,6 @@ import 'package:yusr/features/auth/data/models/login_model.dart';
 import 'package:yusr/features/auto_counter/presentation/views/tawaf_counter_view.dart';
 import 'package:yusr/features/be_leader/providers/active_session_id_provider.dart';
 import 'package:yusr/features/be_leader/providers/pilgrim_tracking_controller.dart';
-import 'package:yusr/features/be_leader/providers/pilgrims_list_provider.dart';
 import 'package:yusr/features/home/data/models/navigation_item_model.dart';
 import 'package:yusr/features/home/presentation/views/home_view.dart';
 import 'package:yusr/features/home/presentation/widgets/custom_drawer.dart';
@@ -198,8 +194,12 @@ class _MainHomeViewState extends ConsumerState<MainHomeView>
 
   /// الواجهة في حالة المستخدم المسجل (صورة + خريطة التتبع + جرس)
   Widget _buildLoggedInLeading(BuildContext context, ProfileModel profile) {
-    final unreadAnnouncementsCount = ref.watch(unreadNotificationsCountProvider);
-    final trackingNotificationsCount = ref.watch(trackingNotificationsStoreProvider).length;
+    final unreadAnnouncementsCount = ref.watch(
+      unreadNotificationsCountProvider,
+    );
+    final trackingNotificationsCount = ref
+        .watch(trackingNotificationsStoreProvider)
+        .length;
     final unreadCount = unreadAnnouncementsCount + trackingNotificationsCount;
 
     return Row(

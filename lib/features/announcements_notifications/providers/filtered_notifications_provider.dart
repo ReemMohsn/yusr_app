@@ -29,10 +29,9 @@ class FilteredNotifications extends _$FilteredNotifications {
   // دالة لتحديث نص البحث وإعادة بناء القائمة
   void search(String query) {
     _searchQuery = query.trim().toLowerCase();
-    // Invalidate تجعل الرفربود يعيد تشغيل دالة build لتطبيق الفلترة الجديدة
     ref.invalidateSelf();
   }
 
-  // Getter بسيط لجلب النص الحالي (نحتاجه في الواجهة لمعرفة هل نظهر زر X)
+  // Getter بسيط لجلب النص الحالي
   String get searchQuery => _searchQuery;
 }
