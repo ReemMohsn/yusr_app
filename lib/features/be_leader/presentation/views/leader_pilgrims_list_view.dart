@@ -99,7 +99,6 @@ class LeaderPilgrimsListView extends ConsumerWidget {
                       .where((p) => p.statusId == 5)
                       .length;
 
-                  // 🌟 التعديل الأساسي هنا: استخدام RefreshIndicator 🌟
                   return RefreshIndicator(
                     color: AppColor.golden,
                     onRefresh: () async {
@@ -111,7 +110,6 @@ class LeaderPilgrimsListView extends ConsumerWidget {
                       } catch (_) {}
                     },
                     child: ListView(
-                      // هذا السطر يضمن أنك تستطيع السحب حتى لو كانت القائمة فارغة ولا تملأ الشاشة
                       physics: const AlwaysScrollableScrollPhysics(),
                       children: [
                         // 1. بطاقات الإحصائيات

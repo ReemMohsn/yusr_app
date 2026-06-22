@@ -87,8 +87,7 @@ class CustomDrawer extends ConsumerWidget {
               int? activeSessionId = await sharedPrefs.getInt(
                 SharedPreferencesKeys.currentSessionId,
               );
-
-              // 🛑 إضافة التحقق من الباك إند إذا لم نجد الجلسة محلياً (تمت معالجة حالة إلغاء التثبيت)
+              // 🛑إضافة التحقق من الباك إند إذا لم نجد الجلسة محلياً (تمت معالجة حالة إلغاء التثبيت)
               if (activeSessionId == null || activeSessionId == 0) {
                 context.showLoadingDialog();
                 try {

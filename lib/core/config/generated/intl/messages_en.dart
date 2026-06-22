@@ -35,6 +35,12 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m5(currentName) =>
       "The current ${currentName} will be stopped and reset from the first lap. Do you want to continue?";
 
+  static String m6(name) =>
+      "Pilgrim \"${name}\" has not been detected by Bluetooth recently — watch out";
+
+  static String m7(name) =>
+      "⚠️ Pilgrim \"${name}\" is out of zone and undetected by Bluetooth for 1 minute";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "aboutCampaign": MessageLookupByLibrary.simpleMessage("About Campaign"),
@@ -698,5 +704,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "youAreHere": MessageLookupByLibrary.simpleMessage("You are here"),
     "youWord": MessageLookupByLibrary.simpleMessage("You"),
     "yourQuestion": MessageLookupByLibrary.simpleMessage("Your Question"),
+    "bleConfirmedNearby": MessageLookupByLibrary.simpleMessage("🔵 Nearby (Bluetooth confirmed)"),
+    "bleNotDetected": MessageLookupByLibrary.simpleMessage("Not detected by Bluetooth"),
+    "bleProximityLabel": MessageLookupByLibrary.simpleMessage("Bluetooth Status"),
+    "bleConfirmedLegend": MessageLookupByLibrary.simpleMessage("Bluetooth confirmed"),
+    "mapApproxHint": MessageLookupByLibrary.simpleMessage("📡 Map is approximate — Bluetooth 🔵 determines actual proximity"),
+    "distanceApprox": MessageLookupByLibrary.simpleMessage("Approximate distance"),
+    "distanceConfirmed": MessageLookupByLibrary.simpleMessage("Confirmed distance (BLE)"),
+    "leaderPilgrimWarningBleBody": m6,
+    "leaderPilgrimEmergencyBleBody": m7,
   };
 }

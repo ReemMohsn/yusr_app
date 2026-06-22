@@ -7,6 +7,7 @@ class PilgrimMarkerData {
   final double distance; // المسافة بالأمتار عن المشرف
   final DateTime lastSeen; // آخر تحرك فعلي للحاج (lastPositionUpdate)
   final DateTime? lastHeartbeat; // آخر إشارة حياة للهاتف (lastUpdate) — null للبيانات القديمة
+  final bool isSafeByBle; // ✅ BLE يؤكد أن الحاج قريب — يُستخدم لمؤشر الخريطة
 
   PilgrimMarkerData({
     required this.id,
@@ -15,5 +16,6 @@ class PilgrimMarkerData {
     required this.distance,
     required this.lastSeen,
     this.lastHeartbeat,
+    this.isSafeByBle = false,
   });
 }

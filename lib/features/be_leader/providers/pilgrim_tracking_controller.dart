@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -14,6 +15,7 @@ import 'package:yusr/core/constants/shared_preferences_keys.dart';
 import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/features/be_leader/data/models/tracking_notification_model.dart';
 import 'package:yusr/features/be_leader/presentation/services/smart_location_filter_service.dart';
+import 'package:yusr/features/be_leader/providers/smart_location_filter_service_provider.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/features/be_leader/providers/active_session_id_provider.dart';
 import 'package:yusr/features/be_leader/providers/be_leader_repository_provider.dart';
@@ -31,6 +33,7 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
   StreamSubscription<Position>? _positionStreamSub;
   StreamSubscription<DatabaseEvent>? _leaderStreamSub;
   StreamSubscription<ServiceStatus>? _serviceStatusSub;
+  bool _isGpsEnabled = true;
   StreamSubscription<DatabaseEvent>? _myFirebaseDataSub;
   StreamSubscription<DatabaseEvent>? _networkSub; // 🌐 مراقبة الإنترنت
 
@@ -45,9 +48,6 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
   Position? _lastValidPosition;
   DateTime? _lastUpdateTime;
 
-  // ─── فلترة المشي (مُفوَّضة للخدمة المشتركة) ──────────────────────────────
-  final SmartLocationFilterService _locationFilter =
-      SmartLocationFilterService();
 
   // ─── حالة التنبيهات ───────────────────────────────────────────────────────
   DateTime? _redZoneEntryTime;
@@ -63,7 +63,8 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
   final double _yellowZone = 20;
   final double _redZone = 30;
 
-  final AudioPlayer _audioPlayer = AudioPlayer();
+  final AudioPlayer _audioPlayer = AudioPlayer()
+    ..audioCache = AudioCache(prefix: '');
   final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
@@ -185,7 +186,11 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
     ].request();
 
     // 4️⃣ تشغيل عدّاد الخطوات الذكي
-    _locationFilter.startSmartStepCounting(tag: ' [الحاج]');
+    // 🔧 إصلاح: تصفير العدادات أولًا لضمان بدء جلسة نظيفة حتى عند الاستئناف بعد فتح التطبيق
+    ref.read(pilgrimLocationFilterServiceProvider).reset();
+    ref
+        .read(pilgrimLocationFilterServiceProvider)
+        .startSmartStepCounting(tag: ' [الحاج]');
 
     // 5️⃣ تشغيل بث البلوتوث عبر BleRadarService الموحَّد
     await ref
@@ -258,8 +263,10 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
           '📍 [الحاج] موقع جديد | دقة: ${position.accuracy.toStringAsFixed(1)} م | ${position.latitude}, ${position.longitude}',
         );
 
+        if (!_isGpsEnabled) return; // تجاهل التحديثات إذا كان الزر مغلقاً
+
         // 🔴 فلتر 1: رفض المواقع ضعيفة الدقة — نبضة الحياة
-        // العتبة: kPilgrimAccuracyThreshold (25م) — أعلى من المشرف (20م) عمداً:
+        // العتبة: kPilgrimAccuracyThreshold (35م) — أعلى من السابق عمداً:
         //   الحاج يتحرك في مناطق مزدحمة وداخل مبانٍ → هامش أوسع لتقليل نبضات الحياة
         // راجع: SmartLocationFilterService.kPilgrimAccuracyThreshold
         if (position.accuracy >
@@ -267,6 +274,7 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
           debugPrint(
             '⚠️ [الحاج] ❌ دقة ضعيفة (${position.accuracy.toStringAsFixed(1)} م > ${SmartLocationFilterService.kPilgrimAccuracyThreshold} م) — رفض وإرسال نبضة حياة...',
           );
+
           if (_lastValidPosition != null) {
             // isRealMove: false (افتراضي) — نبضة حياة: تُبقي الجلسة حية بدون تغيير lastPositionUpdate
             trackingRepo.updatePilgrimLocation(
@@ -295,26 +303,40 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
               .inSeconds;
 
           // فلتر 2: السرعة
-          if (_locationFilter.isSpeedJumpValid(
+          final bool? isSpeedValid = ref
+              .read(pilgrimLocationFilterServiceProvider)
+              .isSpeedJumpValid(
                 distanceMeters: distanceJump,
                 timeDiffSeconds: timeDiffSeconds,
                 tag: ' [الحاج]',
-              ) ==
-              false) {
-            return;
-          }
+              );
 
-          // فلتر 3: الخطوات وتصحيح الـ GPS
-          if (!_locationFilter.isMovementReal(
-            distanceMeters: distanceJump,
-            currentAccuracy: position.accuracy,
-            previousAccuracy: _lastValidPosition!.accuracy,
-            tag: ' [الحاج]',
-          )) {
-            debugPrint(
-              '🛑 [حماية] قفزة GPS وهمية — لا خطوات كافية والمسافة خارج هامش الخطأ!',
-            );
-            return;
+          if (isSpeedValid == false) {
+            // 💡 حل مشكلة الفخ الأولي (Initial GPS Trap):
+            // إذا كانت الدقة الجديدة ممتازة (أقل من أو تساوي 15 متراً) والدقة السابقة كانت أضعف،
+            // نقبل القفزة لكسر تجمّد الموقع.
+            if (position.accuracy <= 15.0 && _lastValidPosition!.accuracy > position.accuracy) {
+              debugPrint(
+                '🚨 [تصحيح ذاتي الحاج] قفزة كبيرة ولكن دقة الـ GPS ممتازة (${position.accuracy.toStringAsFixed(1)}م). كسر الفخ وقبول الموقع!',
+              );
+            } else {
+              return;
+            }
+          } else {
+            // فلتر 3: الخطوات وتصحيح الـ GPS (يُفحص فقط إذا كانت السرعة منطقية)
+            if (!ref
+                .read(pilgrimLocationFilterServiceProvider)
+                .isMovementReal(
+                  distanceMeters: distanceJump,
+                  currentAccuracy: position.accuracy,
+                  previousAccuracy: _lastValidPosition!.accuracy,
+                  tag: ' [الحاج]',
+                )) {
+              debugPrint(
+                '🛑 [حماية] قفزة GPS وهمية — لا خطوات كافية والمسافة خارج هامش الخطأ!',
+              );
+              return;
+            }
           }
         }
 
@@ -373,22 +395,32 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
           if (event.snapshot.exists) {
             final data = event.snapshot.value as Map<dynamic, dynamic>;
             final bool isSafe = data['isSafeByBle'] ?? false;
+            final double? newBleDistance = (data['bleDistance'] as num?)?.toDouble();
 
-            // ← قراءة مسافة BLE التي أرسلها المشرف لعرضها في الواجهة بدلاً من GPS
-            _currentBleDistance = (data['bleDistance'] as num?)?.toDouble();
+            bool shouldUpdateUI = false;
 
+            // 1. هل تغيرت مسافة البلوتوث؟
+            if (_currentBleDistance != newBleDistance) {
+              _currentBleDistance = newBleDistance;
+              shouldUpdateUI = true;
+            }
+
+            // 2. هل تغيرت حالة الأمان؟
             if (_isSafeByBle != isSafe) {
               _isSafeByBle = isSafe;
-              if (_isSafeByBle) {
-                // صك الأمان الجديد: أعد حساب المسافة فوراً لإلغاء أي إنذار نشط
-                _updateStateAndCheckDistance(
-                  pilgrimLoc: state.pilgrimLocation,
-                  leaderLoc: state.leaderLocation,
-                );
-              } else {
+              shouldUpdateUI = true;
+              if (!_isSafeByBle) {
                 // انتهى صك الأمان → صفّر مسافة BLE
                 _currentBleDistance = null;
               }
+            }
+
+            // تحديث الشاشة إذا تغير الأمان أو مسافة البلوتوث
+            if (shouldUpdateUI) {
+              _updateStateAndCheckDistance(
+                pilgrimLoc: state.pilgrimLocation,
+                leaderLoc: state.leaderLocation,
+              );
             }
           }
         });
@@ -403,14 +435,27 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
       ServiceStatus status,
     ) async {
       if (status == ServiceStatus.disabled) {
+        _isGpsEnabled = false;
         debugPrint('⚠️ [GPS] تم إغلاق مفتاح GPS!');
         // الحفاظ على جميع حقول الحالة الحالية وتغيير gpsWarning فقط
         state = state.copyWith(gpsWarning: navigatorKey.currentContext?.locale.gpsDisabledWarning ?? 'تم إغلاق خدمة الموقع (GPS) في الهاتف. يرجى تفعيلها.');
       } else {
+        _isGpsEnabled = true;
         debugPrint('✅ [GPS] تم تفعيل GPS — إعادة تشغيل المستمع...');
         // الحفاظ على جميع حقول الحالة الحالية وتغيير gpsWarning فقط
         state = state.copyWith(gpsWarning: navigatorKey.currentContext?.locale.gpsReenabledWarning ?? 'تم تفعيل الـ GPS، جاري التقاط الإشارة...');
         _startLocationUpdates();
+        
+        // 🌟 إضافة مهمة: إعادة تشغيل بث البلوتوث لأن الخدمة تتأثر بإغلاق الـ GPS
+        if (_currentPilgrimId != null) {
+          ref.read(bleRadarServiceProvider).initBroadcasting(
+            pilgrimId: _currentPilgrimId!,
+            onWarning: (warningMsg) {
+              state = state.copyWith(bleWarning: warningMsg);
+            },
+          );
+        }
+
         // جلب موقع فوري لإنعاش الخريطة — مطابق لسلوك كنترولر المشرف
         final quickPos = await locationService.tryGetCurrentPosition();
         if (quickPos != null) _applyValidPosition(quickPos);
@@ -448,6 +493,7 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
         distance: state.distance,
         gpsWarning: clearWarning ? null : state.gpsWarning,
         bleWarning: state.bleWarning,
+        isSafeByBle: _isSafeByBle,
       );
       return;
     }
@@ -469,12 +515,30 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
       _redZoneEntryTime = null;
       _hasWarnedYellow = false;
       stopAlarmManual();
+      // ── Sensor Fusion: تثبيت موقع الخريطة بناءً على البلوتوث ─────────────
+      LatLng displayPLoc = pLoc;
+      if (lLoc != null) {
+        // يمكننا وضع الحاج على مسافة بصرية 5 أمتار من المشرف
+        final double visualDistance = 5.0;
+        final double bearingRadian = 0.0; // زاوية ثابتة للحاج نفسه
+        // تقريب: 1 درجة خط عرض = 111320 متر
+        final double latOffset = (visualDistance * math.cos(bearingRadian)) / 111320.0;
+        final double lngOffset = (visualDistance * math.sin(bearingRadian)) / (111320.0 * math.cos(lLoc.latitude * math.pi / 180.0));
+
+        displayPLoc = LatLng(
+          lLoc.latitude + latOffset,
+          lLoc.longitude + lngOffset,
+        );
+        debugPrint('📍 [Sensor Fusion] تثبيت موقع الحاج بالبلوتوث (مسافة بصرية: ${visualDistance}م)');
+      }
+
       state = PilgrimTrackingState(
-        pilgrimLocation: pLoc,
+        pilgrimLocation: displayPLoc,
         leaderLocation: lLoc,
         distance: displayedDistance, // ← مسافة BLE في الواجهة لا GPS
         gpsWarning: clearWarning ? null : state.gpsWarning,
         bleWarning: state.bleWarning,
+        isSafeByBle: _isSafeByBle,
       );
       return;
     }
@@ -489,6 +553,7 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
       distance: distance,
       gpsWarning: clearWarning ? null : state.gpsWarning,
       bleWarning: state.bleWarning,
+      isSafeByBle: _isSafeByBle,
     );
 
     if (distance <= _yellowZone) {
@@ -630,7 +695,7 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
     }
     if (!_isMutedManually) {
       await _audioPlayer.setReleaseMode(ReleaseMode.loop);
-      await _audioPlayer.play(AssetSource('sounds/alarm.mp3'));
+      await _audioPlayer.play(AssetSource('asset/sounds/alarm.mp3'));
     }
   }
 
@@ -675,10 +740,17 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
     stopAlarmManual();
 
     // 🌟 إيقاف خدمة الفلترة
-    _locationFilter.stop();
+    ref.read(pilgrimLocationFilterServiceProvider).stop();
 
     // 🌟 إيقاف بث البلوتوث
     ref.read(bleRadarServiceProvider).stopBroadcasting();
+
+    _notificationsPlugin.cancel(1);
+    _notificationsPlugin.cancel(1001);
+
+    if (_currentSessionId != null) {
+      ref.read(trackingNotificationsStoreProvider.notifier).clearBySessionId(_currentSessionId!);
+    }
 
     _lastValidPosition = null;
     _lastUpdateTime = null;

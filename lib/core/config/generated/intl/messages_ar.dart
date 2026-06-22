@@ -33,6 +33,12 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m5(currentName) =>
       "سيتم إيقاف ال${currentName} الحالي وإعادة الضبط من الشوط الأول، هل تريد المتابعة؟";
 
+  static String m6(name) =>
+      "الحاج \"${name}\" لم يُرصد بالبلوتوث منذ قليل — ترقَّب";
+
+  static String m7(name) =>
+      "⚠️ الحاج \"${name}\" خارج النطاق ولم يُرصد بالبلوتوث منذ دقيقة";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "aboutCampaign": MessageLookupByLibrary.simpleMessage("عن الحملة"),
@@ -651,5 +657,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "youAreHere": MessageLookupByLibrary.simpleMessage("أنت هنا"),
     "youWord": MessageLookupByLibrary.simpleMessage("أنت"),
     "yourQuestion": MessageLookupByLibrary.simpleMessage("سؤالك"),
+    "bleConfirmedNearby": MessageLookupByLibrary.simpleMessage("🔵 قريب (بلوتوث مؤكّد)"),
+    "bleNotDetected": MessageLookupByLibrary.simpleMessage("غير مرصود ببلوتوث"),
+    "bleProximityLabel": MessageLookupByLibrary.simpleMessage("حالة البلوتوث"),
+    "bleConfirmedLegend": MessageLookupByLibrary.simpleMessage("مؤكّد بالبلوتوث"),
+    "mapApproxHint": MessageLookupByLibrary.simpleMessage("📡 الخريطة تقريبية — البلوتوث 🔵 يحدد القُرب الفعلي"),
+    "distanceApprox": MessageLookupByLibrary.simpleMessage("مسافة تقديرية"),
+    "distanceConfirmed": MessageLookupByLibrary.simpleMessage("مسافة مؤكدة (BLE)"),
+    "leaderPilgrimWarningBleBody": m6,
+    "leaderPilgrimEmergencyBleBody": m7,
   };
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yusr/core/extensions/async_value_ui.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/features/be_leader/presentation/widgets/leader_end_session_fab.dart';
 import 'package:yusr/features/be_leader/presentation/widgets/leader_map_legend.dart';
@@ -67,9 +68,7 @@ class _LeaderMapTrackingViewState extends ConsumerState<LeaderMapTrackingView> {
         context.showLoadingDialog();
       } else if (state.hasError) {
         context.closeLoadingDialog();
-        context.showErrorSnackBar(
-          state.error.toString().replaceAll('Exception: ', ''),
-        );
+        context.showErrorSnackBar(state.errorMessage);
       } else if (!state.isLoading && !state.hasError) {
         context.closeLoadingDialog();
         context.showSuccessSnackBar(locale.sessionEndedSuccessfully);
@@ -81,10 +80,7 @@ class _LeaderMapTrackingViewState extends ConsumerState<LeaderMapTrackingView> {
       body: Stack(
         children: [
           // ── الخريطة ───────────────────────────────────────────
-          LeaderMapWidget(
-            mapController: _mapController,
-            mapState: mapState,
-          ),
+          LeaderMapWidget(mapController: _mapController, mapState: mapState),
 
           // ── البطاقة العلوية والتنبيه ──────────────────────────
           Positioned(
@@ -115,11 +111,7 @@ class _LeaderMapTrackingViewState extends ConsumerState<LeaderMapTrackingView> {
             ),
 
           // ── وسيلة الإيضاح ─────────────────────────────────────
-          const Positioned(
-            bottom: 110,
-            right: 16,
-            child: LeaderMapLegend(),
-          ),
+          const Positioned(bottom: 110, right: 16, child: LeaderMapLegend()),
 
           // ── زر تتبع الكاميرا ──────────────────────────────────
           TrackingFAB(

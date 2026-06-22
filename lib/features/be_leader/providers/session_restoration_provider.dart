@@ -1,9 +1,7 @@
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yusr/features/be_leader/presentation/services/session_restoration_service.dart';
 
-part 'session_restoration_provider.g.dart';
-
-@riverpod
-SessionRestorationService sessionRestorationService(Ref ref) {
+// استخدام مزود تقليدي للحفاظ على بقائه في الذاكرة (keepAlive) بشكل آمن
+final sessionRestorationServiceProvider = Provider<SessionRestorationService>((ref) {
   return SessionRestorationService(ref);
-}
+});

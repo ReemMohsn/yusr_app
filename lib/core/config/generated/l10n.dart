@@ -2883,6 +2883,96 @@ class AppLocalizations {
       args: [],
     );
   }
+
+  /// `🔵 Nearby (Bluetooth confirmed)`
+  String get bleConfirmedNearby {
+    return Intl.message(
+      '🔵 Nearby (Bluetooth confirmed)',
+      name: 'bleConfirmedNearby',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not detected by Bluetooth`
+  String get bleNotDetected {
+    return Intl.message(
+      'Not detected by Bluetooth',
+      name: 'bleNotDetected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bluetooth Status`
+  String get bleProximityLabel {
+    return Intl.message(
+      'Bluetooth Status',
+      name: 'bleProximityLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bluetooth confirmed`
+  String get bleConfirmedLegend {
+    return Intl.message(
+      'Bluetooth confirmed',
+      name: 'bleConfirmedLegend',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `📡 Map is approximate — Bluetooth 🔵 determines actual proximity`
+  String get mapApproxHint {
+    return Intl.message(
+      '📡 Map is approximate — Bluetooth 🔵 determines actual proximity',
+      name: 'mapApproxHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Approximate distance`
+  String get distanceApprox {
+    return Intl.message(
+      'Approximate distance',
+      name: 'distanceApprox',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirmed distance (BLE)`
+  String get distanceConfirmed {
+    return Intl.message(
+      'Confirmed distance (BLE)',
+      name: 'distanceConfirmed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{name} has not been detected by Bluetooth recently — watch out`
+  String leaderPilgrimWarningBleBody(String name) {
+    return Intl.message(
+      'Pilgrim "$name" has not been detected by Bluetooth recently — watch out',
+      name: 'leaderPilgrimWarningBleBody',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `⚠️ {name} is out of zone and undetected by Bluetooth for 1 minute`
+  String leaderPilgrimEmergencyBleBody(String name) {
+    return Intl.message(
+      '⚠️ Pilgrim "$name" is out of zone and undetected by Bluetooth for 1 minute',
+      name: 'leaderPilgrimEmergencyBleBody',
+      desc: '',
+      args: [name],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {
