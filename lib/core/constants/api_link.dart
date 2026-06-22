@@ -1,6 +1,6 @@
 class ApiLink {
   // 1. Base URL
-  static const String server = 'http://yusrapp.runasp.net/api';
+  static const String server = 'https://yusrapp.runasp.net/api';
 
   // 2. Auth (التوثيق)
   static const String login = '$server/Auth/LoginMobile';

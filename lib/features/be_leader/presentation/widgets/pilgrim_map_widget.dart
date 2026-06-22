@@ -44,8 +44,8 @@ class PilgrimMapWidget extends ConsumerWidget {
               // 🔴 دائرة الخطر (30م)
               CircleMarker(
                 point: mapState.leaderLocation!,
-                color: Colors.red.withOpacity(0.08),
-                borderColor: Colors.red.withOpacity(0.6),
+                color: Colors.red.withValues(alpha: 0.08),
+                borderColor: Colors.red.withValues(alpha: 0.6),
                 borderStrokeWidth: 2,
                 radius: 30,
                 useRadiusInMeter: true,
@@ -53,8 +53,8 @@ class PilgrimMapWidget extends ConsumerWidget {
               // 🟠 دائرة التحذير (20م)
               CircleMarker(
                 point: mapState.leaderLocation!,
-                color: Colors.orange.withOpacity(0.1),
-                borderColor: Colors.orange.withOpacity(0.7),
+                color: Colors.orange.withValues(alpha: 0.1),
+                borderColor: Colors.orange.withValues(alpha: 0.7),
                 borderStrokeWidth: 2,
                 radius: 20,
                 useRadiusInMeter: true,
@@ -69,8 +69,8 @@ class PilgrimMapWidget extends ConsumerWidget {
             if (mapState.leaderLocation != null)
               Marker(
                 point: mapState.leaderLocation!,
-                width: 90,
-                height: 80,
+                width: 70,
+                height: 65,
                 child: Column(
                   children: [
                     Container(
@@ -107,30 +107,52 @@ class PilgrimMapWidget extends ConsumerWidget {
             if (mapState.pilgrimLocation != null)
               Marker(
                 point: mapState.pilgrimLocation!,
-                width: 90,
+                width: 80,
                 height: 80,
                 child: Column(
                   children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 8.w,
-                        vertical: 3.h,
-                      ),
-                      decoration: BoxDecoration(
-                        color: mapState.statusColor,
-                        borderRadius: BorderRadius.circular(10.r),
-                        boxShadow: const [
-                          BoxShadow(color: Colors.black26, blurRadius: 4),
-                        ],
-                      ),
-                      child: Text(
-                        locale.youAreHere,
-                        style: TextStyle(
-                          fontSize: 10.sp,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                    Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 8.w,
+                            vertical: 3.h,
+                          ),
+                          decoration: BoxDecoration(
+                            color: mapState.statusColor,
+                            borderRadius: BorderRadius.circular(10.r),
+                            boxShadow: const [
+                              BoxShadow(color: Colors.black26, blurRadius: 4),
+                            ],
+                          ),
+                          child: Text(
+                            locale.youAreHere,
+                            style: TextStyle(
+                              fontSize: 10.sp,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
-                      ),
+                        if (mapState.isSafeByBle)
+                          Positioned(
+                            top: -5,
+                            right: -5,
+                            child: Container(
+                              width: 10,
+                              height: 10,
+                              decoration: BoxDecoration(
+                                color: Colors.blue.shade300,
+                                shape: BoxShape.circle,
+                                border: Border.all(color: Colors.white, width: 1.5),
+                                boxShadow: const [
+                                  BoxShadow(color: Colors.black26, blurRadius: 2),
+                                ],
+                              ),
+                            ),
+                          ),
+                      ],
                     ),
                     Icon(
                       Icons.person_pin_circle,

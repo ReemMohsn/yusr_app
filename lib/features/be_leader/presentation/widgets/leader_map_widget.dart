@@ -33,26 +33,49 @@ class LeaderMapWidget extends ConsumerWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // فقاعة الاسم
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
-              decoration: BoxDecoration(
-                color: color,
-                borderRadius: BorderRadius.circular(6.r),
-                boxShadow: const [
-                  BoxShadow(color: Colors.black38, blurRadius: 3),
-                ],
-              ),
-              child: Text(
-                p.name.length > 8 ? '${p.name.substring(0, 8)}..' : p.name,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: 8.sp,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+            // فقاعة الاسم مع مؤشر BLE
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
+                  decoration: BoxDecoration(
+                    color: color,
+                    borderRadius: BorderRadius.circular(6.r),
+                    boxShadow: const [
+                      BoxShadow(color: Colors.black38, blurRadius: 3),
+                    ],
+                  ),
+                  child: Text(
+                    p.name.length > 8 ? '${p.name.substring(0, 8)}..' : p.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 8.sp,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-              ),
+                // 🔵 نقطة BLE صغيرة: تظهر فقط عندما يؤكد BLE قُرب الحاج
+                if (p.isSafeByBle)
+                  Positioned(
+                    top: -5,
+                    right: -5,
+                    child: Container(
+                      width: 10,
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: Colors.blue.shade300,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white, width: 1.5),
+                        boxShadow: const [
+                          BoxShadow(color: Colors.black26, blurRadius: 2),
+                        ],
+                      ),
+                    ),
+                  ),
+              ],
             ),
             Icon(Icons.location_on, color: color, size: 26),
           ],
@@ -60,6 +83,7 @@ class LeaderMapWidget extends ConsumerWidget {
       ),
     );
   }
+
 
   // ── نافذة معلومات الحاج عند الضغط ───────────────────────────
   void _showPilgrimInfoSheet(
@@ -106,8 +130,8 @@ class LeaderMapWidget extends ConsumerWidget {
               // 🔴 دائرة الخطر (30 متر)
               CircleMarker(
                 point: mapState.leaderLocation!,
-                color: Colors.red.withOpacity(0.08),
-                borderColor: Colors.red.withOpacity(0.6),
+                color: Colors.red.withValues(alpha: 0.08),
+                borderColor: Colors.red.withValues(alpha: 0.6),
                 borderStrokeWidth: 2,
                 radius: 30,
                 useRadiusInMeter: true,
@@ -115,14 +139,15 @@ class LeaderMapWidget extends ConsumerWidget {
               // 🟠 دائرة التحذير (20 متر)
               CircleMarker(
                 point: mapState.leaderLocation!,
-                color: Colors.orange.withOpacity(0.1),
-                borderColor: Colors.orange.withOpacity(0.7),
+                color: Colors.orange.withValues(alpha: 0.1),
+                borderColor: Colors.orange.withValues(alpha: 0.7),
                 borderStrokeWidth: 2,
                 radius: 20,
                 useRadiusInMeter: true,
               ),
             ],
           ),
+
 
         // ── ماركرات الحجاج والمشرف ──────────────────────────
         MarkerLayer(

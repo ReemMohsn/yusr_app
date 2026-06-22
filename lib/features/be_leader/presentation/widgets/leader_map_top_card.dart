@@ -17,6 +17,12 @@ class LeaderMapTopCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final locale = context.locale;
+    // عدد الحجاج المؤكَّدين بالبلوتوث (من جميع مناطق الألوان)
+    final bleCount = [
+      ...state.greenPilgrims,
+      ...state.yellowPilgrims,
+      ...state.redPilgrims,
+    ].where((p) => p.isSafeByBle).length;
     return Row(
       children: [
         GestureDetector(
@@ -62,11 +68,15 @@ class LeaderMapTopCard extends StatelessWidget {
                     Text(
                       !state.isNetworkConnected
                           ? locale.noInternet
-                          : (isLeaderConnected ? locale.connectedMap : locale.searchingForLocation),
+                          : (isLeaderConnected
+                                ? locale.connectedMap
+                                : locale.searchingForLocation),
                       style: TextStyle(
                         color: !state.isNetworkConnected
                             ? Colors.red
-                            : (isLeaderConnected ? Colors.green : Colors.orange),
+                            : (isLeaderConnected
+                                  ? Colors.green
+                                  : Colors.orange),
                         fontWeight: FontWeight.bold,
                         fontSize: isLeaderConnected ? 14.sp : 11.sp,
                       ),
@@ -77,16 +87,39 @@ class LeaderMapTopCard extends StatelessWidget {
                 Row(
                   children: [
                     if (state.greenPilgrims.isNotEmpty)
-                      _PilgrimCount(count: state.greenPilgrims.length, color: Colors.teal),
+                      _PilgrimCount(
+                        count: state.greenPilgrims.length,
+                        color: Colors.teal,
+                      ),
                     if (state.yellowPilgrims.isNotEmpty)
-                      _PilgrimCount(count: state.yellowPilgrims.length, color: Colors.orange),
+                      _PilgrimCount(
+                        count: state.yellowPilgrims.length,
+                        color: Colors.orange,
+                      ),
                     if (state.redPilgrims.isNotEmpty)
-                      _PilgrimCount(count: state.redPilgrims.length, color: Colors.red),
+                      _PilgrimCount(
+                        count: state.redPilgrims.length,
+                        color: Colors.red,
+                      ),
                     if (state.totalPilgrims == 0)
                       Text(
                         locale.noPilgrims,
                         style: TextStyle(color: Colors.grey, fontSize: 12.sp),
                       ),
+                    // ── فاصل + عداد BLE ────────────────────────────
+                    if (state.totalPilgrims > 0) ...([
+                      Container(
+                        height: 16.h,
+                        width: 1,
+                        margin: EdgeInsets.symmetric(horizontal: 6.w),
+                        color: Colors.grey.shade300,
+                      ),
+                      _PilgrimCount(
+                        count: bleCount,
+                        color: Colors.blue.shade600,
+                        icon: Icons.bluetooth,
+                      ),
+                    ]),
                   ],
                 ),
               ],
@@ -101,8 +134,9 @@ class LeaderMapTopCard extends StatelessWidget {
 class _PilgrimCount extends StatelessWidget {
   final int count;
   final Color color;
+  final IconData? icon;
 
-  const _PilgrimCount({required this.count, required this.color});
+  const _PilgrimCount({required this.count, required this.color, this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -110,17 +144,26 @@ class _PilgrimCount extends StatelessWidget {
       margin: EdgeInsets.only(right: 4.w),
       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.12),
+        color: color.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(20.r),
-        border: Border.all(color: color.withOpacity(0.4)),
+        border: Border.all(color: color.withValues(alpha: 0.4)),
       ),
-      child: Text(
-        '$count',
-        style: TextStyle(
-          color: color,
-          fontWeight: FontWeight.bold,
-          fontSize: 12.sp,
-        ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (icon != null) ...([
+            Icon(icon!, size: 11.sp, color: color),
+            SizedBox(width: 3.w),
+          ]),
+          Text(
+            '$count',
+            style: TextStyle(
+              color: color,
+              fontWeight: FontWeight.bold,
+              fontSize: 12.sp,
+            ),
+          ),
+        ],
       ),
     );
   }

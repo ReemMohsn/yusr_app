@@ -12,10 +12,12 @@ class ApiService {
     // نستقبل الخدمة هنا
     _dio = Dio(
       BaseOptions(
-        baseUrl: 'http://yusrapp.runasp.net/api',
+        baseUrl: 'https://yusrapp.runasp.net/api',
         receiveDataWhenStatusError: true,
         connectTimeout: const Duration(seconds: 30),
-        receiveTimeout: const Duration(seconds: 30), // أضيفي هذا السطر ضروري جداً
+        receiveTimeout: const Duration(
+          seconds: 30,
+        ), // أضيفي هذا السطر ضروري جداً
         sendTimeout: const Duration(seconds: 30),
         headers: {'Content-Type': 'application/json'},
       ),
@@ -63,6 +65,7 @@ class ApiService {
   }) async {
     return await _dio.delete(path, data: data, queryParameters: queryParams);
   }
+
   Future<Response> patch(
     String path, {
     dynamic data,

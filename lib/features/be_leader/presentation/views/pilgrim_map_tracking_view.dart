@@ -62,12 +62,7 @@ class _PilgrimMapTrackingViewState
           ),
         );
       }
-      // ✔️ تحريك الخريطة تلقائياً عند تغيير موقع الحاج (GPS عاد للعمل) — مطابق لخريطة المشرف
-      if (_isTracking &&
-          next.pilgrimLocation != null &&
-          next.pilgrimLocation != previous?.pilgrimLocation) {
-        _mapController.move(next.pilgrimLocation!, 17.0);
-      }
+
     });
 
     if (mapState.errorMessage != null) {

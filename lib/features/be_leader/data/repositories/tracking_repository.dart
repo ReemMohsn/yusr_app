@@ -6,7 +6,6 @@ import 'package:latlong2/latlong.dart';
 
 class TrackingRepository {
   final Ref ref;
-  // final FirebaseDatabase _db = FirebaseDatabase.instance;
   final FirebaseDatabase _db = FirebaseDatabase.instanceFor(
     app: Firebase.app(),
     databaseURL:
@@ -74,9 +73,9 @@ class TrackingRepository {
         // موقع جديد فعلي → أخبر المشرف بآخر حركة حقيقية
         data['lastPositionUpdate'] = ServerValue.timestamp;
       }
-      await _db.ref('TrackingSessions/$sessionId/pilgrims/$pilgrimId').update(
-        data,
-      );
+      await _db
+          .ref('TrackingSessions/$sessionId/pilgrims/$pilgrimId')
+          .update(data);
     } catch (e) {
       throw Exception('فشل في تحديث موقع الحاج: $e');
     }
@@ -97,9 +96,9 @@ class TrackingRepository {
       } else if (!isSafe) {
         data['bleDistance'] = null; // يُزيل الحقل عندما يبتعد الحاج
       }
-      await _db.ref('TrackingSessions/$sessionId/pilgrims/$pilgrimId').update(
-        data,
-      );
+      await _db
+          .ref('TrackingSessions/$sessionId/pilgrims/$pilgrimId')
+          .update(data);
     } catch (e) {
       debugPrint('❌ فشل في تحديث حالة الأمان للحاج: $e');
     }

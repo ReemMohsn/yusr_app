@@ -8,8 +8,8 @@ class TrackingState {
   final List<PilgrimMarkerData> redPilgrims;
   final bool isLoading;
   final String? gpsWarning;
-  final String? bleWarning; // 🌟 إضافة لتنبيهات البلوتوث
-  final bool isNetworkConnected; // 🌐 إضافة لحالة الإنترنت
+  final String? bleWarning;
+  final bool isNetworkConnected;
 
   TrackingState({
     this.leaderLocation,
@@ -24,4 +24,31 @@ class TrackingState {
 
   int get totalPilgrims =>
       greenPilgrims.length + yellowPilgrims.length + redPilgrims.length;
+
+  /// نسخة محدَّثة من الحالة مع تغيير حقول بعينها فقط.
+  /// يستخدم sentinel pattern لتمييز null المقصودة من الحقل غير الممرَّر.
+  TrackingState copyWith({
+    LatLng? leaderLocation,
+    List<PilgrimMarkerData>? greenPilgrims,
+    List<PilgrimMarkerData>? yellowPilgrims,
+    List<PilgrimMarkerData>? redPilgrims,
+    bool? isLoading,
+    Object? gpsWarning = _sentinel,
+    Object? bleWarning = _sentinel,
+    bool? isNetworkConnected,
+  }) {
+    return TrackingState(
+      leaderLocation: leaderLocation ?? this.leaderLocation,
+      greenPilgrims: greenPilgrims ?? this.greenPilgrims,
+      yellowPilgrims: yellowPilgrims ?? this.yellowPilgrims,
+      redPilgrims: redPilgrims ?? this.redPilgrims,
+      isLoading: isLoading ?? this.isLoading,
+      gpsWarning: gpsWarning == _sentinel ? this.gpsWarning : gpsWarning as String?,
+      bleWarning: bleWarning == _sentinel ? this.bleWarning : bleWarning as String?,
+      isNetworkConnected: isNetworkConnected ?? this.isNetworkConnected,
+    );
+  }
 }
+
+// ثابت داخلي للـ sentinel pattern في copyWith
+const Object _sentinel = Object();
