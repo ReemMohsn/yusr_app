@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/features/be_leader/data/models/tracking_notification_model.dart';
 import 'package:yusr/features/be_leader/presentation/services/smart_location_filter_service.dart';
+import 'package:yusr/features/be_leader/providers/smart_location_filter_service_provider.dart';
 import 'package:yusr/features/be_leader/providers/ble_radar_service_provider.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -55,16 +56,13 @@ class LeaderTrackingController extends _$LeaderTrackingController {
   /// ذاكرة زمنية: آخر مرة رُصد فيها كل حاج عبر BLE
   /// المفتاح: pilgrimId (نفس key من Firebase)
   final Map<String, DateTime> _bleLastSeenTimes = {};
-  
+
   // 🔵 تنعيم (Debounce) لتقلبات مسافة البلوتوث لمنع تذبذب الحالة
   final Map<String, DateTime> _lastSafeBleTimes = {};
 
   bool get isCurrentlyTracking => _currentSessionId != null;
   bool _isMutedManually = false; // 🔇 هل قام المشرف بكتم الصوت يدوياً؟
 
-  // 🌟 خدمة فلترة الموقع المشتركة (عدّاد خطوات + حماية GPS)
-  final SmartLocationFilterService _locationFilter =
-      SmartLocationFilterService();
   @override
   TrackingState build() {
     return TrackingState();
@@ -85,7 +83,9 @@ class LeaderTrackingController extends _$LeaderTrackingController {
     await _networkSub?.cancel();
     _evaluationTimer?.cancel();
     ref.read(bleRadarServiceProvider).stop();
-    _locationFilter.stop(); // إيقاف مستشعر الحركة القديم إن وجد
+    ref
+        .read(leaderLocationFilterServiceProvider)
+        .stop(); // إيقاف مستشعر الحركة القديم إن وجد
 
     _currentSessionId = sessionId;
     state = TrackingState(isLoading: true);
@@ -96,7 +96,7 @@ class LeaderTrackingController extends _$LeaderTrackingController {
 
       await repo.initLeaderSession(_currentSessionId.toString());
 
-      // 1️⃣ فحص خدمة GPS (انتقل إلى LocationService)
+      // 1️⃣ فحص خدمة GPS
       final serviceEnabled = await locationService.isServiceEnabled();
       if (!serviceEnabled) {
         debugPrint("⚠️ [GPS] الخدمة مطفأة عند بدء التتبع.");
@@ -145,20 +145,25 @@ class LeaderTrackingController extends _$LeaderTrackingController {
               );
             },
           );
-      _locationFilter.startSmartStepCounting(
-        tag: ' [المشرف]',
-      ); // 🌟 تشغيل فلتر المشي المشترك
-      // 5️⃣ مراقبة تشغيل/إيقاف GPS (عبر الدالة المنفصلة لتخفيف الكود)
+      // 🔧 إصلاح: تصفير عدادات الخطوات قبل البدء لضمان جلسة نظيفة
+      ref.read(leaderLocationFilterServiceProvider).reset();
+
+      // 🌟 تشغيل فلتر المشي
+      ref
+          .read(leaderLocationFilterServiceProvider)
+          .startSmartStepCounting(tag: ' [المشرف]');
+
+      // 5️⃣ مراقبة تشغيل/إيقاف GPS
       _listenToGpsStatusChanges();
 
-      // 6️⃣ جلب الموقع الأولي (يستخدم tryGetCurrentPosition + _applyValidPosition)
+      // 6️⃣ جلب الموقع الأولي
       if (serviceEnabled) {
         final initialPos = await locationService.tryGetCurrentPosition();
         if (initialPos != null) _applyValidPosition(initialPos, repo);
       }
-      // 7️⃣ تشغيل Stream الموقع المستمر (دالة منفصلة)
+      // 7️⃣ تشغيل Stream الموقع المستمر
       _startLocationUpdates();
-      // 8️⃣ استماع تحديثات مواقع الحجاج (دالة منفصلة)
+      // 8️⃣ استماع تحديثات مواقع الحجاج
       _listenToPilgrimsStream();
       // 9️⃣ مراقبة الاتصال بالإنترنت
       _listenToNetworkStatus();
@@ -184,7 +189,8 @@ class LeaderTrackingController extends _$LeaderTrackingController {
 
     bool statusChanged = lastStatus != isSafe;
     // تحديث إذا تغيرت حالة الأمان، أو إذا تغيرت مسافة البلوتوث بأكثر من متر واحد أثناء الأمان
-    bool distanceChangedSignificantly = isSafe &&
+    bool distanceChangedSignificantly =
+        isSafe &&
         bleDistance != null &&
         (lastDist == null || (lastDist - bleDistance).abs() > 1.0);
 
@@ -210,8 +216,6 @@ class LeaderTrackingController extends _$LeaderTrackingController {
     }
   }
 
-  /// يُشغِّل مستمع تحديثات مواقع الحجاج من Firebase.
-  /// مُستخرَجة لتوحيد النمط مع [_startLocationUpdates] و[_listenToGpsStatusChanges].
   void _listenToPilgrimsStream() {
     final repo = ref.read(trackingRepositoryProvider);
     _pilgrimsSub?.cancel();
@@ -267,11 +271,10 @@ class LeaderTrackingController extends _$LeaderTrackingController {
         "📍 [المشرف] موقع جديد | دقة: ${position.accuracy.toStringAsFixed(1)} م | ${position.latitude}, ${position.longitude}",
       );
 
-      if (!_isGpsEnabled) return; // 🌟 تجاهل أي إحداثيات متأخرة إذا كان الـ GPS مغلقاً
+      if (!_isGpsEnabled)
+        return; // 🌟 تجاهل أي إحداثيات متأخرة إذا كان الـ GPS مغلقاً
 
       // 🔴 فلتر 1: رفض المواقع ضعيفة الدقة
-      // العتبة: kLeaderAccuracyThreshold (35م) — المشرف في مناطق مكشوفة -> صرامة معتدلة
-      // راجع: SmartLocationFilterService.kLeaderAccuracyThreshold
       if (position.accuracy >
           SmartLocationFilterService.kLeaderAccuracyThreshold) {
         debugPrint(
@@ -306,17 +309,20 @@ class LeaderTrackingController extends _$LeaderTrackingController {
             .inSeconds;
 
         // فلتر 2: السرعة
-        final bool? isSpeedValid = _locationFilter.isSpeedJumpValid(
-          distanceMeters: distanceJump,
-          timeDiffSeconds: timeDiffSeconds,
-          tag: ' [المشرف]',
-        );
+        final bool? isSpeedValid = ref
+            .read(leaderLocationFilterServiceProvider)
+            .isSpeedJumpValid(
+              distanceMeters: distanceJump,
+              timeDiffSeconds: timeDiffSeconds,
+              tag: ' [المشرف]',
+            );
 
         if (isSpeedValid == false) {
           // 💡 حل مشكلة الفخ الأولي (Initial GPS Trap):
           // إذا كانت الدقة الجديدة ممتازة (أقل من أو تساوي 15 متراً) والدقة السابقة كانت أضعف،
           // فهذا يعني أن الـ GPS التقط إشارة قوية وحقيقية أخيراً وصحح موقعه.
-          if (position.accuracy <= 15.0 && _lastValidLeaderPosition!.accuracy > position.accuracy) {
+          if (position.accuracy <= 20.0 &&
+              _lastValidLeaderPosition!.accuracy > position.accuracy) {
             debugPrint(
               '🚨 [تصحيح ذاتي المشرف] قفزة كبيرة ولكن دقة الـ GPS ممتازة (${position.accuracy.toStringAsFixed(1)}م). كسر الفخ وقبول الموقع!',
             );
@@ -325,12 +331,14 @@ class LeaderTrackingController extends _$LeaderTrackingController {
           }
         } else {
           // فلتر 3: الخطوات وتصحيح الـ GPS (يُفحص فقط إذا كانت السرعة منطقية)
-          if (!_locationFilter.isMovementReal(
-            distanceMeters: distanceJump,
-            currentAccuracy: position.accuracy,
-            previousAccuracy: _lastValidLeaderPosition!.accuracy,
-            tag: ' [المشرف]',
-          )) {
+          if (!ref
+              .read(leaderLocationFilterServiceProvider)
+              .isMovementReal(
+                distanceMeters: distanceJump,
+                currentAccuracy: position.accuracy,
+                previousAccuracy: _lastValidLeaderPosition!.accuracy,
+                tag: ' [المشرف]',
+              )) {
             debugPrint(
               '🛑 [حماية] قفزة GPS وهمية — لا خطوات كافية والمسافة خارج هامش الخطأ!',
             );
@@ -383,22 +391,24 @@ class LeaderTrackingController extends _$LeaderTrackingController {
           isNetworkConnected: state.isNetworkConnected,
         );
         _startLocationUpdates();
-        
+
         // 🌟 إضافة مهمة: إعادة تشغيل الرادار لأن الرادار يتوقف تلقائياً إذا فُتحت الجلسة و الـ GPS مغلق
-        ref.read(bleRadarServiceProvider).initMonitoring(
-          onWarning: (warningMsg) {
-            state = TrackingState(
-              leaderLocation: state.leaderLocation,
-              greenPilgrims: state.greenPilgrims,
-              yellowPilgrims: state.yellowPilgrims,
-              redPilgrims: state.redPilgrims,
-              isLoading: state.isLoading,
-              gpsWarning: state.gpsWarning,
-              bleWarning: warningMsg,
-              isNetworkConnected: state.isNetworkConnected,
+        ref
+            .read(bleRadarServiceProvider)
+            .initMonitoring(
+              onWarning: (warningMsg) {
+                state = TrackingState(
+                  leaderLocation: state.leaderLocation,
+                  greenPilgrims: state.greenPilgrims,
+                  yellowPilgrims: state.yellowPilgrims,
+                  redPilgrims: state.redPilgrims,
+                  isLoading: state.isLoading,
+                  gpsWarning: state.gpsWarning,
+                  bleWarning: warningMsg,
+                  isNetworkConnected: state.isNetworkConnected,
+                );
+              },
             );
-          },
-        );
 
         // جلب موقع فوري لإنعاش الخريطة
         final quickPos = await locationService.tryGetCurrentPosition();
@@ -451,7 +461,10 @@ class LeaderTrackingController extends _$LeaderTrackingController {
         // المسافة المُقدرة أكبر من 20 متراً، قد يكون تذبذباً (Jitter).
         // نعطيه مهلة 10 ثوانٍ (Grace Period) قبل أن نحكم عليه بأنه في خطر/تحذير.
         final lastSafe = _lastSafeBleTimes[key.toString()];
-        if (lastSafe != null && DateTime.now().difference(lastSafe).inSeconds <= 10) {
+        // 🔧 إصلاح: استخدام الثابت _bleGracePeriodSeconds بدلًا من الرقم المشفر مباشرة
+        if (lastSafe != null &&
+            DateTime.now().difference(lastSafe).inSeconds <=
+                _bleGracePeriodSeconds) {
           isStrongBle = true; // استمرار حالة الأمان مؤقتاً لامتصاص التذبذب
         }
       }
@@ -485,10 +498,8 @@ class LeaderTrackingController extends _$LeaderTrackingController {
   }
 
   void _processPilgrimsAndAlert() {
-
     if (_currentLeaderPosition == null) return;
 
-    // ✅ إذا حُذف جميع الحجاج (snapshot فارغ) → امسح الماركرات من الخريطة فوراً
     if (_latestPilgrimsData == null) {
       stopAlarmManual();
       _alertedPilgrims.clear();
@@ -519,8 +530,6 @@ class LeaderTrackingController extends _$LeaderTrackingController {
           value['name'] ??
           navigatorKey.currentContext?.locale.unknownPilgrim ??
           'أحد الحجاج';
-      // lastPositionUpdate: آخر تحرك فعلي للحاج (يتجاهل نبضات الحياة)
-      // lastUpdate: heartbeat — هاتف الحاج متصل (يتحدث مع كل إرسال)
       final rawPositionUpdate = value['lastPositionUpdate'];
       final rawHeartbeat = value['lastUpdate'];
       final lastSeen = rawPositionUpdate != null
@@ -547,8 +556,12 @@ class LeaderTrackingController extends _$LeaderTrackingController {
       bool bleSignalPresent = false;
       double activeBleDistance = double.infinity;
 
-      final bool hasBleEntry = bleService.bleDistances.containsKey(pilgrimMinorId);
-      final bool hasBleTimestamp = bleService.lastBleUpdates.containsKey(pilgrimMinorId);
+      final bool hasBleEntry = bleService.bleDistances.containsKey(
+        pilgrimMinorId,
+      );
+      final bool hasBleTimestamp = bleService.lastBleUpdates.containsKey(
+        pilgrimMinorId,
+      );
 
       if (hasBleEntry && hasBleTimestamp) {
         final timeSinceLastBle = DateTime.now()
@@ -586,7 +599,7 @@ class LeaderTrackingController extends _$LeaderTrackingController {
         gpsDistance: gpsDistance,
         key: key,
       );
-      
+
       final safetyStatus = evaluation.status;
       final isStrongBle = evaluation.isStrongBle;
 
@@ -600,7 +613,9 @@ class LeaderTrackingController extends _$LeaderTrackingController {
       // ── خطوة 2: حساب المسافة المعروضة في الواجهة ─────────────────────────
       // BLE قوي ومؤكد → نعرض مسافة BLE
       // إشارة ضعيفة أو غائبة → نعرض مسافة GPS
-      final double displayDistance = isStrongBle ? activeBleDistance : gpsDistance;
+      final double displayDistance = isStrongBle
+          ? activeBleDistance
+          : gpsDistance;
 
       LatLng displayLocation = LatLng(lat, lng);
 
@@ -609,29 +624,38 @@ class LeaderTrackingController extends _$LeaderTrackingController {
       if (isStrongBle && _currentLeaderPosition != null) {
         // نستخدم زاوية ثابتة لكل حاج بناءً على الـ ID لتوزيع الحجاج حول المشرف بشكل دائري ثابت
         final double bearing = (pilgrimMinorId.toDouble() * 45.0) % 360.0;
-        
+
         // تثبيت المسافة البصرية لكي لا يتدبدب المؤشر أبداً: 5 أمتار للآمن
         final double visualDistance = 5.0;
 
         final double bearingRadian = bearing * math.pi / 180.0;
         // تقريب: 1 درجة خط عرض = 111320 متر
-        final double latOffset = (visualDistance * math.cos(bearingRadian)) / 111320.0;
-        final double lngOffset = (visualDistance * math.sin(bearingRadian)) / (111320.0 * math.cos(_currentLeaderPosition!.latitude * math.pi / 180.0));
+        final double latOffset =
+            (visualDistance * math.cos(bearingRadian)) / 111320.0;
+        final double lngOffset =
+            (visualDistance * math.sin(bearingRadian)) /
+            (111320.0 *
+                math.cos(_currentLeaderPosition!.latitude * math.pi / 180.0));
 
         displayLocation = LatLng(
           _currentLeaderPosition!.latitude + latOffset,
           _currentLeaderPosition!.longitude + lngOffset,
         );
-        
-        debugPrint('📍 [Sensor Fusion] تثبيت موقع الحاج [$name] بالبلوتوث (مسافة بصرية: ${visualDistance}م)');
+
+        debugPrint(
+          '📍 [Sensor Fusion] تثبيت موقع الحاج [$name] بالبلوتوث (مسافة بصرية: ${visualDistance}م)',
+        );
       }
 
       // ── خطوة 3: إرسال حالة BLE لـ Firebase (للحاج ليُطفئ إنذاره) ─────────
-      final bool isSafeByBle = activeBleDistance != null;
+      // 🔧 إصلاح: isSafe = true فقط إذا كانت الإشارة موجودة فعلًا وضمن النطاق الآمن
+      // activeBleDistance هو double وليس double? لذا != null دائمًا true — خطأ منطقي سابق
+      final bool isSafeByBle =
+          bleSignalPresent && activeBleDistance <= _yellowZone;
       _updatePilgrimBleStatusInFirebase(
         key.toString(),
         isSafeByBle,
-        bleDistance: activeBleDistance,
+        bleDistance: isSafeByBle ? activeBleDistance : null,
       );
 
       // ── خطوة 4: بناء PilgrimMarkerData ───────────────────────────────────
@@ -664,7 +688,10 @@ class LeaderTrackingController extends _$LeaderTrackingController {
           ref
               .read(trackingNotificationsStoreProvider.notifier)
               .removeNotification('leader_emrg_$key');
-          _triggerWarningVibration(key, name);
+          _triggerWarningVibration(
+            key.toString(),
+            name,
+          ); // 🔧 إصلاح: تحويل key لـ String لضمان التطابق في Set
 
         case 'danger':
           // BLE غاب > 60 ثانية + GPS بعيد → خطر حقيقي
@@ -688,14 +715,13 @@ class LeaderTrackingController extends _$LeaderTrackingController {
       }
     });
 
-
     if (!hasRedPilgrims) {
       stopAlarmManual();
       _isMutedManually =
           false; // 🌟 إعادة تفعيل الصوت آلياً للجولة القادمة لأن الجميع بأمان الآن
     }
-    state = TrackingState(
-      leaderLocation: state.leaderLocation,
+    // 🔧 إصلاح: استخدام copyWith للحفاظ على gpsWarning و bleWarning و isNetworkConnected
+    state = state.copyWith(
       greenPilgrims: green,
       yellowPilgrims: yellow,
       redPilgrims: red,
@@ -790,9 +816,8 @@ class LeaderTrackingController extends _$LeaderTrackingController {
                     .leaderPilgrimEmergencyTitle ??
                 '🚨 خطر: ضياع حاج!',
             body:
-                navigatorKey.currentContext?.locale.leaderPilgrimEmergencyBleBody(
-                  pilgrimName,
-                ) ??
+                navigatorKey.currentContext?.locale
+                    .leaderPilgrimEmergencyBleBody(pilgrimName) ??
                 '⚠️ الحاج "$pilgrimName" خارج النطاق ولم يُرصد بالبلوتوث منذ دقيقة',
             timestamp: DateTime.now().toIso8601String(),
             type: TrackingNotificationType.leaderEmergency,
@@ -828,7 +853,9 @@ class LeaderTrackingController extends _$LeaderTrackingController {
       await _networkSub?.cancel();
       _evaluationTimer?.cancel();
       ref.read(bleRadarServiceProvider).stop(); // 🌟 إيقاف الرادار
-      _locationFilter.stop(); // 🌟 إيقاف مستشعر الحركة وتصفير العدادات
+      ref
+          .read(leaderLocationFilterServiceProvider)
+          .stop(); // 🌟 إيقاف مستشعر الحركة وتصفير العدادات
       stopAlarmManual();
 
       for (var key in _alertedPilgrims) {
@@ -842,7 +869,6 @@ class LeaderTrackingController extends _$LeaderTrackingController {
       _redZoneEntryTimes.clear();
       _bleLastSeenTimes.clear(); // 🔵 تنظيف ذاكرة غياب BLE
       _lastSafeBleTimes.clear(); // 🔵 تنظيف ذاكرة التذبذب
-
 
       if (_currentSessionId != null) {
         ref

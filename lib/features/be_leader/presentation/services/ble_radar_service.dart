@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:math';
-
 import 'package:beacon_broadcast/beacon_broadcast.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
@@ -30,8 +29,6 @@ class BleRadarService {
 
   /// آخر وقت استقبال إشارة لكل حاج.
   final Map<int, DateTime> lastBleUpdates = {};
-  // final Map<int, double> bleDistances = {};
-  // final Map<int, DateTime> lastBleUpdates = {};
 
   // 🆕 لتنعيم قراءات RSSI المتأرجحة
   final Map<int, List<double>> _bleDistanceHistory = {};
@@ -119,64 +116,16 @@ class BleRadarService {
             '| خام: ${estimatedDistance.toStringAsFixed(2)}م | مُنعَّم: ${smoothedDistance.toStringAsFixed(2)}م',
           ); // 🆕
 
-          bleDistances[extractedMinorId] =
-              smoothedDistance; // 🆕 (كانت estimatedDistance)
+          bleDistances[extractedMinorId] = smoothedDistance;
           lastBleUpdates[extractedMinorId] = DateTime.now();
         }
       }
     });
   }
 
-  // Future<void> _startActualBleScanning() async {
-  //   // ─ فحص GPS قبل البدء (Android يتطلبه لمسح BLE) ────────────────────────
-  //   final bool gpsEnabled = await Geolocator.isLocationServiceEnabled();
-  //   if (!gpsEnabled) {
-  //     debugPrint(
-  //       '⚠️ [رادار البلوتوث] GPS مغلق — سيُعاد المسح تلقائياً عند تفعيله.',
-  //     );
-  //     _onScanWarningChanged?.call(navigatorKey.currentContext?.locale.pleaseEnableGpsForBleWarning ?? 'يرجى تفعيل GPS لتشغيل رادار البلوتوث.');
-  //     return; // نخرج بهدوء بدلاً من رمي PlatformException
-  //   }
-
-  //   debugPrint('📡 [رادار البلوتوث] بدء مسح جديد مستمر...');
-  //   _bleScanSub?.cancel();
-
-  //   try {
-  //     await FlutterBluePlus.startScan(continuousUpdates: true);
-  //   } on Exception catch (e) {
-  //     debugPrint('❌ [رادار البلوتوث] فشل في بدء المسح: $e');
-  //     _onScanWarningChanged?.call(
-  //       navigatorKey.currentContext?.locale.bleScanFailedWarning ?? 'تعذّر بدء مسح البلوتوث. تأكد من تفعيل GPS والبلوتوث.',
-  //     );
-  //     return;
-  //   }
-
-  //   int devicesFound = 0;
-  //   _bleScanSub = FlutterBluePlus.scanResults.listen((results) {
-  //     if (results.length != devicesFound) {
-  //       devicesFound = results.length;
-  //       debugPrint(
-  //         '📡 [رادار البلوتوث] عدد الأجهزة المرصودة الآن: $devicesFound جهاز.',
-  //       );
-  //     }
-  //     for (ScanResult r in results) {
-  //       int? extractedMinorId = _extractMinorIdFromBeacon(r);
-  //       if (extractedMinorId != null) {
-  //         int rssi = r.rssi;
-  //         double estimatedDistance = pow(10, (-59 - rssi) / 20.0).toDouble();
-  //         debugPrint(
-  //           '   ✅ [تطابق iBeacon!] رقم الحاج (MinorId): $extractedMinorId | قوة الإشارة: $rssi | المسافة المقدّرة: ${estimatedDistance.toStringAsFixed(2)} متر',
-  //         );
-  //         bleDistances[extractedMinorId] = estimatedDistance;
-  //         lastBleUpdates[extractedMinorId] = DateTime.now();
-  //       }
-  //     }
-  //   });
-  // }
-
   int? _extractMinorIdFromBeacon(ScanResult result) {
     final manufacturerData = result.advertisementData.manufacturerData;
-    
+
     // 1. Check for iBeacon (Apple = 76)
     if (manufacturerData.containsKey(76)) {
       final data = manufacturerData[76]!;
@@ -184,7 +133,7 @@ class BleRadarService {
         return (data[20] << 8) + data[21];
       }
     }
-    
+
     // 2. Check for AltBeacon (Radius Networks = 280), default for Android beacon_broadcast
     if (manufacturerData.containsKey(280)) {
       final data = manufacturerData[280]!;
@@ -193,7 +142,7 @@ class BleRadarService {
         return (data[20] << 8) + data[21];
       }
     }
-    
+
     return null;
   }
 
@@ -206,17 +155,8 @@ class BleRadarService {
     FlutterBluePlus.stopScan();
     bleDistances.clear();
     lastBleUpdates.clear();
-    _bleDistanceHistory.clear(); // 🆕
+    _bleDistanceHistory.clear();
   }
-  // void stop() {
-  //   _bleScanSub?.cancel();
-  //   _scanAdapterStateSub?.cancel();
-  //   _bleScanSub = null;
-  //   _scanAdapterStateSub = null;
-  //   FlutterBluePlus.stopScan();
-  //   bleDistances.clear();
-  //   lastBleUpdates.clear();
-  // }
 
   // ─── وضع البث (Pilgrim) ─────────────────────────────────────────────────
 
@@ -254,7 +194,9 @@ class BleRadarService {
   void _actuallyStartBeaconBroadcast() {
     if (_currentPilgrimId == null) return;
     try {
-      int numericId = (int.tryParse(_currentPilgrimId!) ?? _currentPilgrimId!.hashCode) % 65535;
+      int numericId =
+          (int.tryParse(_currentPilgrimId!) ?? _currentPilgrimId!.hashCode) %
+          65535;
       _beaconBroadcast
           .setUUID('39ED98FF-2900-441A-802F-9C398FC199D2')
           .setMajorId(1)
@@ -262,27 +204,11 @@ class BleRadarService {
           .start();
       debugPrint(
         '🟢 [BLE-TRACE] بدء البث | PilgrimId: $_currentPilgrimId | MinorId المُولَّد: $numericId',
-      ); // 🆕 (دمجنا الرسالة القديمة مع BLE-TRACE)
+      );
     } catch (e) {
-      debugPrint('🔴 [BLE-TRACE] فشل البث | السبب: $e'); // 🆕
+      debugPrint('🔴 [BLE-TRACE] فشل البث | السبب: $e');
     }
   }
-  // void _actuallyStartBeaconBroadcast() {
-  //   if (_currentPilgrimId == null) return;
-  //   try {
-  //     int numericId = _currentPilgrimId!.hashCode % 65535;
-  //     _beaconBroadcast
-  //         .setUUID('39ED98FF-2900-441A-802F-9C398FC199D2')
-  //         .setMajorId(1)
-  //         .setMinorId(numericId)
-  //         .start();
-  //     debugPrint(
-  //       '📡 [بلوتوث الحاج] بدأ البث بنجاح كـ iBeacon! رقم الحاج التعريفي: $numericId',
-  //     );
-  //   } catch (e) {
-  //     debugPrint('❌ [بلوتوث الحاج] فشل في بدء البث: $e');
-  //   }
-  // }
 
   /// يوقف البث ويُلغي مراقب الـ Adapter.
   void stopBroadcasting() {
@@ -293,17 +219,8 @@ class BleRadarService {
   }
 
   // ─── الدالة المشتركة — تُزيل التكرار بين initMonitoring و initBroadcasting ──
-
   /// تُهيِّئ البلوتوث وتُراقب حالة الـ Adapter.
-  ///
-  /// تتحقق من دعم البلوتوث، تُحاول تشغيله، ثم تُعيد [StreamSubscription]
-  /// يُستدعى فيه [onEnabled] عند تفعيله و[onDisabled] عند إطفائه.
-  ///
-  /// - [tag]: وسم للـ Debug يُميِّز الوضع (مسح / بث).
-  /// - [onWarning]: callback لإرسال تحذير للـ UI أو null لإلغائه.
-  /// - [onEnabled]: تُستدعى عند تشغيل البلوتوث (أو كانت مُشغَّلاً).
-  /// - [onDisabled]: تُستدعى عند إطفاء البلوتوث.
-  /// - [notSupportedMessage]: رسالة تُرسَل إذا كان الجهاز لا يدعم البلوتوث.
+
   Future<StreamSubscription<BluetoothAdapterState>?>
   _initBleWithAdapterMonitoring({
     required String tag,

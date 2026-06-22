@@ -7,8 +7,6 @@ import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 
 class LocationService {
-  // 🌟 1. إعدادات الموقع المثالية (دقة عالية مع منع التذبذب)
-  // distanceFilter: 5م — يمنع تحديثات GPS الوهمية عند الوقوف (drift 理想 2-4م)
   LocationSettings get optimalLocationSettings {
     if (defaultTargetPlatform == TargetPlatform.android) {
       return AndroidSettings(
@@ -32,21 +30,24 @@ class LocationService {
       Geolocator.getPositionStream(
         locationSettings: optimalLocationSettings,
       ).handleError((Object error) {
-        // GPS مغلق أو خطأ آخر — نتجاهله بهدوء بدلاً من unhandled exception
         debugPrint('⚠️ [GPS] خطأ في positionStream (تم التعامل معه): $error');
       });
 
-  // 3. بث مخصص للخلفية (Foreground Service) — مهم لوظيفة المشرف لمنع قتل الـ GPS
+  // 3. بث مخصص للخلفية (Foreground Service)
   Stream<Position> get foregroundPositionStream {
     final locationSettings = defaultTargetPlatform == TargetPlatform.android
         ? AndroidSettings(
             accuracy: LocationAccuracy.bestForNavigation,
-            distanceFilter: 2, // تصفية تذبذب GPS عند الوقوف
+            distanceFilter: 2,
             forceLocationManager: false,
             intervalDuration: const Duration(seconds: 5),
             foregroundNotificationConfig: ForegroundNotificationConfig(
-              notificationText: navigatorKey.currentContext?.locale.locationTrackingDesc ?? "التطبيق يقوم بتتبع موقعك لإرشاد الحجاج",
-              notificationTitle: navigatorKey.currentContext?.locale.locationTrackingTitle ?? "مرافق الحاج - كن قائد نشط",
+              notificationText:
+                  navigatorKey.currentContext?.locale.locationTrackingDesc ??
+                  "التطبيق يقوم بتتبع موقعك لإرشاد الحجاج",
+              notificationTitle:
+                  navigatorKey.currentContext?.locale.locationTrackingTitle ??
+                  "مرافق الحاج - كن قائد نشط",
               enableWakeLock: true,
               notificationIcon: AndroidResource(
                 name: 'ic_notification',
@@ -73,10 +74,6 @@ class LocationService {
 
   // 4. بث اتجاه البوصلة
   Stream<CompassEvent>? get compassStream => FlutterCompass.events;
-
-  // -----------------------------------------------
-  // 🌟 دوال GPS المساعدة (انتُقلت من الكونترولر لهنا)
-  // -----------------------------------------------
 
   /// فحص هل مفتاح خدمة GPS مفعل في إعدادات الهاتف
   Future<bool> isServiceEnabled() => Geolocator.isLocationServiceEnabled();

@@ -4,6 +4,7 @@ import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
 import 'package:pedometer/pedometer.dart';
 
+
 /// خدمة مشتركة لعدّ الخطوات الذكي والتحقق من صحة حركة الـ GPS.
 /// تُستخدم في كلٍّ من [LeaderTrackingController] و [PilgrimTrackingController]
 /// لتجنب تكرار الكود — كل كونترولر يحتفظ بنسخته الخاصة من هذه الخدمة.
@@ -45,12 +46,6 @@ class SmartLocationFilterService {
   /// هل الشخص يمشي حالياً؟ (من PedestrianStatus)
   bool _isCurrentlyWalking = true;
 
-  // ═══════════════════════════════════════════════════════════════════════════
-  // تشغيل العدّاد
-  // ═══════════════════════════════════════════════════════════════════════════
-
-  /// تشغيل Hardware Pedometer + مراقبة حالة المشي.
-  /// [tag] — وسم يُضاف لسجلات الـ Debug لتمييز المشرف عن الحاج.
   void startSmartStepCounting({String tag = ''}) {
     _stepCountSub?.cancel();
     _walkingStatusSub?.cancel();
@@ -83,6 +78,10 @@ class SmartLocationFilterService {
         _lastHardwareTotalSteps = totalFromOS;
         _trustedTotalSteps = totalFromOS - _sessionStartSteps;
 
+        // إعادة تشغيل مؤقت التوقف مع كل خطوة — الشخص يمشي فعلاً
+        _isCurrentlyWalking = true;
+        _resetStoppedTimer();
+
         debugPrint(
           '👟 [عداد الخطوات$tag] +$delta خطوة | إجمالي الجلسة: $_trustedTotalSteps',
         );
@@ -100,13 +99,7 @@ class SmartLocationFilterService {
 
         if (!isWalking && _isCurrentlyWalking) {
           // أعطِ 5 ثوانٍ قبل اعتبار الشخص متوقفاً فعلاً (لتجنب الحركات القصيرة)
-          _stoppedTimer?.cancel();
-          _stoppedTimer = Timer(const Duration(seconds: 5), () {
-            _isCurrentlyWalking = false;
-            debugPrint(
-              '🛑 [توقف$tag] تم رصد التوقف الكامل — تجميد قبول قفزات GPS',
-            );
-          });
+          _resetStoppedTimer();
         } else if (isWalking) {
           _stoppedTimer?.cancel();
           _isCurrentlyWalking = true;
@@ -120,18 +113,6 @@ class SmartLocationFilterService {
     );
   }
 
-  // ═══════════════════════════════════════════════════════════════════════════
-  // فلاتر صحة الموقع
-  // ═══════════════════════════════════════════════════════════════════════════
-
-  /// يتحقق إن كانت قفزة الـ GPS منطقية بالمقارنة مع الخطوات الفعلية.
-  ///
-  /// **شروط القبول:**
-  /// - المسافة < 5م: تُقبل دائماً بدون فحص
-  /// - الشخص متوقف + المسافة > 5م: رفض فوري (جديد)
-  /// - الخطوات الفعلية < المتوقع + المسافة > 15م: رفض (حماية من القفزات)
-  ///
-  /// [tag] — وسم للتمييز في سجلات الـ Debug.
   bool isMovementReal({
     required double distanceMeters,
     required double currentAccuracy,
@@ -191,40 +172,6 @@ class SmartLocationFilterService {
     );
     return false;
   }
-  // bool isMovementReal({
-  //   required double distanceMeters,
-  //   required double currentAccuracy,
-  //   required double previousAccuracy,
-  //   String tag = '',
-  // }) {
-  //   // 1. مسافات صغيرة جداً تُقبل دائماً (GPS error margin طبيعي)
-  //   if (distanceMeters < 5) return true;
-
-  //   final int stepsTaken = _trustedTotalSteps - _stepsAtLastGpsUpdate;
-  //   final double expectedMinSteps = distanceMeters / 1.5;
-
-  //   // 2. إذا كانت الخطوات كافية للمسافة، نقبل فوراً
-  //   if (stepsTaken >= expectedMinSteps) {
-  //     _stepsAtLastGpsUpdate = _trustedTotalSteps;
-  //     debugPrint('✅ [حماية الموقع$tag] مشى المستخدم مسافة كافية ($stepsTaken خطوات).');
-  //     return true;
-  //   }
-
-  //   // 3. الخطوات غير كافية.. هل هذه القفزة تصحيح للـ GPS؟
-  //   // نأخذ الأكبر بين دقة الموقع السابق والحالي كدائرة تداخل مسموحة
-  //   final double allowedNoiseRadius = math.max(currentAccuracy, previousAccuracy);
-
-  //   if (distanceMeters <= allowedNoiseRadius) {
-  //     // القفزة مبررة بأنها ضمن دائرة الخطأ للـ GPS
-  //     _stepsAtLastGpsUpdate = _trustedTotalSteps;
-  //     debugPrint('🔄 [حماية الموقع$tag] تصحيح GPS مسموح: المسافة (${distanceMeters.toStringAsFixed(1)}م) ضمن هامش الخطأ (${allowedNoiseRadius.toStringAsFixed(1)}م) بدون خطوات.');
-  //     return true;
-  //   }
-
-  //   // 4. المسافة أكبر من هامش الخطأ، ولا يوجد خطوات -> قفزة وهمية مرفوضة!
-  //   debugPrint('🛑 [حماية الموقع$tag] رفض! مسافة (${distanceMeters.toStringAsFixed(1)}م) أكبر من هامش الخطأ (${allowedNoiseRadius.toStringAsFixed(1)}م) بخطوات غير كافية ($stepsTaken).');
-  //   return false;
-  // }
 
   /// يتحقق إن كانت السرعة المحسوبة منطقية (أقل من 4 م/ث — فلتر السرعة).
   ///
@@ -254,11 +201,27 @@ class SmartLocationFilterService {
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
+  // مساعدات داخلية
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  /// يُعيد تشغيل مؤقت التوقف من الصفر.
+  /// يُستدعى مع كل خطوة جديدة أو عند رصد إشارة توقف من PedestrianStatus.
+  void _resetStoppedTimer() {
+    _stoppedTimer?.cancel();
+    _stoppedTimer = Timer(const Duration(seconds: 5), () {
+      _isCurrentlyWalking = false;
+      debugPrint('🛑 [توقف] تم رصد التوقف الكامل — تجميد قبول قفزات GPS');
+    });
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
   // إدارة دورة الحياة
   // ═══════════════════════════════════════════════════════════════════════════
 
   /// تصفير جميع عدادات الجلسة (يُستدعى عند انتهاء الجلسة أو إعادة التشغيل).
   void reset() {
+    _stoppedTimer
+        ?.cancel(); // 🔧 إصلاح: إلغاء أي مؤقت توقف معلق لمنعه من الإطلاق بعد التصفير
     _trustedTotalSteps = 0;
     _stepsAtLastGpsUpdate = 0;
     _lastHardwareTotalSteps = -1;

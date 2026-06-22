@@ -15,6 +15,7 @@ import 'package:yusr/core/constants/shared_preferences_keys.dart';
 import 'package:yusr/core/constants/app_route.dart';
 import 'package:yusr/features/be_leader/data/models/tracking_notification_model.dart';
 import 'package:yusr/features/be_leader/presentation/services/smart_location_filter_service.dart';
+import 'package:yusr/features/be_leader/providers/smart_location_filter_service_provider.dart';
 import 'package:yusr/core/extensions/context_extension.dart';
 import 'package:yusr/features/be_leader/providers/active_session_id_provider.dart';
 import 'package:yusr/features/be_leader/providers/be_leader_repository_provider.dart';
@@ -47,9 +48,6 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
   Position? _lastValidPosition;
   DateTime? _lastUpdateTime;
 
-  // ─── فلترة المشي (مُفوَّضة للخدمة المشتركة) ──────────────────────────────
-  final SmartLocationFilterService _locationFilter =
-      SmartLocationFilterService();
 
   // ─── حالة التنبيهات ───────────────────────────────────────────────────────
   DateTime? _redZoneEntryTime;
@@ -188,7 +186,11 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
     ].request();
 
     // 4️⃣ تشغيل عدّاد الخطوات الذكي
-    _locationFilter.startSmartStepCounting(tag: ' [الحاج]');
+    // 🔧 إصلاح: تصفير العدادات أولًا لضمان بدء جلسة نظيفة حتى عند الاستئناف بعد فتح التطبيق
+    ref.read(pilgrimLocationFilterServiceProvider).reset();
+    ref
+        .read(pilgrimLocationFilterServiceProvider)
+        .startSmartStepCounting(tag: ' [الحاج]');
 
     // 5️⃣ تشغيل بث البلوتوث عبر BleRadarService الموحَّد
     await ref
@@ -301,11 +303,13 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
               .inSeconds;
 
           // فلتر 2: السرعة
-          final bool? isSpeedValid = _locationFilter.isSpeedJumpValid(
-            distanceMeters: distanceJump,
-            timeDiffSeconds: timeDiffSeconds,
-            tag: ' [الحاج]',
-          );
+          final bool? isSpeedValid = ref
+              .read(pilgrimLocationFilterServiceProvider)
+              .isSpeedJumpValid(
+                distanceMeters: distanceJump,
+                timeDiffSeconds: timeDiffSeconds,
+                tag: ' [الحاج]',
+              );
 
           if (isSpeedValid == false) {
             // 💡 حل مشكلة الفخ الأولي (Initial GPS Trap):
@@ -320,12 +324,14 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
             }
           } else {
             // فلتر 3: الخطوات وتصحيح الـ GPS (يُفحص فقط إذا كانت السرعة منطقية)
-            if (!_locationFilter.isMovementReal(
-              distanceMeters: distanceJump,
-              currentAccuracy: position.accuracy,
-              previousAccuracy: _lastValidPosition!.accuracy,
-              tag: ' [الحاج]',
-            )) {
+            if (!ref
+                .read(pilgrimLocationFilterServiceProvider)
+                .isMovementReal(
+                  distanceMeters: distanceJump,
+                  currentAccuracy: position.accuracy,
+                  previousAccuracy: _lastValidPosition!.accuracy,
+                  tag: ' [الحاج]',
+                )) {
               debugPrint(
                 '🛑 [حماية] قفزة GPS وهمية — لا خطوات كافية والمسافة خارج هامش الخطأ!',
               );
@@ -734,7 +740,7 @@ class PilgrimTrackingController extends _$PilgrimTrackingController {
     stopAlarmManual();
 
     // 🌟 إيقاف خدمة الفلترة
-    _locationFilter.stop();
+    ref.read(pilgrimLocationFilterServiceProvider).stop();
 
     // 🌟 إيقاف بث البلوتوث
     ref.read(bleRadarServiceProvider).stopBroadcasting();

@@ -26,7 +26,7 @@ class LeaderStartSessionView extends ConsumerWidget {
       } else if (state.hasValue && state.value != null) {
         context.closeLoadingDialog();
         final sessionId = state.value!.data!.sessionId;
-        // 🚀 السطر السحري المفقود: تشغيل التتبع للمشرف فور إنشاء الجلسة!
+        // 🚀 تشغيل التتبع للمشرف فور إنشاء الجلسة!
         ref
             .read(leaderTrackingControllerProvider.notifier)
             .startTracking(sessionId);
