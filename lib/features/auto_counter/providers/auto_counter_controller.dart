@@ -18,40 +18,35 @@ part 'auto_counter_controller.g.dart';
 class AutoCounterController extends _$AutoCounterController {
   static const int _stoppedThresholdMs = 5000;
 
-  // — الجيروسكوب —
+  //  الجيروسكوب
   static const double _gyroNoise = 2.0;
-  // static const double _gyroMaxRate = 85.0;
   static const double _gyroMaxRate = 250.0;
-
+  // static const double _gyroMaxRate = 85.0;
   static const double _gyroMaxDeltaPerFrame = 25.0;
 
-  // — الطواف —
+  //  الطواف
   static const double _tawafLapAngle = 345.0;
-  // static const int _tawafMinSteps = 200;
-  // static const int _tawafMinSeconds = 120;
   static const int _tawafMinSteps = 10;
   static const int _tawafMinSeconds = 5;
+  // static const int _tawafMinSteps = 200;
+  // static const int _tawafMinSeconds = 120;
 
-  // — السعي —
+  //  السعي
   static const double _saeeUTurnAngle = 130.0;
-  // static const int _saeeMinStepsBeforeUTurn = 400;
-  // static const int _saeeMinSeconds = 180;
-  // static const int _saeeLastLapMinSteps = 500;
   static const int _saeeMinStepsBeforeUTurn = 10;
   static const int _saeeMinSeconds = 5;
   static const int _saeeLastLapMinSteps = 10;
 
-  //-مقياس التسارع -
-  static const double _walkingDetectionThreshold = 2.0;
+  // static const int _saeeMinStepsBeforeUTurn = 400;
+  // static const int _saeeMinSeconds = 180;
+  // static const int _saeeLastLapMinSteps = 500;
 
   // متغيرات داخلية
-  // ═══════════════════════════════════════════════════════════
 
   StreamSubscription<StepEvent>? _stepSub;
   StreamSubscription<WalkingStatus>? _walkSub;
   StreamSubscription<GyroscopeReading>? _gyroSub;
   StreamSubscription<Position>? _keepAliveSub;
-  StreamSubscription<double>? _linearAccSub;
   Timer? _stoppedTimer;
 
   int _lastTotalSteps = -1;
@@ -62,7 +57,6 @@ class AutoCounterController extends _$AutoCounterController {
   DateTime _lapStartTime = DateTime.now();
 
   //  البناء الأولي
-  // ═══════════════════════════════════════════════════════════
 
   @override
   AutoCounterState build() {
@@ -72,7 +66,6 @@ class AutoCounterController extends _$AutoCounterController {
   }
 
   // Public API
-  // ═══════════════════════════════════════════════════════════
 
   Future<void> startTracking() async {
     if (state.isRunning) return;
@@ -88,13 +81,11 @@ class AutoCounterController extends _$AutoCounterController {
     }
 
     final isTawaf = ref.read(counterTypeControllerProvider);
-    //استعادة الشوط المحفوظ
     final savedLap = await ref
         .read(autoCounterStorageProvider)
         .loadSavedLap(isTawaf);
     if (!ref.mounted) return;
 
-    //تهيئة الحالة
     _tawafSignedAngle = 0.0;
     _saeeSignedAngle = 0.0;
     _lastTotalSteps = -1;
@@ -107,6 +98,7 @@ class AutoCounterController extends _$AutoCounterController {
       currentLap: savedLap,
       stepsInCurrentLap: 0,
       accumulatedAngle: 0.0,
+      // isMoving: true,
       isMoving: false,
       turnDetected: false,
       startHeading: -1.0,
@@ -130,7 +122,6 @@ class AutoCounterController extends _$AutoCounterController {
     state = const AutoCounterState();
   }
 
-  /// تصحيح يدوي — زيادة شوط
   void incrementLap() {
     if (!state.isRunning || state.currentLap >= 7) return;
     final newLap = state.currentLap + 1;
@@ -150,7 +141,6 @@ class AutoCounterController extends _$AutoCounterController {
         );
   }
 
-  /// تصحيح يدوي — إنقاص شوط
   void decrementLap() {
     if (!state.isRunning || state.currentLap <= 1) return;
     final newLap = state.currentLap - 1;
@@ -171,37 +161,22 @@ class AutoCounterController extends _$AutoCounterController {
   }
 
   // تشغيل الحساسات
-  // ═══════════════════════════════════════════════════════════
 
   void _startSensors(bool isTawaf) {
     final repo = SensorsRepository();
 
     _startForegroundKeepAlive();
 
-    // كشف فوري عن بداية الحركة
-    _linearAccSub = repo.linearAccelerationStream.listen((magnitude) {
-      if (!ref.mounted) return;
-      // لو الحاج واقف وتجاوز التسارع العتبة → بدأ يمشي
-      if (!state.isMoving && magnitude > _walkingDetectionThreshold) {
-        state = state.copyWith(isMoving: true);
-        _lastGyroTime = null; // تصفير الزمن لبدء قراءة نظيفة
-        _resetStoppedTimer(); // تشغيل حارس التوقف كإجراء أمني
-      }
-    }, onError: (_) {});
-
-    // Hardware Pedometer
     _stepSub = repo.stepStream.listen(
       (event) => _handleStep(event, isTawaf),
       onError: (_) => _handleSensorError(AutoCounterStrings.stepSensorError),
     );
 
-    // Walking Statu
     _walkSub = repo.walkingStatusStream.listen(
       _handleWalkingStatus,
       onError: (_) {},
     );
 
-    //لجيروسكوب — قياس الدوران
     _gyroSub = repo.gyroscopeStream.listen(
       (reading) => isTawaf ? _processTawaf(reading) : _processSaee(reading),
       onError: (_) =>
@@ -210,7 +185,6 @@ class AutoCounterController extends _$AutoCounterController {
   }
 
   // معالجة الخطوات
-  // ═══════════════════════════════════════════════════════════
 
   void _handleStep(StepEvent event, bool isTawaf) {
     if (!ref.mounted) return;
@@ -220,7 +194,6 @@ class AutoCounterController extends _$AutoCounterController {
       return;
     }
 
-    //تجاهل قراءات غير منطقية
     final int delta = event.totalSteps - _lastTotalSteps;
     if (delta <= 0 || delta > 10) {
       _lastTotalSteps = event.totalSteps;
@@ -228,13 +201,11 @@ class AutoCounterController extends _$AutoCounterController {
     }
 
     _lastTotalSteps = event.totalSteps;
-    // أعد تشغيل مؤقت التوقف مع كل خطوة جديدة
     _resetStoppedTimer();
 
     final int newSteps = state.stepsInCurrentLap + delta;
     state = state.copyWith(isMoving: true, stepsInCurrentLap: newSteps);
 
-    // الشوط 7 في السعي: يكتمل بالوصول للمروة بلا التفاف
     if (!isTawaf && state.currentLap == 7 && newSteps >= _saeeLastLapMinSteps) {
       final int elapsed = DateTime.now().difference(_lapStartTime).inSeconds;
       if (elapsed >= _saeeMinSeconds) {
@@ -247,7 +218,6 @@ class AutoCounterController extends _$AutoCounterController {
   }
 
   // معالجة حالة المشي
-  // ═══════════════════════════════════════════════════════════
 
   void _handleWalkingStatus(WalkingStatus status) {
     if (!ref.mounted) return;
@@ -283,14 +253,10 @@ class AutoCounterController extends _$AutoCounterController {
     }
   }
 
-  // ═══════════════════════════════════════════════════════════
   // منطق الطواف
-  //ثلاثة مستويات من الفلترة
-  // ═══════════════════════════════════════════════════════════
 
   void _processTawaf(GyroscopeReading reading) {
     if (!ref.mounted) return;
-    //لا تكامل اذا الحاج واقف
     if (!state.isMoving) {
       _lastGyroTime = null;
       return;
@@ -308,27 +274,19 @@ class AutoCounterController extends _$AutoCounterController {
     if (dt <= 0 || dt > 0.5) return;
 
     final double absRate = reading.zRate.abs();
-    //فلتر الضجيج
     if (absRate < _gyroNoise) return;
-
-    //  الفلتر الثالث: هز الهاتف
     if (absRate > _gyroMaxRate) return;
 
-    //الفلتر الرابع: القفزات المغناطيسية
     final double delta = reading.zRate * dt;
     if (delta.abs() > _gyroMaxDeltaPerFrame) return;
-    //التكامل الموقَّع
     _tawafSignedAngle += delta;
 
-    //تحديث الواجهة
     state = state.copyWith(accumulatedAngle: _tawafSignedAngle.abs());
 
-    //التحقق المركزي من الشروط
     _checkLapCompletion(true);
   }
 
   // منطق السعي
-  // ═══════════════════════════════════════════════════════════
 
   void _processSaee(GyroscopeReading reading) {
     if (!ref.mounted) return;
@@ -347,21 +305,17 @@ class AutoCounterController extends _$AutoCounterController {
         now.difference(_lastGyroTime!).inMicroseconds / 1_000_000.0;
     _lastGyroTime = now;
     if (dt <= 0 || dt > 0.5) return;
-    //فلترة الضجيج فقط
     if (reading.zRate.abs() < _gyroNoise) return;
 
-    // فلتر القفزات المغناطيسية
     final double delta = reading.zRate * dt;
     if (delta.abs() > _gyroMaxDeltaPerFrame) return;
 
     _saeeSignedAngle += delta;
 
-    //التحقق المركزي من الشروط
     _checkLapCompletion(false);
   }
 
-  // فحص اكتمال الشوط (مركزي)
-  // ═══════════════════════════════════════════════════════════
+  // فحص اكتمال الشوط
 
   void _checkLapCompletion(bool isTawaf) {
     if (!ref.mounted) return;
@@ -393,7 +347,6 @@ class AutoCounterController extends _$AutoCounterController {
   }
 
   // اكتمال الشوط
-  // ═══════════════════════════════════════════════════════════
 
   void _onLapCompleted() {
     if (!ref.mounted) return;
@@ -414,7 +367,7 @@ class AutoCounterController extends _$AutoCounterController {
         accumulatedAngle: 0.0,
         turnDetected: false,
         startHeading: -1.0,
-        isMoving: false,
+        // isMoving: false,
       );
       ref
           .read(autoCounterStorageProvider)
@@ -450,7 +403,6 @@ class AutoCounterController extends _$AutoCounterController {
   }
 
   // مساعدات
-  // ═══════════════════════════════════════════════════════════
 
   void _handleSensorError(String message) {
     if (!ref.mounted) return;
@@ -463,14 +415,12 @@ class AutoCounterController extends _$AutoCounterController {
     _stepSub?.cancel();
     _walkSub?.cancel();
     _gyroSub?.cancel();
-    _linearAccSub?.cancel();
     _keepAliveSub?.cancel();
     _stoppedTimer?.cancel();
 
     _stepSub = null;
     _walkSub = null;
     _gyroSub = null;
-    _linearAccSub = null;
     _keepAliveSub = null;
     _stoppedTimer = null;
     _lastGyroTime = null;
@@ -488,7 +438,6 @@ class AutoCounterController extends _$AutoCounterController {
     } catch (_) {}
   }
 
-  //إدارة العمل في الخلفية
   void _startForegroundKeepAlive() {
     if (!Platform.isAndroid) return;
     _keepAliveSub = Geolocator.getPositionStream(
