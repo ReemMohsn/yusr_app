@@ -620,7 +620,6 @@ class LeaderTrackingController extends _$LeaderTrackingController {
       LatLng displayLocation = LatLng(lat, lng);
 
       // ── Sensor Fusion: تحديث موقع الخريطة بناءً على البلوتوث ─────────────
-      // بناءً على اقتراحك: نثبت الماركر فقط عندما يكون البلوتوث قوياً ومؤكداً
       if (isStrongBle && _currentLeaderPosition != null) {
         // نستخدم زاوية ثابتة لكل حاج بناءً على الـ ID لتوزيع الحجاج حول المشرف بشكل دائري ثابت
         final double bearing = (pilgrimMinorId.toDouble() * 45.0) % 360.0;
@@ -648,8 +647,6 @@ class LeaderTrackingController extends _$LeaderTrackingController {
       }
 
       // ── خطوة 3: إرسال حالة BLE لـ Firebase (للحاج ليُطفئ إنذاره) ─────────
-      // 🔧 إصلاح: isSafe = true فقط إذا كانت الإشارة موجودة فعلًا وضمن النطاق الآمن
-      // activeBleDistance هو double وليس double? لذا != null دائمًا true — خطأ منطقي سابق
       final bool isSafeByBle =
           bleSignalPresent && activeBleDistance <= _yellowZone;
       _updatePilgrimBleStatusInFirebase(
