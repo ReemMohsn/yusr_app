@@ -55,18 +55,27 @@ This repository contains the **Flutter Mobile Application** within the complete 
 - 📢 **Targeted Announcements & Push Notifications** — Real-time broadcasts from Campaign Managers and Supervisors to all pilgrims, supervisors, or specific groups via Firebase Cloud Messaging (FCM).
 - 🏕️ **Campaign, Group & Base Location Management** — Allows Managers to inspect campaign statistics and set/update lodging coordinates on the map, while Supervisors and Pilgrims can view group details and health indicators.
 - 👤 **Personal Profile Management** — View personal and campaign details and update Saudi/Yemeni/WhatsApp contact numbers seamlessly.
-
+- 
 <a id="screenshots"></a>
 ## 📱 Screenshots
-
 A look at the main mobile interfaces across Pilgrim, Supervisor, and Campaign Manager roles:
 
 <table>
   <tr>
     <td align="center" width="33%">
+      <a href="screenshots/login.jpg"><img src="screenshots/login.jpg" alt="Login Screen" width="240" /></a>
+      <br /><b>Login</b>
+    </td>
+    <td align="center" width="33%">
+      <a href="screenshots/home.jpg"><img src="screenshots/home.jpg" alt="Home Screen" width="240" /></a>
+      <br /><b>Home Screen</b>
+    </td>
+    <td align="center" width="33%">
       <a href="screenshots/drawer_navigation.jpg"><img src="screenshots/drawer_navigation.jpg" alt="Role-Based Drawer Navigation" width="240" /></a>
       <br /><b>Role-Based Navigation</b>
     </td>
+  </tr>
+  <tr>
     <td align="center" width="33%">
       <a href="screenshots/smart_mufti_1.jpg"><img src="screenshots/smart_mufti_1.jpg" alt="Smart Mufti AI Assistant" width="240" /></a>
       <br /><b>Smart Mufti (RAG AI)</b>
@@ -74,6 +83,10 @@ A look at the main mobile interfaces across Pilgrim, Supervisor, and Campaign Ma
     <td align="center" width="33%">
       <a href="screenshots/auto_counter.jpg"><img src="screenshots/auto_counter.jpg" alt="Automatic Tawaf and Sa'i Counter" width="240" /></a>
       <br /><b>Automatic Ritual Counter</b>
+    </td>
+    <td align="center" width="33%">
+      <a href="screenshots/return_me.jpg"><img src="screenshots/return_me.jpg" alt="Return Me Navigation" width="240" /></a>
+      <br /><b>Return Me</b>
     </td>
   </tr>
   <tr>
@@ -92,10 +105,6 @@ A look at the main mobile interfaces across Pilgrim, Supervisor, and Campaign Ma
   </tr>
   <tr>
     <td align="center" width="33%">
-      <a href="screenshots/return_me.jpg"><img src="screenshots/return_me.jpg" alt="Return Me Navigation" width="240" /></a>
-      <br /><b>Return Me</b>
-    </td>
-    <td align="center" width="33%">
       <a href="screenshots/campaign_base_location.jpg"><img src="screenshots/campaign_base_location.jpg" alt="Campaign Base Location Picker" width="240" /></a>
       <br /><b>Set Campaign Base Location</b>
     </td>
@@ -103,12 +112,12 @@ A look at the main mobile interfaces across Pilgrim, Supervisor, and Campaign Ma
       <a href="screenshots/hajj_types.jpg"><img src="screenshots/hajj_types.jpg" alt="Hajj Types Selection" width="240" /></a>
       <br /><b>Hajj Rituals — Types</b>
     </td>
-  </tr>
-  <tr>
     <td align="center" width="33%">
       <a href="screenshots/ritual_guidelines.jpg"><img src="screenshots/ritual_guidelines.jpg" alt="Ritual Guidelines" width="240" /></a>
       <br /><b>Ritual Etiquette & Guidelines</b>
     </td>
+  </tr>
+  <tr>
     <td align="center" width="33%">
       <a href="screenshots/campaign_overview.jpg"><img src="screenshots/campaign_overview.jpg" alt="Campaign Overview" width="240" /></a>
       <br /><b>Campaign Overview</b>
@@ -116,6 +125,10 @@ A look at the main mobile interfaces across Pilgrim, Supervisor, and Campaign Ma
     <td align="center" width="33%">
       <a href="screenshots/group_details.jpg"><img src="screenshots/group_details.jpg" alt="Group Details" width="240" /></a>
       <br /><b>Group Details & Members</b>
+    </td>
+    <td align="center" width="33%">
+      <a href="screenshots/personal_profile.jpg"><img src="screenshots/personal_profile.jpg" alt="Personal Profile" width="240" /></a>
+      <br /><b>Personal Profile</b>
     </td>
   </tr>
 </table>
